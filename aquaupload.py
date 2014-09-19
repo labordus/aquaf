@@ -7,7 +7,7 @@ import mechanize
 import os
 # import sys
 
-# load Image and image plugins manual
+# load Image and image plugins manual ............... en al dat soort dingen meer
 import Image
 # import PngImagePlugin
 # import BmpImagePlugin
