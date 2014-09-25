@@ -221,7 +221,7 @@ class BasicFrame(wx.Frame):
 			self.action = "Plaatje toevoegen aan archief"
 			self.frame_1_statusbar.SetStatusText("Plaatje toevoegen aan archief", 0)
 			aquaupload.addToHistory(AUQAOFORUM_PICTURE_URL + self.desiredName)
-			self.frame_1_statusbar.SetStatusText("Klaar.....", 0)
+			self.frame_1_statusbar.SetStatusText("Klaar....", 0)
 		except Exception, er:
 			self.error = True
 			self.errorEx = er
