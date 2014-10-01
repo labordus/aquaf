@@ -16,7 +16,7 @@ class CalcFrame(maingui.Mainframe):
     # wx calls this function with and 'event' object
     def doleftup(self, event):
         try:
-			print 'test'
+            print 'test'
         except Exception:
             print 'error'
  
