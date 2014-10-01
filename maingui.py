@@ -44,7 +44,7 @@ class Mainframe ( wx.Frame ):
 		self.m_button8 = wx.Button( self, wx.ID_ANY, u"Test", wx.DefaultPosition, wx.DefaultSize, 0 )
 		bSizer6.Add( self.m_button8, 0, wx.ALL, 5 )
 		
-		self.m_button2 = wx.Button( self, wx.ID_ANY, u"MyButton", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_button2 = wx.Button( self, wx.ID_ANY, u"Ook test", wx.DefaultPosition, wx.DefaultSize, 0 )
 		bSizer6.Add( self.m_button2, 0, wx.ALL, 5 )
 		
 		
