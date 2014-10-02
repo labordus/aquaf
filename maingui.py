@@ -17,54 +17,164 @@ import wx.xrc
 class Mainframe ( wx.Frame ):
 	
 	def __init__( self, parent ):
-		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 574,394 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Aquaforum upload programma", pos = wx.DefaultPosition, size = wx.Size( 702, 538 ), style = wx.DEFAULT_FRAME_STYLE )
 		
 		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
+		self.SetBackgroundColour( wx.Colour( 0, 127, 255 ) )
 		
-		bSizer2 = wx.BoxSizer( wx.VERTICAL )
+		self.frame_1_statusbar = self.CreateStatusBar( 1, 0, wx.ID_ANY )
+		bSizer1 = wx.BoxSizer( wx.VERTICAL )
 		
-		bSizer4 = wx.BoxSizer( wx.VERTICAL )
+		bSizer2 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		
-		bSizer4.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
-		
-		bSizer7 = wx.BoxSizer( wx.VERTICAL )
-		
-		
-		bSizer4.Add( bSizer7, 1, wx.EXPAND, 5 )
+		self.bitmap_1 = wx.StaticBitmap( self, wx.ID_ANY, wx.Bitmap( u"forumbanner.gif", wx.BITMAP_TYPE_ANY ), wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer2.Add( self.bitmap_1, 0, wx.FIXED_MINSIZE, 0 )
 		
 		
-		bSizer2.Add( bSizer4, 1, wx.EXPAND, 5 )
-		
-		bSizer6 = wx.BoxSizer( wx.VERTICAL )
+		bSizer2.AddSpacer( ( 20,  20), 0, wx.EXPAND|wx.FIXED_MINSIZE, 0 )
 		
 		
-		bSizer6.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		bSizer1.Add( bSizer2, 1, wx.EXPAND, 0 )
 		
-		self.m_button8 = wx.Button( self, wx.ID_ANY, u"Test", wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer6.Add( self.m_button8, 0, wx.ALL, 5 )
+		bSizer3 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		self.m_button2 = wx.Button( self, wx.ID_ANY, u"Ook test", wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer6.Add( self.m_button2, 0, wx.ALL, 5 )
+		self.label_3 = wx.StaticText( self, wx.ID_ANY, u"Aquaforum login naam", wx.DefaultPosition, wx.DefaultSize, wx.ALIGN_RIGHT )
+		self.label_3.Wrap( -2 )
+		self.label_3.SetBackgroundColour( wx.Colour( 0, 127, 255 ) )
+		
+		bSizer3.Add( self.label_3, 0, wx.ALIGN_CENTER_VERTICAL|wx.FIXED_MINSIZE, 0 )
 		
 		
-		bSizer2.Add( bSizer6, 1, wx.EXPAND, 5 )
+		bSizer3.AddSpacer( ( 20,  20), 0, wx.FIXED_MINSIZE, 0 )
+		
+		self.loginNaam = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.loginNaam.SetMaxLength( 0 ) 
+		bSizer3.Add( self.loginNaam, 0, wx.ALIGN_CENTER_VERTICAL|wx.FIXED_MINSIZE, 0 )
 		
 		
-		self.SetSizer( bSizer2 )
+		bSizer1.Add( bSizer3, 1, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 0 )
+		
+		bSizer4 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.buttonSelectFile = wx.Button( self, wx.ID_ANY, u"Selecteer bestand", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.buttonSelectFile.SetDefault() 
+		bSizer4.Add( self.buttonSelectFile, 0, wx.ALIGN_CENTER_VERTICAL|wx.FIXED_MINSIZE, 0 )
+		
+		self.text_ctrl_Filepath = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 400, 21 ), 0 )
+		self.text_ctrl_Filepath.SetMaxLength( 0 ) 
+		bSizer4.Add( self.text_ctrl_Filepath, 0, wx.ALIGN_CENTER_VERTICAL|wx.FIXED_MINSIZE, 0 )
+		
+		
+		bSizer1.Add( bSizer4, 1, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 0 )
+		
+		bSizer5 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		radio_box_3Choices = [ u"800x600(standaard, groot)", u"640x480 (middelgroot)", u"320x240 (klein)", u"160x120(heel klein, handig voor avatar)" ]
+		self.radio_box_3 = wx.RadioBox( self, wx.ID_ANY, u"Dimensies", wx.DefaultPosition, wx.DefaultSize, radio_box_3Choices, 4, wx.RA_SPECIFY_ROWS )
+		self.radio_box_3.SetSelection( 0 )
+		self.radio_box_3.SetBackgroundColour( wx.Colour( 0, 127, 255 ) )
+		
+		bSizer5.Add( self.radio_box_3, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 0 )
+		
+		
+		bSizer5.AddSpacer( ( 20,  20), 0, wx.FIXED_MINSIZE, 0 )
+		
+		self.button_VoorbeeldGrootte = wx.Button( self, wx.ID_ANY, u"Voorbeeld grootte", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.button_VoorbeeldGrootte.SetDefault() 
+		bSizer5.Add( self.button_VoorbeeldGrootte, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 0 )
+		
+		
+		bSizer1.Add( bSizer5, 1, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 0 )
+		
+		bSizer6 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.buttonUpload = wx.Button( self, wx.ID_ANY, u"Upload bestand naar forum", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.buttonUpload.SetDefault() 
+		bSizer6.Add( self.buttonUpload, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 0 )
+		
+		
+		bSizer6.AddSpacer( ( 20,  20), 0, wx.FIXED_MINSIZE, 0 )
+		
+		self.label_4 = wx.StaticText( self, wx.ID_ANY, u"Als je deze knop gebruikt dan converteert het programma het plaatje naar de juiste afmetingen \nen plaatst het programma het plaatje op aquaforum. \nDit kan enige tijd duren! Zie de statusbalk onderaan voor informatie.\n", wx.DefaultPosition, wx.Size( -1,-1 ), 0 )
+		self.label_4.Wrap( -1 )
+		self.label_4.SetBackgroundColour( wx.Colour( 0, 127, 255 ) )
+		
+		bSizer6.Add( self.label_4, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 0 )
+		
+		
+		bSizer1.Add( bSizer6, 1, wx.EXPAND, 0 )
+		
+		self.button_archief = wx.Button( self, wx.ID_ANY, u"Archief van de plaatjes", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.button_archief.SetDefault() 
+		bSizer1.Add( self.button_archief, 0, wx.FIXED_MINSIZE, 3 )
+		
+		
+		self.SetSizer( bSizer1 )
 		self.Layout()
 		
 		self.Centre( wx.BOTH )
 		
 		# Connect Events
-		self.m_button8.Bind( wx.EVT_LEFT_UP, self.doleftup )
+		self.button_archief.Bind( wx.EVT_BUTTON, self.onbtnArchiefClick )
 	
 	def __del__( self ):
 		pass
 	
 	
 	# Virtual event handlers, overide them in your derived class
-	def doleftup( self, event ):
+	def onbtnArchiefClick( self, event ):
 		event.Skip()
+	
+
+###########################################################################
+## Class dialog_1
+###########################################################################
+
+class dialog_1 ( wx.Dialog ):
+	
+	def __init__( self, parent ):
+		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Bericht", pos = wx.DefaultPosition, size = wx.DefaultSize, style = wx.DEFAULT_DIALOG_STYLE )
+		
+		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
+		self.SetBackgroundColour( wx.Colour( 0, 127, 255 ) )
+		
+		bSizer7 = wx.BoxSizer( wx.VERTICAL )
+		
+		self.label_1 = wx.StaticText( self, wx.ID_ANY, u"Het bericht is geplaatst op aquaforum. Je kan de volgende code gebruiken in je bericht:", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.label_1.Wrap( 0 )
+		self.label_1.SetBackgroundColour( wx.Colour( 0, 127, 255 ) )
+		
+		bSizer7.Add( self.label_1, 0, wx.EXPAND|wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.FIXED_MINSIZE, 0 )
+		
+		bSizer8 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.text_ctrl_Code = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 400, 127 ), wx.TE_READONLY|wx.TE_LINEWRAP )
+		self.text_ctrl_Code.SetMaxLength( 0 ) 
+		bSizer8.Add( self.text_ctrl_Code, 0, wx.EXPAND|wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.FIXED_MINSIZE, 0 )
+		
+		self.button_1 = wx.Button( self, wx.ID_ANY, u"Zet de code in het klembord (clipboard)", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.button_1.SetDefault() 
+		bSizer8.Add( self.button_1, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 0 )
+		
+		
+		bSizer7.Add( bSizer8, 1, wx.EXPAND, 0 )
+		
+		self.label_2 = wx.StaticText( self, wx.ID_ANY, u"Als je op de knop \"Zet de code in het klembord (clipboard)\" drukt, dan kan je vervolgens naar het aquaforum surfen met je browser. \nMaak een bericht waar je het plaatje in wilt hebben, klik rechts met de muis in het bericht  en kies \"plakken\" (of \"paste\"). \nDan staat de code in het bericht.", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.label_2.Wrap( 0 )
+		self.label_2.SetBackgroundColour( wx.Colour( 0, 127, 255 ) )
+		
+		bSizer7.Add( self.label_2, 0, wx.FIXED_MINSIZE, 0 )
+		
+		self.button_2 = wx.Button( self, wx.ID_ANY, u"Klaar", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.button_2.SetDefault() 
+		bSizer7.Add( self.button_2, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.FIXED_MINSIZE, 0 )
+		
+		
+		self.SetSizer( bSizer7 )
+		self.Layout()
+		bSizer7.Fit( self )
+	
+	def __del__( self ):
+		pass
 	
 

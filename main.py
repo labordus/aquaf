@@ -14,9 +14,9 @@ class CalcFrame(maingui.Mainframe):
  
     # what to when 'Solve' is clicked
     # wx calls this function with and 'event' object
-    def doleftup(self, event):
+    def onbtnArchiefClick(self, event):
         try:
-            print 'test'
+            print 'print: onbtnArchiefClick'
         except Exception:
             print 'error'
  
