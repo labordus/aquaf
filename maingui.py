@@ -22,7 +22,7 @@ class Mainframe ( wx.Frame ):
 		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
 		self.SetBackgroundColour( wx.Colour( 0, 127, 255 ) )
 		
-		self.frame_1_statusbar = self.CreateStatusBar( 1, 0, wx.ID_ANY )
+		self.frame_1_statusbar = self.CreateStatusBar( 1, 0|wx.SUNKEN_BORDER, wx.ID_ANY )
 		bSizer1 = wx.BoxSizer( wx.VERTICAL )
 		
 		bSizer2 = wx.BoxSizer( wx.HORIZONTAL )
@@ -56,9 +56,9 @@ class Mainframe ( wx.Frame ):
 		
 		bSizer4 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		self.buttonSelectFile = wx.Button( self, wx.ID_ANY, u"Selecteer bestand", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.buttonSelectFile.SetDefault() 
-		bSizer4.Add( self.buttonSelectFile, 0, wx.ALIGN_CENTER_VERTICAL|wx.FIXED_MINSIZE, 0 )
+		self.btnSelectFile = wx.Button( self, wx.ID_ANY, u"Selecteer bestand", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.btnSelectFile.SetDefault() 
+		bSizer4.Add( self.btnSelectFile, 0, wx.ALIGN_CENTER_VERTICAL|wx.FIXED_MINSIZE, 0 )
 		
 		self.text_ctrl_Filepath = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 400, 21 ), 0 )
 		self.text_ctrl_Filepath.SetMaxLength( 0 ) 
@@ -79,9 +79,9 @@ class Mainframe ( wx.Frame ):
 		
 		bSizer5.AddSpacer( ( 20,  20), 0, wx.FIXED_MINSIZE, 0 )
 		
-		self.button_VoorbeeldGrootte = wx.Button( self, wx.ID_ANY, u"Voorbeeld grootte", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.button_VoorbeeldGrootte.SetDefault() 
-		bSizer5.Add( self.button_VoorbeeldGrootte, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 0 )
+		self.btnVoorbeeld = wx.Button( self, wx.ID_ANY, u"Voorbeeld", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.btnVoorbeeld.SetDefault() 
+		bSizer5.Add( self.btnVoorbeeld, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 0 )
 		
 		
 		bSizer1.Add( bSizer5, 1, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 0 )
@@ -104,9 +104,9 @@ class Mainframe ( wx.Frame ):
 		
 		bSizer1.Add( bSizer6, 1, wx.EXPAND, 0 )
 		
-		self.button_archief = wx.Button( self, wx.ID_ANY, u"Archief van de plaatjes", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.button_archief.SetDefault() 
-		bSizer1.Add( self.button_archief, 0, wx.FIXED_MINSIZE, 3 )
+		self.btnArchief = wx.Button( self, wx.ID_ANY, u"Archief van de plaatjes", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.btnArchief.SetDefault() 
+		bSizer1.Add( self.btnArchief, 0, wx.FIXED_MINSIZE, 3 )
 		
 		
 		self.SetSizer( bSizer1 )
@@ -115,13 +115,21 @@ class Mainframe ( wx.Frame ):
 		self.Centre( wx.BOTH )
 		
 		# Connect Events
-		self.button_archief.Bind( wx.EVT_BUTTON, self.onbtnArchiefClick )
+		self.btnSelectFile.Bind( wx.EVT_BUTTON, self.onbtnSelectFileClick )
+		self.btnVoorbeeld.Bind( wx.EVT_BUTTON, self.onbtnVoorbeeldClick )
+		self.btnArchief.Bind( wx.EVT_BUTTON, self.onbtnArchiefClick )
 	
 	def __del__( self ):
 		pass
 	
 	
 	# Virtual event handlers, overide them in your derived class
+	def onbtnSelectFileClick( self, event ):
+		event.Skip()
+	
+	def onbtnVoorbeeldClick( self, event ):
+		event.Skip()
+	
 	def onbtnArchiefClick( self, event ):
 		event.Skip()
 	
