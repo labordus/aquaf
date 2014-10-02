@@ -1,2 +1,4 @@
 *.pyc
 *.wxg~
+/maingui_oud.fbp
+/exportedbyglade.xrc
