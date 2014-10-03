@@ -7,6 +7,8 @@ import webbrowser
  
 # import the newly created GUI file
 import maingui
+from maingui import dlgVoorbeeld
+import diversen
 
 def main_is_frozen():
     return (hasattr(sys, "frozen") or  # new py2exe
@@ -55,10 +57,47 @@ class AquaFrame(maingui.Mainframe):
         dlg.Destroy()
  
     def onbtnVoorbeeldClick(self, event):
-        try:
-            print 'print: onbtnVoorbeeldClick'
-        except Exception:
-            print 'error'
+        filepath = self.text_ctrl_Filepath.GetValue()
+        dimensions = (800, 600)
+        if self.text_ctrl_Filepath.GetValue() != () and self.text_ctrl_Filepath.GetValue() != "":
+            try:
+                if not (os.path.exists(self.text_ctrl_Filepath.GetValue())):
+                    wx.MessageDialog(self, "Het bestand \"" + self.text_ctrl_Filepath.GetValue() + "\" bestaat niet", "Bericht", style=wx.OK).ShowModal()
+                    resizedFileName = None
+                    return
+                else:
+#                 self.action = "converteren van het plaatje"
+#                    resizedFileName = diversen.resizeFile(self.text_ctrl_Filepath.GetValue(), dimensions)
+#                  self.frame_1_statusbar.SetStatusText(" ", 0)
+                    print 'print: onbtnArchiefClick'
+            except Exception, er:
+#                resizedFileName = None
+#                wx.MessageDialog(self, "Er is een fout opgetreden tijdens het converteren\n" + "De error is " + str(er), "Bericht", style=wx.OK).ShowModal()
+                    print 'print: onbtnArchiefClick'
+
+#        img = wx.Image(filepath, wx.BITMAP_TYPE_ANY)
+        resizedFileName = diversen.resizeFile('bike.png', dimensions)
+        img = wx.Image(self.text_ctrl_Filepath.GetValue(), wx.BITMAP_TYPE_ANY)
+        # scale the image, preserving the aspect ratio
+        W = img.GetWidth()
+        H = img.GetHeight()
+#        PhotoMaxSize = 1000
+#        if W > H:
+#            NewW = PhotoMaxSize
+#            NewH = PhotoMaxSize * H / W
+#        else:
+#            NewH = PhotoMaxSize
+#            NewW = PhotoMaxSize * W / H
+        img = img.Scale(W, H)
+#        size = (W, H)
+        Voorbeeld = dlgVoorbeeld(self)
+        Voorbeeld.SetTitle(self.text_ctrl_Filepath.GetValue())
+        Voorbeeld.bitmapVoorbeeld.SetBitmap(wx.BitmapFromImage(img))
+#        Voorbeeld.SetMinSize(size)
+#        Voorbeeld.SetMaxSize(size)
+        Voorbeeld.Fit()
+        Voorbeeld.Layout()
+        Voorbeeld.Show()                 
  
 # mandatory in wx, create an app, False stands for not deteriction stdin/stdout
 app = wx.App(False)
