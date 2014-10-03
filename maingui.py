@@ -186,3 +186,30 @@ class dialog_1 ( wx.Dialog ):
 		pass
 	
 
+###########################################################################
+## Class dlgVoorbeeld
+###########################################################################
+
+class dlgVoorbeeld ( wx.Dialog ):
+	
+	def __init__( self, parent ):
+		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.DefaultSize, style = wx.CAPTION|wx.CLOSE_BOX )
+		
+		self.SetSizeHintsSz( wx.DefaultSize, wx.Size( -1,-1 ) )
+		
+		sizerVoorbeeld = wx.BoxSizer( wx.VERTICAL )
+		
+		self.bitmapVoorbeeld = wx.StaticBitmap( self, wx.ID_ANY, wx.Bitmap( u"../../../../mnt/syn_media/pics/inspiration/0508_1659_400.jpeg", wx.BITMAP_TYPE_ANY ), wx.DefaultPosition, wx.DefaultSize, 0 )
+		sizerVoorbeeld.Add( self.bitmapVoorbeeld, 1, wx.ALL|wx.EXPAND, 0 )
+		
+		
+		self.SetSizer( sizerVoorbeeld )
+		self.Layout()
+		sizerVoorbeeld.Fit( self )
+		
+		self.Centre( wx.BOTH )
+	
+	def __del__( self ):
+		pass
+	
+
