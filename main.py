@@ -58,7 +58,20 @@ class AquaFrame(maingui.Mainframe):
  
     def onbtnVoorbeeldClick(self, event):
         filepath = self.text_ctrl_Filepath.GetValue()
-        dimensions = (800, 600)
+
+        index = self.radio_box_3.GetSelection()  # zero based index
+        dimensions = None
+        if index == 0:
+            dimensions = (800, 600)
+        elif index == 1:
+            dimensions = (640, 480)
+        elif index == 2:
+            dimensions = (320, 240)
+        else:
+            dimensions = (160, 120)
+#        self.frame_1_statusbar.SetStatusText("Het programma converteert het plaatje", 0)
+        resizedFileName = None
+        
         if self.text_ctrl_Filepath.GetValue() != () and self.text_ctrl_Filepath.GetValue() != "":
             try:
                 if not (os.path.exists(self.text_ctrl_Filepath.GetValue())):
@@ -67,20 +80,18 @@ class AquaFrame(maingui.Mainframe):
                     return
                 else:
 #                 self.action = "converteren van het plaatje"
-#                    resizedFileName = diversen.resizeFile(self.text_ctrl_Filepath.GetValue(), dimensions)
+                    resizedFileName = diversen.resizeFile(filepath, dimensions)
 #                  self.frame_1_statusbar.SetStatusText(" ", 0)
                     print 'print: onbtnArchiefClick'
             except Exception, er:
-#                resizedFileName = None
-#                wx.MessageDialog(self, "Er is een fout opgetreden tijdens het converteren\n" + "De error is " + str(er), "Bericht", style=wx.OK).ShowModal()
-                    print 'print: onbtnArchiefClick'
-
+                resizedFileName = None
+                wx.MessageDialog(self, "Er is een fout opgetreden tijdens het converteren\n" + "De error is " + str(er), "Bericht", style=wx.OK).ShowModal()
+                
 #        img = wx.Image(filepath, wx.BITMAP_TYPE_ANY)
-        resizedFileName = diversen.resizeFile('bike.png', dimensions)
-        img = wx.Image(self.text_ctrl_Filepath.GetValue(), wx.BITMAP_TYPE_ANY)
+        img = wx.Image(resizedFileName, wx.BITMAP_TYPE_ANY)
         # scale the image, preserving the aspect ratio
-        W = img.GetWidth()
-        H = img.GetHeight()
+#        W = img.GetWidth()
+#        H = img.GetHeight()
 #        PhotoMaxSize = 1000
 #        if W > H:
 #            NewW = PhotoMaxSize
@@ -88,7 +99,7 @@ class AquaFrame(maingui.Mainframe):
 #        else:
 #            NewH = PhotoMaxSize
 #            NewW = PhotoMaxSize * W / H
-        img = img.Scale(W, H)
+#        img = img.Scale(W, H)
 #        size = (W, H)
         Voorbeeld = dlgVoorbeeld(self)
         Voorbeeld.SetTitle(self.text_ctrl_Filepath.GetValue())
