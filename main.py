@@ -196,20 +196,31 @@ class AquaFrame(maingui.Mainframe):
         return dimensions
         
 ###########################################################################
-# # def ontvFilesActivated(self, event):
-###########################################################################
-    def ontvFilesActivated(self, event):
-        print 'print: ontvFilesActivated'
-
-###########################################################################
 # # def ontvFilesSelChanged(self, event):
 ###########################################################################
     def ontvFilesSelChanged(self, event):
-        print 'print: ontvFilesSelChanged'
-        
+        pad = self.tvFiles.GetFilePath()
+        if pad != () and pad != "":
+# file
+# update foto
+            dimensions = self.bitmapSelectedFile.GetSize()
+            scaled_file = diversen.resizeFile(pad, dimensions)
+            img = wx.Image(scaled_file, wx.BITMAP_TYPE_ANY)
+            self.bitmapSelectedFile.SetBitmap(wx.BitmapFromImage(img))
+            self.btnSelectFile.Enable()            
+        else:
+# directory
+# update foto naar stock foto
+            dimensions = self.bitmapSelectedFile.GetSize()
+            scaled_file = diversen.resizeFile("default_foto.jpg", dimensions)
+            img = wx.Image(scaled_file, wx.BITMAP_TYPE_ANY)
+            self.bitmapSelectedFile.SetBitmap(wx.BitmapFromImage(img))
+            self.btnSelectFile.Disable()
+            print "directory"
+
 # mandatory in wx, create an app, False stands for not deteriction stdin/stdout
 app = wx.App(False)
- 
+
 # create an object of AquaFrame
 frame = AquaFrame(None)
 # show the frame

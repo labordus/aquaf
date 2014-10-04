@@ -29,7 +29,7 @@ def resizeFile(filename, dimensions):
     '''
     im = Image.open(filename)  # load the image
     dim = im.size
-    # create temporaty file, resize 
+    # create temporary file, resize 
     resizedFileName = "tempfile.dat"
     # im.thumbnail(dimensions)
     originalDimensions = im.size
