@@ -1,3 +1,5 @@
+import mechanize
+import os
 import Image
 import PngImagePlugin
 import BmpImagePlugin
@@ -12,6 +14,12 @@ import TgaImagePlugin
 import TiffImagePlugin
 
 Image._initialized = 2
+
+# FORUM_UPLOAD_URL = "http://www.aquaforum.nl/gallery/upload.php"
+FORUM_UPLOAD_URL = "http://www.aquaforum.nl/ubb/scripts/upload.php"
+VERSION = "0_83"
+ALLOWED_CHARS = "qwertyuioplkjhgfdsazxcvbnm0123456789._"
+
 
 #-------------------------resize file if necessary
 def resizeFile(filename, dimensions):
@@ -46,3 +54,88 @@ def resizeFile(filename, dimensions):
         im = im.convert("RGB")
         im.save(resizedFileName, "JPEG", quality=60)    
     return resizedFileName
+
+def addToHistory(url):
+    '''adds the url to the json archive
+    '''
+    f = open('images.json', 'r')
+    content = f.read()
+    f.close()
+    text = ""
+    if content.find("link") != -1:
+        # already got content
+        text = ","
+    template = '''
+        {
+      "link":"%s"
+    }
+]}
+    
+''' % url
+    text = text + template
+    content = content.replace("]}", text)
+    f = open('images.json', 'w')
+    f.write(content)
+    f.close()
+    return
+
+
+def uploadFileToAquaforum(uploadFilename, requestedFileName):
+    '''
+    returns response page
+    '''
+
+    # build opener. Can be extended to handle cookies/proxies
+    opener = mechanize.build_opener()
+    # goto upload page    
+    request3 = mechanize.Request(FORUM_UPLOAD_URL)       
+    response3 = opener.open(request3)
+        
+    # parse form on upload page and add file
+    forms = mechanize.ParseResponse(response3, backwards_compat=False)
+    form = forms[0]
+    filectr = form.find_control("imgfile")
+    # filectr.add_file(open('/home/jasper/avatar.jpg'),"image/jpeg","avatar.jpg")
+    theFile = file(uploadFilename, 'rb')
+    filectr.add_file(theFile, "image/jpeg", os.path.split(requestedFileName)[-1])
+    # obtain form data    
+    request4 = form.click()  # urllib2.Request object
+    theFile.close()
+    request4.add_header('Referer', response3.geturl())
+    response4 = opener.open(request4)
+    return response4.read()
+
+def contructUploadName(loginname, requestedfilename):
+    '''
+    '''
+    # construct name
+    
+#    import os
+    import string
+    import random
+    filename = os.path.split(requestedfilename)[1]
+    filename = filename[:string.find(filename, ".")] + ".jpg"  # construct jpg extension
+    resultName = string.lower(loginname + "_" + VERSION + "_" + filename)  # prepend loginname
+    resultName = string.replace(resultName, " ", "_")  # replace spaces
+    resultName = string.replace(resultName, "'", "_")  # replace '
+    # resultName = urllib.quote(resultName) #make safe url
+    theResult = ""
+    for theChar in resultName:
+        if theChar in ALLOWED_CHARS:
+            theResult += theChar
+    resultName = theResult 
+    # check whether ok
+    # build opener. Can be extended to handle cookies/proxies
+    opener = mechanize.build_opener()
+    # goto upload page    
+    request3 = mechanize.Request(FORUM_UPLOAD_URL)       
+    response3 = opener.open(request3)    
+    page = string.lower(response3.read())
+    response3.close()    
+    random.seed()
+    # while not name ok, permutate
+    for i in range(6):
+        resultName = str(random.random())[-1] + resultName  # prepend with random number
+    # while string.find(page,resultName)<>-1:
+    #    resultName = str(random.random())[-1] + resultName #prepend with random number
+    return resultName

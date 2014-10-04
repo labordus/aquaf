@@ -8,7 +8,22 @@ import webbrowser
 # import the newly created GUI file
 import maingui
 from maingui import dlgVoorbeeld
+from maingui import dlgUploadDone
 import diversen
+
+AUQAOFORUM_PICTURE_URL = "http://www.aquaforum.nl/gallery/upload/"
+
+# create custom event
+UPLOAD_DONE_EVENT_TYPE = wx.NewEventType() 
+EVT_UPLOAD_DONE = wx.PyEventBinder(UPLOAD_DONE_EVENT_TYPE, 1) 
+
+class UploadDoneEvent(wx.PyCommandEvent): 
+    eventType = UPLOAD_DONE_EVENT_TYPE 
+    def __init__(self, windowID): 
+        wx.PyCommandEvent.__init__(self, self.eventType, windowID) 
+
+    def Clone(self): 
+        self.__class__(self.GetId())
 
 def main_is_frozen():
     return (hasattr(sys, "frozen") or  # new py2exe
@@ -109,6 +124,49 @@ class AquaFrame(maingui.Mainframe):
         Voorbeeld.Fit()
         Voorbeeld.Layout()
         Voorbeeld.Show()                 
+
+    def onbtnUploadClick(self, event):
+        index = self.radio_box_3.GetSelection()  # zero based index
+        dimensions = None
+        if index == 0:
+            dimensions = (800, 600)
+        elif index == 1:
+            dimensions = (640, 480)
+        elif index == 2:
+            dimensions = (320, 240)
+        else:
+            dimensions = (160, 120)
+        self.frame_1_statusbar.SetStatusText("Het programma converteert het plaatje", 0)
+        try:
+            self.action = "converteren van het plaatje"
+            resizedFileName = diversen.resizeFile(self.text_ctrl_Filepath.GetValue(), dimensions)
+            self.frame_1_statusbar.SetStatusText("Het programma bekijkt het aquaforum zodat het plaatje een unieke naam heeft", 0)
+            self.action = "benaderen van aquaforum webpagina"            
+            self.desiredName = diversen.contructUploadName(self.loginNaam.GetValue(), self.text_ctrl_Filepath.GetValue())
+            self.frame_1_statusbar.SetStatusText("Het programma zet het plaatje op aquaforum", 0)
+            self.action = "uploaden van het plaatje"                        
+            diversen.uploadFileToAquaforum(resizedFileName, self.desiredName)
+            self.action = "Plaatje toevoegen aan archief"
+            self.frame_1_statusbar.SetStatusText("Plaatje toevoegen aan archief", 0)
+            diversen.addToHistory(AUQAOFORUM_PICTURE_URL + self.desiredName)
+            self.frame_1_statusbar.SetStatusText("Klaar....", 0)
+        except Exception, er:
+            self.error = True
+            self.errorEx = er
+        # done, send done event
+        event = UploadDoneEvent(self.GetId())
+        self.GetEventHandler().AddPendingEvent(event)        
+    
+    def OnEventUploadDone(self, event):
+        '''show dialog'''
+        if self.error == True:
+            wx.MessageDialog(self, "Er is een fout opgetreden tijdens het " + self.action + "\n" + "De error is " + str(self.errorEx), "Bericht", style=wx.OK).ShowModal()
+            self.error = False
+        else:
+            dlg = dlgUploadDone(self, -1, "Bericht")
+            dlg.setCode(" [IMG]" + AUQAOFORUM_PICTURE_URL + self.desiredName + "[/IMG]")
+            dlg.ShowModal()
+        self.busy = False
  
 # mandatory in wx, create an app, False stands for not deteriction stdin/stdout
 app = wx.App(False)

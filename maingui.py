@@ -88,9 +88,9 @@ class Mainframe ( wx.Frame ):
 		
 		bSizer6 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		self.buttonUpload = wx.Button( self, wx.ID_ANY, u"Upload bestand naar forum", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.buttonUpload.SetDefault() 
-		bSizer6.Add( self.buttonUpload, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 0 )
+		self.btnUpload = wx.Button( self, wx.ID_ANY, u"Upload bestand naar forum", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.btnUpload.SetDefault() 
+		bSizer6.Add( self.btnUpload, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 0 )
 		
 		
 		bSizer6.AddSpacer( ( 20,  20), 0, wx.FIXED_MINSIZE, 0 )
@@ -117,6 +117,7 @@ class Mainframe ( wx.Frame ):
 		# Connect Events
 		self.btnSelectFile.Bind( wx.EVT_BUTTON, self.onbtnSelectFileClick )
 		self.btnVoorbeeld.Bind( wx.EVT_BUTTON, self.onbtnVoorbeeldClick )
+		self.btnUpload.Bind( wx.EVT_BUTTON, self.onbtnUploadClick )
 		self.btnArchief.Bind( wx.EVT_BUTTON, self.onbtnArchiefClick )
 	
 	def __del__( self ):
@@ -130,15 +131,18 @@ class Mainframe ( wx.Frame ):
 	def onbtnVoorbeeldClick( self, event ):
 		event.Skip()
 	
+	def onbtnUploadClick( self, event ):
+		event.Skip()
+	
 	def onbtnArchiefClick( self, event ):
 		event.Skip()
 	
 
 ###########################################################################
-## Class dialog_1
+## Class dlgUploadDone
 ###########################################################################
 
-class dialog_1 ( wx.Dialog ):
+class dlgUploadDone ( wx.Dialog ):
 	
 	def __init__( self, parent ):
 		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Bericht", pos = wx.DefaultPosition, size = wx.DefaultSize, style = wx.DEFAULT_DIALOG_STYLE )
