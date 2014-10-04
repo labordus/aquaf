@@ -44,7 +44,7 @@
             <property name="minimum_size"></property>
             <property name="name">Mainframe</property>
             <property name="pos"></property>
-            <property name="size">829,651</property>
+            <property name="size">829,711</property>
             <property name="style">wxDEFAULT_FRAME_STYLE</property>
             <property name="subclass">; </property>
             <property name="title">Aquaforum upload programma</property>
