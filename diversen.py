@@ -20,8 +20,9 @@ FORUM_UPLOAD_URL = "http://www.aquaforum.nl/ubb/scripts/upload.php"
 VERSION = "0_83"
 ALLOWED_CHARS = "qwertyuioplkjhgfdsazxcvbnm0123456789._"
 
-
-#-------------------------resize file if necessary
+###########################################################################
+# # def resizeFile(filename, dimensions):
+###########################################################################
 def resizeFile(filename, dimensions):
     '''
     returns filename of resized file
@@ -55,6 +56,9 @@ def resizeFile(filename, dimensions):
         im.save(resizedFileName, "JPEG", quality=60)    
     return resizedFileName
 
+###########################################################################
+# # def addToHistory(url):
+###########################################################################
 def addToHistory(url):
     '''adds the url to the json archive
     '''
@@ -79,7 +83,9 @@ def addToHistory(url):
     f.close()
     return
 
-
+###########################################################################
+# # def uploadFileToAquaforum(uploadFilename, requestedFileName):
+###########################################################################
 def uploadFileToAquaforum(uploadFilename, requestedFileName):
     '''
     returns response page
@@ -105,7 +111,10 @@ def uploadFileToAquaforum(uploadFilename, requestedFileName):
     response4 = opener.open(request4)
     return response4.read()
 
-def contructUploadName(loginname, requestedfilename):
+###########################################################################
+# # def constructUploadName(loginname, requestedfilename):
+###########################################################################
+def constructUploadName(loginname, requestedfilename):
     '''
     '''
     # construct name

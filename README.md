@@ -1,8 +1,6 @@
 aquaf
 =====
 
-# aquaf
-
 Origineel ontwikkeld door Riba.
 Riba's aquazone - Aquaforum uploadprogramma: http://aquazone.leeuwen.nu/blog/uploadprogramma
 
