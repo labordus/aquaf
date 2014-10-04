@@ -110,7 +110,7 @@ class AquaFrame(maingui.Mainframe):
                     resizedFileName = diversen.resizeFile(filepath, dimensions)
 #                  self.frame_1_statusbar.SetStatusText(" ", 0)
 #                    print 'print: onbtnArchiefClick'
-            except Exception, er:
+            except Exception as er:
                 resizedFileName = None
                 wx.MessageDialog(self, "Er is een fout opgetreden tijdens het converteren\n" + "De error is " + str(er), "Bericht", style=wx.OK).ShowModal()
                 
