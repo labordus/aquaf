@@ -14,12 +14,17 @@ verder ontwikkeld door Mark labordus - kellemes (bordumar@gmail.com)
 aquaf maakt gebruik van Python 2.7, wxwidgets, PIL
 (python-wxWidgets-3_0) 3.0.1.1-8.1
 
+# gedaan tot nu toe
+- Cross-platform.. werkt prima op Linux, moest daarvoor de gui van de logic scheiden. (nog niet kunnen testen op Windows)
+- Gui gedeelte wordt nu geregeld door wxformbuilder
+- Meerdere foto's tegelijk kunnen uploaden zit er bijna in.
+- Wat kleine aanpassinkjes om een eventuele overstap naar Python 3+ mogelijk te maken.
+- 
 
 # Opmerkingen, uitzoekpunten en todo's.
 
 - Zinnig om naar Python 3+ over te stappen? Wat zijn de gevolgen voor de install?
 - De wxpython (3.0.1.1-8.1) versie die ik gebruik werkt niet meer met Windows 9*
-- meerdere foto's kunnen uploaden .. is bijna af.
 - jpeg's worden met quality=60 opgeslagen.. dat verminderd de kwaliteit drastisch.
 - taborder
 - default actie voor enter op het mainform?
