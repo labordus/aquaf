@@ -19,7 +19,6 @@ aquaf maakt gebruik van Python 2.7, wxwidgets, PIL
 - Gui gedeelte wordt nu geregeld door wxformbuilder
 - Meerdere foto's tegelijk kunnen uploaden zit er bijna in.
 - Wat kleine aanpassinkjes om een eventuele overstap naar Python 3+ mogelijk te maken.
-- 
 
 # Opmerkingen, uitzoekpunten en todo's.
 
