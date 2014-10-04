@@ -12,7 +12,8 @@ verder ontwikkeld door Mark labordus - kellemes (bordumar@gmail.com)
 
 # Building
 
-aquaf maakt gebruik van Python 3.0.1, wxwidgets, PIL
+aquaf maakt gebruik van Python 2.7, wxwidgets, PIL
+(python-wxWidgets-3_0) 3.0.1.1-8.1
 
 # Development
 
