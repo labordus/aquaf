@@ -47,12 +47,12 @@ class Mainframe ( wx.Frame ):
 		
 		bSizer3.AddSpacer( ( 20,  20), 0, wx.FIXED_MINSIZE, 0 )
 		
-		self.loginNaam = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.loginNaam.SetMaxLength( 0 ) 
-		bSizer3.Add( self.loginNaam, 0, wx.ALIGN_CENTER_VERTICAL|wx.FIXED_MINSIZE, 0 )
+		self.edtLoginName = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 180,-1 ), 0 )
+		self.edtLoginName.SetMaxLength( 0 ) 
+		bSizer3.Add( self.edtLoginName, 0, wx.ALIGN_CENTER_VERTICAL|wx.FIXED_MINSIZE, 0 )
 		
 		
-		bSizer1.Add( bSizer3, 1, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 0 )
+		bSizer1.Add( bSizer3, 1, wx.EXPAND|wx.SHAPED, 0 )
 		
 		bSizer4 = wx.BoxSizer( wx.HORIZONTAL )
 		

@@ -142,7 +142,7 @@ class AquaFrame(maingui.Mainframe):
             resizedFileName = diversen.resizeFile(self.text_ctrl_Filepath.GetValue(), dimensions)
             self.frame_1_statusbar.SetStatusText("Het programma bekijkt het aquaforum zodat het plaatje een unieke naam heeft", 0)
             self.action = "benaderen van aquaforum webpagina"            
-            self.desiredName = diversen.contructUploadName(self.loginNaam.GetValue(), self.text_ctrl_Filepath.GetValue())
+            self.desiredName = diversen.contructUploadName(self.edtLoginName.GetValue(), self.text_ctrl_Filepath.GetValue())
             self.frame_1_statusbar.SetStatusText("Het programma zet het plaatje op aquaforum", 0)
             self.action = "uploaden van het plaatje"                        
             diversen.uploadFileToAquaforum(resizedFileName, self.desiredName)
