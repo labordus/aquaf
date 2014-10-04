@@ -17,7 +17,7 @@ import wx.xrc
 class Mainframe ( wx.Frame ):
 	
 	def __init__( self, parent ):
-		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Aquaforum upload programma", pos = wx.DefaultPosition, size = wx.Size( 702, 538 ), style = wx.DEFAULT_FRAME_STYLE )
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Aquaforum upload programma", pos = wx.DefaultPosition, size = wx.Size( 829,651 ), style = wx.DEFAULT_FRAME_STYLE )
 		
 		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
 		self.SetBackgroundColour( wx.Colour( 0, 127, 255 ) )
@@ -44,9 +44,6 @@ class Mainframe ( wx.Frame ):
 		
 		bSizer3.Add( self.label_3, 0, wx.ALIGN_CENTER_VERTICAL|wx.FIXED_MINSIZE, 0 )
 		
-		
-		bSizer3.AddSpacer( ( 20,  20), 0, wx.FIXED_MINSIZE, 0 )
-		
 		self.edtLoginName = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 180,-1 ), 0 )
 		self.edtLoginName.SetMaxLength( 0 ) 
 		bSizer3.Add( self.edtLoginName, 0, wx.ALIGN_CENTER_VERTICAL|wx.FIXED_MINSIZE, 0 )
@@ -54,18 +51,59 @@ class Mainframe ( wx.Frame ):
 		
 		bSizer1.Add( bSizer3, 1, wx.EXPAND|wx.SHAPED, 0 )
 		
+		bSizer16 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.btnSelectFile1 = wx.Button( self, wx.ID_ANY, u"MyButton", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer16.Add( self.btnSelectFile1, 0, wx.ALL, 5 )
+		
+		self.edtFile1 = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 400,21 ), 0 )
+		bSizer16.Add( self.edtFile1, 0, wx.ALIGN_CENTER_VERTICAL|wx.FIXED_MINSIZE, 5 )
+		
+		
+		bSizer1.Add( bSizer16, 1, wx.EXPAND, 0 )
+		
+		bSizer13 = wx.BoxSizer( wx.HORIZONTAL )
+		
 		bSizer4 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		self.btnSelectFile = wx.Button( self, wx.ID_ANY, u"Selecteer bestand", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.btnSelectFile.SetDefault() 
-		bSizer4.Add( self.btnSelectFile, 0, wx.ALIGN_CENTER_VERTICAL|wx.FIXED_MINSIZE, 0 )
+		self.tvFiles = wx.GenericDirCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.DIRCTRL_3D_INTERNAL|wx.SUNKEN_BORDER, u"\"plaatjes (*.bmp;*.jpg;*.png;*.tiff)|*.bmp;*.jpg;*.png;*.tiff\"", 0 )
 		
-		self.text_ctrl_Filepath = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 400, 21 ), 0 )
-		self.text_ctrl_Filepath.SetMaxLength( 0 ) 
-		bSizer4.Add( self.text_ctrl_Filepath, 0, wx.ALIGN_CENTER_VERTICAL|wx.FIXED_MINSIZE, 0 )
+		self.tvFiles.ShowHidden( False )
+		bSizer4.Add( self.tvFiles, 1, wx.EXPAND |wx.ALL, 5 )
 		
 		
-		bSizer1.Add( bSizer4, 1, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 0 )
+		bSizer13.Add( bSizer4, 1, wx.EXPAND, 0 )
+		
+		bSizer15 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.m_bitmap3 = wx.StaticBitmap( self, wx.ID_ANY, wx.Bitmap( u"test2.jpg", wx.BITMAP_TYPE_ANY ), wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer15.Add( self.m_bitmap3, 0, wx.ALL, 5 )
+		
+		
+		bSizer13.Add( bSizer15, 1, wx.EXPAND, 0 )
+		
+		bSizer151 = wx.BoxSizer( wx.VERTICAL )
+		
+		self.m_bpButton1 = wx.BitmapButton( self, wx.ID_ANY, wx.Bitmap( u"dagverder.bmp", wx.BITMAP_TYPE_ANY ), wx.DefaultPosition, wx.DefaultSize, wx.BU_AUTODRAW )
+		bSizer151.Add( self.m_bpButton1, 0, wx.ALL, 5 )
+		
+		self.m_bpButton2 = wx.BitmapButton( self, wx.ID_ANY, wx.Bitmap( u"dagterug.bmp", wx.BITMAP_TYPE_ANY ), wx.DefaultPosition, wx.DefaultSize, wx.BU_AUTODRAW )
+		bSizer151.Add( self.m_bpButton2, 0, wx.ALL, 5 )
+		
+		
+		bSizer13.Add( bSizer151, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 5 )
+		
+		bSizer14 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		m_listBox1Choices = []
+		self.m_listBox1 = wx.ListBox( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, m_listBox1Choices, 0 )
+		bSizer14.Add( self.m_listBox1, 1, wx.ALL|wx.EXPAND, 5 )
+		
+		
+		bSizer13.Add( bSizer14, 1, wx.EXPAND, 5 )
+		
+		
+		bSizer1.Add( bSizer13, 1, wx.EXPAND, 5 )
 		
 		bSizer5 = wx.BoxSizer( wx.HORIZONTAL )
 		
@@ -115,7 +153,9 @@ class Mainframe ( wx.Frame ):
 		self.Centre( wx.BOTH )
 		
 		# Connect Events
-		self.btnSelectFile.Bind( wx.EVT_BUTTON, self.onbtnSelectFileClick )
+		self.btnSelectFile1.Bind( wx.EVT_BUTTON, self.onbtnSelectFile1Click )
+		self.tvFiles.Bind( wx.EVT_TREE_ITEM_ACTIVATED, self.ontvFilesActivated )
+		self.tvFiles.Bind( wx.EVT_TREE_SEL_CHANGED, self.ontvFilesSelChanged )
 		self.btnVoorbeeld.Bind( wx.EVT_BUTTON, self.onbtnVoorbeeldClick )
 		self.btnUpload.Bind( wx.EVT_BUTTON, self.onbtnUploadClick )
 		self.btnArchief.Bind( wx.EVT_BUTTON, self.onbtnArchiefClick )
@@ -125,7 +165,13 @@ class Mainframe ( wx.Frame ):
 	
 	
 	# Virtual event handlers, overide them in your derived class
-	def onbtnSelectFileClick( self, event ):
+	def onbtnSelectFile1Click( self, event ):
+		event.Skip()
+	
+	def ontvFilesActivated( self, event ):
+		event.Skip()
+	
+	def ontvFilesSelChanged( self, event ):
 		event.Skip()
 	
 	def onbtnVoorbeeldClick( self, event ):

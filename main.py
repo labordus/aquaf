@@ -78,38 +78,38 @@ class AquaFrame(maingui.Mainframe):
         return
 
 ###########################################################################
-# # def onbtnSelectFileClick(self, event):
+# # def onbtnSelectFile1Click(self, event):
 ###########################################################################
-    def onbtnSelectFileClick(self, event):
+    def onbtnSelectFile1Click(self, event):
         """ Open a file"""
         self.dirname = ''
         dlg = wx.FileDialog(self, "Choose a file", self.dirname, "", "*.*", wx.OPEN)
         dlg.SetWildcard("plaatjes (*.bmp;*.jpg;*.png;*.tiff)|*.bmp;*.jpg;*.png;*.tiff|Alles (*.*)|*.*")
         if dlg.ShowModal() == wx.ID_OK:
-            self.text_ctrl_Filepath.SetValue(dlg.GetPath())
+            self.edtFile1.SetValue(dlg.GetPath())
         dlg.Destroy()
 
 ###########################################################################
 # # def onbtnVoorbeeldClick(self, event):
 ###########################################################################
     def onbtnVoorbeeldClick(self, event):
-        filepath = self.text_ctrl_Filepath.GetValue()
+        filepath = self.edtFile1.GetValue()
 
         dimensions = self.getDimensions()
 #        self.frame_1_statusbar.SetStatusText("Het programma converteert het plaatje", 0)
         resizedFileName = None
         
-        if self.text_ctrl_Filepath.GetValue() != () and self.text_ctrl_Filepath.GetValue() != "":
+        if self.edtFile1.GetValue() != () and self.edtFile1.GetValue() != "":
             try:
-                if not (os.path.exists(self.text_ctrl_Filepath.GetValue())):
-                    wx.MessageDialog(self, "Het bestand \"" + self.text_ctrl_Filepath.GetValue() + "\" bestaat niet", "Bericht", style=wx.OK).ShowModal()
+                if not (os.path.exists(self.edtFile1.GetValue())):
+                    wx.MessageDialog(self, "Het bestand \"" + self.edtFile1.GetValue() + "\" bestaat niet", "Bericht", style=wx.OK).ShowModal()
                     resizedFileName = None
                     return
                 else:
 #                 self.action = "converteren van het plaatje"
                     resizedFileName = diversen.resizeFile(filepath, dimensions)
 #                  self.frame_1_statusbar.SetStatusText(" ", 0)
-                    print 'print: onbtnArchiefClick'
+#                    print 'print: onbtnArchiefClick'
             except Exception, er:
                 resizedFileName = None
                 wx.MessageDialog(self, "Er is een fout opgetreden tijdens het converteren\n" + "De error is " + str(er), "Bericht", style=wx.OK).ShowModal()
@@ -129,7 +129,7 @@ class AquaFrame(maingui.Mainframe):
 #        img = img.Scale(W, H)
 #        size = (W, H)
         Voorbeeld = dlgVoorbeeld(self)
-        Voorbeeld.SetTitle(self.text_ctrl_Filepath.GetValue())
+        Voorbeeld.SetTitle(self.edtFile1.GetValue())
         Voorbeeld.bitmapVoorbeeld.SetBitmap(wx.BitmapFromImage(img))
 #        Voorbeeld.SetMinSize(size)
 #        Voorbeeld.SetMaxSize(size)
@@ -147,10 +147,10 @@ class AquaFrame(maingui.Mainframe):
         self.frame_1_statusbar.SetStatusText("Het programma converteert het plaatje", 0)
         try:
             self.action = "converteren van het plaatje"
-            resizedFileName = diversen.resizeFile(self.text_ctrl_Filepath.GetValue(), dimensions)
+            resizedFileName = diversen.resizeFile(self.edtFile1.GetValue(), dimensions)
             self.frame_1_statusbar.SetStatusText("Het programma bekijkt het aquaforum zodat het plaatje een unieke naam heeft", 0)
             self.action = "benaderen van aquaforum webpagina"            
-            self.desiredName = diversen.constructUploadName(self.edtLoginName.GetValue(), self.text_ctrl_Filepath.GetValue())
+            self.desiredName = diversen.constructUploadName(self.edtLoginName.GetValue(), self.edtFile1.GetValue())
             self.frame_1_statusbar.SetStatusText("Het programma zet het plaatje op aquaforum", 0)
             self.action = "uploaden van het plaatje"                        
             diversen.uploadFileToAquaforum(resizedFileName, self.desiredName)
@@ -195,6 +195,17 @@ class AquaFrame(maingui.Mainframe):
             dimensions = (160, 120)
         return dimensions
         
+###########################################################################
+# # def ontvFilesActivated(self, event):
+###########################################################################
+    def ontvFilesActivated(self, event):
+        print 'print: ontvFilesActivated'
+
+###########################################################################
+# # def ontvFilesSelChanged(self, event):
+###########################################################################
+    def ontvFilesSelChanged(self, event):
+        print 'print: ontvFilesSelChanged'
         
 # mandatory in wx, create an app, False stands for not deteriction stdin/stdout
 app = wx.App(False)
