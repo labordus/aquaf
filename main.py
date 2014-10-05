@@ -62,9 +62,9 @@ class AquaFrame(maingui.Mainframe):
 ###########################################################################
 # # def onMainframeActivate( self, event )
 ########################################################################### 
-    def onMainframeActivate(self, event):
-        self.btnSelectFile.Enable(False)
-        self.btnUnselectFile.Enable(False)
+#    def onMainframeActivate(self, event):
+#        self.btnSelectFile.Enable(False)
+#        self.btnUnselectFile.Enable(False)
 
 ###########################################################################
 # # def onbtnArchiefClick(self, event):
@@ -149,42 +149,67 @@ class AquaFrame(maingui.Mainframe):
 ###########################################################################
     def onbtnUploadClick(self, event):
 
+# hier meerdere bestanden kunnen oploaden..
+        filecount = self.listboxSelectedFiles.GetCount()
+        if filecount <= 0:
+            self.frame_1_statusbar.SetStatusText("Geen bestand geselecteerd", 0)
+            return
+        else:
+            print filecount
+            return
+
         dimensions = self.getDimensions()
-        
-        self.frame_1_statusbar.SetStatusText("Het programma converteert het plaatje", 0)
-        try:
-            self.action = "converteren van het plaatje"
-            resizedFileName = diversen.resizeFile(self.edtFile1.GetValue(), dimensions)
-            self.frame_1_statusbar.SetStatusText("Het programma bekijkt het aquaforum zodat het plaatje een unieke naam heeft", 0)
-            self.action = "benaderen van aquaforum webpagina"            
-            self.desiredName = diversen.constructUploadName(self.edtLoginName.GetValue(), self.edtFile1.GetValue())
-            self.frame_1_statusbar.SetStatusText("Het programma zet het plaatje op aquaforum", 0)
-            self.action = "uploaden van het plaatje"                        
-            diversen.uploadFileToAquaforum(resizedFileName, self.desiredName)
-            self.action = "Plaatje toevoegen aan archief"
-            self.frame_1_statusbar.SetStatusText("Plaatje toevoegen aan archief", 0)
-            diversen.addToHistory(AUQAOFORUM_PICTURE_URL + self.desiredName)
-            self.frame_1_statusbar.SetStatusText("Klaar....", 0)
-        except Exception as er:
-            self.error = True
-            self.errorEx = er
-        # done, send done event
-        event = UploadDoneEvent(self.GetId())
-        self.GetEventHandler().AddPendingEvent(event)        
+
+        for _i in range(filecount): 
+            print self.listboxSelectedFiles.GetClientData(_i)
+            try:
+                resizedFileName = diversen.resizeFile(self.listboxSelectedFiles.GetClientData(_i), dimensions)
+                self.desiredName = diversen.constructUploadName(self.edtLoginName.GetValue(), self.listboxSelectedFiles.GetClientData(_i))
+#                diversen.uploadFileToAquaforum(resizedFileName, self.desiredName)
+                diversen.addToHistory(AUQAOFORUM_PICTURE_URL + self.desiredName)
+            except Exception as er:
+                    self.error = True
+                    self.errorEx = er
+                    # done, send done event
+            event = UploadDoneEvent(self.GetId())
+            self.GetEventHandler().AddPendingEvent(event)
+            
+#         dimensions = self.getDimensions()
+#         
+#         self.frame_1_statusbar.SetStatusText("Het programma converteert het plaatje", 0)
+#         try:
+#             self.action = "converteren van het plaatje"
+#             resizedFileName = diversen.resizeFile(self.edtFile1.GetValue(), dimensions)
+#             self.frame_1_statusbar.SetStatusText("Het programma bekijkt het aquaforum zodat het plaatje een unieke naam heeft", 0)
+#             self.action = "benaderen van aquaforum webpagina"            
+#             self.desiredName = diversen.constructUploadName(self.edtLoginName.GetValue(), self.edtFile1.GetValue())
+#             self.frame_1_statusbar.SetStatusText("Het programma zet het plaatje op aquaforum", 0)
+#             self.action = "uploaden van het plaatje"                        
+#             diversen.uploadFileToAquaforum(resizedFileName, self.desiredName)
+#             self.action = "Plaatje toevoegen aan archief"
+#             self.frame_1_statusbar.SetStatusText("Plaatje toevoegen aan archief", 0)
+#             diversen.addToHistory(AUQAOFORUM_PICTURE_URL + self.desiredName)
+#             self.frame_1_statusbar.SetStatusText("Klaar....", 0)
+#         except Exception as er:
+#             self.error = True
+#             self.errorEx = er
+#         # done, send done event
+#         event = UploadDoneEvent(self.GetId())
+#         self.GetEventHandler().AddPendingEvent(event)        
 
 ###########################################################################
 # # def OnEventUploadDone(self, event):
 ###########################################################################
-    def OnEventUploadDone(self, event):
-        '''show dialog'''
-        if self.error == True:
-            wx.MessageDialog(self, "Er is een fout opgetreden tijdens het " + self.action + "\n" + "De error is " + str(self.errorEx), "Bericht", style=wx.OK).ShowModal()
-            self.error = False
-        else:
-            dlg = dlgUploadDone(self, -1, "Bericht")
-            dlg.setCode(" [IMG]" + AUQAOFORUM_PICTURE_URL + self.desiredName + "[/IMG]")
-            dlg.ShowModal()
-        self.busy = False
+#    def OnEventUploadDone(self, event):
+#        '''show dialog'''
+#         if self.error == True:
+#             wx.MessageDialog(self, "Er is een fout opgetreden tijdens het " + self.action + "\n" + "De error is " + str(self.errorEx), "Bericht", style=wx.OK).ShowModal()
+#             self.error = False
+#         else:
+#             dlg = dlgUploadDone(self, -1, "Bericht")
+#             dlg.setCode(" [IMG]" + AUQAOFORUM_PICTURE_URL + self.desiredName + "[/IMG]")
+#             dlg.ShowModal()
+#         self.busy = False
  
 ###########################################################################
 # # def getDimensions(self):
@@ -213,13 +238,15 @@ class AquaFrame(maingui.Mainframe):
             scaled_file = diversen.resizeFile(pad, dimensions)
             img = wx.Image(scaled_file, wx.BITMAP_TYPE_ANY)
             self.bitmapSelectedFile.SetBitmap(wx.BitmapFromImage(img))
-            self.btnSelectFile.Enable()
+#            self.btnSelectFile.Enable()
+            self.frame_1_statusbar.SetStatusText("bestand geselecteerd", 0)
+            self.action = "benaderen van aquaforum webpagina"
         else:
 # directory selected
             scaled_file = diversen.resizeFile("default_foto.jpg", dimensions)
             img = wx.Image(scaled_file, wx.BITMAP_TYPE_ANY)
             self.bitmapSelectedFile.SetBitmap(wx.BitmapFromImage(img))
-            self.btnSelectFile.Disable()
+#            self.btnSelectFile.Disable()
             print "directory"        
 
 ###########################################################################
@@ -232,13 +259,31 @@ class AquaFrame(maingui.Mainframe):
         bestandsnaam = os.path.basename(helepad)
         self.listboxSelectedFiles.Append(bestandsnaam, helepad)
 
-    def onlistboxSelectedFile(self, event):
-        print "You selected: " + self.listboxSelectedFiles.GetStringSelection()
-        helepad = self.listboxSelectedFiles.GetClientData(self.listboxSelectedFiles.GetSelection())
-        print helepad 
+###########################################################################
+# # def onlistboxSelectedFile(self, event):
+###########################################################################
+#    def onlistboxSelectedFile(self, event):
+#        print "You selected: " + self.listboxSelectedFiles.GetStringSelection()
+#        helepad = self.listboxSelectedFiles.GetClientData(self.listboxSelectedFiles.GetSelection())
+#        print helepad
+#        self.btnUnselectFile.Enable(True)
+#        self.listboxSelectedFiles.Delete(self.listboxSelectedFiles.GetSelection()) 
 
-    def onbtnTest(self, event):
-        print "test"
+###########################################################################
+# # def onbtnUnselectFileClick(self, event):
+###########################################################################
+    def onbtnUnselectFileClick(self, event):
+        self.listboxSelectedFiles.Delete(self.listboxSelectedFiles.GetSelection())
+#       self.btnUnselectFile.Enable(False)
+
+#   def onlistboxSelectedFileLostFocus(self, event):
+#       self.btnUnselectFile.Enable(False)
+        
+#   def onlistboxSelectedFileSetFocus(self, event):
+#       self.btnUnselectFile.Enable(True)
+
+    def btnBlaClick(self, event):
+        self.infobar.Dismiss()
 
 # mandatory in wx, create an app, False stands for not deteriction stdin/stdout
 app = wx.App(False)
