@@ -86,23 +86,22 @@ class Mainframe ( wx.Frame ):
 		bSizer151 = wx.BoxSizer( wx.VERTICAL )
 		
 		self.btnSelectFile = wx.BitmapButton( self, wx.ID_ANY, wx.Bitmap( u"dagverder.bmp", wx.BITMAP_TYPE_ANY ), wx.DefaultPosition, wx.DefaultSize, wx.BU_AUTODRAW )
-		self.btnSelectFile.Enable( False )
-		
 		bSizer151.Add( self.btnSelectFile, 0, wx.ALL, 5 )
 		
 		self.btnUnselectFile = wx.BitmapButton( self, wx.ID_ANY, wx.Bitmap( u"dagterug.bmp", wx.BITMAP_TYPE_ANY ), wx.DefaultPosition, wx.DefaultSize, wx.BU_AUTODRAW )
-		self.btnUnselectFile.Enable( False )
-		
 		bSizer151.Add( self.btnUnselectFile, 0, wx.ALL, 5 )
 		
 		
 		bSizer13.Add( bSizer151, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
-		bSizer14 = wx.BoxSizer( wx.HORIZONTAL )
+		bSizer14 = wx.BoxSizer( wx.VERTICAL )
 		
-		m_listBox1Choices = []
-		self.m_listBox1 = wx.ListBox( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, m_listBox1Choices, 0 )
-		bSizer14.Add( self.m_listBox1, 1, wx.ALL|wx.EXPAND, 5 )
+		listboxSelectedFilesChoices = []
+		self.listboxSelectedFiles = wx.ListBox( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, listboxSelectedFilesChoices, 0 )
+		bSizer14.Add( self.listboxSelectedFiles, 1, wx.ALL|wx.EXPAND, 5 )
+		
+		self.btnTest = wx.Button( self, wx.ID_ANY, u"MyButton", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer14.Add( self.btnTest, 0, wx.ALL, 5 )
 		
 		
 		bSizer13.Add( bSizer14, 1, wx.EXPAND, 5 )
@@ -158,8 +157,12 @@ class Mainframe ( wx.Frame ):
 		self.Centre( wx.BOTH )
 		
 		# Connect Events
+		self.Bind( wx.EVT_ACTIVATE, self.onMainframeActivate )
 		self.btnSelectFile1.Bind( wx.EVT_BUTTON, self.onbtnSelectFile1Click )
 		self.tvFiles.Bind( wx.EVT_TREE_SEL_CHANGED, self.ontvFilesSelChanged )
+		self.btnSelectFile.Bind( wx.EVT_BUTTON, self.onbtnSelectFileClick )
+		self.listboxSelectedFiles.Bind( wx.EVT_LISTBOX, self.onlistboxSelectedFile )
+		self.btnTest.Bind( wx.EVT_BUTTON, self.onbtnTest )
 		self.btnVoorbeeld.Bind( wx.EVT_BUTTON, self.onbtnVoorbeeldClick )
 		self.btnUpload.Bind( wx.EVT_BUTTON, self.onbtnUploadClick )
 		self.btnArchief.Bind( wx.EVT_BUTTON, self.onbtnArchiefClick )
@@ -169,10 +172,22 @@ class Mainframe ( wx.Frame ):
 	
 	
 	# Virtual event handlers, overide them in your derived class
+	def onMainframeActivate( self, event ):
+		event.Skip()
+	
 	def onbtnSelectFile1Click( self, event ):
 		event.Skip()
 	
 	def ontvFilesSelChanged( self, event ):
+		event.Skip()
+	
+	def onbtnSelectFileClick( self, event ):
+		event.Skip()
+	
+	def onlistboxSelectedFile( self, event ):
+		event.Skip()
+	
+	def onbtnTest( self, event ):
 		event.Skip()
 	
 	def onbtnVoorbeeldClick( self, event ):
