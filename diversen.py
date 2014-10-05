@@ -1,17 +1,17 @@
 import mechanize
 import os
 import Image
-import PngImagePlugin
-import BmpImagePlugin
-import IcoImagePlugin
-import JpegImagePlugin
-import MpegImagePlugin
-import PcxImagePlugin
-import PdfImagePlugin
-import PpmImagePlugin
-import PsdImagePlugin
-import TgaImagePlugin
-import TiffImagePlugin
+import PngImagePlugin  # @UnusedImport
+import BmpImagePlugin  # @UnusedImport
+import IcoImagePlugin  # @UnusedImport
+import JpegImagePlugin  # @UnusedImport
+import MpegImagePlugin  # @UnusedImport
+import PcxImagePlugin  # @UnusedImport
+import PdfImagePlugin  # @UnusedImport
+import PpmImagePlugin  # @UnusedImport
+import PsdImagePlugin  # @UnusedImport
+import TgaImagePlugin  # @UnusedImport
+import TiffImagePlugin  # @UnusedImport
 
 Image._initialized = 2
 
@@ -28,7 +28,7 @@ def resizeFile(filename, dimensions):
     returns filename of resized file
     '''
     im = Image.open(filename)  # load the image
-    dim = im.size
+#    dim = im.size
     # create temporary file, resize 
     resizedFileName = "tempfile.dat"
     # im.thumbnail(dimensions)
@@ -139,11 +139,11 @@ def constructUploadName(loginname, requestedfilename):
     # goto upload page    
     request3 = mechanize.Request(FORUM_UPLOAD_URL)       
     response3 = opener.open(request3)    
-    page = string.lower(response3.read())
+#    page = string.lower(response3.read())
     response3.close()    
     random.seed()
     # while not name ok, permutate
-    for i in range(6):
+    for _i in range(6):
         resultName = str(random.random())[-1] + resultName  # prepend with random number
     # while string.find(page,resultName)<>-1:
     #    resultName = str(random.random())[-1] + resultName #prepend with random number

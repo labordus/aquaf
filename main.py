@@ -22,7 +22,7 @@ EVT_UPLOAD_DONE = wx.PyEventBinder(UPLOAD_DONE_EVENT_TYPE, 1)
 ###########################################################################
 class UploadDoneEvent(wx.PyCommandEvent): 
     eventType = UPLOAD_DONE_EVENT_TYPE 
-    def __init__(self, windowID): 
+    def __init__(self, windowID):
         wx.PyCommandEvent.__init__(self, self.eventType, windowID) 
 
     def Clone(self): 
@@ -60,6 +60,13 @@ class AquaFrame(maingui.Mainframe):
         maingui.Mainframe.__init__(self, parent)
 
 ###########################################################################
+# # def onMainframeActivate( self, event )
+########################################################################### 
+    def onMainframeActivate(self, event):
+        self.btnSelectFile.Enable(False)
+        self.btnUnselectFile.Enable(False)
+
+###########################################################################
 # # def onbtnArchiefClick(self, event):
 ########################################################################### 
     def onbtnArchiefClick(self, event):
@@ -68,7 +75,7 @@ class AquaFrame(maingui.Mainframe):
 #        except Exception:
 #            print 'error'
         '''open archive'''
-        path = "file:///"
+#        path = "file:///"
         theArchive = get_main_dir()
         theArchive = theArchive.replace("\\", "/")
         if theArchive[-1] != "/":
@@ -158,7 +165,7 @@ class AquaFrame(maingui.Mainframe):
             self.frame_1_statusbar.SetStatusText("Plaatje toevoegen aan archief", 0)
             diversen.addToHistory(AUQAOFORUM_PICTURE_URL + self.desiredName)
             self.frame_1_statusbar.SetStatusText("Klaar....", 0)
-        except Exception, er:
+        except Exception as er:
             self.error = True
             self.errorEx = er
         # done, send done event
@@ -200,23 +207,38 @@ class AquaFrame(maingui.Mainframe):
 ###########################################################################
     def ontvFilesSelChanged(self, event):
         pad = self.tvFiles.GetFilePath()
+        dimensions = self.bitmapSelectedFile.GetSize()
         if pad != () and pad != "":
-# file
-# update foto
-            dimensions = self.bitmapSelectedFile.GetSize()
+# file selected
             scaled_file = diversen.resizeFile(pad, dimensions)
             img = wx.Image(scaled_file, wx.BITMAP_TYPE_ANY)
             self.bitmapSelectedFile.SetBitmap(wx.BitmapFromImage(img))
-            self.btnSelectFile.Enable()            
+            self.btnSelectFile.Enable()
         else:
-# directory
-# update foto naar stock foto
-            dimensions = self.bitmapSelectedFile.GetSize()
+# directory selected
             scaled_file = diversen.resizeFile("default_foto.jpg", dimensions)
             img = wx.Image(scaled_file, wx.BITMAP_TYPE_ANY)
             self.bitmapSelectedFile.SetBitmap(wx.BitmapFromImage(img))
             self.btnSelectFile.Disable()
-            print "directory"
+            print "directory"        
+
+###########################################################################
+# # def onbtnSelectFileClick(self, event):
+###########################################################################
+    def onbtnSelectFileClick(self, event):
+        # check of bestand al is toegevoegd..
+        # sla het hele pad op in..? pyobject clientdata
+        helepad = self.tvFiles.GetPath()
+        bestandsnaam = os.path.basename(helepad)
+        self.listboxSelectedFiles.Append(bestandsnaam, helepad)
+
+    def onlistboxSelectedFile(self, event):
+        print "You selected: " + self.listboxSelectedFiles.GetStringSelection()
+        helepad = self.listboxSelectedFiles.GetClientData(self.listboxSelectedFiles.GetSelection())
+        print helepad 
+
+    def onbtnTest(self, event):
+        print "test"
 
 # mandatory in wx, create an app, False stands for not deteriction stdin/stdout
 app = wx.App(False)
