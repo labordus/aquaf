@@ -17,12 +17,14 @@ import wx.xrc
 class Mainframe ( wx.Frame ):
 	
 	def __init__( self, parent ):
-		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Aquaforum upload programma", pos = wx.DefaultPosition, size = wx.Size( 829,711 ), style = wx.DEFAULT_FRAME_STYLE )
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Aquaforum upload programma", pos = wx.DefaultPosition, size = wx.Size( 829,739 ), style = wx.DEFAULT_FRAME_STYLE )
 		
 		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
 		self.SetBackgroundColour( wx.Colour( 0, 127, 255 ) )
 		
 		self.frame_1_statusbar = self.CreateStatusBar( 1, 0|wx.SUNKEN_BORDER, wx.ID_ANY )
+		bSizer15 = wx.BoxSizer( wx.VERTICAL )
+		
 		bSizer1 = wx.BoxSizer( wx.VERTICAL )
 		
 		bSizer2 = wx.BoxSizer( wx.HORIZONTAL )
@@ -67,7 +69,7 @@ class Mainframe ( wx.Frame ):
 		bSizer4 = wx.BoxSizer( wx.HORIZONTAL )
 		
 		bSizer4.SetMinSize( wx.Size( 250,-1 ) ) 
-		self.tvFiles = wx.GenericDirCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.DIRCTRL_3D_INTERNAL|wx.SUNKEN_BORDER, u"\"plaatjes (*.bmp;*.jpg;*.png;*.tiff)|*.bmp;*.jpg;*.png;*.tiff\"", 0 )
+		self.tvFiles = wx.GenericDirCtrl( self, wx.ID_ANY, u"/home/kelp/Desktop/test", wx.DefaultPosition, wx.DefaultSize, wx.DIRCTRL_3D_INTERNAL|wx.SUNKEN_BORDER, u"\"plaatjes (*.bmp;*.jpg;*.png;*.tiff)|*.bmp;*.jpg;*.png;*.tiff\"", 0 )
 		
 		self.tvFiles.ShowHidden( False )
 		bSizer4.Add( self.tvFiles, 1, wx.EXPAND |wx.ALL, 5 )
@@ -75,13 +77,13 @@ class Mainframe ( wx.Frame ):
 		
 		bSizer13.Add( bSizer4, 1, wx.EXPAND, 0 )
 		
-		bSizer15 = wx.BoxSizer( wx.HORIZONTAL )
+		bSizer152 = wx.BoxSizer( wx.HORIZONTAL )
 		
 		self.bitmapSelectedFile = wx.StaticBitmap( self, wx.ID_ANY, wx.Bitmap( u"default_foto.jpg", wx.BITMAP_TYPE_ANY ), wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer15.Add( self.bitmapSelectedFile, 0, wx.ALL|wx.EXPAND|wx.FIXED_MINSIZE, 5 )
+		bSizer152.Add( self.bitmapSelectedFile, 0, wx.ALL|wx.EXPAND|wx.FIXED_MINSIZE, 5 )
 		
 		
-		bSizer13.Add( bSizer15, 1, wx.EXPAND, 0 )
+		bSizer13.Add( bSizer152, 1, wx.EXPAND, 0 )
 		
 		bSizer151 = wx.BoxSizer( wx.VERTICAL )
 		
@@ -100,8 +102,8 @@ class Mainframe ( wx.Frame ):
 		self.listboxSelectedFiles = wx.ListBox( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, listboxSelectedFilesChoices, 0 )
 		bSizer14.Add( self.listboxSelectedFiles, 1, wx.ALL|wx.EXPAND, 5 )
 		
-		self.btnTest = wx.Button( self, wx.ID_ANY, u"MyButton", wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer14.Add( self.btnTest, 0, wx.ALL, 5 )
+		self.btnUpload = wx.Button( self, wx.ID_ANY, u"Upload naar aquaforum.nl", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer14.Add( self.btnUpload, 0, wx.ALL, 5 )
 		
 		
 		bSizer13.Add( bSizer14, 1, wx.EXPAND, 5 )
@@ -130,9 +132,9 @@ class Mainframe ( wx.Frame ):
 		
 		bSizer6 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		self.btnUpload = wx.Button( self, wx.ID_ANY, u"Upload bestand naar forum", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.btnUpload.SetDefault() 
-		bSizer6.Add( self.btnUpload, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 0 )
+		self.btnblablablabla = wx.Button( self, wx.ID_ANY, u"blablablablablabla", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.btnblablablabla.SetDefault() 
+		bSizer6.Add( self.btnblablablabla, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 0 )
 		
 		
 		bSizer6.AddSpacer( ( 20,  20), 0, wx.FIXED_MINSIZE, 0 )
@@ -151,7 +153,10 @@ class Mainframe ( wx.Frame ):
 		bSizer1.Add( self.btnArchief, 0, wx.FIXED_MINSIZE, 3 )
 		
 		
-		self.SetSizer( bSizer1 )
+		bSizer15.Add( bSizer1, 1, wx.EXPAND, 5 )
+		
+		
+		self.SetSizer( bSizer15 )
 		self.Layout()
 		
 		self.Centre( wx.BOTH )
@@ -161,10 +166,13 @@ class Mainframe ( wx.Frame ):
 		self.btnSelectFile1.Bind( wx.EVT_BUTTON, self.onbtnSelectFile1Click )
 		self.tvFiles.Bind( wx.EVT_TREE_SEL_CHANGED, self.ontvFilesSelChanged )
 		self.btnSelectFile.Bind( wx.EVT_BUTTON, self.onbtnSelectFileClick )
+		self.btnUnselectFile.Bind( wx.EVT_BUTTON, self.onbtnUnselectFileClick )
+		self.listboxSelectedFiles.Bind( wx.EVT_KILL_FOCUS, self.onlistboxSelectedFileLostFocus )
 		self.listboxSelectedFiles.Bind( wx.EVT_LISTBOX, self.onlistboxSelectedFile )
-		self.btnTest.Bind( wx.EVT_BUTTON, self.onbtnTest )
-		self.btnVoorbeeld.Bind( wx.EVT_BUTTON, self.onbtnVoorbeeldClick )
+		self.listboxSelectedFiles.Bind( wx.EVT_SET_FOCUS, self.onlistboxSelectedFileSetFocus )
 		self.btnUpload.Bind( wx.EVT_BUTTON, self.onbtnUploadClick )
+		self.btnVoorbeeld.Bind( wx.EVT_BUTTON, self.onbtnVoorbeeldClick )
+		self.btnblablablabla.Bind( wx.EVT_BUTTON, self.btnBlaClick )
 		self.btnArchief.Bind( wx.EVT_BUTTON, self.onbtnArchiefClick )
 	
 	def __del__( self ):
@@ -184,16 +192,25 @@ class Mainframe ( wx.Frame ):
 	def onbtnSelectFileClick( self, event ):
 		event.Skip()
 	
+	def onbtnUnselectFileClick( self, event ):
+		event.Skip()
+	
+	def onlistboxSelectedFileLostFocus( self, event ):
+		event.Skip()
+	
 	def onlistboxSelectedFile( self, event ):
 		event.Skip()
 	
-	def onbtnTest( self, event ):
+	def onlistboxSelectedFileSetFocus( self, event ):
+		event.Skip()
+	
+	def onbtnUploadClick( self, event ):
 		event.Skip()
 	
 	def onbtnVoorbeeldClick( self, event ):
 		event.Skip()
 	
-	def onbtnUploadClick( self, event ):
+	def btnBlaClick( self, event ):
 		event.Skip()
 	
 	def onbtnArchiefClick( self, event ):
