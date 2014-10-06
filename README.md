@@ -15,10 +15,9 @@ aquaf maakt gebruik van Python 2.7, wxwidgets, PIL
 (python-wxWidgets-3_0) 3.0.1.1-8.1
 
 # gedaan tot nu toe
-- Cross-platform.. werkt prima op Linux, moest daarvoor de gui van de logic scheiden. (nog niet kunnen testen op Windows)
+- Cross-platform.. werkt prima op Linux, (nog niet kunnen testen op Windows)
 - Gui gedeelte wordt nu geregeld door wxformbuilder
-- Meerdere foto's tegelijk kunnen uploaden zit er bijna in.
-- Wat kleine aanpassinkjes om een eventuele overstap naar Python 3+ mogelijk te maken.
+- Meerdere foto's tegelijk kunnen selecteren/uploaden zit er bijna in.
 
 # Opmerkingen, uitzoekpunten en todo's.
 
