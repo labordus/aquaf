@@ -7,9 +7,11 @@ import webbrowser
  
 # import the newly created GUI file
 import maingui
-from maingui import dlgVoorbeeld
+from maingui import dlgVoorbeeld, dlgUploadDone
 from maingui import dlgUploadDone
 import diversen
+from Dialog import Dialog
+import uploaddialog
 
 AUQAOFORUM_PICTURE_URL = "http://www.aquaforum.nl/gallery/upload/"
 
@@ -147,74 +149,6 @@ class AquaFrame(maingui.Mainframe):
         Voorbeeld.Fit()
         Voorbeeld.Layout()
         Voorbeeld.Show()                 
-
-###########################################################################
-# # def onbtnUploadClick(self, event):
-###########################################################################
-    def onbtnUploadClick(self, event):
-
-# hier meerdere bestanden kunnen oploaden..
-        filecount = self.listboxSelectedFiles.GetCount()
-        if filecount <= 0:
-            self.frame_1_statusbar.SetStatusText("Geen bestand geselecteerd", 0)
-            return
-        else:
-            print filecount
-#            return
-
-        dimensions = self.getDimensions()
-
-        for _i in range(filecount): 
-            print self.listboxSelectedFiles.GetClientData(_i)
-            try:
-                resizedFileName = diversen.resizeFile(self.listboxSelectedFiles.GetClientData(_i), dimensions)
-                self.desiredName = diversen.constructUploadName(self.edtLoginName.GetValue(), self.listboxSelectedFiles.GetClientData(_i))
-#                diversen.uploadFileToAquaforum(resizedFileName, self.desiredName)
-#                diversen.addToHistory(AUQAOFORUM_PICTURE_URL + self.desiredName)
-            except Exception as er:
-                    self.error = True
-                    self.errorEx = er
-                    # done, send done event
-            event = UploadDoneEvent(self.GetId())
-            self.GetEventHandler().AddPendingEvent(event)
-            
-#         dimensions = self.getDimensions()
-#         
-#         self.frame_1_statusbar.SetStatusText("Het programma converteert het plaatje", 0)
-#         try:
-#             self.action = "converteren van het plaatje"
-#             resizedFileName = diversen.resizeFile(self.edtFile1.GetValue(), dimensions)
-#             self.frame_1_statusbar.SetStatusText("Het programma bekijkt het aquaforum zodat het plaatje een unieke naam heeft", 0)
-#             self.action = "benaderen van aquaforum webpagina"            
-#             self.desiredName = diversen.constructUploadName(self.edtLoginName.GetValue(), self.edtFile1.GetValue())
-#             self.frame_1_statusbar.SetStatusText("Het programma zet het plaatje op aquaforum", 0)
-#             self.action = "uploaden van het plaatje"                        
-#             diversen.uploadFileToAquaforum(resizedFileName, self.desiredName)
-#             self.action = "Plaatje toevoegen aan archief"
-#             self.frame_1_statusbar.SetStatusText("Plaatje toevoegen aan archief", 0)
-#             diversen.addToHistory(AUQAOFORUM_PICTURE_URL + self.desiredName)
-#             self.frame_1_statusbar.SetStatusText("Klaar....", 0)
-#         except Exception as er:
-#             self.error = True
-#             self.errorEx = er
-#         # done, send done event
-#         event = UploadDoneEvent(self.GetId())
-#         self.GetEventHandler().AddPendingEvent(event)        
-
-###########################################################################
-# # def OnEventUploadDone(self, event):
-###########################################################################
-    def OnEventUploadDone(self, event):
-# Hier moeten meerdere bestanden worden toegevoegd!!
-#        if self.error == True:
-#            wx.MessageDialog(self, "Er is een fout opgetreden tijdens het " + self.action + "\n" + "De error is " + str(self.errorEx), "Bericht", style=wx.OK).ShowModal()
-#            self.error = False
-#        else:
-#            dlg = dlgUploadDone(self, -1, "Bericht")
-            dlg = dlgUploadDone(self)
-#            dlg.setCode(" [IMG]" + AUQAOFORUM_PICTURE_URL + self.desiredName + "[/IMG]")
-            dlg.ShowModal()
-            self.busy = False
  
 ###########################################################################
 # # def getDimensions(self):
@@ -289,6 +223,90 @@ class AquaFrame(maingui.Mainframe):
 
     def btnBlaClick(self, event):
         self.infobar.Dismiss()
+
+###########################################################################
+# # def onbtnUploadClick(self, event):
+###########################################################################
+    def onbtnUploadClick(self, event):
+
+# hier meerdere bestanden kunnen oploaden..
+        filecount = self.listboxSelectedFiles.GetCount()
+        if filecount <= 0:
+            self.frame_1_statusbar.SetStatusText("Geen bestand geselecteerd", 0)
+            return
+        else:
+            print filecount
+#            return
+
+        dimensions = self.getDimensions()
+
+        for _i in range(filecount): 
+            print self.listboxSelectedFiles.GetClientData(_i)
+            try:
+                resizedFileName = diversen.resizeFile(self.listboxSelectedFiles.GetClientData(_i), dimensions)
+                self.desiredName = diversen.constructUploadName(self.edtLoginName.GetValue(), self.listboxSelectedFiles.GetClientData(_i))
+#                diversen.uploadFileToAquaforum(resizedFileName, self.desiredName)
+#                diversen.addToHistory(AUQAOFORUM_PICTURE_URL + self.desiredName)
+# ZET IN GLOBAL LISTBOX???
+            except Exception as er:
+                    self.error = True
+                    self.errorEx = er
+                    # done, send done event
+            event = UploadDoneEvent(self.GetId())
+            self.GetEventHandler().AddPendingEvent(event)
+#         dimensions = self.getDimensions()
+#         
+#         self.frame_1_statusbar.SetStatusText("Het programma converteert het plaatje", 0)
+#         try:
+#             self.action = "converteren van het plaatje"
+#             resizedFileName = diversen.resizeFile(self.edtFile1.GetValue(), dimensions)
+#             self.frame_1_statusbar.SetStatusText("Het programma bekijkt het aquaforum zodat het plaatje een unieke naam heeft", 0)
+#             self.action = "benaderen van aquaforum webpagina"            
+#             self.desiredName = diversen.constructUploadName(self.edtLoginName.GetValue(), self.edtFile1.GetValue())
+#             self.frame_1_statusbar.SetStatusText("Het programma zet het plaatje op aquaforum", 0)
+#             self.action = "uploaden van het plaatje"                        
+#             diversen.uploadFileToAquaforum(resizedFileName, self.desiredName)
+#             self.action = "Plaatje toevoegen aan archief"
+#             self.frame_1_statusbar.SetStatusText("Plaatje toevoegen aan archief", 0)
+#             diversen.addToHistory(AUQAOFORUM_PICTURE_URL + self.desiredName)
+#             self.frame_1_statusbar.SetStatusText("Klaar....", 0)
+#         except Exception as er:
+#             self.error = True
+#             self.errorEx = er
+#         # done, send done event
+#         event = UploadDoneEvent(self.GetId())
+#         self.GetEventHandler().AddPendingEvent(event)        
+
+###########################################################################
+# # def OnEventUploadDone(self, event):
+###########################################################################
+    def OnEventUploadDone(self, event):
+# Hier moeten meerdere bestanden worden toegevoegd!!
+#        if self.error == True:
+#            wx.MessageDialog(self, "Er is een fout opgetreden tijdens het " + self.action + "\n" + "De error is " + str(self.errorEx), "Bericht", style=wx.OK).ShowModal()
+#            self.error = False
+#        else:
+#            dlg = dlgUploadDone(self, -1, "Bericht")
+            dlg = uploaddialog.UploadDoneDialog(self)
+            urls = ""
+            stringlist = self.listboxSelectedFiles.GetCount()
+            dimensions = self.getDimensions()
+            for _i in range (stringlist):
+                resizedFileName = diversen.resizeFile(self.listboxSelectedFiles.GetClientData(_i), dimensions)
+                desiredName = diversen.constructUploadName(self.edtLoginName.GetValue(), resizedFileName)
+                urls = urls + " [IMG]" + AUQAOFORUM_PICTURE_URL + desiredName + "[/IMG]" + "\n"
+# #
+            dlg.setCode(urls)
+#            dlg.setCode(" [IMG]" + AUQAOFORUM_PICTURE_URL + self.desiredName + "[/IMG]")
+#            dlg.ShowModal()
+#            self.busy = False
+            
+        # check whether a correct file is selected                
+#        popupFrame = popupImage.MyFrame(None,-1,"")
+#        popupFrame.SetSize((dimensions[0]+10,dimensions[1]+30))
+#        popupFrame.setPath(resizedFileName)
+            dlg.ShowModal()  # this one is non blocking!!
+#            dlg.Destroy()
 
 # mandatory in wx, create an app, False stands for not deteriction stdin/stdout
 app = wx.App(False)

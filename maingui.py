@@ -242,7 +242,7 @@ class dlgUploadDone ( wx.Dialog ):
 		
 		bSizer19 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		self.text_ctrl_Code1 = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 400, 127 ), wx.TE_READONLY )
+		self.text_ctrl_Code1 = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 400, 127 ), wx.TE_MULTILINE|wx.TE_READONLY )
 		self.text_ctrl_Code1.SetMaxLength( 0 ) 
 		bSizer19.Add( self.text_ctrl_Code1, 0, wx.ALL, 5 )
 		
@@ -267,12 +267,36 @@ class dlgUploadDone ( wx.Dialog ):
 		
 		bSizer16.Add( bSizer20, 1, wx.ALL|wx.EXPAND, 5 )
 		
+		bSizer191 = wx.BoxSizer( wx.VERTICAL )
+		
+		self.btnKlaar = wx.Button( self, wx.ID_ANY, u"Klaar", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer191.Add( self.btnKlaar, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
+		
+		
+		bSizer16.Add( bSizer191, 1, wx.EXPAND, 5 )
+		
 		
 		self.SetSizer( bSizer16 )
 		self.Layout()
+		
+		# Connect Events
+		self.Bind( wx.EVT_INIT_DIALOG, self.oninitdlgUploadDone )
+		self.btnCopyToClipboard.Bind( wx.EVT_BUTTON, self.onbtnCopyToClipboardClick )
+		self.btnKlaar.Bind( wx.EVT_BUTTON, self.onbtnKlaarClick )
 	
 	def __del__( self ):
 		pass
+	
+	
+	# Virtual event handlers, overide them in your derived class
+	def oninitdlgUploadDone( self, event ):
+		event.Skip()
+	
+	def onbtnCopyToClipboardClick( self, event ):
+		event.Skip()
+	
+	def onbtnKlaarClick( self, event ):
+		event.Skip()
 	
 
 ###########################################################################
