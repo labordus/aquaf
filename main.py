@@ -58,6 +58,10 @@ class AquaFrame(maingui.Mainframe):
     def __init__(self, parent):
         # initialize parent class
         maingui.Mainframe.__init__(self, parent)
+#####################################################
+        self.Bind(EVT_UPLOAD_DONE, self.OnEventUploadDone)
+        EVT_UPLOAD_DONE(self, -1, self.OnEventUploadDone)
+#####################################################
 
 ###########################################################################
 # # def onMainframeActivate( self, event )
@@ -156,7 +160,7 @@ class AquaFrame(maingui.Mainframe):
             return
         else:
             print filecount
-            return
+#            return
 
         dimensions = self.getDimensions()
 
@@ -166,7 +170,7 @@ class AquaFrame(maingui.Mainframe):
                 resizedFileName = diversen.resizeFile(self.listboxSelectedFiles.GetClientData(_i), dimensions)
                 self.desiredName = diversen.constructUploadName(self.edtLoginName.GetValue(), self.listboxSelectedFiles.GetClientData(_i))
 #                diversen.uploadFileToAquaforum(resizedFileName, self.desiredName)
-                diversen.addToHistory(AUQAOFORUM_PICTURE_URL + self.desiredName)
+#                diversen.addToHistory(AUQAOFORUM_PICTURE_URL + self.desiredName)
             except Exception as er:
                     self.error = True
                     self.errorEx = er
@@ -200,16 +204,17 @@ class AquaFrame(maingui.Mainframe):
 ###########################################################################
 # # def OnEventUploadDone(self, event):
 ###########################################################################
-#    def OnEventUploadDone(self, event):
-#        '''show dialog'''
-#         if self.error == True:
-#             wx.MessageDialog(self, "Er is een fout opgetreden tijdens het " + self.action + "\n" + "De error is " + str(self.errorEx), "Bericht", style=wx.OK).ShowModal()
-#             self.error = False
-#         else:
-#             dlg = dlgUploadDone(self, -1, "Bericht")
-#             dlg.setCode(" [IMG]" + AUQAOFORUM_PICTURE_URL + self.desiredName + "[/IMG]")
-#             dlg.ShowModal()
-#         self.busy = False
+    def OnEventUploadDone(self, event):
+# Hier moeten meerdere bestanden worden toegevoegd!!
+#        if self.error == True:
+#            wx.MessageDialog(self, "Er is een fout opgetreden tijdens het " + self.action + "\n" + "De error is " + str(self.errorEx), "Bericht", style=wx.OK).ShowModal()
+#            self.error = False
+#        else:
+#            dlg = dlgUploadDone(self, -1, "Bericht")
+            dlg = dlgUploadDone(self)
+#            dlg.setCode(" [IMG]" + AUQAOFORUM_PICTURE_URL + self.desiredName + "[/IMG]")
+            dlg.ShowModal()
+            self.busy = False
  
 ###########################################################################
 # # def getDimensions(self):
