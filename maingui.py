@@ -224,46 +224,52 @@ class Mainframe ( wx.Frame ):
 class dlgUploadDone ( wx.Dialog ):
 	
 	def __init__( self, parent ):
-		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Bericht", pos = wx.DefaultPosition, size = wx.DefaultSize, style = wx.DEFAULT_DIALOG_STYLE )
+		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Bericht", pos = wx.DefaultPosition, size = wx.Size( 727,358 ), style = wx.CLOSE_BOX|wx.DEFAULT_DIALOG_STYLE )
 		
 		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
 		self.SetBackgroundColour( wx.Colour( 0, 127, 255 ) )
 		
-		bSizer7 = wx.BoxSizer( wx.VERTICAL )
+		bSizer16 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.label_1 = wx.StaticText( self, wx.ID_ANY, u"Het bericht is geplaatst op aquaforum. Je kan de volgende code gebruiken in je bericht:", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.label_1.Wrap( 0 )
-		self.label_1.SetBackgroundColour( wx.Colour( 0, 127, 255 ) )
+		bSizer18 = wx.BoxSizer( wx.VERTICAL )
 		
-		bSizer7.Add( self.label_1, 0, wx.EXPAND|wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.FIXED_MINSIZE, 0 )
-		
-		bSizer8 = wx.BoxSizer( wx.HORIZONTAL )
-		
-		self.text_ctrl_Code = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 400, 127 ), wx.TE_READONLY|wx.TE_LINEWRAP )
-		self.text_ctrl_Code.SetMaxLength( 0 ) 
-		bSizer8.Add( self.text_ctrl_Code, 0, wx.EXPAND|wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.FIXED_MINSIZE, 0 )
-		
-		self.button_1 = wx.Button( self, wx.ID_ANY, u"Zet de code in het klembord (clipboard)", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.button_1.SetDefault() 
-		bSizer8.Add( self.button_1, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 0 )
+		self.m_staticText5 = wx.StaticText( self, wx.ID_ANY, u"Het bericht is geplaatst op aquaforum. Je kan de volgende code gebruiken in je bericht:", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText5.Wrap( -1 )
+		bSizer18.Add( self.m_staticText5, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
 		
 		
-		bSizer7.Add( bSizer8, 1, wx.EXPAND, 0 )
+		bSizer16.Add( bSizer18, 1, wx.ALL|wx.EXPAND, 5 )
 		
-		self.label_2 = wx.StaticText( self, wx.ID_ANY, u"Als je op de knop \"Zet de code in het klembord (clipboard)\" drukt, dan kan je vervolgens naar het aquaforum surfen met je browser. \nMaak een bericht waar je het plaatje in wilt hebben, klik rechts met de muis in het bericht  en kies \"plakken\" (of \"paste\"). \nDan staat de code in het bericht.", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.label_2.Wrap( 0 )
-		self.label_2.SetBackgroundColour( wx.Colour( 0, 127, 255 ) )
+		bSizer19 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		bSizer7.Add( self.label_2, 0, wx.FIXED_MINSIZE, 0 )
+		self.text_ctrl_Code1 = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 400, 127 ), wx.TE_READONLY )
+		self.text_ctrl_Code1.SetMaxLength( 0 ) 
+		bSizer19.Add( self.text_ctrl_Code1, 0, wx.ALL, 5 )
 		
-		self.button_2 = wx.Button( self, wx.ID_ANY, u"Klaar", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.button_2.SetDefault() 
-		bSizer7.Add( self.button_2, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.FIXED_MINSIZE, 0 )
+		bSizer21 = wx.BoxSizer( wx.VERTICAL )
+		
+		self.btnCopyToClipboard = wx.Button( self, wx.ID_ANY, u"Zet de code in het klembord (clipboard)", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.btnCopyToClipboard.SetDefault() 
+		bSizer21.Add( self.btnCopyToClipboard, 0, wx.ALIGN_CENTER, 5 )
 		
 		
-		self.SetSizer( bSizer7 )
+		bSizer19.Add( bSizer21, 1, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 5 )
+		
+		
+		bSizer16.Add( bSizer19, 1, wx.EXPAND, 5 )
+		
+		bSizer20 = wx.BoxSizer( wx.VERTICAL )
+		
+		self.m_staticText6 = wx.StaticText( self, wx.ID_ANY, u"Als je op de knop \"Zet de code in het klembord (clipboard)\" drukt, dan kan je vervolgens naar het aquaforum surfen met je browser. \nMaak een bericht waar je het plaatje in wilt hebben, klik rechts met de muis in het bericht  en kies \"plakken\" (of \"paste\"). \nDan staat de code in het bericht.", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText6.Wrap( -1 )
+		bSizer20.Add( self.m_staticText6, 1, wx.ALL|wx.EXPAND, 5 )
+		
+		
+		bSizer16.Add( bSizer20, 1, wx.ALL|wx.EXPAND, 5 )
+		
+		
+		self.SetSizer( bSizer16 )
 		self.Layout()
-		bSizer7.Fit( self )
 	
 	def __del__( self ):
 		pass
