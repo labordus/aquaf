@@ -28,6 +28,7 @@ aquaf maakt gebruik van Python 2.7, wxwidgets, PIL
 - Voorbeeld: per foto doen? Of gewoon een totaal overzicht van de gekozen foto's in de geselecteerde scale?
 - gebruikersnaam-invoer eisen? Het nut hiervan is alleen voor het genereren van een bestandsnaam?
 - Hoe wordt je account eigenlijk gekoppeld aan de foto's? Worden ze wel gekoppeld?
+- 1 instance
 
 -- data --
 - Ik zou wat gegevens willen opslaan.. zoals ingevoerde username of laatst gekozen directory etc.. Hoe?
