@@ -221,9 +221,6 @@ class AquaFrame(maingui.Mainframe):
 #   def onlistboxSelectedFileSetFocus(self, event):
 #       self.btnUnselectFile.Enable(True)
 
-    def btnBlaClick(self, event):
-        print "blabla"
-
 ###########################################################################
 # # def onbtnUploadClick(self, event):
 ###########################################################################
