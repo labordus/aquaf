@@ -5,12 +5,12 @@ import sys
 import imp
 import webbrowser
  
-# import the newly created GUI file
+# import GUI
 import maingui
 from maingui import dlgVoorbeeld, dlgUploadDone
-from maingui import dlgUploadDone
-import diversen
 from Dialog import Dialog
+
+import diversen
 import uploaddialog
 
 AUQAOFORUM_PICTURE_URL = "http://www.aquaforum.nl/gallery/upload/"
@@ -222,7 +222,7 @@ class AquaFrame(maingui.Mainframe):
 #       self.btnUnselectFile.Enable(True)
 
     def btnBlaClick(self, event):
-        self.infobar.Dismiss()
+        print "blabla"
 
 ###########################################################################
 # # def onbtnUploadClick(self, event):
@@ -234,9 +234,6 @@ class AquaFrame(maingui.Mainframe):
         if filecount <= 0:
             self.frame_1_statusbar.SetStatusText("Geen bestand geselecteerd", 0)
             return
-        else:
-            print filecount
-#            return
 
         dimensions = self.getDimensions()
 
@@ -247,15 +244,15 @@ class AquaFrame(maingui.Mainframe):
                 self.desiredName = diversen.constructUploadName(self.edtLoginName.GetValue(), self.listboxSelectedFiles.GetClientData(_i))
 #                diversen.uploadFileToAquaforum(resizedFileName, self.desiredName)
 #                diversen.addToHistory(AUQAOFORUM_PICTURE_URL + self.desiredName)
-# ZET IN GLOBAL LISTBOX???
+# ZET IN STRINGLIST/ARRAY EN SEND TO EVENT ???
             except Exception as er:
                     self.error = True
                     self.errorEx = er
                     # done, send done event
-            event = UploadDoneEvent(self.GetId())
-            self.GetEventHandler().AddPendingEvent(event)
-#         dimensions = self.getDimensions()
-#         
+                    
+        event = UploadDoneEvent(self.GetId())
+        self.GetEventHandler().AddPendingEvent(event)
+        
 #         self.frame_1_statusbar.SetStatusText("Het programma converteert het plaatje", 0)
 #         try:
 #             self.action = "converteren van het plaatje"
@@ -270,12 +267,6 @@ class AquaFrame(maingui.Mainframe):
 #             self.frame_1_statusbar.SetStatusText("Plaatje toevoegen aan archief", 0)
 #             diversen.addToHistory(AUQAOFORUM_PICTURE_URL + self.desiredName)
 #             self.frame_1_statusbar.SetStatusText("Klaar....", 0)
-#         except Exception as er:
-#             self.error = True
-#             self.errorEx = er
-#         # done, send done event
-#         event = UploadDoneEvent(self.GetId())
-#         self.GetEventHandler().AddPendingEvent(event)        
 
 ###########################################################################
 # # def OnEventUploadDone(self, event):
