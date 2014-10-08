@@ -66,13 +66,6 @@ class AquaFrame(maingui.Mainframe):
 #####################################################
 
 ###########################################################################
-# # def onMainframeActivate( self, event )
-########################################################################### 
-#    def onMainframeActivate(self, event):
-#        self.btnSelectFile.Enable(False)
-#        self.btnUnselectFile.Enable(False)
-
-###########################################################################
 # # def onbtnArchiefClick(self, event):
 ########################################################################### 
     def onbtnArchiefClick(self, event):
@@ -269,7 +262,6 @@ class AquaFrame(maingui.Mainframe):
 # # def OnEventUploadDone(self, event):
 ###########################################################################
     def OnEventUploadDone(self, event):
-# Hier moeten meerdere bestanden worden toegevoegd!!
 #        if self.error == True:
 #            wx.MessageDialog(self, "Er is een fout opgetreden tijdens het " + self.action + "\n" + "De error is " + str(self.errorEx), "Bericht", style=wx.OK).ShowModal()
 #            self.error = False
