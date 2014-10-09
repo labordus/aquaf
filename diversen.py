@@ -20,6 +20,7 @@ FORUM_UPLOAD_URL = "http://www.aquaforum.nl/ubb/scripts/upload.php"
 VERSION = "0_83"
 ALLOWED_CHARS = "qwertyuioplkjhgfdsazxcvbnm0123456789._"
 
+
 ###########################################################################
 # # def resizeFile(filename, dimensions):
 ###########################################################################
@@ -29,12 +30,12 @@ def resizeFile(filename, dimensions):
     '''
     im = Image.open(filename)  # load the image
 #    dim = im.size
-    # create temporary file, resize 
+    # create temporary file, resize
     resizedFileName = "tempfile.dat"
     # im.thumbnail(dimensions)
     originalDimensions = im.size
     xRatio = float(dimensions[0]) / originalDimensions[0]
-    yRatio = float(dimensions[1]) / originalDimensions[1]                           
+    yRatio = float(dimensions[1]) / originalDimensions[1]
     if xRatio < 1 or yRatio < 1:
         # only resize when needed
         minimumRatio = min([xRatio, yRatio])
@@ -48,13 +49,14 @@ def resizeFile(filename, dimensions):
     # except IOError:
     #    # try again, without optimization
     try:
-        im.save(resizedFileName, "JPEG", quality=60)    
+        im.save(resizedFileName, "JPEG", quality=60)
     except IOError:
-    #    # try again, without optimization
+        # try again, without optimization
         im.draft("RGB", im.size)
         im = im.convert("RGB")
-        im.save(resizedFileName, "JPEG", quality=60)    
+        im.save(resizedFileName, "JPEG", quality=60)
     return resizedFileName
+
 
 ###########################################################################
 # # def addToHistory(url):
@@ -74,7 +76,7 @@ def addToHistory(url):
       "link":"%s"
     }
 ]}
-    
+
 ''' % url
     text = text + template
     content = content.replace("]}", text)
@@ -82,6 +84,7 @@ def addToHistory(url):
     f.write(content)
     f.close()
     return
+
 
 ###########################################################################
 # # def uploadFileToAquaforum(uploadFilename, requestedFileName):
@@ -93,23 +96,25 @@ def uploadFileToAquaforum(uploadFilename, requestedFileName):
 
     # build opener. Can be extended to handle cookies/proxies
     opener = mechanize.build_opener()
-    # goto upload page    
-    request3 = mechanize.Request(FORUM_UPLOAD_URL)       
+    # goto upload page
+    request3 = mechanize.Request(FORUM_UPLOAD_URL)
     response3 = opener.open(request3)
-        
+
     # parse form on upload page and add file
     forms = mechanize.ParseResponse(response3, backwards_compat=False)
     form = forms[0]
     filectr = form.find_control("imgfile")
     # filectr.add_file(open('/home/jasper/avatar.jpg'),"image/jpeg","avatar.jpg")
     theFile = file(uploadFilename, 'rb')
-    filectr.add_file(theFile, "image/jpeg", os.path.split(requestedFileName)[-1])
-    # obtain form data    
+    filectr.add_file(theFile, "image/jpeg", os.path.split(
+        requestedFileName)[-1])
+    # obtain form data
     request4 = form.click()  # urllib2.Request object
     theFile.close()
     request4.add_header('Referer', response3.geturl())
     response4 = opener.open(request4)
     return response4.read()
+
 
 ###########################################################################
 # # def constructUploadName(loginname, requestedfilename):
@@ -118,7 +123,7 @@ def constructUploadName(loginname, requestedfilename):
     '''
     '''
     # construct name
-    
+
 #    import os
     import string
     import random
@@ -132,19 +137,18 @@ def constructUploadName(loginname, requestedfilename):
     for theChar in resultName:
         if theChar in ALLOWED_CHARS:
             theResult += theChar
-    resultName = theResult 
+    resultName = theResult
     # check whether ok
     # build opener. Can be extended to handle cookies/proxies
     opener = mechanize.build_opener()
-    # goto upload page    
-    request3 = mechanize.Request(FORUM_UPLOAD_URL)       
-    response3 = opener.open(request3)    
+    # goto upload page
+    request3 = mechanize.Request(FORUM_UPLOAD_URL)
+    response3 = opener.open(request3)
 #    page = string.lower(response3.read())
-    response3.close()    
+    response3.close()
     random.seed()
     # while not name ok, permutate
     for _i in range(6):
         resultName = str(random.random())[-1] + resultName  # prepend with random number
     # while string.find(page,resultName)<>-1:
-    #    resultName = str(random.random())[-1] + resultName #prepend with random number
     return resultName
