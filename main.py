@@ -79,10 +79,10 @@ class AquaFrame(maingui.Mainframe):
 # def onbtnArchiefClick(self, event):
 ###########################################################################
     def onbtnArchiefClick(self, event):
-#        try:
-#            print 'print: onbtnArchiefClick'
-#        except Exception:
-#            print 'error'
+        #        try:
+        #            print 'print: onbtnArchiefClick'
+        #        except Exception:
+        #            print 'error'
         '''open archive'''
 #        path = "file:///"
         theArchive = get_main_dir()
@@ -135,7 +135,7 @@ class AquaFrame(maingui.Mainframe):
                     resizedFileName = None
                     return
                 else:
-#                 self.action = "converteren van het plaatje"
+                    #                 self.action = "converteren van het plaatje"
                     resizedFileName = diversen.resizeFile(filepath, dimensions)
 #                  self.frame_1_statusbar.SetStatusText(" ", 0)
 #                    print 'print: onbtnArchiefClick'
@@ -195,7 +195,7 @@ class AquaFrame(maingui.Mainframe):
         pad = self.tvFiles.GetFilePath()
         dimensions = self.bitmapSelectedFile.GetSize()
         if pad != () and pad != "":
-# file selected
+            # file selected
             scaled_file = diversen.resizeFile(pad, dimensions)
             img = wx.Image(scaled_file, wx.BITMAP_TYPE_ANY)
             self.bitmapSelectedFile.SetBitmap(wx.BitmapFromImage(img))
@@ -203,7 +203,7 @@ class AquaFrame(maingui.Mainframe):
             self.frame_1_statusbar.SetStatusText("bestand geselecteerd", 0)
             self.action = "benaderen van aquaforum webpagina"
         else:
-# directory selected
+            # directory selected
             scaled_file = diversen.resizeFile("default_foto.jpg", dimensions)
             img = wx.Image(scaled_file, wx.BITMAP_TYPE_ANY)
             self.bitmapSelectedFile.SetBitmap(wx.BitmapFromImage(img))
@@ -224,8 +224,10 @@ class AquaFrame(maingui.Mainframe):
 # def onlistboxSelectedFile(self, event):
 ###########################################################################
 #    def onlistboxSelectedFile(self, event):
-#        print "You selected: " + self.listboxSelectedFiles.GetStringSelection()
-#        helepad = self.listboxSelectedFiles.GetClientData(self.listboxSelectedFiles.GetSelection())
+# print "You     selected: " +
+# self.listboxSelectedFiles.GetStringSelection()
+        helepad = self.listboxSelectedFiles.GetClientData(
+            self.listboxSelectedFiles.GetSelection())
 #        print helepad
 #        self.btnUnselectFile.Enable(True)
 #        self.listboxSelectedFiles.Delete(self.listboxSelectedFiles.GetSelection())
@@ -249,14 +251,16 @@ class AquaFrame(maingui.Mainframe):
 ###########################################################################
     def onbtnUploadClick(self, event):
 
-# hier meerdere bestanden kunnen oploaden..
+        # hier meerdere bestanden kunnen oploaden..
         filecount = self.listboxSelectedFiles.GetCount()
         if filecount <= 0:
-            self.frame_1_statusbar.SetStatusText("Geen bestand geselecteerd", 0)
+            self.frame_1_statusbar.SetStatusText(
+                "Geen bestand geselecteerd",
+                0)
             return
 
         dimensions = self.getDimensions()
-
+        urls = ""
         for _i in range(filecount):
             print self.listboxSelectedFiles.GetClientData(_i)
             try:
@@ -266,16 +270,23 @@ class AquaFrame(maingui.Mainframe):
                 self.desiredName = diversen.constructUploadName(
                     self.edtLoginName.GetValue(),
                     self.listboxSelectedFiles.GetClientData(_i))
-#                diversen.uploadFileToAquaforum(resizedFileName, self.desiredName)
-#                diversen.addToHistory(AUQAOFORUM_PICTURE_URL + self.desiredName)
-# ZET IN STRINGLIST/ARRAY EN SEND TO EVENT ???
+#             diversen.uploadFileToAquaforum(resizedFileName, self.desiredName)
+                diversen.addToHistory(AUQAOFORUM_PICTURE_URL + self.desiredName)
+                urls = urls + " [IMG]" + AUQAOFORUM_PICTURE_URL + self.desiredName + "[/IMG]" + "\n"
+
             except Exception as er:
                 self.error = True
                 self.errorEx = er
                 # done, send done event
 
-        event = UploadDoneEvent(self.GetId())
-        self.GetEventHandler().AddPendingEvent(event)
+#        event = UploadDoneEvent(self.GetId())
+#        self.GetEventHandler().AddPendingEvent(event)
+
+        dlg = uploaddialog.UploadDoneDialog(self)
+        dlg.setCode(urls)
+        self.listboxSelectedFiles.Clear()
+        dlg.ShowModal()  # this one is non blocking!!
+
 
 #         self.frame_1_statusbar.SetStatusText("Het programma converteert het plaatje", 0)
 #         try:
@@ -296,11 +307,12 @@ class AquaFrame(maingui.Mainframe):
 # def OnEventUploadDone(self, event):
 ###########################################################################
     def OnEventUploadDone(self, event):
-#        if self.error == True:
-#            wx.MessageDialog(self, "Er is een fout opgetreden tijdens het " + self.action + "\n" + "De error is " + str(self.errorEx), "Bericht", style=wx.OK).ShowModal()
-#            self.error = False
-#        else:
-#            dlg = dlgUploadDone(self, -1, "Bericht")
+        #        if self.error == True:
+        #            wx.MessageDialog(self, "Er is een fout opgetreden tijdens het " + self.action + "\n" + "De error is " + str(self.errorEx), "Bericht", style=wx.OK).ShowModal()
+        #            self.error = False
+        #        else:
+        #            dlg = dlgUploadDone(self, -1, "Bericht")
+
         dlg = uploaddialog.UploadDoneDialog(self)
         urls = ""
         stringlist = self.listboxSelectedFiles.GetCount()
@@ -316,14 +328,15 @@ class AquaFrame(maingui.Mainframe):
                 desiredName + "[/IMG]" + "\n"
 # #
         dlg.setCode(urls)
-#            dlg.setCode(" [IMG]" + AUQAOFORUM_PICTURE_URL + self.desiredName + "[/IMG]")
-#            dlg.ShowModal()
-#            self.busy = False
+# dlg.setCode(" [IMG]" + AUQAOFORUM_PICTURE_URL + self.desiredName + "[/IMG]")
+# dlg.ShowModal()
+# self.busy = False
 
         # check whether a correct file is selected
 #        popupFrame = popupImage.MyFrame(None,-1,"")
 #        popupFrame.SetSize((dimensions[0]+10,dimensions[1]+30))
 #        popupFrame.setPath(resizedFileName)
+        self.listboxSelectedFiles.Clear()
         dlg.ShowModal()  # this one is non blocking!!
 #            dlg.Destroy()
 

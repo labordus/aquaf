@@ -22,7 +22,7 @@ ALLOWED_CHARS = "qwertyuioplkjhgfdsazxcvbnm0123456789._"
 
 
 ###########################################################################
-# # def resizeFile(filename, dimensions):
+# def resizeFile(filename, dimensions):
 ###########################################################################
 def resizeFile(filename, dimensions):
     '''
@@ -47,7 +47,7 @@ def resizeFile(filename, dimensions):
     # try:
     #    im.save(resizedFileName,"JPEG",quality=100,optimize=1)
     # except IOError:
-    #    # try again, without optimization
+    # try again, without optimization
     try:
         im.save(resizedFileName, "JPEG", quality=60)
     except IOError:
@@ -59,7 +59,7 @@ def resizeFile(filename, dimensions):
 
 
 ###########################################################################
-# # def addToHistory(url):
+# def addToHistory(url):
 ###########################################################################
 def addToHistory(url):
     '''adds the url to the json archive
@@ -87,7 +87,7 @@ def addToHistory(url):
 
 
 ###########################################################################
-# # def uploadFileToAquaforum(uploadFilename, requestedFileName):
+# def uploadFileToAquaforum(uploadFilename, requestedFileName):
 ###########################################################################
 def uploadFileToAquaforum(uploadFilename, requestedFileName):
     '''
@@ -117,7 +117,7 @@ def uploadFileToAquaforum(uploadFilename, requestedFileName):
 
 
 ###########################################################################
-# # def constructUploadName(loginname, requestedfilename):
+# def constructUploadName(loginname, requestedfilename):
 ###########################################################################
 def constructUploadName(loginname, requestedfilename):
     '''

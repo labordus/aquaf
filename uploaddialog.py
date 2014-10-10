@@ -11,8 +11,8 @@ import maingui
 
 def main_is_frozen():
     return (hasattr(sys, "frozen") or  # new py2exe
-           hasattr(sys, "importers")  # old py2exe
-           or imp.is_frozen("__main__"))  # tools/freeze
+            hasattr(sys, "importers")  # old py2exe
+            or imp.is_frozen("__main__"))  # tools/freeze
 
 
 def get_main_dir():
@@ -23,6 +23,7 @@ def get_main_dir():
 
 class UploadDoneDialog(maingui.dlgUploadDone):
     # constructor
+
     def __init__(self, parent):
         # initialize parent class
         maingui.dlgUploadDone.__init__(self, parent)
