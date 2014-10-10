@@ -1927,7 +1927,7 @@
                                 <property name="pos"></property>
                                 <property name="resize">Resizable</property>
                                 <property name="show">1</property>
-                                <property name="size">400, 127</property>
+                                <property name="size">420,127</property>
                                 <property name="style">wxHSCROLL|wxTE_CHARWRAP|wxTE_MULTILINE|wxTE_READONLY</property>
                                 <property name="subclass"></property>
                                 <property name="toolbar_pane">0</property>

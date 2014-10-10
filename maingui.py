@@ -242,7 +242,7 @@ class dlgUploadDone ( wx.Dialog ):
 		
 		bSizer19 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		self.text_ctrl_Code1 = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 400, 127 ), wx.HSCROLL|wx.TE_CHARWRAP|wx.TE_MULTILINE|wx.TE_READONLY )
+		self.text_ctrl_Code1 = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 420,127 ), wx.HSCROLL|wx.TE_CHARWRAP|wx.TE_MULTILINE|wx.TE_READONLY )
 		self.text_ctrl_Code1.SetMaxLength( 0 ) 
 		bSizer19.Add( self.text_ctrl_Code1, 0, wx.ALL, 5 )
 		

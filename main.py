@@ -255,8 +255,7 @@ class AquaFrame(maingui.Mainframe):
         filecount = self.listboxSelectedFiles.GetCount()
         if filecount <= 0:
             self.frame_1_statusbar.SetStatusText(
-                "Geen bestand geselecteerd",
-                0)
+                "Geen bestand geselecteerd", 0)
             return
 
         dimensions = self.getDimensions()
