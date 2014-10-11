@@ -12,6 +12,7 @@ from Dialog import Dialog
 
 import diversen
 import uploaddialog
+from wx.lib.pubsub.pub import validate
 
 AUQAOFORUM_PICTURE_URL = "http://www.aquaforum.nl/gallery/upload/"
 
@@ -74,6 +75,7 @@ class AquaFrame(maingui.Mainframe):
         self.Bind(EVT_UPLOAD_DONE, self.OnEventUploadDone)
         EVT_UPLOAD_DONE(self, -1, self.OnEventUploadDone)
 #####################################################
+
 
 ###########################################################################
 # def onbtnArchiefClick(self, event):
@@ -250,7 +252,8 @@ class AquaFrame(maingui.Mainframe):
 # def onbtnUploadClick(self, event):
 ###########################################################################
     def onbtnUploadClick(self, event):
-
+        # TODO: Check of gebruikernaam is ingevoerd. Zie demo.py
+        self.edtLoginName.SetValidator()
         # hier meerdere bestanden kunnen oploaden..
         filecount = self.listboxSelectedFiles.GetCount()
         if filecount <= 0:

@@ -162,7 +162,6 @@ class Mainframe ( wx.Frame ):
 		self.Centre( wx.BOTH )
 		
 		# Connect Events
-		self.Bind( wx.EVT_ACTIVATE, self.onMainframeActivate )
 		self.btnSelectFile1.Bind( wx.EVT_BUTTON, self.onbtnSelectFile1Click )
 		self.tvFiles.Bind( wx.EVT_TREE_SEL_CHANGED, self.ontvFilesSelChanged )
 		self.btnSelectFile.Bind( wx.EVT_BUTTON, self.onbtnSelectFileClick )
@@ -180,9 +179,6 @@ class Mainframe ( wx.Frame ):
 	
 	
 	# Virtual event handlers, overide them in your derived class
-	def onMainframeActivate( self, event ):
-		event.Skip()
-	
 	def onbtnSelectFile1Click( self, event ):
 		event.Skip()
 	
