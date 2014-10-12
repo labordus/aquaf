@@ -13,6 +13,8 @@ from Dialog import Dialog
 import diversen
 import uploaddialog
 from wx.lib.pubsub.pub import validate
+from diversen import ValideerInvoer
+from telnetlib import theNULL
 
 AUQAOFORUM_PICTURE_URL = "http://www.aquaforum.nl/gallery/upload/"
 
@@ -71,10 +73,12 @@ class AquaFrame(maingui.Mainframe):
     def __init__(self, parent):
         # initialize parent class
         maingui.Mainframe.__init__(self, parent)
-#####################################################
+
         self.Bind(EVT_UPLOAD_DONE, self.OnEventUploadDone)
         EVT_UPLOAD_DONE(self, -1, self.OnEventUploadDone)
-#####################################################
+
+        # bind validator to edtLogin-Invoerbox
+        # self.edtLoginName.SetValidator(ValideerInvoer(diversen.ALPHA_ONLY))
 
 
 ###########################################################################
@@ -101,13 +105,8 @@ class AquaFrame(maingui.Mainframe):
     def onbtnSelectFile1Click(self, event):
         """ Open a file"""
         self.dirname = ''
-        dlg = wx.FileDialog(
-            self,
-            "Choose a file",
-            self.dirname,
-            "",
-            "*.*",
-            wx.OPEN)
+        dlg = wx.FileDialog(self, "Choose a file", self.dirname,
+                            "", "*.*", wx.OPEN)
         dlg.SetWildcard(
             "plaatjes (*.bmp;*.jpg;*.png;*.tiff)|*.bmp;*.jpg;*.png;*.tiff|Alles (*.*)|*.*")
         if dlg.ShowModal() == wx.ID_OK:
@@ -228,8 +227,10 @@ class AquaFrame(maingui.Mainframe):
 #    def onlistboxSelectedFile(self, event):
 # print "You     selected: " +
 # self.listboxSelectedFiles.GetStringSelection()
-        helepad = self.listboxSelectedFiles.GetClientData(
-            self.listboxSelectedFiles.GetSelection())
+
+#        helepad = self.listboxSelectedFiles.GetClientData(
+#            self.listboxSelectedFiles.GetSelection())
+
 #        print helepad
 #        self.btnUnselectFile.Enable(True)
 #        self.listboxSelectedFiles.Delete(self.listboxSelectedFiles.GetSelection())
@@ -248,12 +249,18 @@ class AquaFrame(maingui.Mainframe):
 #   def onlistboxSelectedFileSetFocus(self, event):
 #       self.btnUnselectFile.Enable(True)
 
+
 ###########################################################################
 # def onbtnUploadClick(self, event):
 ###########################################################################
     def onbtnUploadClick(self, event):
-        # TODO: Check of gebruikernaam is ingevoerd. Zie demo.py
-        self.edtLoginName.SetValidator()
+        # TODO: Check of gebruikernaam is ingevoerd.
+        # TODO: Check of er bestanden zijn geselecteerd.
+
+        if len(self.edtLoginName.GetValue()) == 0:
+            print "Geen loginnaam ingoevoerd"
+            return
+
         # hier meerdere bestanden kunnen oploaden..
         filecount = self.listboxSelectedFiles.GetCount()
         if filecount <= 0:
@@ -272,7 +279,7 @@ class AquaFrame(maingui.Mainframe):
                 self.desiredName = diversen.constructUploadName(
                     self.edtLoginName.GetValue(),
                     self.listboxSelectedFiles.GetClientData(_i))
-#             diversen.uploadFileToAquaforum(resizedFileName, self.desiredName)
+                # diversen.uploadFileToAquaforum(resizedFileName, self.desiredName)
                 diversen.addToHistory(AUQAOFORUM_PICTURE_URL + self.desiredName)
                 urls = urls + " [IMG]" + AUQAOFORUM_PICTURE_URL + self.desiredName + "[/IMG]" + "\n"
 
@@ -281,8 +288,8 @@ class AquaFrame(maingui.Mainframe):
                 self.errorEx = er
                 # done, send done event
 
-#        event = UploadDoneEvent(self.GetId())
-#        self.GetEventHandler().AddPendingEvent(event)
+                #        event = UploadDoneEvent(self.GetId())
+                #        self.GetEventHandler().AddPendingEvent(event)
 
         dlg = uploaddialog.UploadDoneDialog(self)
         dlg.setCode(urls)
