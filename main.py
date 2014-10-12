@@ -13,8 +13,8 @@ from Dialog import Dialog
 import diversen
 import uploaddialog
 from wx.lib.pubsub.pub import validate
-from diversen import ValideerInvoer
-from telnetlib import theNULL
+#from diversen import ValideerInvoer
+#from telnetlib import theNULL
 
 AUQAOFORUM_PICTURE_URL = "http://www.aquaforum.nl/gallery/upload/"
 
@@ -258,7 +258,7 @@ class AquaFrame(maingui.Mainframe):
         # TODO: Check of er bestanden zijn geselecteerd.
 
         if len(self.edtLoginName.GetValue()) == 0:
-            print "Geen loginnaam ingoevoerd"
+            print "Geen loginnaam ingevoerd"
             return
 
         # hier meerdere bestanden kunnen oploaden..
