@@ -6,6 +6,22 @@
 - gebruikersnaam-invoer eisen? Het nut hiervan is alleen voor het genereren van een bestandsnaam?
 - Hoe wordt je account eigenlijk gekoppeld aan de foto's? Worden ze wel gekoppeld?
 - 1 instance
+- bij laden test.jpg.. moet ik eerst ook het pad zoeken? (OnbtnVoorbeeldClick)
+########### demo.py
+                  'GetUserConfigDir',
+                  'GetDataDir',
+                  'GetLocalDataDir',
+                  'GetUserDataDir',
+                  'GetUserLocalDataDir',
+                  'GetDocumentsDir',
+                  'GetAppDocumentsDir',
+                  'GetPluginsDir',
+                  'GetInstallPrefix',
+                  'GetResourcesDir',
+                  'GetTempDir',
+                  'GetExecutablePath',
+############
+
 
 -- data --
 - Ik zou wat gegevens willen opslaan.. zoals ingevoerde username of laatst gekozen directory etc.. Hoe?
