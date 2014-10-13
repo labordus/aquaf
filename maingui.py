@@ -308,7 +308,7 @@ class dlgVoorbeeld ( wx.Dialog ):
 		
 		sizerVoorbeeld = wx.BoxSizer( wx.VERTICAL )
 		
-		self.bitmapVoorbeeld = wx.StaticBitmap( self, wx.ID_ANY, wx.Bitmap( u"../../../../mnt/syn_media/pics/inspiration/0508_1659_400.jpeg", wx.BITMAP_TYPE_ANY ), wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.bitmapVoorbeeld = wx.StaticBitmap( self, wx.ID_ANY, wx.Bitmap( u"test.jpg", wx.BITMAP_TYPE_ANY ), wx.DefaultPosition, wx.DefaultSize, 0 )
 		sizerVoorbeeld.Add( self.bitmapVoorbeeld, 1, wx.ALL|wx.EXPAND, 0 )
 		
 		
