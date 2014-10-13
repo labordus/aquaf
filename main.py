@@ -17,6 +17,7 @@ from wx.lib.pubsub.pub import validate
 #from telnetlib import theNULL
 
 AUQAOFORUM_PICTURE_URL = "http://www.aquaforum.nl/gallery/upload/"
+TEST_FOTO = "test.jpg"
 
 # create custom event
 UPLOAD_DONE_EVENT_TYPE = wx.NewEventType()
@@ -117,40 +118,31 @@ class AquaFrame(maingui.Mainframe):
 # def onbtnVoorbeeldClick(self, event):
 ###########################################################################
     def onbtnVoorbeeldClick(self, event):
-        filepath = self.edtFile1.GetValue()
+        #        filepath = self.edtFile1.GetValue()
 
         dimensions = self.getDimensions()
 #        self.frame_1_statusbar.SetStatusText("Het programma converteert het plaatje", 0)
         resizedFileName = None
 
-        if self.edtFile1.GetValue() != () and self.edtFile1.GetValue() != "":
-            try:
-                if not (os.path.exists(self.edtFile1.GetValue())):
-                    wx.MessageDialog(
-                        self,
-                        "Het bestand \"" +
-                        self.edtFile1.GetValue() +
-                        "\" bestaat niet",
-                        "Bericht",
-                        style=wx.OK).ShowModal()
-                    resizedFileName = None
-                    return
-                else:
-                    #                 self.action = "converteren van het plaatje"
-                    resizedFileName = diversen.resizeFile(filepath, dimensions)
-#                  self.frame_1_statusbar.SetStatusText(" ", 0)
-#                    print 'print: onbtnArchiefClick'
-            except Exception as er:
+#        if self.edtFile1.GetValue() != () and self.edtFile1.GetValue() != "":
+        try:
+            if not (os.path.exists(TEST_FOTO)):
+                wx.MessageDialog(self, TEST_FOTO + " bestaat niet", "Bericht", style=wx.OK).ShowModal()
                 resizedFileName = None
-                wx.MessageDialog(
-                    self,
-                    "Er is een fout opgetreden tijdens het converteren\n" +
-                    "De error is " +
-                    str(er),
-                    "Bericht",
-                    style=wx.OK).ShowModal()
+                return
+            else:
+                resizedFileName = diversen.resizeFile(TEST_FOTO, dimensions)
+#                  self.frame_1_statusbar.SetStatusText(" ", 0)
+        except Exception as er:
+            resizedFileName = None
+            wx.MessageDialog(
+                self,
+                "Er is een fout opgetreden tijdens het converteren\n" +
+                "De error is " +
+                str(er),
+                "Bericht",
+                style=wx.OK).ShowModal()
 
-#        img = wx.Image(filepath, wx.BITMAP_TYPE_ANY)
         img = wx.Image(resizedFileName, wx.BITMAP_TYPE_ANY)
         # scale the image, preserving the aspect ratio
 #        W = img.GetWidth()
@@ -164,11 +156,10 @@ class AquaFrame(maingui.Mainframe):
 #            NewW = PhotoMaxSize * W / H
 #        img = img.Scale(W, H)
 #        size = (W, H)
+
         Voorbeeld = dlgVoorbeeld(self)
         Voorbeeld.SetTitle(self.edtFile1.GetValue())
         Voorbeeld.bitmapVoorbeeld.SetBitmap(wx.BitmapFromImage(img))
-#        Voorbeeld.SetMinSize(size)
-#        Voorbeeld.SetMaxSize(size)
         Voorbeeld.Fit()
         Voorbeeld.Layout()
         Voorbeeld.Show()
