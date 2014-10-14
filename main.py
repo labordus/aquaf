@@ -103,16 +103,16 @@ class AquaFrame(maingui.Mainframe):
 ###########################################################################
 # def onbtnSelectFile1Click(self, event):
 ###########################################################################
-    def onbtnSelectFile1Click(self, event):
-        """ Open a file"""
-        self.dirname = ''
-        dlg = wx.FileDialog(self, "Choose a file", self.dirname,
-                            "", "*.*", wx.OPEN)
-        dlg.SetWildcard(
-            "plaatjes (*.bmp;*.jpg;*.png;*.tiff)|*.bmp;*.jpg;*.png;*.tiff|Alles (*.*)|*.*")
-        if dlg.ShowModal() == wx.ID_OK:
-            self.edtFile1.SetValue(dlg.GetPath())
-        dlg.Destroy()
+#     def onbtnSelectFile1Click(self, event):
+#         """ Open a file"""
+#         self.dirname = ''
+#         dlg = wx.FileDialog(self, "Choose a file", self.dirname,
+#                             "", "*.*", wx.OPEN)
+#         dlg.SetWildcard(
+#             "plaatjes (*.bmp;*.jpg;*.png;*.tiff)|*.bmp;*.jpg;*.png;*.tiff|Alles (*.*)|*.*")
+#         if dlg.ShowModal() == wx.ID_OK:
+#             self.edtFile1.SetValue(dlg.GetPath())
+#         dlg.Destroy()
 
 ###########################################################################
 # def onbtnVoorbeeldClick(self, event):
@@ -200,26 +200,35 @@ class AquaFrame(maingui.Mainframe):
             scaled_file = diversen.resizeFile(pad, dimensions)
             img = wx.Image(scaled_file, wx.BITMAP_TYPE_ANY)
             self.bitmapSelectedFile.SetBitmap(wx.BitmapFromImage(img))
+#            self.bitmapSelectedFile.Fit()
+#            self.bitmapSelectedFile.Layout()
 #            self.btnSelectFile.Enable()
             self.frame_1_statusbar.SetStatusText("bestand geselecteerd", 0)
             self.action = "benaderen van aquaforum webpagina"
         else:
             # directory selected
-            scaled_file = diversen.resizeFile("default_foto.jpg", dimensions)
+            scaled_file = diversen.resizeFile("test.jpg", dimensions)
             img = wx.Image(scaled_file, wx.BITMAP_TYPE_ANY)
             self.bitmapSelectedFile.SetBitmap(wx.BitmapFromImage(img))
+#            self.Fit()
+#            self.Layout()
 #            self.btnSelectFile.Disable()
-            print "directory"
 
 ###########################################################################
 # def onbtnSelectFileClick(self, event):
 ###########################################################################
     def onbtnSelectFileClick(self, event):
-        # check of bestand al is toegevoegd..
+        # TODO: check of bestand al is toegevoegd..
         # sla het hele pad op in..? pyobject clientdata
-        helepad = self.tvFiles.GetPath()
-        bestandsnaam = os.path.basename(helepad)
-        self.listboxSelectedFiles.Append(bestandsnaam, helepad)
+
+        _pad = self.tvFiles.GetFilePath()
+        if _pad != () and _pad != "":
+            # file
+            helepad = self.tvFiles.GetPath()
+            bestandsnaam = os.path.basename(helepad)
+            self.listboxSelectedFiles.Append(bestandsnaam, helepad)
+        # else directory en doe niks
+
 
 ###########################################################################
 # def onlistboxSelectedFile(self, event):
@@ -239,8 +248,7 @@ class AquaFrame(maingui.Mainframe):
 # def onbtnUnselectFileClick(self, event):
 ###########################################################################
     def onbtnUnselectFileClick(self, event):
-        self.listboxSelectedFiles.Delete(
-            self.listboxSelectedFiles.GetSelection())
+        self.listboxSelectedFiles.Delete(self.listboxSelectedFiles.GetSelection())
 #       self.btnUnselectFile.Enable(False)
 
 #   def onlistboxSelectedFileLostFocus(self, event):
