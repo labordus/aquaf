@@ -17,7 +17,7 @@ import wx.xrc
 class Mainframe ( wx.Frame ):
 	
 	def __init__( self, parent ):
-		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Aquaforum upload programma", pos = wx.DefaultPosition, size = wx.Size( 829,739 ), style = wx.DEFAULT_FRAME_STYLE )
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Aquaforum upload programma", pos = wx.DefaultPosition, size = wx.Size( 829,692 ), style = wx.DEFAULT_FRAME_STYLE )
 		
 		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
 		self.SetBackgroundColour( wx.Colour( 0, 127, 255 ) )
@@ -36,7 +36,7 @@ class Mainframe ( wx.Frame ):
 		bSizer2.AddSpacer( ( 20,  20), 0, wx.EXPAND|wx.FIXED_MINSIZE, 0 )
 		
 		
-		bSizer1.Add( bSizer2, 1, wx.EXPAND, 0 )
+		bSizer1.Add( bSizer2, 1, wx.EXPAND|wx.SHAPED, 0 )
 		
 		bSizer3 = wx.BoxSizer( wx.HORIZONTAL )
 		
@@ -51,10 +51,11 @@ class Mainframe ( wx.Frame ):
 		bSizer3.Add( self.edtLoginName, 0, wx.ALIGN_CENTER_VERTICAL|wx.FIXED_MINSIZE, 0 )
 		
 		
-		bSizer1.Add( bSizer3, 1, wx.EXPAND|wx.SHAPED, 0 )
+		bSizer1.Add( bSizer3, 1, wx.EXPAND, 0 )
 		
 		bSizer13 = wx.BoxSizer( wx.HORIZONTAL )
 		
+		bSizer13.SetMinSize( wx.Size( -1,350 ) ) 
 		bSizer4 = wx.BoxSizer( wx.HORIZONTAL )
 		
 		bSizer4.SetMinSize( wx.Size( 250,-1 ) ) 
@@ -66,24 +67,32 @@ class Mainframe ( wx.Frame ):
 		
 		bSizer13.Add( bSizer4, 1, wx.EXPAND, 0 )
 		
-		bSizer152 = wx.BoxSizer( wx.HORIZONTAL )
+		bSizer22 = wx.BoxSizer( wx.VERTICAL )
+		
+		bSizer152 = wx.BoxSizer( wx.VERTICAL )
 		
 		self.bitmapSelectedFile = wx.StaticBitmap( self, wx.ID_ANY, wx.Bitmap( u"default_foto.jpg", wx.BITMAP_TYPE_ANY ), wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer152.Add( self.bitmapSelectedFile, 0, wx.ALL|wx.EXPAND|wx.FIXED_MINSIZE, 5 )
+		self.bitmapSelectedFile.SetMinSize( wx.Size( 250,250 ) )
+		self.bitmapSelectedFile.SetMaxSize( wx.Size( 250,250 ) )
+		
+		bSizer152.Add( self.bitmapSelectedFile, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALL|wx.EXPAND, 5 )
 		
 		
-		bSizer13.Add( bSizer152, 1, wx.EXPAND, 0 )
+		bSizer22.Add( bSizer152, 1, wx.EXPAND, 0 )
 		
 		bSizer151 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.btnSelectFile = wx.BitmapButton( self, wx.ID_ANY, wx.Bitmap( u"dagverder.bmp", wx.BITMAP_TYPE_ANY ), wx.DefaultPosition, wx.DefaultSize, wx.BU_AUTODRAW )
+		self.btnSelectFile = wx.Button( self, wx.ID_ANY, u"Toevoegen ->", wx.DefaultPosition, wx.DefaultSize, 0 )
 		bSizer151.Add( self.btnSelectFile, 0, wx.ALL, 5 )
 		
-		self.btnUnselectFile = wx.BitmapButton( self, wx.ID_ANY, wx.Bitmap( u"dagterug.bmp", wx.BITMAP_TYPE_ANY ), wx.DefaultPosition, wx.DefaultSize, wx.BU_AUTODRAW )
+		self.btnUnselectFile = wx.Button( self, wx.ID_ANY, u"<- Verwijderen", wx.DefaultPosition, wx.DefaultSize, 0 )
 		bSizer151.Add( self.btnUnselectFile, 0, wx.ALL, 5 )
 		
 		
-		bSizer13.Add( bSizer151, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 5 )
+		bSizer22.Add( bSizer151, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 5 )
+		
+		
+		bSizer13.Add( bSizer22, 1, wx.EXPAND, 5 )
 		
 		bSizer14 = wx.BoxSizer( wx.VERTICAL )
 		
@@ -91,8 +100,15 @@ class Mainframe ( wx.Frame ):
 		self.listboxSelectedFiles = wx.ListBox( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, listboxSelectedFilesChoices, 0 )
 		bSizer14.Add( self.listboxSelectedFiles, 1, wx.ALL|wx.EXPAND, 5 )
 		
-		self.btnUpload = wx.Button( self, wx.ID_ANY, u"Upload naar aquaforum.nl", wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer14.Add( self.btnUpload, 0, wx.ALL, 5 )
+		self.btnUpload = wx.Button( self, wx.ID_ANY, u"Upload naar aquaforum", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.btnUpload.SetToolTipString( u"Als je deze knop gebruikt dan converteert het programma het plaatje naar de juiste afmetingen \nen plaatst het programma het plaatje op aquaforum. \nDit kan enige tijd duren! Zie de statusbalk onderaan voor informatie." )
+		
+		bSizer14.Add( self.btnUpload, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 5 )
+		
+		bSizer21 = wx.BoxSizer( wx.VERTICAL )
+		
+		
+		bSizer14.Add( bSizer21, 1, wx.EXPAND, 5 )
 		
 		
 		bSizer13.Add( bSizer14, 1, wx.EXPAND, 5 )
@@ -117,18 +133,7 @@ class Mainframe ( wx.Frame ):
 		bSizer5.Add( self.btnVoorbeeld, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 0 )
 		
 		
-		bSizer1.Add( bSizer5, 1, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 0 )
-		
-		bSizer6 = wx.BoxSizer( wx.HORIZONTAL )
-		
-		self.label_4 = wx.StaticText( self, wx.ID_ANY, u"Als je deze knop gebruikt dan converteert het programma het plaatje naar de juiste afmetingen \nen plaatst het programma het plaatje op aquaforum. \nDit kan enige tijd duren! Zie de statusbalk onderaan voor informatie.\n", wx.DefaultPosition, wx.Size( -1,-1 ), 0 )
-		self.label_4.Wrap( -1 )
-		self.label_4.SetBackgroundColour( wx.Colour( 0, 127, 255 ) )
-		
-		bSizer6.Add( self.label_4, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 0 )
-		
-		
-		bSizer1.Add( bSizer6, 1, wx.EXPAND, 0 )
+		bSizer1.Add( bSizer5, 1, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.EXPAND|wx.SHAPED, 0 )
 		
 		self.btnArchief = wx.Button( self, wx.ID_ANY, u"Archief van de plaatjes", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.btnArchief.SetDefault() 
@@ -282,7 +287,7 @@ class dlgVoorbeeld ( wx.Dialog ):
 		
 		sizerVoorbeeld = wx.BoxSizer( wx.VERTICAL )
 		
-		self.m_staticText6 = wx.StaticText( self, wx.ID_ANY, u"Dimensie=800:500", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText6 = wx.StaticText( self, wx.ID_ANY, u"Dimensie=000x000", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText6.Wrap( -1 )
 		sizerVoorbeeld.Add( self.m_staticText6, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 5 )
 		
