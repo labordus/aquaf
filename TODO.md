@@ -23,6 +23,9 @@
 ############
 - voorbeelddialoog midden in mainform
 - voorbeeld dynamisch dimensie laten zien in de tekst boven de image
+- showmodal -> destroy verplicht?
+- Preview-bitmap moet meteen test.jpg zijn, maar dan moet ie eerst geresized.
+- Bug! Er kunnen ook directories worden toegevoegd!
 
 -- data --
 - Ik zou wat gegevens willen opslaan.. zoals ingevoerde username of laatst gekozen directory etc.. Hoe?
