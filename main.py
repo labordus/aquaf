@@ -158,7 +158,7 @@ class AquaFrame(maingui.Mainframe):
 #        size = (W, H)
 
         Voorbeeld = dlgVoorbeeld(self)
-        Voorbeeld.SetTitle(self.edtFile1.GetValue())
+        Voorbeeld.SetTitle(TEST_FOTO)
         Voorbeeld.bitmapVoorbeeld.SetBitmap(wx.BitmapFromImage(img))
         Voorbeeld.Fit()
         Voorbeeld.Layout()
@@ -270,7 +270,7 @@ class AquaFrame(maingui.Mainframe):
                 self.desiredName = diversen.constructUploadName(
                     self.edtLoginName.GetValue(),
                     self.listboxSelectedFiles.GetClientData(_i))
-                # diversen.uploadFileToAquaforum(resizedFileName, self.desiredName)
+                diversen.uploadFileToAquaforum(resizedFileName, self.desiredName)
                 diversen.addToHistory(AUQAOFORUM_PICTURE_URL + self.desiredName)
                 urls = urls + " [IMG]" + AUQAOFORUM_PICTURE_URL + self.desiredName + "[/IMG]" + "\n"
 
