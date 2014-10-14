@@ -21,7 +21,8 @@
                   'GetTempDir',
                   'GetExecutablePath',
 ############
-
+- voorbeelddialoog midden in mainform
+- voorbeeld dynamisch dimensie laten zien in de tekst boven de image
 
 -- data --
 - Ik zou wat gegevens willen opslaan.. zoals ingevoerde username of laatst gekozen directory etc.. Hoe?
