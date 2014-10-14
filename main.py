@@ -157,12 +157,21 @@ class AquaFrame(maingui.Mainframe):
 #        img = img.Scale(W, H)
 #        size = (W, H)
 
+        self.ShowVoorbeeld(img, dimensions)
+
+
+########################################
+    def ShowVoorbeeld(self, img, dimensions):
         Voorbeeld = dlgVoorbeeld(self)
         Voorbeeld.SetTitle(TEST_FOTO)
+        Voorbeeld.m_staticText6.Label = "Dimensie=" + str(dimensions)
         Voorbeeld.bitmapVoorbeeld.SetBitmap(wx.BitmapFromImage(img))
+#        Voorbeeld.CenterOnParent()
         Voorbeeld.Fit()
         Voorbeeld.Layout()
-        Voorbeeld.Show()
+#        Voorbeeld.Show()
+        Voorbeeld.ShowModal()
+        Voorbeeld.Destroy()
 
 ###########################################################################
 # def getDimensions(self):
@@ -286,6 +295,7 @@ class AquaFrame(maingui.Mainframe):
         dlg.setCode(urls)
         self.listboxSelectedFiles.Clear()
         dlg.ShowModal()  # this one is non blocking!!
+        dlg.Destroy()
 
 
 #         self.frame_1_statusbar.SetStatusText("Het programma converteert het plaatje", 0)
