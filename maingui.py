@@ -53,17 +53,6 @@ class Mainframe ( wx.Frame ):
 		
 		bSizer1.Add( bSizer3, 1, wx.EXPAND|wx.SHAPED, 0 )
 		
-		bSizer16 = wx.BoxSizer( wx.HORIZONTAL )
-		
-		self.btnSelectFile1 = wx.Button( self, wx.ID_ANY, u"MyButton", wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer16.Add( self.btnSelectFile1, 0, wx.ALL, 5 )
-		
-		self.edtFile1 = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 400,21 ), 0 )
-		bSizer16.Add( self.edtFile1, 0, wx.ALIGN_CENTER_VERTICAL|wx.FIXED_MINSIZE, 5 )
-		
-		
-		bSizer1.Add( bSizer16, 1, wx.EXPAND, 0 )
-		
 		bSizer13 = wx.BoxSizer( wx.HORIZONTAL )
 		
 		bSizer4 = wx.BoxSizer( wx.HORIZONTAL )
@@ -114,8 +103,8 @@ class Mainframe ( wx.Frame ):
 		bSizer5 = wx.BoxSizer( wx.HORIZONTAL )
 		
 		radio_box_3Choices = [ u"800x600(standaard, groot)", u"640x480 (middelgroot)", u"320x240 (klein)", u"160x120(heel klein, handig voor avatar)" ]
-		self.radio_box_3 = wx.RadioBox( self, wx.ID_ANY, u"Dimensies", wx.DefaultPosition, wx.DefaultSize, radio_box_3Choices, 4, wx.RA_SPECIFY_ROWS )
-		self.radio_box_3.SetSelection( 0 )
+		self.radio_box_3 = wx.RadioBox( self, wx.ID_ANY, u"Dimensies", wx.DefaultPosition, wx.DefaultSize, radio_box_3Choices, 2, wx.RA_SPECIFY_ROWS )
+		self.radio_box_3.SetSelection( 1 )
 		self.radio_box_3.SetBackgroundColour( wx.Colour( 0, 127, 255 ) )
 		
 		bSizer5.Add( self.radio_box_3, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 0 )
@@ -131,13 +120,6 @@ class Mainframe ( wx.Frame ):
 		bSizer1.Add( bSizer5, 1, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 0 )
 		
 		bSizer6 = wx.BoxSizer( wx.HORIZONTAL )
-		
-		self.btnblablablabla = wx.Button( self, wx.ID_ANY, u"blablablablablabla", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.btnblablablabla.SetDefault() 
-		bSizer6.Add( self.btnblablablabla, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 0 )
-		
-		
-		bSizer6.AddSpacer( ( 20,  20), 0, wx.FIXED_MINSIZE, 0 )
 		
 		self.label_4 = wx.StaticText( self, wx.ID_ANY, u"Als je deze knop gebruikt dan converteert het programma het plaatje naar de juiste afmetingen \nen plaatst het programma het plaatje op aquaforum. \nDit kan enige tijd duren! Zie de statusbalk onderaan voor informatie.\n", wx.DefaultPosition, wx.Size( -1,-1 ), 0 )
 		self.label_4.Wrap( -1 )
@@ -162,7 +144,6 @@ class Mainframe ( wx.Frame ):
 		self.Centre( wx.BOTH )
 		
 		# Connect Events
-		self.btnSelectFile1.Bind( wx.EVT_BUTTON, self.onbtnSelectFile1Click )
 		self.tvFiles.Bind( wx.EVT_TREE_SEL_CHANGED, self.ontvFilesSelChanged )
 		self.btnSelectFile.Bind( wx.EVT_BUTTON, self.onbtnSelectFileClick )
 		self.btnUnselectFile.Bind( wx.EVT_BUTTON, self.onbtnUnselectFileClick )
@@ -171,7 +152,6 @@ class Mainframe ( wx.Frame ):
 		self.listboxSelectedFiles.Bind( wx.EVT_SET_FOCUS, self.onlistboxSelectedFileSetFocus )
 		self.btnUpload.Bind( wx.EVT_BUTTON, self.onbtnUploadClick )
 		self.btnVoorbeeld.Bind( wx.EVT_BUTTON, self.onbtnVoorbeeldClick )
-		self.btnblablablabla.Bind( wx.EVT_BUTTON, self.btnBlaClick )
 		self.btnArchief.Bind( wx.EVT_BUTTON, self.onbtnArchiefClick )
 	
 	def __del__( self ):
@@ -179,9 +159,6 @@ class Mainframe ( wx.Frame ):
 	
 	
 	# Virtual event handlers, overide them in your derived class
-	def onbtnSelectFile1Click( self, event ):
-		event.Skip()
-	
 	def ontvFilesSelChanged( self, event ):
 		event.Skip()
 	
@@ -204,9 +181,6 @@ class Mainframe ( wx.Frame ):
 		event.Skip()
 	
 	def onbtnVoorbeeldClick( self, event ):
-		event.Skip()
-	
-	def btnBlaClick( self, event ):
 		event.Skip()
 	
 	def onbtnArchiefClick( self, event ):
@@ -307,6 +281,10 @@ class dlgVoorbeeld ( wx.Dialog ):
 		self.SetSizeHintsSz( wx.DefaultSize, wx.Size( -1,-1 ) )
 		
 		sizerVoorbeeld = wx.BoxSizer( wx.VERTICAL )
+		
+		self.m_staticText6 = wx.StaticText( self, wx.ID_ANY, u"Dimensie=800:500", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText6.Wrap( -1 )
+		sizerVoorbeeld.Add( self.m_staticText6, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 5 )
 		
 		self.bitmapVoorbeeld = wx.StaticBitmap( self, wx.ID_ANY, wx.Bitmap( u"test.jpg", wx.BITMAP_TYPE_ANY ), wx.DefaultPosition, wx.DefaultSize, 0 )
 		sizerVoorbeeld.Add( self.bitmapVoorbeeld, 1, wx.ALL|wx.EXPAND, 0 )
