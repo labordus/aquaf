@@ -100,12 +100,12 @@ def resizeFile(filename, dimensions):
     # except IOError:
     # try again, without optimization
     try:
-        im.save(resizedFileName, "JPEG", quality=60)
+        im.save(resizedFileName, "JPEG", quality=100)
     except IOError:
         # try again, without optimization
         im.draft("RGB", im.size)
         im = im.convert("RGB")
-        im.save(resizedFileName, "JPEG", quality=60)
+        im.save(resizedFileName, "JPEG", quality=100)
     return resizedFileName
 
 
