@@ -178,8 +178,8 @@ class AquaFrame(maingui.Mainframe):
                 self.desiredName = diversen.constructUploadName(
                     self.edtLoginName.GetValue(),
                     self.listboxSelectedFiles.GetClientData(_i))
-                diversen.uploadFileToAquaforum(resizedFileName, self.desiredName)
-                diversen.addToHistory(AUQAOFORUM_PICTURE_URL + self.desiredName)
+#                diversen.uploadFileToAquaforum(resizedFileName, self.desiredName)
+#                diversen.addToHistory(AUQAOFORUM_PICTURE_URL + self.desiredName)
                 urls = urls + " [IMG]" + AUQAOFORUM_PICTURE_URL + self.desiredName + "[/IMG]" + "\n"
 
             except Exception as er:
