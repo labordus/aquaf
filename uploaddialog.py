@@ -28,10 +28,6 @@ class UploadDoneDialog(maingui.dlgUploadDone):
         # initialize parent class
         maingui.dlgUploadDone.__init__(self, parent)
 
-#    def oninitdlgUploadDone(self, event):
-#        maingui.dlgUploadDone.oninitdlgUploadDone(self, event)
-#        print "oninitdlgUploadDone"
-
     def setCode(self, text):
         self.text_ctrl_Code1.SetValue(text)
 
