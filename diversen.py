@@ -2,11 +2,15 @@ import mechanize
 import os
 import wx
 import string
-from PIL import Image
-import PngImagePlugin  # @UnusedImport
-import BmpImagePlugin  # @UnusedImport
-import JpegImagePlugin  # @UnusedImport
-import TiffImagePlugin  # @UnusedImport
+
+try:
+    from PIL import Image
+    from PIL import JpegImagePlugin  # @UnusedImport
+    from PIL import PngImagePlugin  # @UnusedImport
+    from PIL import BmpImagePlugin  # @UnusedImport
+    from PIL import TiffImagePlugin  # @UnusedImport
+except ImportError:
+    raise ImportError('Aquaf was unable to import Pil(low). Please confirm it`s installed and available on your current Python path.')
 
 Image._initialized = 2
 
@@ -92,13 +96,16 @@ def resizeFile(filename, dimensions):
     #    im.save(resizedFileName,"JPEG",quality=100,optimize=1)
     # except IOError:
     # try again, without optimization
+
+    # quality hoger dan 95 heeft geen nut,
+    # zie http://pillow.readthedocs.org/en/latest/handbook/image-file-formats.html
     try:
-        im.save(resizedFileName, "JPEG", quality=100)
+        im.save(resizedFileName, "JPEG", quality=95, optimize=True)
     except IOError:
         # try again, without optimization
         im.draft("RGB", im.size)
         im = im.convert("RGB")
-        im.save(resizedFileName, "JPEG", quality=100)
+        im.save(resizedFileName, "JPEG", quality=95, optimize=False)
     return resizedFileName
 
 
