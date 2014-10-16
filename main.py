@@ -120,7 +120,7 @@ class AquaFrame(maingui.Mainframe):
             dimensions = (160, 120)
         return dimensions
 
-    def IsImage(self, pad):
+    def IsValidImage(self, pad):
         import imghdr
         # TODO: Checken wat voor image dit is.. if image at all.
         image_type = imghdr.what(pad)
@@ -159,7 +159,7 @@ class AquaFrame(maingui.Mainframe):
         dimensions = self.bitmapSelectedFile.GetSize()
         if pad != () and pad != "":
             # file selected
-            if self.IsImage(pad):
+            if self.IsValidImage(pad):
                 scaled_file = diversen.resizeFile(pad, dimensions)
                 img = wx.Image(scaled_file, wx.BITMAP_TYPE_ANY)
                 self.bitmapSelectedFile.SetBitmap(wx.BitmapFromImage(img))
@@ -183,16 +183,22 @@ class AquaFrame(maingui.Mainframe):
         self.PreviewImage(pad)
 
     def onbtnSelectFileClick(self, event):
-        # TODO: check of bestand al is toegevoegd..
-        # sla het hele pad op in..? pyobject clientdata
-
         _pad = self.tvFiles.GetFilePath()
+
+        # TODO: check of bestand al is toegevoegd..
+        for _i in range(self.listboxSelectedFiles.Count):
+            sPad = self.listboxSelectedFiles.GetClientData(_i)
+            if _pad == sPad:
+                print "image is al toegevoegd"
+                return
+
         if _pad != () and _pad != "":
             # file
-            if not self.IsImage(_pad):
+            if not self.IsValidImage(_pad):
                 return
             helepad = self.tvFiles.GetPath()
             bestandsnaam = os.path.basename(helepad)
+            # sla het hele pad op in pyobject clientdata.. toch?
             self.listboxSelectedFiles.Append(bestandsnaam, helepad)
         # else directory en doe niks
 
