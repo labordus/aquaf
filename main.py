@@ -13,6 +13,7 @@ from Dialog import Dialog
 import diversen
 import uploaddialog
 from wx.lib.pubsub.pub import validate
+from wx import BITMAP_TYPE_TIF
 #from diversen import ValideerInvoer
 #from telnetlib import theNULL
 
@@ -120,11 +121,53 @@ class AquaFrame(maingui.Mainframe):
         return dimensions
 
     def ontvFilesSelChanged(self, event):
+        import imghdr
         pad = self.tvFiles.GetFilePath()
         dimensions = self.bitmapSelectedFile.GetSize()
         if pad != () and pad != "":
             # file selected
+
+            # TODO: Checken wat voor image dit is.. if image at all.
+            #            image_type = imghdr.what(pad)
+            #            if not image_type:
+            #                print "error.. geen image-bestand"
+            #                return
+            #            else:
+            image_type = imghdr.what(pad)
+            if not image_type:
+                print "error.. geen image-bestand"
+                return
+            else:
+                # check of bv.. IMAGE.PNG ook echt een PNG is.. anders return.
+                # extract extension en maak lowercase
+                ext = os.path.splitext(pad)[-1].lower()
+                print image_type
+                if image_type == 'jpeg':
+                    if (ext != '.jpg' and
+                            ext != '.jpeg'):
+                        print "filetype JPG heeft geen JPG-extensie"
+                        return
+                elif image_type == 'bmp':
+                    if ext != '.bmp':
+                        print "filetype BMP heeft geen BMP-extensie"
+                        return
+                elif image_type == 'png':
+                    if ext != '.png':
+                        print "filetype PNG heeft geen PNG-extensie"
+                        return
+                elif image_type == 'tiff':
+                    if (ext != '.tiff' and
+                            ext != '.tif'):
+                        print "filetype TIF(F) heeft geen TIFF-extensie"
+                        return
+                else:
+                    print "Geen ondersteund image format"
+                    return
+
+##########################
+
             scaled_file = diversen.resizeFile(pad, dimensions)
+#            img = wx.Image(scaled_file, wx.BITMAP_TYPE_ANY)
             img = wx.Image(scaled_file, wx.BITMAP_TYPE_ANY)
             self.bitmapSelectedFile.SetBitmap(wx.BitmapFromImage(img))
 #            self.bitmapSelectedFile.Fit()
@@ -135,6 +178,7 @@ class AquaFrame(maingui.Mainframe):
         else:
             # directory selected
             scaled_file = diversen.resizeFile("test.jpg", dimensions)
+            # TODO: imgType jpg?
             img = wx.Image(scaled_file, wx.BITMAP_TYPE_ANY)
             self.bitmapSelectedFile.SetBitmap(wx.BitmapFromImage(img))
 #            self.Fit()
