@@ -1,5 +1,6 @@
 - De wxpython (3.0.1.1-8.1) versie die ik gebruik werkt niet meer met Windows 9*
 - PIL -> Pillow .. PIL levert gedoe op met BMP's met transparantie en nog meer, ook wordt het niet meer doorontwikkeld, Pillow wel. -> FIXED
+- Images niet dubbel kunnen selecteren -> FIXED
 - Kan ook niet geaccepteerde bestanden in selectielijst zetten met TOEVOEGEN -> FIXED
 - jpeg's worden met quality=60 opgeslagen.. dat verminderd de kwaliteit drastisch. Optimize?
 - taborder
@@ -29,5 +30,4 @@
 - Afbeeldingen mogen een maximale grootte hebben van 800*600 pixels.
 
 -- data --
-- Ik zou wat gegevens willen opslaan.. zoals ingevoerde username of laatst gekozen directory etc.. Hoe?
 - Archief zou niet voor iedereen werken blijkbaar.
