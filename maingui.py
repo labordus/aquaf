@@ -59,7 +59,7 @@ class Mainframe ( wx.Frame ):
 		bSizer4 = wx.BoxSizer( wx.HORIZONTAL )
 		
 		bSizer4.SetMinSize( wx.Size( 250,-1 ) ) 
-		self.tvFiles = wx.GenericDirCtrl( self, wx.ID_ANY, u"/home/kelp/Desktop/test", wx.DefaultPosition, wx.DefaultSize, wx.DIRCTRL_3D_INTERNAL|wx.SUNKEN_BORDER, u"\"plaatjes (*.bmp;*.jpg;*.png;*.tiff)|*.bmp;*.jpg;*.png;*.tiff\"", 0 )
+		self.tvFiles = wx.GenericDirCtrl( self, wx.ID_ANY, u"/home/kelp/Desktop/test", wx.DefaultPosition, wx.DefaultSize, wx.DIRCTRL_3D_INTERNAL|wx.SUNKEN_BORDER, u"\"plaatjes (*.bmp;*.BMP;*.jpg;*.JPG;*.png;*.PNG;*.tiff;*.TIFF;*.tif;*.TIF)|*.bmp;*.BMP;*.jpg;*.JPG;*.png;*.PNG;*.tiff;*.TIFF;*.tif;*.TIF\"", 0 )
 		
 		self.tvFiles.ShowHidden( False )
 		bSizer4.Add( self.tvFiles, 1, wx.EXPAND |wx.ALL, 5 )
