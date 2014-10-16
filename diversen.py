@@ -2,17 +2,10 @@ import mechanize
 import os
 import wx
 import string
-import Image
+from PIL import Image
 import PngImagePlugin  # @UnusedImport
 import BmpImagePlugin  # @UnusedImport
-import IcoImagePlugin  # @UnusedImport
 import JpegImagePlugin  # @UnusedImport
-import MpegImagePlugin  # @UnusedImport
-import PcxImagePlugin  # @UnusedImport
-import PdfImagePlugin  # @UnusedImport
-import PpmImagePlugin  # @UnusedImport
-import PsdImagePlugin  # @UnusedImport
-import TgaImagePlugin  # @UnusedImport
 import TiffImagePlugin  # @UnusedImport
 
 Image._initialized = 2
