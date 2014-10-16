@@ -12,10 +12,10 @@ from Dialog import Dialog
 
 import diversen
 import uploaddialog
-from wx.lib.pubsub.pub import validate
-from wx import BITMAP_TYPE_TIF
-#from diversen import ValideerInvoer
-#from telnetlib import theNULL
+# from wx.lib.pubsub.pub import validate
+# from wx import BITMAP_TYPE_TIF
+# from diversen import ValideerInvoer
+# from telnetlib import theNULL
 
 AUQAOFORUM_PICTURE_URL = "http://www.aquaforum.nl/gallery/upload/"
 TEST_FOTO = "test.jpg"
@@ -120,70 +120,67 @@ class AquaFrame(maingui.Mainframe):
             dimensions = (160, 120)
         return dimensions
 
-    def ontvFilesSelChanged(self, event):
+    def IsImage(self, pad):
         import imghdr
-        pad = self.tvFiles.GetFilePath()
+        # TODO: Checken wat voor image dit is.. if image at all.
+        image_type = imghdr.what(pad)
+        if not image_type:
+            print "error.. geen image-bestand"
+            return False
+        else:
+            # check of bv.. IMAGE.PNG ook echt een PNG is.. anders return.
+            # extract extension en maak lowercase
+            ext = os.path.splitext(pad)[-1].lower()
+            print image_type
+            if image_type == 'jpeg':
+                if (ext != '.jpg' and
+                        ext != '.jpeg'):
+                    print "filetype JPG heeft geen JPG-extensie"
+                    return False
+            elif image_type == 'bmp':
+                if ext != '.bmp':
+                    print "filetype BMP heeft geen BMP-extensie"
+                    return False
+            elif image_type == 'png':
+                if ext != '.png':
+                    print "filetype PNG heeft geen PNG-extensie"
+                    return False
+            elif image_type == 'tiff':
+                if (ext != '.tiff' and
+                        ext != '.tif'):
+                    print "filetype TIF(F) heeft geen TIFF-extensie"
+                    return False
+            else:
+                print "Geen ondersteund image format"
+                return False
+            return True
+
+    def PreviewImage(self, pad):
         dimensions = self.bitmapSelectedFile.GetSize()
         if pad != () and pad != "":
             # file selected
-
-            # TODO: Checken wat voor image dit is.. if image at all.
-            #            image_type = imghdr.what(pad)
-            #            if not image_type:
-            #                print "error.. geen image-bestand"
-            #                return
-            #            else:
-            image_type = imghdr.what(pad)
-            if not image_type:
-                print "error.. geen image-bestand"
+            if self.IsImage(pad):
+                scaled_file = diversen.resizeFile(pad, dimensions)
+                img = wx.Image(scaled_file, wx.BITMAP_TYPE_ANY)
+                self.bitmapSelectedFile.SetBitmap(wx.BitmapFromImage(img))
+                self.frame_1_statusbar.SetStatusText("bestand geselecteerd", 0)
+                self.action = "benaderen van aquaforum webpagina"
+            else:  # als geen geldige image
                 return
-            else:
-                # check of bv.. IMAGE.PNG ook echt een PNG is.. anders return.
-                # extract extension en maak lowercase
-                ext = os.path.splitext(pad)[-1].lower()
-                print image_type
-                if image_type == 'jpeg':
-                    if (ext != '.jpg' and
-                            ext != '.jpeg'):
-                        print "filetype JPG heeft geen JPG-extensie"
-                        return
-                elif image_type == 'bmp':
-                    if ext != '.bmp':
-                        print "filetype BMP heeft geen BMP-extensie"
-                        return
-                elif image_type == 'png':
-                    if ext != '.png':
-                        print "filetype PNG heeft geen PNG-extensie"
-                        return
-                elif image_type == 'tiff':
-                    if (ext != '.tiff' and
-                            ext != '.tif'):
-                        print "filetype TIF(F) heeft geen TIFF-extensie"
-                        return
-                else:
-                    print "Geen ondersteund image format"
-                    return
-
-##########################
-
-            scaled_file = diversen.resizeFile(pad, dimensions)
-#            img = wx.Image(scaled_file, wx.BITMAP_TYPE_ANY)
-            img = wx.Image(scaled_file, wx.BITMAP_TYPE_ANY)
-            self.bitmapSelectedFile.SetBitmap(wx.BitmapFromImage(img))
-#            self.bitmapSelectedFile.Fit()
-#            self.bitmapSelectedFile.Layout()
-#            self.btnSelectFile.Enable()
-            self.frame_1_statusbar.SetStatusText("bestand geselecteerd", 0)
-            self.action = "benaderen van aquaforum webpagina"
         else:
             # directory selected
-            scaled_file = diversen.resizeFile("test.jpg", dimensions)
+            scaled_file = diversen.resizeFile(TEST_FOTO, dimensions)
             # TODO: imgType jpg?
             img = wx.Image(scaled_file, wx.BITMAP_TYPE_ANY)
             self.bitmapSelectedFile.SetBitmap(wx.BitmapFromImage(img))
-#            self.Fit()
-#            self.Layout()
-#            self.btnSelectFile.Disable()
+
+    def ontvFilesSelChanged(self, event):
+        pad = self.tvFiles.GetFilePath()
+        self.PreviewImage(pad)
+
+    def onlistboxSelectedFile(self, event):
+        pad = self.listboxSelectedFiles.GetClientData(self.listboxSelectedFiles.GetSelection())
+        self.PreviewImage(pad)
 
     def onbtnSelectFileClick(self, event):
         # TODO: check of bestand al is toegevoegd..
@@ -192,6 +189,8 @@ class AquaFrame(maingui.Mainframe):
         _pad = self.tvFiles.GetFilePath()
         if _pad != () and _pad != "":
             # file
+            if not self.IsImage(_pad):
+                return
             helepad = self.tvFiles.GetPath()
             bestandsnaam = os.path.basename(helepad)
             self.listboxSelectedFiles.Append(bestandsnaam, helepad)
