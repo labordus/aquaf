@@ -100,9 +100,9 @@ class AquaFrame(maingui.Mainframe):
         Voorbeeld.SetTitle(TEST_FOTO)
         Voorbeeld.m_staticText6.Label = "Dimensie=" + str(dimensions)
         Voorbeeld.bitmapVoorbeeld.SetBitmap(wx.BitmapFromImage(img))
-#        Voorbeeld.CenterOnParent()
         Voorbeeld.Fit()
         Voorbeeld.Layout()
+        Voorbeeld.CenterOnParent()
 #        Voorbeeld.Show()
         Voorbeeld.ShowModal()
         Voorbeeld.Destroy()
@@ -238,6 +238,7 @@ class AquaFrame(maingui.Mainframe):
         dlg = uploaddialog.UploadDoneDialog(self)
         dlg.setCode(urls)
         self.listboxSelectedFiles.Clear()
+        dlg.CenterOnParent()
         dlg.ShowModal()  # this one is non blocking!!
         dlg.Destroy()
 
