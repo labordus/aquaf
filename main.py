@@ -4,6 +4,7 @@ import os
 import sys
 import imp
 import webbrowser
+from PIL import Image
 
 # import GUI
 import maingui
@@ -47,6 +48,8 @@ class AquaFrame(maingui.Mainframe):
 
         # bind validator to edtLogin-Invoerbox
         # self.edtLoginName.SetValidator(ValideerInvoer(diversen.ALPHA_ONLY))
+
+        self.PhotoMaxSize = 240
 
     def onbtnArchiefClick(self, event):
         #        try:
@@ -176,7 +179,54 @@ class AquaFrame(maingui.Mainframe):
 
     def ontvFilesSelChanged(self, event):
         pad = self.tvFiles.GetFilePath()
-        self.PreviewImage(pad)
+#        self.PreviewImage(pad)
+        self.OnView()
+
+# ########## TESTEN OP WINDOWS ################################
+
+    def OnView(self):
+        filepath = self.tvFiles.GetFilePath()
+        dimensions = self.bitmapSelectedFile.GetSize()
+#        img = wx.Image(filepath, wx.BITMAP_TYPE_ANY)
+        img = Image.open(filepath)
+        # scale the image, preserving the aspect ratio
+        originalDimensions = img.size
+        xRatio = float(dimensions[0]) / originalDimensions[0]
+        yRatio = float(dimensions[1]) / originalDimensions[1]
+        if xRatio < 1 or yRatio < 1:
+            # only resize when needed
+            minimumRatio = min([xRatio, yRatio])
+            img = img.resize(
+                (
+                    int(originalDimensions[0] * minimumRatio),
+                    int(originalDimensions[1] * minimumRatio)
+                ), Image.ANTIALIAS)  # resize
+
+#        self.bitmapSelectedFile.SetBitmap(wx.BitmapFromImage(img))
+        self.bitmapSelectedFile.SetBitmap(self.PilImageToWxBitmap(img))
+
+    def PilImageToWxBitmap(self, myPilImage):
+        return self.WxImageToWxBitmap(self.PilImageToWxImage(myPilImage))
+
+    def WxImageToWxBitmap(self, myWxImage):
+        return myWxImage.ConvertToBitmap()
+
+    def PilImageToWxImage(self, myPilImage, copyAlpha=True):
+        hasAlpha = myPilImage.mode[-1] == 'A'
+        if copyAlpha and hasAlpha:  # Make sure there is an alpha layer copy.
+            myWxImage = wx.EmptyImage(*myPilImage.size)
+            myPilImageCopyRGBA = myPilImage.copy()
+            myPilImageCopyRGB = myPilImageCopyRGBA.convert('RGB')    # RGBA --> RGB
+            myPilImageRgbData = myPilImageCopyRGB.tostring()
+            myWxImage.SetData(myPilImageRgbData)
+            myWxImage.SetAlphaData(myPilImageCopyRGBA.tostring()[3::4])  # Create layer and insert alpha values.
+        else:    # The resulting image will not have alpha.
+            myWxImage = wx.EmptyImage(*myPilImage.size)
+            myPilImageCopy = myPilImage.copy()
+            myPilImageCopyRGB = myPilImageCopy.convert('RGB')    # Discard any alpha from the PIL image.
+            myPilImageRgbData = myPilImageCopyRGB.tostring()
+            myWxImage.SetData(myPilImageRgbData)
+        return myWxImage
 
     def onlistboxSelectedFile(self, event):
         pad = self.listboxSelectedFiles.GetClientData(self.listboxSelectedFiles.GetSelection())
