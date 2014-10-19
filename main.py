@@ -49,7 +49,12 @@ class AquaFrame(maingui.Mainframe):
         # bind validator to edtLogin-Invoerbox
         # self.edtLoginName.SetValidator(ValideerInvoer(diversen.ALPHA_ONLY))
 
-        self.PhotoMaxSize = 240
+        # Windows laat anders dubbele entries zien,
+        # en linux laat alleen bestanden zien met specifieke casing
+        if (sys.platform == 'win32'):  # weet niet of dit ook Win 7/8 meeneemt
+            self.tvFiles.SetFilter("plaatjes(*.bmp;*.jpg;*.png;*.tiff;*.tif;)|*.bmp;*.jpg;*.png;*.tiff;*.tif")
+        else:  # posix
+            self.tvFiles.SetFilter("plaatjes(*.bmp;*.BMP;*.jpg;*.JPG;*.png;*.PNG;*.tiff;*.TIFF;*.tif;*.TIF)|*.bmp;*.BMP;*.jpg;*.JPG;*.png;*.PNG;*.tiff;*.TIFF;*.tif;*.TIF")
 
     def onbtnArchiefClick(self, event):
         #        try:
@@ -181,12 +186,14 @@ class AquaFrame(maingui.Mainframe):
         pad = self.tvFiles.GetFilePath()
 #        self.PreviewImage(pad)
         self.OnView()
-
-# ########## TESTEN OP WINDOWS ################################
+#        print platform.platform(aliased=0, terse=0)
 
     def OnView(self):
+        # TODO: Checks hier..
         filepath = self.tvFiles.GetFilePath()
-        dimensions = self.bitmapSelectedFile.GetSize()
+#        self.bitmapSelectedFile.SetMinSize((400, 300))
+#        dimensions = self.bitmapSelectedFile.GetSize()
+        dimensions = (400, 300)
 #        img = wx.Image(filepath, wx.BITMAP_TYPE_ANY)
         img = Image.open(filepath)
         # scale the image, preserving the aspect ratio
@@ -201,7 +208,7 @@ class AquaFrame(maingui.Mainframe):
                     int(originalDimensions[0] * minimumRatio),
                     int(originalDimensions[1] * minimumRatio)
                 ), Image.ANTIALIAS)  # resize
-
+        self.bitmapSelectedFile.SetSize(img.size)
 #        self.bitmapSelectedFile.SetBitmap(wx.BitmapFromImage(img))
         self.bitmapSelectedFile.SetBitmap(self.PilImageToWxBitmap(img))
 
