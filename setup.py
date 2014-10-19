@@ -1,9 +1,9 @@
 # setup.py
 from distutils.core import setup
 import py2exe
-      
+
 setup(windows=[ {
-                "script" : "aquaforumUpload.py",
+                "script" : "main.py",
                 "icon_resources": [(1, "icon.ico")]
                  }
                 ],
