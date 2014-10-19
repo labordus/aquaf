@@ -59,7 +59,7 @@ class Mainframe ( wx.Frame ):
 		bSizer4 = wx.BoxSizer( wx.HORIZONTAL )
 		
 		bSizer4.SetMinSize( wx.Size( 250,-1 ) ) 
-		self.tvFiles = wx.GenericDirCtrl( self, wx.ID_ANY, u"/home/kelp/Desktop/test", wx.DefaultPosition, wx.DefaultSize, wx.DIRCTRL_3D_INTERNAL|wx.SUNKEN_BORDER, u"\"plaatjes (*.bmp;*.BMP;*.jpg;*.JPG;*.png;*.PNG;*.tiff;*.TIFF;*.tif;*.TIF)|*.bmp;*.BMP;*.jpg;*.JPG;*.png;*.PNG;*.tiff;*.TIFF;*.tif;*.TIF\"", 0 )
+		self.tvFiles = wx.GenericDirCtrl( self, wx.ID_ANY, u"/home/kelp/Desktop/test", wx.DefaultPosition, wx.DefaultSize, wx.DIRCTRL_3D_INTERNAL|wx.SUNKEN_BORDER, wx.EmptyString, 0 )
 		
 		self.tvFiles.ShowHidden( False )
 		bSizer4.Add( self.tvFiles, 1, wx.EXPAND |wx.ALL, 5 )
@@ -72,13 +72,10 @@ class Mainframe ( wx.Frame ):
 		bSizer152 = wx.BoxSizer( wx.VERTICAL )
 		
 		self.bitmapSelectedFile = wx.StaticBitmap( self, wx.ID_ANY, wx.Bitmap( u"default_foto.jpg", wx.BITMAP_TYPE_ANY ), wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.bitmapSelectedFile.SetMinSize( wx.Size( 250,250 ) )
-		self.bitmapSelectedFile.SetMaxSize( wx.Size( 250,250 ) )
-		
 		bSizer152.Add( self.bitmapSelectedFile, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALL|wx.EXPAND, 5 )
 		
 		
-		bSizer22.Add( bSizer152, 1, wx.EXPAND, 0 )
+		bSizer22.Add( bSizer152, 1, wx.ALL|wx.EXPAND|wx.SHAPED, 0 )
 		
 		bSizer151 = wx.BoxSizer( wx.VERTICAL )
 		
@@ -92,7 +89,7 @@ class Mainframe ( wx.Frame ):
 		bSizer22.Add( bSizer151, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		
-		bSizer13.Add( bSizer22, 1, wx.EXPAND, 5 )
+		bSizer13.Add( bSizer22, 1, wx.ALL|wx.EXPAND, 5 )
 		
 		bSizer14 = wx.BoxSizer( wx.VERTICAL )
 		

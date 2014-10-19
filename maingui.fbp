@@ -482,7 +482,7 @@
                                                 <property name="docking">Left</property>
                                                 <property name="enabled">1</property>
                                                 <property name="fg"></property>
-                                                <property name="filter">&quot;plaatjes (*.bmp;*.BMP;*.jpg;*.JPG;*.png;*.PNG;*.tiff;*.TIFF;*.tif;*.TIF)|*.bmp;*.BMP;*.jpg;*.JPG;*.png;*.PNG;*.tiff;*.TIFF;*.tif;*.TIF&quot;</property>
+                                                <property name="filter"></property>
                                                 <property name="floatable">1</property>
                                                 <property name="font"></property>
                                                 <property name="gripper">0</property>
@@ -559,7 +559,7 @@
                                 </object>
                                 <object class="sizeritem" expanded="0">
                                     <property name="border">5</property>
-                                    <property name="flag">wxEXPAND</property>
+                                    <property name="flag">wxALL|wxEXPAND</property>
                                     <property name="proportion">1</property>
                                     <object class="wxBoxSizer" expanded="0">
                                         <property name="minimum_size"></property>
@@ -568,10 +568,10 @@
                                         <property name="permission">none</property>
                                         <object class="sizeritem" expanded="0">
                                             <property name="border">0</property>
-                                            <property name="flag">wxEXPAND</property>
+                                            <property name="flag">wxALL|wxEXPAND|wxSHAPED</property>
                                             <property name="proportion">1</property>
                                             <object class="wxBoxSizer" expanded="0">
-                                                <property name="minimum_size"></property>
+                                                <property name="minimum_size">-1,-1</property>
                                                 <property name="name">bSizer152</property>
                                                 <property name="orient">wxVERTICAL</property>
                                                 <property name="permission">none</property>
@@ -610,10 +610,10 @@
                                                         <property name="id">wxID_ANY</property>
                                                         <property name="max_size"></property>
                                                         <property name="maximize_button">0</property>
-                                                        <property name="maximum_size">250,250</property>
+                                                        <property name="maximum_size">-1,-1</property>
                                                         <property name="min_size"></property>
                                                         <property name="minimize_button">0</property>
-                                                        <property name="minimum_size">250,250</property>
+                                                        <property name="minimum_size">-1,-1</property>
                                                         <property name="moveable">1</property>
                                                         <property name="name">bitmapSelectedFile</property>
                                                         <property name="pane_border">1</property>
