@@ -194,3 +194,63 @@ def constructUploadName(loginname, requestedfilename):
         resultName = str(random.random())[-1] + resultName  # prepend with random number
     # while string.find(page,resultName)<>-1:
     return resultName
+
+
+def IsValidImage(pad):
+    import imghdr
+    image_type = imghdr.what(pad)
+    if not image_type:
+        print "error.. geen image-bestand"
+        return False
+    else:
+        # check of bv.. IMAGE.PNG ook echt een PNG is.. anders return.
+        # extract extension en maak lowercase
+        ext = os.path.splitext(pad)[-1].lower()
+        if image_type == 'jpeg':
+            if (ext != '.jpg' and
+                    ext != '.jpeg'):
+                print "filetype JPG heeft geen JPG-extensie"
+                return False
+        elif image_type == 'bmp':
+            if ext != '.bmp':
+                print "filetype BMP heeft geen BMP-extensie"
+                return False
+        elif image_type == 'png':
+            if ext != '.png':
+                print "filetype PNG heeft geen PNG-extensie"
+                return False
+        elif image_type == 'tiff':
+            if (ext != '.tiff' and
+                    ext != '.tif'):
+                print "filetype TIF(F) heeft geen TIFF-extensie"
+                return False
+        else:
+            print "Geen ondersteund image format"
+            return False
+        return True
+
+
+def PilImageToWxBitmap(myPilImage):
+    return WxImageToWxBitmap(PilImageToWxImage(myPilImage))
+
+
+def WxImageToWxBitmap(myWxImage):
+    return myWxImage.ConvertToBitmap()
+
+
+def PilImageToWxImage(myPilImage, copyAlpha=True):
+    hasAlpha = myPilImage.mode[-1] == 'A'
+    if copyAlpha and hasAlpha:  # Make sure there is an alpha layer copy.
+        myWxImage = wx.EmptyImage(*myPilImage.size)
+        myPilImageCopyRGBA = myPilImage.copy()
+        myPilImageCopyRGB = myPilImageCopyRGBA.convert('RGB')    # RGBA --> RGB
+        myPilImageRgbData = myPilImageCopyRGB.tostring()
+        myWxImage.SetData(myPilImageRgbData)
+        myWxImage.SetAlphaData(myPilImageCopyRGBA.tostring()[3::4])  # Create layer and insert alpha values.
+    else:    # The resulting image will not have alpha.
+        myWxImage = wx.EmptyImage(*myPilImage.size)
+        myPilImageCopy = myPilImage.copy()
+        myPilImageCopyRGB = myPilImageCopy.convert('RGB')    # Discard any alpha from the PIL image.
+        myPilImageRgbData = myPilImageCopyRGB.tostring()
+        myWxImage.SetData(myPilImageRgbData)
+    return myWxImage
