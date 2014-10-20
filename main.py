@@ -74,20 +74,16 @@ class AquaFrame(maingui.Mainframe):
         return
 
     def onbtnVoorbeeldClick(self, event):
-        #        filepath = self.edtFile1.GetValue()
-
-        dimensions = self.getDimensions()
+        dimensions = getDimensions(self.radio_box_3.GetSelection())
 #        self.frame_1_statusbar.SetStatusText("Het programma converteert het plaatje", 0)
         resizedFileName = None
-
-#        if self.edtFile1.GetValue() != () and self.edtFile1.GetValue() != "":
         try:
             if not (os.path.exists(TEST_FOTO)):
                 wx.MessageDialog(self, TEST_FOTO + " bestaat niet", "Bericht", style=wx.OK).ShowModal()
                 resizedFileName = None
                 return
             else:
-                resizedFileName = diversen.resizeFile(TEST_FOTO, dimensions)
+                resizedFileName = ResizeImage(TEST_FOTO, dimensions)
 #                  self.frame_1_statusbar.SetStatusText(" ", 0)
         except Exception as er:
             resizedFileName = None
@@ -98,65 +94,30 @@ class AquaFrame(maingui.Mainframe):
                 str(er),
                 "Bericht",
                 style=wx.OK).ShowModal()
-
-        img = wx.Image(resizedFileName, wx.BITMAP_TYPE_ANY)
-
-        self.ShowVoorbeeld(img, dimensions)
-
-
-########################################
-    def ShowVoorbeeld(self, img, dimensions):
+            return
         Voorbeeld = dlgVoorbeeld(self)
-        Voorbeeld.SetTitle(TEST_FOTO)
+        Voorbeeld.SetTitle("Voorbeeld")
         Voorbeeld.m_staticText6.Label = "Dimensie=" + str(dimensions)
-        Voorbeeld.bitmapVoorbeeld.SetBitmap(wx.BitmapFromImage(img))
+        Voorbeeld.bitmapVoorbeeld.SetBitmap(PilImageToWxBitmap(resizedFileName))
         Voorbeeld.Fit()
         Voorbeeld.Layout()
         Voorbeeld.CenterOnParent()
-#        Voorbeeld.Show()
         Voorbeeld.ShowModal()
         Voorbeeld.Destroy()
-
-    def getDimensions(self):
-        index = self.radio_box_3.GetSelection()  # zero based index
-        dimensions = None
-        if index == 0:
-            dimensions = (800, 600)
-        elif index == 1:
-            dimensions = (640, 480)
-        elif index == 2:
-            dimensions = (320, 240)
-        else:
-            dimensions = (160, 120)
-        return dimensions
-
-    def ResizeImage(self, pad, dim):
-        img = Image.open(pad)
-        # scale the image, preserving the aspect ratio
-        originalDimensions = img.size
-        xRatio = float(dim[0]) / originalDimensions[0]
-        yRatio = float(dim[1]) / originalDimensions[1]
-        if xRatio < 1 or yRatio < 1:
-            # only resize when needed
-            minimumRatio = min([xRatio, yRatio])
-            img = img.resize(
-                (
-                    int(originalDimensions[0] * minimumRatio),
-                    int(originalDimensions[1] * minimumRatio)
-                ), Image.ANTIALIAS)  # resize
-        self.bitmapSelectedFile.SetSize(img.size)
-        self.bitmapSelectedFile.SetBitmap(PilImageToWxBitmap(img))
 
     def PreviewImage(self, pad):
         #        dimensions = self.bitmapSelectedFile.GetSize()
         if pad != () and pad != "":
             # file selected
             if IsValidImage(pad):
-                self.ResizeImage(pad, (400, 300))
-            else:  # als geen geldige image
+                img = ResizeImage(pad, (400, 300))
+            else:  # als geen geldige image.. return
                 return
-        else:  # dir
-            self.ResizeImage(TEST_FOTO, (400, 300))
+        else:  # directory selected
+            img = ResizeImage(TEST_FOTO, (400, 300))
+
+        self.bitmapSelectedFile.SetSize(img.size)
+        self.bitmapSelectedFile.SetBitmap(PilImageToWxBitmap(img))
 
     def ontvFilesSelChanged(self, event):
         self.PreviewImage(self.tvFiles.GetFilePath())
@@ -200,19 +161,22 @@ class AquaFrame(maingui.Mainframe):
                 "Geen bestand geselecteerd", 0)
             return
 
-        dimensions = self.getDimensions()
+        dimensions = getDimensions(self.radio_box_3.GetSelection())
         urls = ""
         for _i in range(filecount):
             print self.listboxSelectedFiles.GetClientData(_i)
             try:
-                resizedFileName = diversen.resizeFile(
-                    self.listboxSelectedFiles.GetClientData(_i),
-                    dimensions)
+                resizedFilename = ResizeImage(
+                    self.listboxSelectedFiles.GetClientData(_i), dimensions)
+                SaveImageToTemp(resizedFilename)
+#                resizedFileName = diversen.resizeFile(
+#                    self.listboxSelectedFiles.GetClientData(_i),
+#                    dimensions
                 self.desiredName = diversen.constructUploadName(
                     self.edtLoginName.GetValue(),
                     self.listboxSelectedFiles.GetClientData(_i))
 #                diversen.uploadFileToAquaforum(resizedFileName, self.desiredName)
-#                diversen.addToHistory(AUQAOFORUM_PICTURE_URL + self.desiredName)
+                diversen.addToHistory(AUQAOFORUM_PICTURE_URL + self.desiredName)
                 urls = urls + " [IMG]" + AUQAOFORUM_PICTURE_URL + self.desiredName + "[/IMG]" + "\n"
 
             except Exception as er:
