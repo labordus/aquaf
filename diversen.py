@@ -86,6 +86,7 @@ def getDimensions(index):
 
 
 def ResizeImage(pad, dim):
+    # FIXME: Bestand mag uiteindelijk niet groter zijn dan 200 kb
     img = Image.open(pad)
     # scale the image, preserving the aspect ratio
     originalDimensions = img.size
@@ -102,18 +103,28 @@ def ResizeImage(pad, dim):
     return img
 
 
-def SaveImageToTemp(im):
+def SaveJPEGToTemp(im):
     resizedFileName = "tempfile.dat"
     # quality hoger dan 95 heeft geen nut,
     # zie http://pillow.readthedocs.org/en/latest/handbook/image-file-formats.html
+    kwal = 95
     try:
-        im.save(resizedFileName, "JPEG", quality=95, optimize=True)
+        im.save(resizedFileName, "JPEG", quality=kwal, optimize=True)
     except IOError:
         # try again, without optimization
         im.draft("RGB", im.size)
         im = im.convert("RGB")
-        im.save(resizedFileName, "JPEG", quality=95, optimize=False)
+        im.save(resizedFileName, "JPEG", quality=kwal, optimize=False)
+#############################################################################
+    kwaliteit = [95, 93, 91, 89, 87, 85, 83, 81, 79, 77, 75, 73, 71, 69, 67]
+    for _x in kwaliteit:
+        im.save(resizedFileName, "JPEG", quality=_x, optimize=True)
+        if os.path.getsize(resizedFileName) <= 200000:
+            break
+#        else:
+#            print "kon niet klein genoeg worden gemaakt"
     return resizedFileName
+#############################################################################
 
 
 def addToHistory(url):
