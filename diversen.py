@@ -72,31 +72,38 @@ class ValideerInvoer(wx.PyValidator):
         return
 
 
-def resizeFile(filename, dimensions):
-    '''
-    returns filename of resized file
-    '''
-    im = Image.open(filename)  # load the image
-#    dim = im.size
-    # create temporary file, resize
-    resizedFileName = "tempfile.dat"
-    # im.thumbnail(dimensions)
-    originalDimensions = im.size
-    xRatio = float(dimensions[0]) / originalDimensions[0]
-    yRatio = float(dimensions[1]) / originalDimensions[1]
+def getDimensions(index):
+    dimensions = None
+    if index == 0:
+        dimensions = (800, 600)
+    elif index == 1:
+        dimensions = (640, 480)
+    elif index == 2:
+        dimensions = (320, 240)
+    else:
+        dimensions = (160, 120)
+    return dimensions
+
+
+def ResizeImage(pad, dim):
+    img = Image.open(pad)
+    # scale the image, preserving the aspect ratio
+    originalDimensions = img.size
+    xRatio = float(dim[0]) / originalDimensions[0]
+    yRatio = float(dim[1]) / originalDimensions[1]
     if xRatio < 1 or yRatio < 1:
         # only resize when needed
         minimumRatio = min([xRatio, yRatio])
-        im = im.resize(
+        img = img.resize(
             (
                 int(originalDimensions[0] * minimumRatio),
                 int(originalDimensions[1] * minimumRatio)
             ), Image.ANTIALIAS)  # resize
-    # try:
-    #    im.save(resizedFileName,"JPEG",quality=100,optimize=1)
-    # except IOError:
-    # try again, without optimization
+    return img
 
+
+def SaveImageToTemp(im):
+    resizedFileName = "tempfile.dat"
     # quality hoger dan 95 heeft geen nut,
     # zie http://pillow.readthedocs.org/en/latest/handbook/image-file-formats.html
     try:
@@ -162,12 +169,7 @@ def uploadFileToAquaforum(uploadFilename, requestedFileName):
 
 
 def constructUploadName(loginname, requestedfilename):
-    '''
-    '''
     # construct name
-
-#    import os
-    import string
     import random
     filename = os.path.split(requestedfilename)[1]
     filename = filename[:string.find(filename, ".")] + ".jpg"  # construct jpg extension
