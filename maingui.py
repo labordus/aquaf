@@ -50,6 +50,9 @@ class Mainframe ( wx.Frame ):
 		self.edtLoginName.SetMaxLength( 0 ) 
 		bSizer3.Add( self.edtLoginName, 0, wx.ALIGN_CENTER_VERTICAL|wx.FIXED_MINSIZE, 0 )
 		
+		self.btnTestSize = wx.Button( self, wx.ID_ANY, u"MyButton", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer3.Add( self.btnTestSize, 0, wx.ALL, 5 )
+		
 		
 		bSizer1.Add( bSizer3, 1, wx.EXPAND, 0 )
 		
@@ -146,6 +149,7 @@ class Mainframe ( wx.Frame ):
 		self.Centre( wx.BOTH )
 		
 		# Connect Events
+		self.btnTestSize.Bind( wx.EVT_BUTTON, self.onbtnTestSize )
 		self.tvFiles.Bind( wx.EVT_TREE_SEL_CHANGED, self.ontvFilesSelChanged )
 		self.btnSelectFile.Bind( wx.EVT_BUTTON, self.onbtnSelectFileClick )
 		self.btnUnselectFile.Bind( wx.EVT_BUTTON, self.onbtnUnselectFileClick )
@@ -161,6 +165,9 @@ class Mainframe ( wx.Frame ):
 	
 	
 	# Virtual event handlers, overide them in your derived class
+	def onbtnTestSize( self, event ):
+		event.Skip()
+	
 	def ontvFilesSelChanged( self, event ):
 		event.Skip()
 	
