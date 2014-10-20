@@ -12,6 +12,8 @@ from maingui import dlgVoorbeeld, dlgUploadDone
 from Dialog import Dialog
 
 import diversen
+from diversen import *
+
 import uploaddialog
 # from wx.lib.pubsub.pub import validate
 # from wx import BITMAP_TYPE_TIF
@@ -128,78 +130,12 @@ class AquaFrame(maingui.Mainframe):
             dimensions = (160, 120)
         return dimensions
 
-    def IsValidImage(self, pad):
-        import imghdr
-        # TODO: Checken wat voor image dit is.. if image at all.
-        image_type = imghdr.what(pad)
-        if not image_type:
-            print "error.. geen image-bestand"
-            return False
-        else:
-            # check of bv.. IMAGE.PNG ook echt een PNG is.. anders return.
-            # extract extension en maak lowercase
-            ext = os.path.splitext(pad)[-1].lower()
-            print image_type
-            if image_type == 'jpeg':
-                if (ext != '.jpg' and
-                        ext != '.jpeg'):
-                    print "filetype JPG heeft geen JPG-extensie"
-                    return False
-            elif image_type == 'bmp':
-                if ext != '.bmp':
-                    print "filetype BMP heeft geen BMP-extensie"
-                    return False
-            elif image_type == 'png':
-                if ext != '.png':
-                    print "filetype PNG heeft geen PNG-extensie"
-                    return False
-            elif image_type == 'tiff':
-                if (ext != '.tiff' and
-                        ext != '.tif'):
-                    print "filetype TIF(F) heeft geen TIFF-extensie"
-                    return False
-            else:
-                print "Geen ondersteund image format"
-                return False
-            return True
-
-    def PreviewImage(self, pad):
-        dimensions = self.bitmapSelectedFile.GetSize()
-        if pad != () and pad != "":
-            # file selected
-            if self.IsValidImage(pad):
-                scaled_file = diversen.resizeFile(pad, dimensions)
-                img = wx.Image(scaled_file, wx.BITMAP_TYPE_ANY)
-                self.bitmapSelectedFile.SetBitmap(wx.BitmapFromImage(img))
-                self.frame_1_statusbar.SetStatusText("bestand geselecteerd", 0)
-                self.action = "benaderen van aquaforum webpagina"
-            else:  # als geen geldige image
-                return
-        else:
-            # directory selected
-            scaled_file = diversen.resizeFile(TEST_FOTO, dimensions)
-            # TODO: imgType jpg?
-            img = wx.Image(scaled_file, wx.BITMAP_TYPE_ANY)
-            self.bitmapSelectedFile.SetBitmap(wx.BitmapFromImage(img))
-
-    def ontvFilesSelChanged(self, event):
-        pad = self.tvFiles.GetFilePath()
-#        self.PreviewImage(pad)
-        self.OnView()
-#        print platform.platform(aliased=0, terse=0)
-
-    def OnView(self):
-        # TODO: Checks hier..
-        filepath = self.tvFiles.GetFilePath()
-#        self.bitmapSelectedFile.SetMinSize((400, 300))
-#        dimensions = self.bitmapSelectedFile.GetSize()
-        dimensions = (400, 300)
-#        img = wx.Image(filepath, wx.BITMAP_TYPE_ANY)
-        img = Image.open(filepath)
+    def ResizeImage(self, pad, dim):
+        img = Image.open(pad)
         # scale the image, preserving the aspect ratio
         originalDimensions = img.size
-        xRatio = float(dimensions[0]) / originalDimensions[0]
-        yRatio = float(dimensions[1]) / originalDimensions[1]
+        xRatio = float(dim[0]) / originalDimensions[0]
+        yRatio = float(dim[1]) / originalDimensions[1]
         if xRatio < 1 or yRatio < 1:
             # only resize when needed
             minimumRatio = min([xRatio, yRatio])
@@ -209,31 +145,22 @@ class AquaFrame(maingui.Mainframe):
                     int(originalDimensions[1] * minimumRatio)
                 ), Image.ANTIALIAS)  # resize
         self.bitmapSelectedFile.SetSize(img.size)
-#        self.bitmapSelectedFile.SetBitmap(wx.BitmapFromImage(img))
-        self.bitmapSelectedFile.SetBitmap(self.PilImageToWxBitmap(img))
+        self.bitmapSelectedFile.SetBitmap(PilImageToWxBitmap(img))
 
-    def PilImageToWxBitmap(self, myPilImage):
-        return self.WxImageToWxBitmap(self.PilImageToWxImage(myPilImage))
+    def PreviewImage(self, pad):
+        #        dimensions = self.bitmapSelectedFile.GetSize()
+        if pad != () and pad != "":
+            # file selected
+            if IsValidImage(pad):
+                self.ResizeImage(pad, (400, 300))
+            else:  # als geen geldige image
+                return
+        else:  # dir
+            self.ResizeImage(TEST_FOTO, (400, 300))
 
-    def WxImageToWxBitmap(self, myWxImage):
-        return myWxImage.ConvertToBitmap()
-
-    def PilImageToWxImage(self, myPilImage, copyAlpha=True):
-        hasAlpha = myPilImage.mode[-1] == 'A'
-        if copyAlpha and hasAlpha:  # Make sure there is an alpha layer copy.
-            myWxImage = wx.EmptyImage(*myPilImage.size)
-            myPilImageCopyRGBA = myPilImage.copy()
-            myPilImageCopyRGB = myPilImageCopyRGBA.convert('RGB')    # RGBA --> RGB
-            myPilImageRgbData = myPilImageCopyRGB.tostring()
-            myWxImage.SetData(myPilImageRgbData)
-            myWxImage.SetAlphaData(myPilImageCopyRGBA.tostring()[3::4])  # Create layer and insert alpha values.
-        else:    # The resulting image will not have alpha.
-            myWxImage = wx.EmptyImage(*myPilImage.size)
-            myPilImageCopy = myPilImage.copy()
-            myPilImageCopyRGB = myPilImageCopy.convert('RGB')    # Discard any alpha from the PIL image.
-            myPilImageRgbData = myPilImageCopyRGB.tostring()
-            myWxImage.SetData(myPilImageRgbData)
-        return myWxImage
+    def ontvFilesSelChanged(self, event):
+        self.PreviewImage(self.tvFiles.GetFilePath())
+#        print platform.platform(aliased=0, terse=0)
 
     def onlistboxSelectedFile(self, event):
         pad = self.listboxSelectedFiles.GetClientData(self.listboxSelectedFiles.GetSelection())
@@ -251,7 +178,7 @@ class AquaFrame(maingui.Mainframe):
 
         if _pad != () and _pad != "":
             # file
-            if not self.IsValidImage(_pad):
+            if not IsValidImage(_pad):
                 return
             helepad = self.tvFiles.GetPath()
             bestandsnaam = os.path.basename(helepad)
@@ -298,6 +225,7 @@ class AquaFrame(maingui.Mainframe):
         dlg.CenterOnParent()
         dlg.ShowModal()  # this one is non blocking!!
         dlg.Destroy()
+
 
 # mandatory in wx, create an app, False stands for not deteriction stdin/stdout
 app = wx.App(False)
