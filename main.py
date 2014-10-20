@@ -53,6 +53,8 @@ class AquaFrame(maingui.Mainframe):
 
         # Windows laat anders dubbele entries zien,
         # en linux laat alleen bestanden zien met specifieke casing
+
+        # if sys.platform[:3] == 'win':
         if (sys.platform == 'win32'):  # weet niet of dit ook Win 7/8 meeneemt
             self.tvFiles.SetFilter("plaatjes(*.bmp;*.jpg;*.png;*.tiff;*.tif;)|*.bmp;*.jpg;*.png;*.tiff;*.tif")
         else:  # posix
@@ -130,7 +132,7 @@ class AquaFrame(maingui.Mainframe):
     def onbtnSelectFileClick(self, event):
         _pad = self.tvFiles.GetFilePath()
 
-        # TODO: check of bestand al is toegevoegd..
+        # check of bestand al is toegevoegd..
         for _i in range(self.listboxSelectedFiles.Count):
             sPad = self.listboxSelectedFiles.GetClientData(_i)
             if _pad == sPad:
@@ -168,15 +170,13 @@ class AquaFrame(maingui.Mainframe):
             try:
                 resizedFilename = ResizeImage(
                     self.listboxSelectedFiles.GetClientData(_i), dimensions)
-                SaveImageToTemp(resizedFilename)
-#                resizedFileName = diversen.resizeFile(
-#                    self.listboxSelectedFiles.GetClientData(_i),
-#                    dimensions
+                resizedFilename = SaveJPEGToTemp(resizedFilename)
                 self.desiredName = diversen.constructUploadName(
                     self.edtLoginName.GetValue(),
                     self.listboxSelectedFiles.GetClientData(_i))
-#                diversen.uploadFileToAquaforum(resizedFileName, self.desiredName)
-                diversen.addToHistory(AUQAOFORUM_PICTURE_URL + self.desiredName)
+
+                uploadFileToAquaforum(resizedFilename, self.desiredName)
+                addToHistory(AUQAOFORUM_PICTURE_URL + self.desiredName)
                 urls = urls + " [IMG]" + AUQAOFORUM_PICTURE_URL + self.desiredName + "[/IMG]" + "\n"
 
             except Exception as er:
@@ -190,6 +190,8 @@ class AquaFrame(maingui.Mainframe):
         dlg.ShowModal()  # this one is non blocking!!
         dlg.Destroy()
 
+    def onbtnTestSize(self, event):
+        print os.path.getsize("tempfile.dat")
 
 # mandatory in wx, create an app, False stands for not deteriction stdin/stdout
 app = wx.App(False)
