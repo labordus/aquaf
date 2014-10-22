@@ -55,7 +55,7 @@ class AquaFrame(maingui.Mainframe):
         # en linux laat alleen bestanden zien met specifieke casing
 
         # if sys.platform[:3] == 'win':
-        if (sys.platform == 'win32'):  # weet niet of dit ook Win 7/8 meeneemt
+        if (sys.platform.lower() == 'win32'):  # weet niet of dit ook Win 7/8 meeneemt
             self.tvFiles.SetFilter("plaatjes(*.bmp;*.jpg;*.png;*.tiff;*.tif;)|*.bmp;*.jpg;*.png;*.tiff;*.tif")
         else:  # posix
             self.tvFiles.SetFilter("plaatjes(*.bmp;*.BMP;*.jpg;*.JPG;*.png;*.PNG;*.tiff;*.TIFF;*.tif;*.TIF)|*.bmp;*.BMP;*.jpg;*.JPG;*.png;*.PNG;*.tiff;*.TIFF;*.tif;*.TIF")
@@ -92,10 +92,8 @@ class AquaFrame(maingui.Mainframe):
             wx.MessageDialog(
                 self,
                 "Er is een fout opgetreden tijdens het converteren\n" +
-                "De error is " +
-                str(er),
-                "Bericht",
-                style=wx.OK).ShowModal()
+                "De error is " + str(er),
+                "Bericht", style=wx.OK).ShowModal()
             return
         Voorbeeld = dlgVoorbeeld(self)
         Voorbeeld.SetTitle("Voorbeeld")
@@ -126,6 +124,12 @@ class AquaFrame(maingui.Mainframe):
 #        print platform.platform(aliased=0, terse=0)
 
     def onlistboxSelectedFile(self, event):
+        pad = self.listboxSelectedFiles.GetClientData(self.listboxSelectedFiles.GetSelection())
+        self.PreviewImage(pad)
+
+    def onlistboxSelectedFileSetFocus(self, event):
+        if self.listboxSelectedFiles.GetSelection() == wx.NOT_FOUND:
+            return
         pad = self.listboxSelectedFiles.GetClientData(self.listboxSelectedFiles.GetSelection())
         self.PreviewImage(pad)
 
@@ -175,8 +179,8 @@ class AquaFrame(maingui.Mainframe):
                     self.edtLoginName.GetValue(),
                     self.listboxSelectedFiles.GetClientData(_i))
 
-                uploadFileToAquaforum(resizedFilename, self.desiredName)
-                addToHistory(AUQAOFORUM_PICTURE_URL + self.desiredName)
+#                uploadFileToAquaforum(resizedFilename, self.desiredName)
+#                addToHistory(AUQAOFORUM_PICTURE_URL + self.desiredName)
                 urls = urls + " [IMG]" + AUQAOFORUM_PICTURE_URL + self.desiredName + "[/IMG]" + "\n"
 
             except Exception as er:
