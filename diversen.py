@@ -86,7 +86,7 @@ def getDimensions(index):
 
 
 def ResizeImage(pad, dim):
-    # FIXME: Bestand mag uiteindelijk niet groter zijn dan 200 kb
+    # try except
     img = Image.open(pad)
     # scale the image, preserving the aspect ratio
     originalDimensions = img.size
@@ -104,25 +104,36 @@ def ResizeImage(pad, dim):
 
 
 def SaveJPEGToTemp(im):
+    #    kwal = 95
+    #    try:
+    #        im.save(resizedFileName, "JPEG", quality=kwal, optimize=True)
+    #    except IOError:
+    # try again, without optimization
+    #        im.draft("RGB", im.size)
+    #        im = im.convert("RGB")
+    #        im.save(resizedFileName, "JPEG", quality=kwal, optimize=False)
+    #############################################################################
     resizedFileName = "tempfile.dat"
     # quality hoger dan 95 heeft geen nut,
     # zie http://pillow.readthedocs.org/en/latest/handbook/image-file-formats.html
-    kwal = 95
-    try:
-        im.save(resizedFileName, "JPEG", quality=kwal, optimize=True)
-    except IOError:
-        # try again, without optimization
-        im.draft("RGB", im.size)
-        im = im.convert("RGB")
-        im.save(resizedFileName, "JPEG", quality=kwal, optimize=False)
-#############################################################################
-    kwaliteit = [95, 93, 91, 89, 87, 85, 83, 81, 79, 77, 75, 73, 71, 69, 67]
+    kwaliteit = [95, 93, 91, 89, 87, 85, 83, 81, 79, 77, 75,
+                 73, 71, 69, 67, 65, 63, 61, 59]
     for _x in kwaliteit:
-        im.save(resizedFileName, "JPEG", quality=_x, optimize=True)
-        if os.path.getsize(resizedFileName) <= 200000:
+        try:
+            im.save(resizedFileName, "JPEG", quality=_x, optimize=True)
+            filesize = os.path.getsize(resizedFileName)
+            print filesize
+            if filesize <= 200000:
+                break
+        except IOError as er:
+            wx.MessageDialog(
+                "Er is een fout opgetreden tijdens het converteren\n" +
+                "De error is " + str(er),
+                "Bericht", style=wx.OK).ShowModal()
             break
 #        else:
 #            print "kon niet klein genoeg worden gemaakt"
+#    print "quality = " + str(_x)
     return resizedFileName
 #############################################################################
 
