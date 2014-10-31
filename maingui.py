@@ -46,12 +46,9 @@ class Mainframe ( wx.Frame ):
 		
 		bSizer3.Add( self.label_3, 0, wx.ALIGN_CENTER_VERTICAL|wx.FIXED_MINSIZE, 0 )
 		
-		self.edtLoginName = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 180,-1 ), 0 )
+		self.edtLoginName = wx.TextCtrl( self, wx.ID_ANY, u"kellemes", wx.DefaultPosition, wx.Size( 180,-1 ), 0 )
 		self.edtLoginName.SetMaxLength( 0 ) 
 		bSizer3.Add( self.edtLoginName, 0, wx.ALIGN_CENTER_VERTICAL|wx.FIXED_MINSIZE, 0 )
-		
-		self.btnTestSize = wx.Button( self, wx.ID_ANY, u"MyButton", wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer3.Add( self.btnTestSize, 0, wx.ALL, 5 )
 		
 		
 		bSizer1.Add( bSizer3, 1, wx.EXPAND, 0 )
@@ -74,8 +71,10 @@ class Mainframe ( wx.Frame ):
 		
 		bSizer152 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.bitmapSelectedFile = wx.StaticBitmap( self, wx.ID_ANY, wx.Bitmap( u"default_foto.jpg", wx.BITMAP_TYPE_ANY ), wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer152.Add( self.bitmapSelectedFile, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALL|wx.EXPAND, 5 )
+		self.bitmapSelectedFile = wx.StaticBitmap( self, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.bitmapSelectedFile.SetMinSize( wx.Size( 400,300 ) )
+		
+		bSizer152.Add( self.bitmapSelectedFile, 1, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.ALL|wx.EXPAND, 0 )
 		
 		
 		bSizer22.Add( bSizer152, 1, wx.ALL|wx.EXPAND|wx.SHAPED, 0 )
@@ -120,7 +119,7 @@ class Mainframe ( wx.Frame ):
 		
 		radio_box_3Choices = [ u"800x600(standaard, groot)", u"640x480 (middelgroot)", u"320x240 (klein)", u"160x120(heel klein, handig voor avatar)" ]
 		self.radio_box_3 = wx.RadioBox( self, wx.ID_ANY, u"Dimensies", wx.DefaultPosition, wx.DefaultSize, radio_box_3Choices, 2, wx.RA_SPECIFY_ROWS )
-		self.radio_box_3.SetSelection( 1 )
+		self.radio_box_3.SetSelection( 0 )
 		self.radio_box_3.SetBackgroundColour( wx.Colour( 0, 127, 255 ) )
 		
 		bSizer5.Add( self.radio_box_3, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 0 )
@@ -149,11 +148,9 @@ class Mainframe ( wx.Frame ):
 		self.Centre( wx.BOTH )
 		
 		# Connect Events
-		self.btnTestSize.Bind( wx.EVT_BUTTON, self.onbtnTestSize )
 		self.tvFiles.Bind( wx.EVT_TREE_SEL_CHANGED, self.ontvFilesSelChanged )
 		self.btnSelectFile.Bind( wx.EVT_BUTTON, self.onbtnSelectFileClick )
 		self.btnUnselectFile.Bind( wx.EVT_BUTTON, self.onbtnUnselectFileClick )
-		self.listboxSelectedFiles.Bind( wx.EVT_KILL_FOCUS, self.onlistboxSelectedFileLostFocus )
 		self.listboxSelectedFiles.Bind( wx.EVT_LISTBOX, self.onlistboxSelectedFile )
 		self.listboxSelectedFiles.Bind( wx.EVT_SET_FOCUS, self.onlistboxSelectedFileSetFocus )
 		self.btnUpload.Bind( wx.EVT_BUTTON, self.onbtnUploadClick )
@@ -165,9 +162,6 @@ class Mainframe ( wx.Frame ):
 	
 	
 	# Virtual event handlers, overide them in your derived class
-	def onbtnTestSize( self, event ):
-		event.Skip()
-	
 	def ontvFilesSelChanged( self, event ):
 		event.Skip()
 	
@@ -175,9 +169,6 @@ class Mainframe ( wx.Frame ):
 		event.Skip()
 	
 	def onbtnUnselectFileClick( self, event ):
-		event.Skip()
-	
-	def onlistboxSelectedFileLostFocus( self, event ):
 		event.Skip()
 	
 	def onlistboxSelectedFile( self, event ):
@@ -285,15 +276,11 @@ class dlgUploadDone ( wx.Dialog ):
 class dlgVoorbeeld ( wx.Dialog ):
 	
 	def __init__( self, parent ):
-		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.DefaultSize, style = wx.CAPTION|wx.CLOSE_BOX )
+		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.DefaultSize, style = wx.CLOSE_BOX )
 		
 		self.SetSizeHintsSz( wx.DefaultSize, wx.Size( -1,-1 ) )
 		
 		sizerVoorbeeld = wx.BoxSizer( wx.VERTICAL )
-		
-		self.m_staticText6 = wx.StaticText( self, wx.ID_ANY, u"Dimensie=000x000", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText6.Wrap( -1 )
-		sizerVoorbeeld.Add( self.m_staticText6, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 5 )
 		
 		self.bitmapVoorbeeld = wx.StaticBitmap( self, wx.ID_ANY, wx.Bitmap( u"test.jpg", wx.BITMAP_TYPE_ANY ), wx.DefaultPosition, wx.DefaultSize, 0 )
 		sizerVoorbeeld.Add( self.bitmapVoorbeeld, 1, wx.ALL|wx.EXPAND, 0 )
