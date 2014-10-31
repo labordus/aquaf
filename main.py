@@ -54,11 +54,16 @@ class AquaFrame(maingui.Mainframe):
         # Windows laat anders dubbele entries zien,
         # en linux laat alleen bestanden zien met specifieke casing
 
+        # weet niet of dit ook Win 7/8 meeneemt?
+        # en win64?
         # if sys.platform[:3] == 'win':
-        if (sys.platform.lower() == 'win32'):  # weet niet of dit ook Win 7/8 meeneemt
+        if (sys.platform.lower() == 'win32'):
+
             self.tvFiles.SetFilter("plaatjes(*.bmp;*.jpg;*.png;*.tiff;*.tif;)|*.bmp;*.jpg;*.png;*.tiff;*.tif")
         else:  # posix
             self.tvFiles.SetFilter("plaatjes(*.bmp;*.BMP;*.jpg;*.JPG;*.png;*.PNG;*.tiff;*.TIFF;*.tif;*.TIF)|*.bmp;*.BMP;*.jpg;*.JPG;*.png;*.PNG;*.tiff;*.TIFF;*.tif;*.TIF")
+
+        self.PreviewImage(TEST_FOTO)
 
     def onbtnArchiefClick(self, event):
         #        try:
@@ -96,8 +101,7 @@ class AquaFrame(maingui.Mainframe):
                 "Bericht", style=wx.OK).ShowModal()
             return
         Voorbeeld = dlgVoorbeeld(self)
-        Voorbeeld.SetTitle("Voorbeeld")
-        Voorbeeld.m_staticText6.Label = "Dimensie=" + str(dimensions)
+        Voorbeeld.SetTitle(str(dimensions))
         Voorbeeld.bitmapVoorbeeld.SetBitmap(PilImageToWxBitmap(resizedFileName))
         Voorbeeld.Fit()
         Voorbeeld.Layout()
@@ -175,6 +179,7 @@ class AquaFrame(maingui.Mainframe):
                 resizedFilename = ResizeImage(
                     self.listboxSelectedFiles.GetClientData(_i), dimensions)
                 resizedFilename = SaveJPEGToTemp(resizedFilename)
+# TODO: als SaveJPEGToTemp() niet is gelukt dan..
                 self.desiredName = diversen.constructUploadName(
                     self.edtLoginName.GetValue(),
                     self.listboxSelectedFiles.GetClientData(_i))
@@ -194,8 +199,14 @@ class AquaFrame(maingui.Mainframe):
         dlg.ShowModal()  # this one is non blocking!!
         dlg.Destroy()
 
-    def onbtnTestSize(self, event):
-        print os.path.getsize("tempfile.dat")
+#     def onbtnTestSize(self, event):
+#         conn = sqlite3.connect('aquaf.sqlite3')
+#         c = conn.cursor()
+#         c.execute('SELECT * FROM tblApp')
+#         print c.fetchone()
+#
+# t = ('RHAT',)
+# c.execute('SELECT * FROM stocks WHERE symbol=?', t)
 
 # mandatory in wx, create an app, False stands for not deteriction stdin/stdout
 app = wx.App(False)
