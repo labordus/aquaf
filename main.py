@@ -35,7 +35,11 @@ def get_main_dir():
     if main_is_frozen():
         result = os.path.dirname(sys.executable)
     else:
-        result = os.path.dirname(sys.argv[0])
+        # volgende werkt niet altijd vanuit dev-environment
+        #        result = os.path.dirname(sys.argv[0])
+        result = os.path.dirname(__file__)
+        # volgende werkt ook..
+#        result = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
     if result == "":
         result = "."
     return result
