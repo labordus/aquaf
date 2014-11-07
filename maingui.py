@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*- 
 
 ###########################################################################
-## Python code generated with wxFormBuilder (version Oct  1 2014)
+## Python code generated with wxFormBuilder (version Nov  7 2014)
 ## http://www.wxformbuilder.org/
 ##
 ## PLEASE DO "NOT" EDIT THIS FILE!
@@ -210,11 +210,12 @@ class dlgUploadDone ( wx.Dialog ):
 		
 		bSizer16.Add( bSizer18, 1, wx.ALL|wx.EXPAND, 5 )
 		
-		bSizer19 = wx.BoxSizer( wx.HORIZONTAL )
+		bSizer19 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.text_ctrl_Code1 = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 420,127 ), wx.HSCROLL|wx.TE_CHARWRAP|wx.TE_MULTILINE|wx.TE_READONLY )
-		self.text_ctrl_Code1.SetMaxLength( 0 ) 
-		bSizer19.Add( self.text_ctrl_Code1, 0, wx.ALL, 5 )
+		self.text_ctrl_Code1 = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( -1,-1 ), wx.TE_MULTILINE )
+		self.text_ctrl_Code1.SetMinSize( wx.Size( -1,127 ) )
+		
+		bSizer19.Add( self.text_ctrl_Code1, 0, wx.ALL|wx.EXPAND, 5 )
 		
 		bSizer21 = wx.BoxSizer( wx.VERTICAL )
 		
