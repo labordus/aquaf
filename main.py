@@ -148,7 +148,7 @@ class AquaFrame(maingui.Mainframe):
         for _i in range(self.listboxSelectedFiles.Count):
             sPad = self.listboxSelectedFiles.GetClientData(_i)
             if _pad == sPad:
-                print "image is al toegevoegd"
+                print("image is al toegevoegd")
                 return
 
         if _pad != () and _pad != "":
@@ -166,7 +166,7 @@ class AquaFrame(maingui.Mainframe):
 
     def onbtnUploadClick(self, event):
         if len(self.edtLoginName.GetValue()) == 0:
-            print "Geen loginnaam ingevoerd"
+            print("Geen loginnaam ingevoerd")
             return
 
         filecount = self.listboxSelectedFiles.GetCount()
@@ -178,7 +178,7 @@ class AquaFrame(maingui.Mainframe):
         dimensions = getDimensions(self.radio_box_3.GetSelection())
         urls = ""
         for _i in range(filecount):
-            print self.listboxSelectedFiles.GetClientData(_i)
+            print(self.listboxSelectedFiles.GetClientData(_i))
             try:
                 resizedFilename = ResizeImage(
                     self.listboxSelectedFiles.GetClientData(_i), dimensions)
