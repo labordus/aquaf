@@ -52,6 +52,11 @@ class AquaFrame(maingui.Mainframe):
         # initialize parent class
         maingui.Mainframe.__init__(self, parent)
 
+        _icon = wx.EmptyIcon()
+        _icon.CopyFromBitmap(wx.Bitmap("icon.ico", wx.BITMAP_TYPE_ANY))
+        self.SetIcon(_icon)
+        self.SetSize((702, 538))
+
         # bind validator to edtLogin-Invoerbox
         # self.edtLoginName.SetValidator(ValideerInvoer(diversen.ALPHA_ONLY))
 
