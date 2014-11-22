@@ -66,8 +66,7 @@ class AquaFrame(maingui.Mainframe):
         # weet niet of dit ook Win 7/8 meeneemt?
         # en win64?
         # if sys.platform[:3] == 'win':
-        if (sys.platform.lower() == 'win32'):
-
+        if (sys.platform.startswith('win')):  # dan win32 of win64
             self.tvFiles.SetFilter("plaatjes(*.bmp;*.jpg;*.png;*.tiff;*.tif;)|*.bmp;*.jpg;*.png;*.tiff;*.tif")
         else:  # posix
             self.tvFiles.SetFilter("plaatjes(*.bmp;*.BMP;*.jpg;*.JPG;*.png;*.PNG;*.tiff;*.TIFF;*.tif;*.TIF)|*.bmp;*.BMP;*.jpg;*.JPG;*.png;*.PNG;*.tiff;*.TIFF;*.tif;*.TIF")
