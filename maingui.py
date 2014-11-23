@@ -17,9 +17,9 @@ import wx.xrc
 class Mainframe ( wx.Frame ):
 	
 	def __init__( self, parent ):
-		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Aquaforum upload programma", pos = wx.DefaultPosition, size = wx.Size( 829,692 ), style = wx.DEFAULT_FRAME_STYLE )
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Aquaforum upload programma", pos = wx.DefaultPosition, size = wx.Size( 850,692 ), style = wx.DEFAULT_FRAME_STYLE )
 		
-		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
+		self.SetSizeHintsSz( wx.Size( 850,692 ), wx.DefaultSize )
 		self.SetBackgroundColour( wx.Colour( 0, 127, 255 ) )
 		
 		self.frame_1_statusbar = self.CreateStatusBar( 1, 0|wx.SUNKEN_BORDER, wx.ID_ANY )

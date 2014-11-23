@@ -41,10 +41,10 @@
             <property name="hidden"></property>
             <property name="id">wxID_ANY</property>
             <property name="maximum_size"></property>
-            <property name="minimum_size"></property>
+            <property name="minimum_size">850,692</property>
             <property name="name">Mainframe</property>
             <property name="pos"></property>
-            <property name="size">829,692</property>
+            <property name="size">850,692</property>
             <property name="style">wxDEFAULT_FRAME_STYLE</property>
             <property name="subclass">; </property>
             <property name="title">Aquaforum upload programma</property>
