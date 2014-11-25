@@ -5,10 +5,12 @@ import sys
 import imp
 import webbrowser
 from PIL import Image
+import SimpleHTTPServer
+import BaseHTTPServer
 
 # import GUI
 import maingui
-from maingui import dlgVoorbeeld, dlgUploadDone
+from maingui import dlgVoorbeeld, dlgUploadDone, Archiveframe
 from Dialog import Dialog
 
 import diversen
@@ -43,6 +45,31 @@ def get_main_dir():
     if result == "":
         result = "."
     return result
+
+
+def run_while_true(server_class=BaseHTTPServer.HTTPServer,
+                   handler_class=BaseHTTPServer.BaseHTTPRequestHandler):
+    """
+    This assumes that keep_running() is a function of no arguments which
+    is tested initially and after each request.  If its return value
+    is true, the server continues.
+    """
+    server_address = ('', 8000)
+    httpd = server_class(server_address, handler_class)
+    while keep_running():
+        httpd.handle_request()
+
+
+def keep_running():
+
+    return True
+
+
+def runServer(server_class=BaseHTTPServer.HTTPServer,
+              handler_class=BaseHTTPServer.BaseHTTPRequestHandler):
+    server_address = ('', 8000)
+    httpd = server_class(server_address, handler_class)
+    httpd.serve_forever()
 
 
 class AquaFrame(maingui.Mainframe):
@@ -80,13 +107,35 @@ class AquaFrame(maingui.Mainframe):
         #            print 'error'
         '''open archive'''
 #        path = "file:///"
+
+#        PORT = 80
+#        httpd = StoppableHTTPServer(("127.0.0.1", PORT), handler)
+#        thread.start_new_thread(httpd.serve, ())
+#        webbrowser.open_new('http://localhost:%s/%s' % (PORT, path))
+#        input("Press <RETURN> to stop server\n")
+#        httpd.stop()
+#        print("To restart server run: \n%s" % server)
+
+#        runServer()
+
         theArchive = get_main_dir()
         theArchive = theArchive.replace("\\", "/")
         if theArchive[-1] != "/":
             theArchive += "/"
         theArchive += "archive.html"
-        webbrowser.open_new(theArchive)
+        # localhost pikt ie niet
+        theArchive = "http://127.0.0.1:8000/archive.html"
+#        webbrowser.open_new(theArchive)
+        webbrowser.open_new_tab(theArchive)
         return
+
+    def onbtnArchief2Click(self, event):
+        ArchiefForm = Archiveframe(self)
+        ArchiefForm.Show()
+
+    def onActivateArchiveframe(self):
+        #        Archiveframe.m_scrolledWindow1.
+        print "test"
 
     def onbtnVoorbeeldClick(self, event):
         dimensions = getDimensions(self.radio_box_3.GetSelection())
