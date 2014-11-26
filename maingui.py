@@ -141,6 +141,9 @@ class Mainframe ( wx.Frame ):
 		
 		bSizer15.Add( bSizer1, 1, wx.EXPAND, 5 )
 		
+		self.btnArchief2 = wx.Button( self, wx.ID_ANY, u"Archief", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer15.Add( self.btnArchief2, 0, wx.ALL, 5 )
+		
 		
 		self.SetSizer( bSizer15 )
 		self.Layout()
@@ -156,6 +159,7 @@ class Mainframe ( wx.Frame ):
 		self.btnUpload.Bind( wx.EVT_BUTTON, self.onbtnUploadClick )
 		self.btnVoorbeeld.Bind( wx.EVT_BUTTON, self.onbtnVoorbeeldClick )
 		self.btnArchief.Bind( wx.EVT_BUTTON, self.onbtnArchiefClick )
+		self.btnArchief2.Bind( wx.EVT_BUTTON, self.onbtnArchief2Click )
 	
 	def __del__( self ):
 		pass
@@ -184,6 +188,52 @@ class Mainframe ( wx.Frame ):
 		event.Skip()
 	
 	def onbtnArchiefClick( self, event ):
+		event.Skip()
+	
+	def onbtnArchief2Click( self, event ):
+		event.Skip()
+	
+
+###########################################################################
+## Class Archiveframe
+###########################################################################
+
+class Archiveframe ( wx.Frame ):
+	
+	def __init__( self, parent ):
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Archief van de plaatjes", pos = wx.DefaultPosition, size = wx.Size( 500,300 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
+		
+		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
+		
+		bSizer20 = wx.BoxSizer( wx.VERTICAL )
+		
+		bSizer21 = wx.BoxSizer( wx.VERTICAL )
+		
+		self.m_scrolledWindow1 = wx.ScrolledWindow( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.HSCROLL|wx.VSCROLL )
+		self.m_scrolledWindow1.SetScrollRate( 5, 5 )
+		bSizer21.Add( self.m_scrolledWindow1, 1, wx.EXPAND |wx.ALL, 5 )
+		
+		self.m_button9 = wx.Button( self, wx.ID_ANY, u"MyButton", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer21.Add( self.m_button9, 0, wx.ALL, 5 )
+		
+		
+		bSizer20.Add( bSizer21, 1, wx.EXPAND, 5 )
+		
+		
+		self.SetSizer( bSizer20 )
+		self.Layout()
+		
+		self.Centre( wx.BOTH )
+		
+		# Connect Events
+		self.Bind( wx.EVT_ACTIVATE, self.onActivateArchiveframe )
+	
+	def __del__( self ):
+		pass
+	
+	
+	# Virtual event handlers, overide them in your derived class
+	def onActivateArchiveframe( self, event ):
 		event.Skip()
 	
 
