@@ -7,6 +7,7 @@ import webbrowser
 from PIL import Image
 import SimpleHTTPServer
 import BaseHTTPServer
+import threading
 
 # import GUI
 import maingui
@@ -15,6 +16,7 @@ from Dialog import Dialog
 
 import diversen
 from diversen import *
+import httpserver
 
 import uploaddialog
 # from wx.lib.pubsub.pub import validate
@@ -47,29 +49,13 @@ def get_main_dir():
     return result
 
 
-def run_while_true(server_class=BaseHTTPServer.HTTPServer,
-                   handler_class=BaseHTTPServer.BaseHTTPRequestHandler):
-    """
-    This assumes that keep_running() is a function of no arguments which
-    is tested initially and after each request.  If its return value
-    is true, the server continues.
-    """
-    server_address = ('', 8000)
-    httpd = server_class(server_address, handler_class)
-    while keep_running():
-        httpd.handle_request()
+# class ServerThread(threading.Thread):
 
+#    def __init__(self, port):
+#        threading.Thread.__init__(self)
 
-def keep_running():
-
-    return True
-
-
-def runServer(server_class=BaseHTTPServer.HTTPServer,
-              handler_class=BaseHTTPServer.BaseHTTPRequestHandler):
-    server_address = ('', 8000)
-    httpd = server_class(server_address, handler_class)
-    httpd.serve_forever()
+#    def run(self):
+#        httpserver.runServer()
 
 
 class AquaFrame(maingui.Mainframe):
@@ -108,15 +94,7 @@ class AquaFrame(maingui.Mainframe):
         '''open archive'''
 #        path = "file:///"
 
-#        PORT = 80
-#        httpd = StoppableHTTPServer(("127.0.0.1", PORT), handler)
-#        thread.start_new_thread(httpd.serve, ())
-#        webbrowser.open_new('http://localhost:%s/%s' % (PORT, path))
-#        input("Press <RETURN> to stop server\n")
-#        httpd.stop()
-#        print("To restart server run: \n%s" % server)
-
-#        runServer()
+#        ServerThread(self).start()
 
         theArchive = get_main_dir()
         theArchive = theArchive.replace("\\", "/")
@@ -124,9 +102,10 @@ class AquaFrame(maingui.Mainframe):
             theArchive += "/"
         theArchive += "archive.html"
         # localhost pikt ie niet
-        theArchive = "http://127.0.0.1:8000/archive.html"
-#        webbrowser.open_new(theArchive)
-        webbrowser.open_new_tab(theArchive)
+        theArchive = "archive.html"
+        webbrowser.get("firefox").open_new_tab(theArchive)
+#        t = webbrowser.get("chrome")
+#        print t
         return
 
     def onbtnArchief2Click(self, event):
