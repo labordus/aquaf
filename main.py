@@ -102,8 +102,12 @@ class AquaFrame(maingui.Mainframe):
             theArchive += "/"
         theArchive += "archive.html"
         # localhost pikt ie niet
-        theArchive = "archive.html"
-        webbrowser.get("firefox").open_new_tab(theArchive)
+        theArchive = "http://127.0.0.1:8000/archive.html"
+#        webbrowser.get("chrome").open_new_tab(theArchive)
+        webbrowser.open_new(theArchive)
+
+# PLAATJES DOWNLOADEN VAN WEB.. THUMBNAILEN.. EN SHOWEN?
+
 #        t = webbrowser.get("chrome")
 #        print t
         return
