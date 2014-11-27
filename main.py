@@ -5,19 +5,14 @@ import sys
 import imp
 import webbrowser
 from PIL import Image
-import SimpleHTTPServer
-import BaseHTTPServer
-import threading
 
 # import GUI
 import maingui
-from maingui import dlgVoorbeeld, dlgUploadDone, dlgArchive
+from maingui import dlgVoorbeeld, dlgUploadDone
 from Dialog import Dialog
-import archive
 
 import diversen
 from diversen import *
-import httpserver
 
 import uploaddialog
 # from wx.lib.pubsub.pub import validate
@@ -48,15 +43,6 @@ def get_main_dir():
     if result == "":
         result = "."
     return result
-
-
-# class ServerThread(threading.Thread):
-
-#    def __init__(self, port):
-#        threading.Thread.__init__(self)
-
-#    def run(self):
-#        httpserver.runServer()
 
 
 class AquaFrame(maingui.Mainframe):
@@ -95,35 +81,23 @@ class AquaFrame(maingui.Mainframe):
         '''open archive'''
 #        path = "file:///"
 
-#        ServerThread(self).start()
-
         theArchive = get_main_dir()
         theArchive = theArchive.replace("\\", "/")
         if theArchive[-1] != "/":
             theArchive += "/"
         theArchive += "archive.html"
-        # localhost pikt ie niet
-        theArchive = "http://127.0.0.1:8000/archive.html"
-#        webbrowser.get("chrome").open_new_tab(theArchive)
-        webbrowser.open_new(theArchive)
 
-# PLAATJES DOWNLOADEN VAN WEB.. THUMBNAILEN.. EN SHOWEN?
+# CHECKEN OF IE EN/OF FIREFOX AANWEZIG IS, ZO JA.. GEBRUIKEN!!
+# EN ANDERS?
+
+        # localhost pikt ie niet
+#        theArchive = "http://127.0.0.1:8000/archive.html"
+#        webbrowser.get("chrome").open_new_tab(theArchive)
+        webbrowser.get("firefox").open_new(theArchive)
 
 #        t = webbrowser.get("chrome")
 #        print t
         return
-
-    def onbtnArchief2Click(self, event):
-        #        ArchiefForm = Archiveframe(self)
-        #        ArchiefForm.Show()
-        dlg = archive.ArchiveDialog(self)
-        dlg.CenterOnParent()
-        dlg.ShowModal()  # this one is non blocking!!
-        dlg.Destroy()
-
-    def onActivateArchiveframe(self):
-        #        Archiveframe.m_scrolledWindow1.
-        print "test"
 
     def onbtnVoorbeeldClick(self, event):
         dimensions = getDimensions(self.radio_box_3.GetSelection())
