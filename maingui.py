@@ -141,9 +141,6 @@ class Mainframe ( wx.Frame ):
 		
 		bSizer15.Add( bSizer1, 1, wx.EXPAND, 5 )
 		
-		self.btnArchief2 = wx.Button( self, wx.ID_ANY, u"Archief", wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer15.Add( self.btnArchief2, 0, wx.ALL, 5 )
-		
 		
 		self.SetSizer( bSizer15 )
 		self.Layout()
@@ -159,7 +156,6 @@ class Mainframe ( wx.Frame ):
 		self.btnUpload.Bind( wx.EVT_BUTTON, self.onbtnUploadClick )
 		self.btnVoorbeeld.Bind( wx.EVT_BUTTON, self.onbtnVoorbeeldClick )
 		self.btnArchief.Bind( wx.EVT_BUTTON, self.onbtnArchiefClick )
-		self.btnArchief2.Bind( wx.EVT_BUTTON, self.onbtnArchief2Click )
 	
 	def __del__( self ):
 		pass
@@ -188,55 +184,6 @@ class Mainframe ( wx.Frame ):
 		event.Skip()
 	
 	def onbtnArchiefClick( self, event ):
-		event.Skip()
-	
-	def onbtnArchief2Click( self, event ):
-		event.Skip()
-	
-
-###########################################################################
-## Class dlgArchive
-###########################################################################
-
-class dlgArchive ( wx.Dialog ):
-	
-	def __init__( self, parent ):
-		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.DefaultSize, style = wx.DEFAULT_DIALOG_STYLE )
-		
-		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
-		
-		bSizer20 = wx.BoxSizer( wx.VERTICAL )
-		
-		bSizer21 = wx.BoxSizer( wx.VERTICAL )
-		
-		self.m_scrolledWindow1 = wx.ScrolledWindow( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.HSCROLL|wx.VSCROLL )
-		self.m_scrolledWindow1.SetScrollRate( 5, 5 )
-		self.m_scrolledWindow1.SetMinSize( wx.Size( 400,200 ) )
-		
-		bSizer21.Add( self.m_scrolledWindow1, 1, wx.ALL|wx.EXPAND, 5 )
-		
-		self.m_button9 = wx.Button( self, wx.ID_ANY, u"MyButton", wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer21.Add( self.m_button9, 0, wx.ALL, 5 )
-		
-		
-		bSizer20.Add( bSizer21, 1, wx.EXPAND, 5 )
-		
-		
-		self.SetSizer( bSizer20 )
-		self.Layout()
-		bSizer20.Fit( self )
-		
-		self.Centre( wx.BOTH )
-		
-		# Connect Events
-		self.Bind( wx.EVT_ACTIVATE, self.onActivatedlgArchive )
-	
-	def __del__( self ):
-		pass
-	
-	
-	# Virtual event handlers, overide them in your derived class
-	def onActivatedlgArchive( self, event ):
 		event.Skip()
 	
 
