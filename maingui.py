@@ -195,13 +195,13 @@ class Mainframe ( wx.Frame ):
 	
 
 ###########################################################################
-## Class Archiveframe
+## Class dlgArchive
 ###########################################################################
 
-class Archiveframe ( wx.Frame ):
+class dlgArchive ( wx.Dialog ):
 	
 	def __init__( self, parent ):
-		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Archief van de plaatjes", pos = wx.DefaultPosition, size = wx.Size( 500,300 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
+		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.DefaultSize, style = wx.DEFAULT_DIALOG_STYLE )
 		
 		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
 		
@@ -211,7 +211,9 @@ class Archiveframe ( wx.Frame ):
 		
 		self.m_scrolledWindow1 = wx.ScrolledWindow( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.HSCROLL|wx.VSCROLL )
 		self.m_scrolledWindow1.SetScrollRate( 5, 5 )
-		bSizer21.Add( self.m_scrolledWindow1, 1, wx.EXPAND |wx.ALL, 5 )
+		self.m_scrolledWindow1.SetMinSize( wx.Size( 400,200 ) )
+		
+		bSizer21.Add( self.m_scrolledWindow1, 1, wx.ALL|wx.EXPAND, 5 )
 		
 		self.m_button9 = wx.Button( self, wx.ID_ANY, u"MyButton", wx.DefaultPosition, wx.DefaultSize, 0 )
 		bSizer21.Add( self.m_button9, 0, wx.ALL, 5 )
@@ -222,18 +224,19 @@ class Archiveframe ( wx.Frame ):
 		
 		self.SetSizer( bSizer20 )
 		self.Layout()
+		bSizer20.Fit( self )
 		
 		self.Centre( wx.BOTH )
 		
 		# Connect Events
-		self.Bind( wx.EVT_ACTIVATE, self.onActivateArchiveframe )
+		self.Bind( wx.EVT_ACTIVATE, self.onActivatedlgArchive )
 	
 	def __del__( self ):
 		pass
 	
 	
 	# Virtual event handlers, overide them in your derived class
-	def onActivateArchiveframe( self, event ):
+	def onActivatedlgArchive( self, event ):
 		event.Skip()
 	
 
