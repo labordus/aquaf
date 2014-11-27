@@ -11,8 +11,9 @@ import threading
 
 # import GUI
 import maingui
-from maingui import dlgVoorbeeld, dlgUploadDone, Archiveframe
+from maingui import dlgVoorbeeld, dlgUploadDone, dlgArchive
 from Dialog import Dialog
+import archive
 
 import diversen
 from diversen import *
@@ -113,8 +114,12 @@ class AquaFrame(maingui.Mainframe):
         return
 
     def onbtnArchief2Click(self, event):
-        ArchiefForm = Archiveframe(self)
-        ArchiefForm.Show()
+        #        ArchiefForm = Archiveframe(self)
+        #        ArchiefForm.Show()
+        dlg = archive.ArchiveDialog(self)
+        dlg.CenterOnParent()
+        dlg.ShowModal()  # this one is non blocking!!
+        dlg.Destroy()
 
     def onActivateArchiveframe(self):
         #        Archiveframe.m_scrolledWindow1.
