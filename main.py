@@ -131,11 +131,12 @@ class AquaFrame(maingui.Mainframe):
         pad = self.listboxSelectedFiles.GetClientData(self.listboxSelectedFiles.GetSelection())
         self.PreviewImage(pad)
 
-    def onlistboxSelectedFileSetFocus(self, event):
-        if self.listboxSelectedFiles.GetSelection() == wx.NOT_FOUND:
-            return
-        pad = self.listboxSelectedFiles.GetClientData(self.listboxSelectedFiles.GetSelection())
-        self.PreviewImage(pad)
+# FOLGENDE FUNCTIE LEVERT PROBLEMEN OP MET WINDOWS
+#    def onlistboxSelectedFileSetFocus(self, event):
+#        if self.listboxSelectedFiles.GetSelection() == wx.NOT_FOUND:
+#            return
+#        pad = self.listboxSelectedFiles.GetClientData(self.listboxSelectedFiles.GetSelection())
+#        self.PreviewImage(pad)
 
     def onbtnSelectFileClick(self, event):
         _pad = self.tvFiles.GetFilePath()
