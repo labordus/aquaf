@@ -74,29 +74,10 @@ class AquaFrame(maingui.Mainframe):
         self.PreviewImage(TEST_FOTO)
 
     def onbtnArchiefClick(self, event):
-        #        try:
-        #            print 'print: onbtnArchiefClick'
-        #        except Exception:
-        #            print 'error'
-        '''open archive'''
-#        path = "file:///"
+        #        webbrowser.get("chrome").open_new_tab(theArchive)
+        #        webbrowser.get("firefox").open_new(theArchive)
+        launch_archive('firefox')
 
-        theArchive = get_main_dir()
-        theArchive = theArchive.replace("\\", "/")
-        if theArchive[-1] != "/":
-            theArchive += "/"
-        theArchive += "archive.html"
-
-# CHECKEN OF IE EN/OF FIREFOX AANWEZIG IS, ZO JA.. GEBRUIKEN!!
-# EN ANDERS?
-
-        # localhost pikt ie niet
-#        theArchive = "http://127.0.0.1:8000/archive.html"
-#        webbrowser.get("chrome").open_new_tab(theArchive)
-        webbrowser.get("firefox").open_new(theArchive)
-
-#        t = webbrowser.get("chrome")
-#        print t
         return
 
     def onbtnVoorbeeldClick(self, event):
