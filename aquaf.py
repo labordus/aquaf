@@ -45,6 +45,15 @@ def get_main_dir():
     return result
 
 
+class RedirectText(object):
+
+    def __init__(self, aWxTextCtrl):
+        self.out = aWxTextCtrl
+
+    def write(self, string):
+        self.out.WriteText(string)
+
+
 class AquaFrame(maingui.Mainframe):
     # constructor
 
@@ -56,6 +65,11 @@ class AquaFrame(maingui.Mainframe):
         _icon.CopyFromBitmap(wx.Bitmap("icon.ico", wx.BITMAP_TYPE_ANY))
         self.SetIcon(_icon)
         self.SetSize((702, 538))
+
+        log = self.infoBox
+        # redirect text here
+        redir = RedirectText(log)
+        sys.stdout = redir
 
         # bind validator to edtLogin-Invoerbox
         # self.edtLoginName.SetValidator(ValideerInvoer(diversen.ALPHA_ONLY))
