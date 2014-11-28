@@ -17,9 +17,9 @@ import wx.xrc
 class Mainframe ( wx.Frame ):
 	
 	def __init__( self, parent ):
-		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Aquaforum upload programma", pos = wx.DefaultPosition, size = wx.Size( 850,675 ), style = wx.CAPTION|wx.DEFAULT_FRAME_STYLE )
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Aquaforum upload programma", pos = wx.DefaultPosition, size = wx.Size( 850,700 ), style = wx.CAPTION|wx.DEFAULT_FRAME_STYLE )
 		
-		self.SetSizeHintsSz( wx.Size( 850,675 ), wx.DefaultSize )
+		self.SetSizeHintsSz( wx.Size( 850,700 ), wx.DefaultSize )
 		self.SetBackgroundColour( wx.Colour( 116, 113, 162 ) )
 		
 		bSizer15 = wx.BoxSizer( wx.VERTICAL )
@@ -31,7 +31,22 @@ class Mainframe ( wx.Frame ):
 		self.bitmap_1 = wx.StaticBitmap( self, wx.ID_ANY, wx.Bitmap( u"forumbanner.gif", wx.BITMAP_TYPE_ANY ), wx.DefaultPosition, wx.DefaultSize, 0 )
 		bSizer2.Add( self.bitmap_1, 0, wx.FIXED_MINSIZE, 0 )
 		
-		bSizer23 = wx.BoxSizer( wx.VERTICAL )
+		bSizer25 = wx.BoxSizer( wx.VERTICAL )
+		
+		self.infoBox = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.HSCROLL|wx.TE_MULTILINE|wx.TE_READONLY|wx.TE_WORDWRAP )
+		self.infoBox.SetFont( wx.Font( 8, 70, 90, 90, False, wx.EmptyString ) )
+		self.infoBox.SetForegroundColour( wx.Colour( 255, 255, 255 ) )
+		self.infoBox.SetBackgroundColour( wx.Colour( 0, 0, 0 ) )
+		
+		bSizer25.Add( self.infoBox, 1, wx.ALL|wx.EXPAND, 1 )
+		
+		
+		bSizer2.Add( bSizer25, 1, wx.ALL|wx.EXPAND, 1 )
+		
+		
+		bSizer1.Add( bSizer2, 1, wx.ALL|wx.EXPAND, 0 )
+		
+		bSizer23 = wx.BoxSizer( wx.HORIZONTAL )
 		
 		self.label_3 = wx.StaticText( self, wx.ID_ANY, u"Aquaforum login naam", wx.DefaultPosition, wx.DefaultSize, wx.ALIGN_RIGHT )
 		self.label_3.Wrap( -2 )
@@ -47,10 +62,7 @@ class Mainframe ( wx.Frame ):
 		bSizer23.Add( self.edtLoginName, 0, wx.ALIGN_CENTER|wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.FIXED_MINSIZE, 0 )
 		
 		
-		bSizer2.Add( bSizer23, 1, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.ALL|wx.EXPAND|wx.SHAPED, 0 )
-		
-		
-		bSizer1.Add( bSizer2, 1, wx.ALL|wx.EXPAND|wx.SHAPED, 0 )
+		bSizer1.Add( bSizer23, 1, wx.ALL|wx.EXPAND, 0 )
 		
 		bSizer3 = wx.BoxSizer( wx.HORIZONTAL )
 		
