@@ -200,15 +200,6 @@ class AquaFrame(maingui.Mainframe):
         dlg.ShowModal()  # this one is non blocking!!
         dlg.Destroy()
 
-#     def onbtnTestSize(self, event):
-#         conn = sqlite3.connect('aquaf.sqlite3')
-#         c = conn.cursor()
-#         c.execute('SELECT * FROM tblApp')
-#         print c.fetchone()
-#
-# t = ('RHAT',)
-# c.execute('SELECT * FROM stocks WHERE symbol=?', t)
-
 # mandatory in wx, create an app, False stands for not deteriction stdin/stdout
 app = wx.App(False)
 
