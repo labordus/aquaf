@@ -2,6 +2,10 @@ import mechanize
 import os
 import wx
 import string
+import sys
+import webbrowser
+import imp
+from distutils.spawn import find_executable
 
 try:
     from PIL import Image
@@ -21,6 +25,27 @@ ALLOWED_CHARS = "qwertyuioplkjhgfdsazxcvbnm0123456789._"
 
 ALPHA_ONLY = 1
 DIGIT_ONLY = 2
+
+
+def main_is_frozen():
+    return (hasattr(sys, "frozen") or  # new py2exe
+            hasattr(sys, "importers")  # old py2exe
+            or imp.is_frozen("__main__"))  # tools/freeze
+
+
+def get_main_dir():
+    result = ""
+    if main_is_frozen():
+        result = os.path.dirname(sys.executable)
+    else:
+        # volgende werkt niet altijd vanuit dev-environment
+        #        result = os.path.dirname(sys.argv[0])
+        result = os.path.dirname(__file__)
+        # volgende werkt ook..
+#        result = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
+    if result == "":
+        result = "."
+    return result
 
 
 class ValideerInvoer(wx.PyValidator):
@@ -279,3 +304,88 @@ def PilImageToWxImage(myPilImage, copyAlpha=True):
         myPilImageRgbData = myPilImageCopyRGB.tostring()
         myWxImage.SetData(myPilImageRgbData)
     return myWxImage
+
+
+def get_executable_path(executable_names):
+    '''Look for an executable given a list of the possible names.
+    '''
+    path = None
+    for name in executable_names:
+        path = find_executable(name)
+        if path:
+            break
+    return path
+
+
+def find_chrome():
+    """ Find the Chrome executable. """
+    path = '/Applications/Google Chrome.app/Contents/MacOS' \
+        + os.pathsep \
+        + "C:\Program Files\Google\Chrome\Application" \
+        + os.pathsep \
+        + "C:\Program Files (x86)\Google\Chrome\Application" \
+        + os.pathsep \
+        + os.environ['PATH']
+
+    # Windows7
+    USERPROFILE = os.getenv("USERPROFILE")
+    if USERPROFILE:
+        path += os.pathsep \
+            + USERPROFILE + '\AppData\Local\Google\Chrome\Application'
+
+    exe_names = ('chrome', 'chrome.exe', 'Google Chrome',
+                 'google-chrome', 'chromium-browser')
+
+    for name in exe_names:
+        pathname = find_executable(name, path)
+        if pathname:
+            break
+
+    return pathname
+
+
+def launch_archive(preferred_browser=None):
+    ''' Launch web browser on specified port.
+        Try to use preferred browser if specified; fall back to default.
+        (Chrome will launch in "app mode".)
+    '''
+    theArchive = get_main_dir()
+    theArchive = theArchive.replace("\\", "/")
+    if theArchive[-1] != "/":
+        theArchive += "/"
+    theArchive += "archive.html"
+
+    url = theArchive
+    print 'Opening URL in browser: ' + url + ' (pid=' + str(os.getpid()) + ')'
+
+    # webbrowser doesn't know about chrome, so try to find it, use app mode if possible
+    if preferred_browser and preferred_browser.lower() == 'chrome':
+        chrome_path = find_chrome()
+        if chrome_path:
+            if sys.platform == 'win32':
+                preferred_browser = chrome_path.replace('\\', '\\\\') + ' --app=%s &'
+            elif sys.platform == 'darwin':
+                chrome_path = chrome_path.replace('Google Chrome', 'Google\ Chrome')
+                preferred_browser = 'open -a ' + chrome_path + ' %s'
+            elif sys.platform == 'linux2':
+                preferred_browser = chrome_path + ' --app=%s &'
+
+    # try to get preferred browser, fall back to default
+    if preferred_browser:
+        try:
+            browser = webbrowser.get(preferred_browser)
+        except:
+            print "Couldn't get preferred browser (" + preferred_browser + "), using default..."
+            browser = webbrowser.get()
+    else:
+        browser = webbrowser.get()
+
+    # open new browser window (may open in a tab depending on user preferences, etc.)
+    if browser:
+        browser.open(url, 1, True)
+        try:
+            print "Opened in", browser.name
+        except AttributeError:
+            pass  # Happens with safari.
+    else:
+        print "Couldn't launch browser: " + str(browser)
