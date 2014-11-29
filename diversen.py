@@ -275,7 +275,7 @@ def IsValidImage(pad):
                 print "filetype TIF(F) heeft geen TIFF-extensie"
                 return False
         else:
-            print "Geen ondersteund image format"
+            print "Geen ondersteund image-formaat"
             return False
         return True
 
