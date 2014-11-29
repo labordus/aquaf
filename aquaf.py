@@ -86,6 +86,7 @@ class AquaFrame(maingui.Mainframe):
             self.tvFiles.SetFilter("plaatjes(*.bmp;*.BMP;*.jpg;*.JPG;*.png;*.PNG;*.tiff;*.TIFF;*.tif;*.TIF)|*.bmp;*.BMP;*.jpg;*.JPG;*.png;*.PNG;*.tiff;*.TIFF;*.tif;*.TIF")
 
         self.PreviewImage(TEST_FOTO)
+        print "Aquaf v8.4"
 
     def onbtnArchiefClick(self, event):
         #        webbrowser.get("chrome").open_new_tab(theArchive)
@@ -170,7 +171,9 @@ class AquaFrame(maingui.Mainframe):
             bestandsnaam = os.path.basename(helepad)
             # sla het hele pad op in pyobject clientdata.. toch?
             self.listboxSelectedFiles.Append(bestandsnaam, helepad)
-        # else directory en doe niks
+        # else directory
+        else:
+            print "Geen geldig plaatje"
 
     def onbtnUnselectFileClick(self, event):
         self.listboxSelectedFiles.Delete(self.listboxSelectedFiles.GetSelection())
