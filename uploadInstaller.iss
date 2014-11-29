@@ -1,9 +1,9 @@
 ; -- aquaf.iss --
-; Versie 0.84 
+; Versie 0.84-alpha 
 
 [Setup]
 AppName=Aquaf
-AppVerName=version 0.84
+AppVerName=version 0.84-alpha
 DefaultDirName={pf}\Aquaf
 DefaultGroupName=Aquaf
 Compression=lzma
