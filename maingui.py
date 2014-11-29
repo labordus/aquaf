@@ -174,6 +174,7 @@ class Mainframe ( wx.Frame ):
 		self.Centre( wx.BOTH )
 		
 		# Connect Events
+		self.edtLoginName.Bind( wx.EVT_KILL_FOCUS, self.onedtLoginNameKillFocus )
 		self.tvFiles.Bind( wx.EVT_TREE_SEL_CHANGED, self.ontvFilesSelChanged )
 		self.btnSelectFile.Bind( wx.EVT_BUTTON, self.onbtnSelectFileClick )
 		self.btnUnselectFile.Bind( wx.EVT_BUTTON, self.onbtnUnselectFileClick )
@@ -188,6 +189,9 @@ class Mainframe ( wx.Frame ):
 	
 	
 	# Virtual event handlers, overide them in your derived class
+	def onedtLoginNameKillFocus( self, event ):
+		event.Skip()
+	
 	def ontvFilesSelChanged( self, event ):
 		event.Skip()
 	
