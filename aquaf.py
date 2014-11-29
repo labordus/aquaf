@@ -5,6 +5,7 @@ import sys
 import imp
 import webbrowser
 from PIL import Image
+import db
 
 # import GUI
 import maingui
@@ -86,7 +87,16 @@ class AquaFrame(maingui.Mainframe):
             self.tvFiles.SetFilter("plaatjes(*.bmp;*.BMP;*.jpg;*.JPG;*.png;*.PNG;*.tiff;*.TIFF;*.tif;*.TIF)|*.bmp;*.BMP;*.jpg;*.JPG;*.png;*.PNG;*.tiff;*.TIFF;*.tif;*.TIF")
 
         self.PreviewImage(TEST_FOTO)
-        print "Aquaf v8.4"
+
+        userName = db.get_username()
+        print "Hoi " + userName
+        print "Welkom bij Aquaf v8.4"
+        self.edtLoginName.SetValue(userName)
+
+    def onedtLoginNameKillFocus(self, event):
+        #        if len(self.edtLoginName.GetValue()) == 0:
+        #            print("Geen loginnaam ingevoerd")
+        db.set_username(self.edtLoginName.GetValue())
 
     def onbtnArchiefClick(self, event):
         #        webbrowser.get("chrome").open_new_tab(theArchive)
@@ -160,7 +170,7 @@ class AquaFrame(maingui.Mainframe):
         for _i in range(self.listboxSelectedFiles.Count):
             sPad = self.listboxSelectedFiles.GetClientData(_i)
             if _pad == sPad:
-                print("image is al toegevoegd")
+                print("Image is al toegevoegd")
                 return
 
         if _pad != () and _pad != "":
@@ -171,12 +181,21 @@ class AquaFrame(maingui.Mainframe):
             bestandsnaam = os.path.basename(helepad)
             # sla het hele pad op in pyobject clientdata.. toch?
             self.listboxSelectedFiles.Append(bestandsnaam, helepad)
+            print bestandsnaam + " toegevoegd"
         # else directory
         else:
-            print "Geen geldig plaatje"
+            print "Geen geldige image"
 
     def onbtnUnselectFileClick(self, event):
-        self.listboxSelectedFiles.Delete(self.listboxSelectedFiles.GetSelection())
+        sel = self.listboxSelectedFiles.GetSelection()
+        if sel < 0:  # nothing selected
+            return
+        # else
+        bl = self.listboxSelectedFiles.GetString(sel)
+#        if self.listboxSelectedFiles.getsel
+        self.listboxSelectedFiles.Delete(sel)
+#        bl = self.listboxSelectedFiles.GetClientData(self.listboxSelectedFiles.GetSelection())
+        print bl + " verwijderd"
 
     def onbtnUploadClick(self, event):
         if len(self.edtLoginName.GetValue()) == 0:
