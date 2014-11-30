@@ -96,7 +96,16 @@ class AquaFrame(maingui.Mainframe):
     def onedtLoginNameKillFocus(self, event):
         #        if len(self.edtLoginName.GetValue()) == 0:
         #            print("Geen loginnaam ingevoerd")
-        db.set_username(self.edtLoginName.GetValue())
+        if self.edtLoginName.IsModified():
+            if len(self.edtLoginName.GetValue()) == 0:
+                print "Niets ingevoerd"
+                self.edtLoginName.SetValue(db.get_username())
+            else:
+                db.set_username(self.edtLoginName.GetValue())
+                self.edtLoginName.SetModified(False)
+        else:
+            print "IsNOTModified"
+        event.Skip()
 
     def onbtnArchiefClick(self, event):
         #        webbrowser.get("chrome").open_new_tab(theArchive)
@@ -204,8 +213,7 @@ class AquaFrame(maingui.Mainframe):
 
         filecount = self.listboxSelectedFiles.GetCount()
         if filecount <= 0:
-            self.frame_1_statusbar.SetStatusText(
-                "Geen bestand geselecteerd", 0)
+            print("Geen bestand geselecteerd")
             return
 
         dimensions = getDimensions(self.radio_box_3.GetSelection())
@@ -221,8 +229,8 @@ class AquaFrame(maingui.Mainframe):
                     self.edtLoginName.GetValue(),
                     self.listboxSelectedFiles.GetClientData(_i))
 
-#                uploadFileToAquaforum(resizedFilename, self.desiredName)
-#                addToHistory(AUQAOFORUM_PICTURE_URL + self.desiredName)
+                uploadFileToAquaforum(resizedFilename, self.desiredName)
+                addToHistory(AUQAOFORUM_PICTURE_URL + self.desiredName)
                 urls = urls + " [IMG]" + AUQAOFORUM_PICTURE_URL + self.desiredName + "[/IMG]" + "\n"
 
             except Exception as er:
