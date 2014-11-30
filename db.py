@@ -6,7 +6,9 @@ def get_username():
         conn = sqlite3.connect('aquaf.db')
         c = conn.cursor()
         c.execute('''CREATE TABLE IF NOT EXISTS
-                      tblApp(USERNM VARCHAR(30))''')
+                      tblApp(
+                      USERID INT PRIMARY KEY    NOT NULL  DEFAULT (1),
+                      USERNM VARCHAR(30))''')
         conn.commit()
         c.execute('SELECT USERNM FROM tblApp')
         try:
@@ -33,6 +35,7 @@ def set_username(userName):
                   (userName, 1))
     conn.commit()
     conn.close()
+    print "Gebruikersnaam is nu " + userName
 
 #         firstrow = str(c.fetchone()[0])
 # if firstrow is not "None":  # niet leeg
