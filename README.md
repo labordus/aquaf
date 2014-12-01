@@ -29,7 +29,7 @@ Die versie wordt dus niet overschreven.
 # Wat is er veranderd?
 
 * T'is nu cross-platform, werkt op posix-besturingssystemen en Windows.
-Windows 95/98 wordt niet meer ondersteund!
+Windows 95/98/ME wordt niet meer ondersteund!
 Heb het kunnen testen op..
 Linux(64bit)/WindowsXP(32bit)/WindowsVista(64bit)/Windows7(32bit)/Windows8.1(32bit)
 * Je kunt nu meerdere plaatjes klaarzetten om in 1 ruk te kunnen uploaden.
