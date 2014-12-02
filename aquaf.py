@@ -103,8 +103,6 @@ class AquaFrame(maingui.Mainframe):
             else:
                 db.set_username(self.edtLoginName.GetValue())
                 self.edtLoginName.SetModified(False)
-        else:
-            print "IsNOTModified"
         event.Skip()
 
     def onbtnArchiefClick(self, event):
