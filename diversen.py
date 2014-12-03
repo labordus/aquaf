@@ -128,40 +128,30 @@ def ResizeImage(pad, dim):
     return img
 
 
-def SaveJPEGToTemp(im):
-    #    kwal = 95
-    #    try:
-    #        im.save(resizedFileName, "JPEG", quality=kwal, optimize=True)
-    #    except IOError:
-    # try again, without optimization
-    #        im.draft("RGB", im.size)
-    #        im = im.convert("RGB")
-    #        im.save(resizedFileName, "JPEG", quality=kwal, optimize=False)
-    #############################################################################
-    resizedFileName = "tempfile.dat"
-    # quality hoger dan 95 heeft geen nut,
-    # zie http://pillow.readthedocs.org/en/latest/handbook/image-file-formats.html
-    kwaliteit = [95, 94, 93, 92, 91, 90, 88, 86, 84, 82, 80, 78, 76,
-                 74, 72, 70, 68, 66, 64, 62, 60, 58, 56, 54, 52, 50,
-                 48, 46, 44, 42, 40, 38, 36]
-    for _x in kwaliteit:
-        try:
-            im.save(resizedFileName, "JPEG", quality=_x, optimize=True)
-            filesize = os.path.getsize(resizedFileName)
-            if filesize <= 200000:
+def DumpImage(im, username, filename):
+    import tempfile
+    with tempfile.NamedTemporaryFile(delete=True) as temp:
+        # quality hoger dan 95 heeft geen nut,
+        # zie http://pillow.readthedocs.org/en/latest/handbook/image-file-formats.html
+        kwaliteit = [95, 94, 93, 92, 91, 90, 88, 86, 84, 82, 80, 78, 76,
+                     74, 72, 70, 68, 66, 64, 62, 60, 58, 56, 54, 52, 50,
+                     48, 46, 44, 42, 40, 38, 36]
+        for _x in kwaliteit:
+            try:
+                im.save(temp.name, "JPEG", quality=_x, optimize=True)
+                filesize = os.path.getsize(temp.name)
+                if filesize <= 200000:
+                    break
+            except IOError as er:
+                wx.MessageDialog(
+                    "Er is een fout opgetreden tijdens het converteren\n" +
+                    "De error is " + str(er),
+                    "Bericht", style=wx.OK).ShowModal()
                 break
-        except IOError as er:
-            wx.MessageDialog(
-                "Er is een fout opgetreden tijdens het converteren\n" +
-                "De error is " + str(er),
-                "Bericht", style=wx.OK).ShowModal()
-            break
-# FIXME: error-handling voor als bestand toch nog groter is dan 200kb
-#    if filesize > 200000:
-#        print "kon niet klein genoeg worden gemaakt"
-#    print "quality = " + str(_x)
-    return resizedFileName
-#############################################################################
+        desiredName = constructUploadName(username, filename)
+        uploadFileToAquaforum(temp.name, desiredName)
+        temp.flush()
+    return desiredName
 
 
 def addToHistory(url):
