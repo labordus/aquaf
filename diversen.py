@@ -6,6 +6,7 @@ import sys
 import webbrowser
 import imp
 from distutils.spawn import find_executable
+from tempfile import tempdir
 
 try:
     from PIL import Image
@@ -130,27 +131,29 @@ def ResizeImage(pad, dim):
 
 def DumpImage(im, username, filename):
     import tempfile
-    with tempfile.NamedTemporaryFile(delete=True) as temp:
+#    with tempfile.mks NamedTemporaryFile(delete=True) as temp:
+    fd, path = tempfile.mkstemp()
         # quality hoger dan 95 heeft geen nut,
         # zie http://pillow.readthedocs.org/en/latest/handbook/image-file-formats.html
-        kwaliteit = [95, 94, 93, 92, 91, 90, 88, 86, 84, 82, 80, 78, 76,
+    kwaliteit = [95, 94, 93, 92, 91, 90, 88, 86, 84, 82, 80, 78, 76,
                      74, 72, 70, 68, 66, 64, 62, 60, 58, 56, 54, 52, 50,
                      48, 46, 44, 42, 40, 38, 36]
-        for _x in kwaliteit:
-            try:
-                im.save(temp.name, "JPEG", quality=_x, optimize=True)
-                filesize = os.path.getsize(temp.name)
-                if filesize <= 200000:
-                    break
-            except IOError as er:
-                wx.MessageDialog(
+    for _x in kwaliteit:
+        try:
+            im.save(path, "JPEG", quality=_x, optimize=True)
+            filesize = os.path.getsize(path)
+            if filesize <= 200000:
+                break
+        except IOError as er:
+            wx.MessageDialog(
                     "Er is een fout opgetreden tijdens het converteren\n" +
                     "De error is " + str(er),
                     "Bericht", style=wx.OK).ShowModal()
-                break
-        desiredName = constructUploadName(username, filename)
-        uploadFileToAquaforum(temp.name, desiredName)
-        temp.flush()
+            break
+    desiredName = constructUploadName(username, filename)
+    uploadFileToAquaforum(path, desiredName)
+    os.close(fd)
+    os.remove(path)
     return desiredName
 
 
