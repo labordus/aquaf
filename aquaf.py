@@ -221,15 +221,10 @@ class AquaFrame(maingui.Mainframe):
             try:
                 resizedFilename = ResizeImage(
                     self.listboxSelectedFiles.GetClientData(_i), dimensions)
-                resizedFilename = SaveJPEGToTemp(resizedFilename)
-# TODO: als SaveJPEGToTemp() niet is gelukt dan..
-                self.desiredName = diversen.constructUploadName(
-                    self.edtLoginName.GetValue(),
-                    self.listboxSelectedFiles.GetClientData(_i))
 
-                uploadFileToAquaforum(resizedFilename, self.desiredName)
-                addToHistory(AUQAOFORUM_PICTURE_URL + self.desiredName)
-                urls = urls + " [IMG]" + AUQAOFORUM_PICTURE_URL + self.desiredName + "[/IMG]" + "\n"
+                desiredName = DumpImage(resizedFilename, self.edtLoginName.GetValue(), self.listboxSelectedFiles.GetClientData(_i))
+                addToHistory(AUQAOFORUM_PICTURE_URL + desiredName)
+                urls = urls + " [IMG]" + AUQAOFORUM_PICTURE_URL + desiredName + "[/IMG]" + "\n"
 
             except Exception as er:
                 self.error = True
