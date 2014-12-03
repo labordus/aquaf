@@ -133,11 +133,11 @@ def DumpImage(im, username, filename):
     import tempfile
 #    with tempfile.mks NamedTemporaryFile(delete=True) as temp:
     fd, path = tempfile.mkstemp()
-        # quality hoger dan 95 heeft geen nut,
-        # zie http://pillow.readthedocs.org/en/latest/handbook/image-file-formats.html
+    # quality hoger dan 95 heeft geen nut,
+    # zie http://pillow.readthedocs.org/en/latest/handbook/image-file-formats.html
     kwaliteit = [95, 94, 93, 92, 91, 90, 88, 86, 84, 82, 80, 78, 76,
-                     74, 72, 70, 68, 66, 64, 62, 60, 58, 56, 54, 52, 50,
-                     48, 46, 44, 42, 40, 38, 36]
+                 74, 72, 70, 68, 66, 64, 62, 60, 58, 56, 54, 52, 50,
+                 48, 46, 44, 42, 40, 38, 36]
     for _x in kwaliteit:
         try:
             im.save(path, "JPEG", quality=_x, optimize=True)
@@ -145,10 +145,9 @@ def DumpImage(im, username, filename):
             if filesize <= 200000:
                 break
         except IOError as er:
-            wx.MessageDialog(
-                    "Er is een fout opgetreden tijdens het converteren\n" +
-                    "De error is " + str(er),
-                    "Bericht", style=wx.OK).ShowModal()
+            wx.MessageDialog("Er is een fout opgetreden tijdens het converteren\n" +
+                             "De error is " + str(er),
+                             "Bericht", style=wx.OK).ShowModal()
             break
     desiredName = constructUploadName(username, filename)
     uploadFileToAquaforum(path, desiredName)
