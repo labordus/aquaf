@@ -223,7 +223,7 @@ class AquaFrame(maingui.Mainframe):
                     self.listboxSelectedFiles.GetClientData(_i), dimensions)
 
                 desiredName = DumpImage(resizedFilename, self.edtLoginName.GetValue(), self.listboxSelectedFiles.GetClientData(_i))
-                addToHistory(AUQAOFORUM_PICTURE_URL + desiredName)
+#                addToHistory(AUQAOFORUM_PICTURE_URL + desiredName)
                 urls = urls + " [IMG]" + AUQAOFORUM_PICTURE_URL + desiredName + "[/IMG]" + "\n"
 
             except Exception as er:
