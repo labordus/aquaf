@@ -74,6 +74,7 @@ Nieuwe gebruikers kunnen gewoon de applicatie opstarten.
 * Selecteer in de lijst links op het scherm een plaatje die je uploaden wilt,
 klik op de knop "toevoegen" zodat die wordt toegevoegd aan de lijst aan de rechter kant.
 Ga zo door totdat je alle plaatjes hebt toegevoegd die je wilt uploaden.
+* Selecteer de gewenste dimensies voor de te uploaden plaatjes.
 * Klik op knop "upload naar aquaforum" en wacht op het volgende venster alwaar
 je de URL's kunt kopieren om in je forumbericht te plakken.
 
@@ -84,4 +85,3 @@ Download hier het Windows installatiepakket.
 
 
 Als er Linux-gebruikers zijn die hulp willen bij de installatie, laat het me weten.
-Als er Apple-gebruikers zijn, die kan ik niet helpen, die hebben pech ;)
