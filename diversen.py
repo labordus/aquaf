@@ -150,7 +150,7 @@ def DumpImage(im, username, filename):
                              "Bericht", style=wx.OK).ShowModal()
             break
     desiredName = constructUploadName(username, filename)
-    uploadFileToAquaforum(path, desiredName)
+#    uploadFileToAquaforum(path, desiredName)
     os.close(fd)
     os.remove(path)
     return desiredName
