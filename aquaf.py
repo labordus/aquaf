@@ -6,6 +6,11 @@ import imp
 import webbrowser
 from PIL import Image
 import db
+import BaseHTTPServer
+import SimpleHTTPServer
+from SimpleHTTPServer import SimpleHTTPRequestHandler
+import threading
+from time import sleep
 
 # import GUI
 import maingui
@@ -16,6 +21,8 @@ import diversen
 from diversen import *
 
 import uploaddialog
+from urllib import quote, quote_plus
+from mechanize._opener import urlopen
 # from wx.lib.pubsub.pub import validate
 # from wx import BITMAP_TYPE_TIF
 # from diversen import ValideerInvoer
@@ -108,7 +115,58 @@ class AquaFrame(maingui.Mainframe):
     def onbtnArchiefClick(self, event):
         #        webbrowser.get("chrome").open_new_tab(theArchive)
         #        webbrowser.get("firefox").open_new(theArchive)
-        launch_archive('firefox')
+
+        HandlerClass = SimpleHTTPRequestHandler
+        ServerClass = BaseHTTPServer.HTTPServer
+        Protocol = "HTTP/1.0"
+
+        server_address = ("127.0.0.1", 8000)
+
+        HandlerClass.protocol_version = Protocol
+        httpd = ServerClass(server_address, HandlerClass)
+
+        sa = httpd.socket.getsockname()
+        print "Serving HTTP on", sa[0], "port", sa[1], "..."
+
+        thread = threading.Thread(target=httpd.serve_forever)
+        thread.deamon = True
+        thread.start()
+        sleep(1)
+
+# browser in eigen thread???????
+
+        weburl = "http://127.0.0.1:8000/archive.html"
+        webbrowserController = webbrowser.get()
+        webbrowserName = webbrowserController.name
+#        webbrowserName = 'google-chrome-stable'
+        webbrowserName = 'firefox'
+        webbrowser.get(webbrowserName + ' %s').open(weburl, new=1)
+
+#         try:
+#             webbrowserController = webbrowser.get('chrome %s')
+#         except:
+#             webbrowserController = webbrowser.get()
+#         webbrowserName = webbrowserController.name
+#         if webbrowserName == '':
+#             try:
+#                 os.startfile(weburl)
+#                 return
+#             except:
+#                 pass
+#             print('Geen browser gevonden')
+#         else:
+#             os.system(webbrowserName + ' ' + weburl)
+
+#        webbrowser.open(weburl)
+#        webbrowser.get("google-chrome-stable %s").open_new(weburl)
+#        webbrowser.get("opera %s").open_new(weburl)
+#        webbrowser.get("firefox %s").open_new(weburl)
+#        sleep(3)
+
+
+#        launch_archive('firefox')
+
+        httpd.shutdown()
 
         return
 
@@ -221,7 +279,6 @@ class AquaFrame(maingui.Mainframe):
             try:
                 resizedFilename = ResizeImage(
                     self.listboxSelectedFiles.GetClientData(_i), dimensions)
-
                 desiredName = DumpImage(resizedFilename, self.edtLoginName.GetValue(), self.listboxSelectedFiles.GetClientData(_i))
 #                addToHistory(AUQAOFORUM_PICTURE_URL + desiredName)
                 urls = urls + " [IMG]" + AUQAOFORUM_PICTURE_URL + desiredName + "[/IMG]" + "\n"
@@ -229,6 +286,7 @@ class AquaFrame(maingui.Mainframe):
             except Exception as er:
                 self.error = True
                 self.errorEx = er
+                exit
 
         dlg = uploaddialog.UploadDoneDialog(self)
         dlg.setCode(urls)
