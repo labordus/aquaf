@@ -145,14 +145,13 @@ def DumpImage(im, username, filename):
             if filesize <= 200000:
                 break
         except IOError as er:
-            wx.MessageDialog("Er is een fout opgetreden tijdens het converteren\n" +
-                             "De error is " + str(er),
-                             "Bericht", style=wx.OK).ShowModal()
-            break
+            print("ERROR : " + str(er))
+            os.close(fd)
+            os.remove(path)
+            return
+
     desiredName = constructUploadName(username, filename)
 #    uploadFileToAquaforum(path, desiredName)
-    os.close(fd)
-    os.remove(path)
     return desiredName
 
 
