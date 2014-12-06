@@ -17,10 +17,6 @@ from diversen import *
 
 import uploaddialog
 from mechanize._opener import urlopen
-# from wx.lib.pubsub.pub import validate
-# from wx import BITMAP_TYPE_TIF
-# from diversen import ValideerInvoer
-# from telnetlib import theNULL
 
 AUQAOFORUM_PICTURE_URL = "http://www.aquaforum.nl/gallery/upload/"
 TEST_FOTO = "test.jpg"
@@ -73,15 +69,9 @@ class AquaFrame(maingui.Mainframe):
         redir = RedirectText(log)
         sys.stdout = redir
 
-        # bind validator to edtLogin-Invoerbox
-        # self.edtLoginName.SetValidator(ValideerInvoer(diversen.ALPHA_ONLY))
-
         # Windows laat anders dubbele entries zien,
         # en linux laat alleen bestanden zien met specifieke casing
 
-        # weet niet of dit ook Win 7/8 meeneemt?
-        # en win64?
-        # if sys.platform[:3] == 'win':
         if (sys.platform.startswith('win')):  # dan win32 of win64
             self.tvFiles.SetFilter("plaatjes(*.bmp;*.jpg;*.png;*.tiff;*.tif;)|*.bmp;*.jpg;*.png;*.tiff;*.tif")
         else:  # posix
@@ -110,9 +100,10 @@ class AquaFrame(maingui.Mainframe):
         #        webbrowser.get("chrome").open_new_tab(theArchive)
         #        webbrowser.get("firefox").open_new(theArchive)
 
-        weburl = "http://127.0.0.1:8000/archive.html"
+        weburl = "http://127.0.0.1:8200/archive.html"
         dialog = MyBrowser(None, -1)
         dialog.browser.LoadURL(weburl)
+        dialog.CenterOnParent()
         dialog.ShowModal()
         dialog.Destroy()
         #        launch_archive('firefox')
@@ -120,7 +111,6 @@ class AquaFrame(maingui.Mainframe):
 
     def onbtnVoorbeeldClick(self, event):
         dimensions = getDimensions(self.radio_box_3.GetSelection())
-#        self.frame_1_statusbar.SetStatusText("Het programma converteert het plaatje", 0)
         resizedFileName = None
         try:
             if not (os.path.exists(TEST_FOTO)):
@@ -129,7 +119,6 @@ class AquaFrame(maingui.Mainframe):
                 return
             else:
                 resizedFileName = ResizeImage(TEST_FOTO, dimensions)
-#                  self.frame_1_statusbar.SetStatusText(" ", 0)
         except Exception as er:
             resizedFileName = None
             wx.MessageDialog(
@@ -148,7 +137,6 @@ class AquaFrame(maingui.Mainframe):
         Voorbeeld.Destroy()
 
     def PreviewImage(self, pad):
-        #        dimensions = self.bitmapSelectedFile.GetSize()
         if pad != () and pad != "":
             # file selected
             if IsValidImage(pad):
@@ -163,7 +151,6 @@ class AquaFrame(maingui.Mainframe):
 
     def ontvFilesSelChanged(self, event):
         self.PreviewImage(self.tvFiles.GetFilePath())
-#        print platform.platform(aliased=0, terse=0)
 
     def onlistboxSelectedFile(self, event):
         pad = self.listboxSelectedFiles.GetClientData(self.listboxSelectedFiles.GetSelection())
