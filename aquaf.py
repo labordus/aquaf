@@ -3,7 +3,6 @@ import wx
 import os
 import sys
 import imp
-import webbrowser
 from PIL import Image
 import db
 from archiveview import MyBrowser
@@ -17,7 +16,6 @@ import diversen
 from diversen import *
 
 import uploaddialog
-from urllib import quote, quote_plus
 from mechanize._opener import urlopen
 # from wx.lib.pubsub.pub import validate
 # from wx import BITMAP_TYPE_TIF
