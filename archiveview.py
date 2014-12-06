@@ -1,7 +1,6 @@
 import wx
 import wx.html2
 import BaseHTTPServer
-import SimpleHTTPServer
 from SimpleHTTPServer import SimpleHTTPRequestHandler
 import threading
 from time import sleep
