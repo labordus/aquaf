@@ -6,11 +6,7 @@ import imp
 import webbrowser
 from PIL import Image
 import db
-import BaseHTTPServer
-import SimpleHTTPServer
-from SimpleHTTPServer import SimpleHTTPRequestHandler
-import threading
-from time import sleep
+from archiveview import MyBrowser
 
 # import GUI
 import maingui
@@ -19,7 +15,6 @@ from Dialog import Dialog
 
 import diversen
 from diversen import *
-import functools
 
 import uploaddialog
 from urllib import quote, quote_plus
@@ -31,8 +26,6 @@ from mechanize._opener import urlopen
 
 AUQAOFORUM_PICTURE_URL = "http://www.aquaforum.nl/gallery/upload/"
 TEST_FOTO = "test.jpg"
-
-# A decorator that will run its wrapped function in a new thread
 
 
 def main_is_frozen():
@@ -115,73 +108,16 @@ class AquaFrame(maingui.Mainframe):
                 self.edtLoginName.SetModified(False)
         event.Skip()
 
-    def run_in_other_thread(self, function):
-        # functool.wraps will copy over the docstring and some other metadata
-        # from the original function
-        @functools.wraps(function)
-        def fn_(*args, **kwargs):
-            thread = threading.Thread(target=function, args=args, kwargs=kwargs)
-            thread.start()
-            thread.join()
-        return fn_
-
     def onbtnArchiefClick(self, event):
         #        webbrowser.get("chrome").open_new_tab(theArchive)
         #        webbrowser.get("firefox").open_new(theArchive)
 
-        HandlerClass = SimpleHTTPRequestHandler
-        ServerClass = BaseHTTPServer.HTTPServer
-        Protocol = "HTTP/1.0"
-
-        server_address = ("127.0.0.1", 8000)
-
-        HandlerClass.protocol_version = Protocol
-        httpd = ServerClass(server_address, HandlerClass)
-
-        sa = httpd.socket.getsockname()
-        print "Serving HTTP on", sa[0], "port", sa[1], "..."
-
-        thread = threading.Thread(target=httpd.serve_forever)
-        thread.deamon = True
-        thread.start()
-        sleep(1)
-
-        # browser in eigen thread???????
-
         weburl = "http://127.0.0.1:8000/archive.html"
-        webbrowserController = webbrowser.get()
-        webbrowserName = webbrowserController.name
-#        webbrowserName = 'google-chrome-stable'
-        webbrowserName = 'firefox'
-        self.run_in_other_thread(webbrowser.get(webbrowserName + ' %s').open(weburl, new=1))
-#        self.run_in_other_thread(webbrowser.open("http://www.google.nl"))
-
-#         try:
-#             webbrowserController = webbrowser.get('chrome %s')
-#         except:
-#             webbrowserController = webbrowser.get()
-#         webbrowserName = webbrowserController.name
-#         if webbrowserName == '':
-#             try:
-#                 os.startfile(weburl)
-#                 return
-#             except:
-#                 pass
-#             print('Geen browser gevonden')
-#         else:
-#             os.system(webbrowserName + ' ' + weburl)
-
-#        webbrowser.open(weburl)
-#        webbrowser.get("google-chrome-stable %s").open_new(weburl)
-#        webbrowser.get("opera %s").open_new(weburl)
-#        webbrowser.get("firefox %s").open_new(weburl)
-#        sleep(3)
-
-
-#        launch_archive('firefox')
-
-        httpd.shutdown()
-
+        dialog = MyBrowser(None, -1)
+        dialog.browser.LoadURL(weburl)
+        dialog.ShowModal()
+        dialog.Destroy()
+        #        launch_archive('firefox')
         return
 
     def onbtnVoorbeeldClick(self, event):
