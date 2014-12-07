@@ -22,20 +22,21 @@ Heb het kunnen testen op..
 Linux(64bit)/WindowsXP(32bit)/WindowsVista(64bit)/Windows7(32bit)/Windows8.1(32bit)
 * Je kunt nu meerdere plaatjes klaarzetten om in 1 ruk te kunnen uploaden.
 Wel is het zo dat de geselecteerde dimensie van de te uploaden plaatjes
-geldt voor alle klaargezette plaatjes.. je kunt dat niet per individueel
-plaatje aangeven..
+geldt voor alle klaargezette plaatjes.. je kunt dat (vooralsnog) niet
+per individueel plaatje aangeven..
 * Kwaliteit van de plaatjes wordt zo maximaal mogelijk gehouden voor upload.
 * Gebruikersnaam hoeft niet telkens opnieuw te worden ingevoerd.
-
-
-# Verdere op/aanmerkingen.
 * Bij sommige gebruikers werkte de archiefpagina schijnbaar niet..
-Ik ken de oorzaak maar heb momenteel geen makkelijke/werkbare oplossing. Zal daar later mee aan de slag gaan..
+Ik heb inderdaad problemen geconstateerd bij het gebruik van bepaalde browsers,
+met name Opera en Chrome. Heb dat opgelost door gebruik te maken van
+een eigen browser-component die los van de geinstalleerde browser functioneerd.
 
 # Bij problemen.
-Laat het me weten.. maar liefst wel met zoveel mogelijk informatie over wat
-er mis gaat.. hoe meer informatie ik heb hoe makkelijker ik het kan oplossen.
-En vooral ook welk besturingsysteem je gebruikt, liefst ook architectuur (32bit/64bit).
+Laat het me weten.. maar liefst wel met zoveel mogelijk informatie, een duidelijke
+beschrijving van wat er mis gaat.. en info over het besturingsysteem
+dat je gebruikt, liefst ook architectuur (32bit/64bit).
+Alle informatie helpt mij om de oorzaak te vinden en op te lossen.
+Je kunt je vragen/opmerkingen poneren in dit forum-topic of via een PB'tje.
 
 # Instructies voor installatie (alleen voor gebruikers van Riba's versie)
 Ik maak gebruik van hetzelfde databestand als waar Riba's versie gebruik
@@ -62,7 +63,8 @@ je de URL's kunt kopieren om in je forumbericht te plakken.
 Download hier het Windows installatiepakket.
 ......
 
-
+Als er mensen zijn die zich geroepen voelen om mee te helpen met het ontwikkelen
+van dit tooltje dan zijn die meer dan welkom.
 * Code home page: https://github.com/labordus/aquaf
 * Issue tracker: https://github.com/labordus/aquaf/issues
 
