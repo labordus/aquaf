@@ -6,8 +6,6 @@ Riba's aquazone - Aquaforum uploadprogramma: http://aquazone.leeuwen.nu/blog/upl
 
 verder ontwikkeld door Mark labordus - kellemes (bordumar@gmail.com)
 
-# Info
-
 Bij deze een nieuwe versie van Riba's uploadtooltje.. 0.84-Alpha.
 De veranderingen 'under the hood' zijn aanzienlijk.. vandaar dat ik er voor kies
 om het programma naast de (eventueel aanwezige) versie van Riba te installeren.
