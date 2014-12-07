@@ -6,7 +6,7 @@ Riba's aquazone - Aquaforum uploadprogramma: http://aquazone.leeuwen.nu/blog/upl
 
 verder ontwikkeld door Mark labordus - kellemes (bordumar@gmail.com)
 
-Bij deze een nieuwe versie van Riba's uploadtooltje.. 0.84-Alpha.
+Bij deze een nieuwe versie van Riba's uploadtooltje.
 De veranderingen 'under the hood' zijn aanzienlijk.. vandaar dat ik er voor kies
 om het programma naast de (eventueel aanwezige) versie van Riba te installeren.
 Riba's versie wordt dus niet overschreven.
@@ -25,9 +25,9 @@ per individueel plaatje aangeven..
 * Kwaliteit van de plaatjes wordt zo maximaal mogelijk gehouden voor upload.
 * Gebruikersnaam hoeft niet telkens opnieuw te worden ingevoerd.
 * Bij sommige gebruikers werkte de archiefpagina schijnbaar niet..
-Ik heb inderdaad problemen geconstateerd bij het gebruik van bepaalde browsers,
-met name Opera en Chrome. Heb dat opgelost door gebruik te maken van
-een eigen browser-component die los van de geinstalleerde browser functioneerd.
+Ik heb inderdaad problemen geconstateerd bij het gebruik van met name
+Opera en Chrome. Heb dat opgelost door gebruik te maken van een eigen
+browser-component die los van de geinstalleerde browser functioneerd.
 
 # Bij problemen.
 Laat het me weten.. maar liefst wel met zoveel mogelijk informatie, een duidelijke
@@ -57,7 +57,7 @@ Ga zo door totdat je alle plaatjes hebt toegevoegd die je wilt uploaden.
 * Klik op knop "upload naar aquaforum" en wacht op het volgende venster alwaar
 je de URL's kunt kopieren om in je forumbericht te plakken.
 
-
+0.84-Alpha
 Download hier het Windows installatiepakket.
 ......
 
