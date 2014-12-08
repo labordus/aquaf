@@ -17,6 +17,7 @@ from diversen import *
 
 import uploaddialog
 from mechanize._opener import urlopen
+import paths
 
 AUQAOFORUM_PICTURE_URL = "http://www.aquaforum.nl/gallery/upload/"
 TEST_FOTO = "test.jpg"
@@ -84,6 +85,8 @@ class AquaFrame(maingui.Mainframe):
         print "Welkom bij Aquaf v8.4"
         self.edtLoginName.SetValue(userName)
 
+        print paths.user_data_dir(False, False, False, False)
+
     def onedtLoginNameKillFocus(self, event):
         #        if len(self.edtLoginName.GetValue()) == 0:
         #            print("Geen loginnaam ingevoerd")
@@ -100,7 +103,7 @@ class AquaFrame(maingui.Mainframe):
         #        webbrowser.get("chrome").open_new_tab(theArchive)
         #        webbrowser.get("firefox").open_new(theArchive)
 
-        weburl = "http://127.0.0.1:8200/archive.html"
+        weburl = "http://127.0.0.1:8100/archive.html"
         dialog = MyBrowser(None, -1)
         dialog.browser.LoadURL(weburl)
         dialog.CenterOnParent()
