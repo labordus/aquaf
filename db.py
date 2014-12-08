@@ -1,9 +1,20 @@
 import sqlite3
+import paths
+import os
+
+
+def check_path_exists(path):
+    d = os.path.dirname(path)
+    if not os.path.exists(d):
+        os.makedirs(d)
 
 
 def get_username():
+    path = paths.user_data_dir('aquaf', False, False, False) + '/'
+    check_path_exists(path)
+    filepath = path + 'aquaf.db'
     try:
-        conn = sqlite3.connect('aquaf.db')
+        conn = sqlite3.connect(filepath)
         c = conn.cursor()
         c.execute('''CREATE TABLE IF NOT EXISTS
                       tblApp(
@@ -25,7 +36,10 @@ def get_username():
 
 
 def set_username(userName):
-    conn = sqlite3.connect('aquaf.db')
+    path = paths.user_data_dir('aquaf', False, False, False) + '/'
+    filepath = path + 'aquaf.db'
+
+    conn = sqlite3.connect(filepath)
     c = conn.cursor()
     try:
         c.execute('''INSERT INTO tblApp(USERID,USERNM)
