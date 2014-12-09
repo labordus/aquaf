@@ -15,7 +15,7 @@ OutputBaseFilename=aquaf
 
 [Files]
 Source: "aquaf.exe"; DestDir: "{app}"
-Source: "aquaf.db"; DestDir: "{commonappdata}\aquaf"; Flags: onlyifdoesntexist uninsneveruninstall
+Source: "aquaf.db"; DestDir: "{localappdata}\aquaf"; Flags: onlyifdoesntexist uninsneveruninstall
 Source: "README.md"; DestDir: "{app}"; Flags: isreadme
 Source: "MSVCR90.dll"; DestDir: "{app}"
 Source: "forumbanner.gif"; DestDir: "{app}"
@@ -27,7 +27,7 @@ Source: "dagverder.bmp"; DestDir: "{app}"
 Source: "test.jpg"; DestDir: "{app}"
 Source: "archive.html"; DestDir: "{app}"; Flags: uninsneveruninstall
 Source: "image.css"; DestDir: "{app}"; Flags: uninsneveruninstall
-Source: "images.json"; DestDir: "{commonappdata}\aquaf"; Flags: onlyifdoesntexist uninsneveruninstall
+Source: "images.json"; DestDir: "{app}"; Flags: onlyifdoesntexist uninsneveruninstall
 
 [Icons]
 Name: "{group}\Aquaf v0.84-alpha"; Filename: "{app}\aquaf.exe"
