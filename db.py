@@ -1,6 +1,6 @@
 import sqlite3
-import paths
 import os
+import appdirs
 
 
 def check_path_exists(path):
@@ -10,9 +10,9 @@ def check_path_exists(path):
 
 
 def get_username():
-    path = paths.user_data_dir('aquaf', False, False, False) + '/'
-    check_path_exists(path)
-    filepath = path + 'aquaf.db'
+    path = appdirs.user_data_dir('aquaf', False, False, False)
+    check_path_exists(os.path.join(path, 'aquaf.db'))
+    filepath = os.path.join(path, 'aquaf.db')
     try:
         conn = sqlite3.connect(filepath)
         c = conn.cursor()
@@ -36,8 +36,8 @@ def get_username():
 
 
 def set_username(userName):
-    path = paths.user_data_dir('aquaf', False, False, False) + '/'
-    filepath = path + 'aquaf.db'
+    path = appdirs.user_data_dir('aquaf', False, False, False) + '/'
+    filepath = os.path.join(path, 'aquaf.db')
 
     conn = sqlite3.connect(filepath)
     c = conn.cursor()
