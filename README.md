@@ -17,7 +17,7 @@ Riba's versie wordt dus niet overschreven.
 * T'is nu cross-platform, werkt op posix-besturingssystemen en Windows.
 Windows 95/98/ME wordt niet meer ondersteund!
 Heb het kunnen testen op..
-Linux(64bit)/WindowsXP(32bit)/WindowsVista(64bit)/Windows7(32bit)/Windows8.1(32bit)
+Linux(64bit)/WindowsXP(32bit)/WindowsVista(64bit)/Windows7(32bit)
 * Je kunt nu meerdere plaatjes klaarzetten om in 1 ruk te kunnen uploaden.
 Wel is het zo dat de geselecteerde dimensie van de te uploaden plaatjes
 geldt voor alle klaargezette plaatjes.. je kunt dat (vooralsnog) niet
@@ -70,6 +70,7 @@ van dit tooltje dan zijn die meer dan welkom.
 
 aquaf maakt gebruik van Python 2.7, wxwidgets, Pillow 2.5.1-26.1
 (python-wxWidgets-3_0) 3.0.1.1-8.1
+appdirs (https://github.com/ActiveState/appdirs)
 
 
 [Todo](TODO.md)
