@@ -17,7 +17,6 @@ from diversen import *
 
 import uploaddialog
 from mechanize._opener import urlopen
-import paths
 
 AUQAOFORUM_PICTURE_URL = "http://www.aquaforum.nl/gallery/upload/"
 TEST_FOTO = "test.jpg"
@@ -84,8 +83,6 @@ class AquaFrame(maingui.Mainframe):
         print "Hoi " + userName
         print "Welkom bij Aquaf v8.4"
         self.edtLoginName.SetValue(userName)
-
-        print paths.user_data_dir(False, False, False, False)
 
     def onedtLoginNameKillFocus(self, event):
         #        if len(self.edtLoginName.GetValue()) == 0:
