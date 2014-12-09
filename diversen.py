@@ -105,9 +105,15 @@ def DumpImage(im, username, filename):
 
 
 def addToHistory(url):
+    import appdirs
     '''adds the url to the json archive
     '''
-    f = open('images.json', 'r')
+    path = appdirs.user_data_dir('aquaf', False, False, False)
+#    check_path_exists(os.path.join(path, 'aquaf.db'))
+    filepath = os.path.join(path, 'images.json')
+
+#    f = open('images.json', 'r')
+    f = open(filepath, 'r')
     content = f.read()
     f.close()
     text = ""
@@ -123,7 +129,8 @@ def addToHistory(url):
 ''' % url
     text = text + template
     content = content.replace("]}", text)
-    f = open('images.json', 'w')
+#    f = open('images.json', 'w')
+    f = open(filepath, 'w')
     f.write(content)
     f.close()
     return
