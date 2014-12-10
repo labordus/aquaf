@@ -4,15 +4,17 @@ import BaseHTTPServer
 from SimpleHTTPServer import SimpleHTTPRequestHandler
 import threading
 from time import sleep
+import os
+
+oudepad = os.getcwd()
 
 
 class MyServer():
-
     HandlerClass = SimpleHTTPRequestHandler
     ServerClass = BaseHTTPServer.HTTPServer
     Protocol = "HTTP/1.0"
 
-    server_address = ("127.0.0.1", 8200)
+    server_address = ("127.0.0.1", 8000)
 
     HandlerClass.protocol_version = Protocol
     httpd = ServerClass(server_address, HandlerClass)
@@ -20,20 +22,26 @@ class MyServer():
     def run(self):
         #        sa = self.httpd.socket.getsockname()
         #        print "Served HTTP on", sa[0], "port", sa[1], "..."
+        import appdirs
+        datapad = appdirs.user_data_dir('aquaf', False, False, False)
+        os.chdir(datapad)
+
         thread = threading.Thread(target=self.httpd.serve_forever)
         thread.deamon = True
         thread.start()
-        sleep(1)
+        sleep(0.25)
 
     def stop(self):
         self.httpd.shutdown()
+        os.chdir(oudepad)
+#        os.chdir(os.path.dirname(sys.executable))
 
 
 class MyBrowser(wx.Dialog):
 
     def __init__(self, *args, **kwds):
-
         wx.Dialog.__init__(self, *args, **kwds)
+#        self.SetWindowStyleFlag(wx.RESIZE_BORDER)
         sizer = wx.BoxSizer(wx.VERTICAL)
         self.browser = wx.html2.WebView.New(self)
         sizer.Add(self.browser, 1, wx.EXPAND, 10)
