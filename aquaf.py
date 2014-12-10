@@ -100,7 +100,7 @@ class AquaFrame(maingui.Mainframe):
         #        webbrowser.get("chrome").open_new_tab(theArchive)
         #        webbrowser.get("firefox").open_new(theArchive)
 
-        weburl = "http://127.0.0.1:8100/archive.html"
+        weburl = "http://127.0.0.1:8000/archive.html"
         dialog = MyBrowser(None, -1)
         dialog.browser.LoadURL(weburl)
         dialog.CenterOnParent()
@@ -215,7 +215,7 @@ class AquaFrame(maingui.Mainframe):
                 resizedFilename = ResizeImage(
                     self.listboxSelectedFiles.GetClientData(_i), dimensions)
                 desiredName = DumpImage(resizedFilename, self.edtLoginName.GetValue(), self.listboxSelectedFiles.GetClientData(_i))
-#                addToHistory(AUQAOFORUM_PICTURE_URL + desiredName)
+                addToHistory(AUQAOFORUM_PICTURE_URL + desiredName)
                 urls = urls + " [IMG]" + AUQAOFORUM_PICTURE_URL + desiredName + "[/IMG]" + "\n"
 
             except Exception as er:
@@ -223,6 +223,7 @@ class AquaFrame(maingui.Mainframe):
                 self.errorEx = er
                 exit
 
+        stripJSON()
         dlg = uploaddialog.UploadDoneDialog(self)
         dlg.setCode(urls)
         self.listboxSelectedFiles.Clear()
