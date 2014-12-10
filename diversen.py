@@ -5,6 +5,7 @@ import string
 import sys
 import imp
 from tempfile import tempdir
+import appdirs
 
 try:
     from PIL import Image
@@ -104,8 +105,18 @@ def DumpImage(im, username, filename):
     return desiredName
 
 
+def stripJSON():
+    print 'empty'
+#    path = appdirs.user_data_dir('aquaf', False, False, False)
+#    filepath = os.path.join(path, 'images.json')
+#    with open(filepath, 'rw') as lines:
+# for line in lines:
+ #           if line.strip():
+ #               lines.write(line)
+ #   lines.close()
+
+
 def addToHistory(url):
-    import appdirs
     '''adds the url to the json archive
     '''
     path = appdirs.user_data_dir('aquaf', False, False, False)
