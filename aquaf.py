@@ -72,6 +72,9 @@ class AquaFrame(maingui.Mainframe):
 
 # ############################################### #
 
+#        stripJSON()
+        Initialize_JSON()
+
         _icon = wx.EmptyIcon()
         _icon.CopyFromBitmap(wx.Bitmap("icon.ico", wx.BITMAP_TYPE_ANY))
         self.SetIcon(_icon)
@@ -245,7 +248,6 @@ class AquaFrame(maingui.Mainframe):
                 self.errorEx = er
                 exit
 
-#        stripJSON()
         dlg = uploaddialog.UploadDoneDialog(self)
         dlg.setCode(urls)
         self.listboxSelectedFiles.Clear()
