@@ -81,7 +81,6 @@ def ResizeImage(pad, dim):
 
 def DumpImage(im, username, filename):
     import tempfile
-#    with tempfile.mks NamedTemporaryFile(delete=True) as temp:
     fd, path = tempfile.mkstemp()
     # quality hoger dan 95 heeft geen nut,
     # zie http://pillow.readthedocs.org/en/latest/handbook/image-file-formats.html
