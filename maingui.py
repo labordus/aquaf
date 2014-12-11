@@ -245,7 +245,7 @@ class dlgImport ( wx.Dialog ):
 		
 		bSizer25 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.m_staticText4 = wx.StaticText( self, wx.ID_ANY, u"Alleen voor gebruikers van Aquaforumuploader van Riba!\n\nHier kun je de oude data importeren..\n\nHet data-bestand heet \"IMAGES.JSON\" en zal te vinden zijn op de volgende locatie..\nC:\\Program Files\\aquaforumuploader\\\n(tenzij er tijdens de installatie is gekozen voor een ander locatie)\n\n1 - Zoek/selecteer \"IMAGES.JSON\"\n2 - Druk op \"Importeer\" om de data te importeren in de nieuwe versie.\n(het oude data-bestand zal gewoon blijven bestaan)", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText4 = wx.StaticText( self, wx.ID_ANY, u"Alleen voor gebruikers van Aquaforumuploader van Riba!\n\nHier kun je de oude data importeren..\n\nHet data-bestand heet \"IMAGES.JSON\" en zal te vinden zijn op de volgende locatie..\nC:Program Files\\AquaforumUploader\\\n(tenzij er tijdens de installatie is gekozen voor een ander locatie)\n\n1 - Zoek/selecteer \"IMAGES.JSON\"\n2 - Druk op \"Importeer\" om de data te importeren in de nieuwe versie.\n(het oude data-bestand zal gewoon blijven bestaan)", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText4.Wrap( -1 )
 		bSizer25.Add( self.m_staticText4, 0, wx.ALL, 5 )
 		

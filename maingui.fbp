@@ -1600,7 +1600,7 @@
                                 <property name="gripper">0</property>
                                 <property name="hidden">0</property>
                                 <property name="id">wxID_ANY</property>
-                                <property name="label">Alleen voor gebruikers van Aquaforumuploader van Riba!&#x0A;&#x0A;Hier kun je de oude data importeren..&#x0A;&#x0A;Het data-bestand heet &quot;IMAGES.JSON&quot; en zal te vinden zijn op de volgende locatie..&#x0A;C:\Program Files\aquaforumuploader\&#x0A;(tenzij er tijdens de installatie is gekozen voor een ander locatie)&#x0A;&#x0A;1 - Zoek/selecteer &quot;IMAGES.JSON&quot;&#x0A;2 - Druk op &quot;Importeer&quot; om de data te importeren in de nieuwe versie.&#x0A;(het oude data-bestand zal gewoon blijven bestaan)</property>
+                                <property name="label">Alleen voor gebruikers van Aquaforumuploader van Riba!&#x0A;&#x0A;Hier kun je de oude data importeren..&#x0A;&#x0A;Het data-bestand heet &quot;IMAGES.JSON&quot; en zal te vinden zijn op de volgende locatie..&#x0A;C:Program Files\AquaforumUploader\&#x0A;(tenzij er tijdens de installatie is gekozen voor een ander locatie)&#x0A;&#x0A;1 - Zoek/selecteer &quot;IMAGES.JSON&quot;&#x0A;2 - Druk op &quot;Importeer&quot; om de data te importeren in de nieuwe versie.&#x0A;(het oude data-bestand zal gewoon blijven bestaan)</property>
                                 <property name="max_size"></property>
                                 <property name="maximize_button">0</property>
                                 <property name="maximum_size"></property>
