@@ -8,3 +8,4 @@
 *.dat
 *.swp
 /pics/
+*.dbeaver-data-sources.xml
