@@ -17,9 +17,9 @@ import wx.xrc
 class Mainframe ( wx.Frame ):
 	
 	def __init__( self, parent ):
-		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Aquaforum upload programma", pos = wx.DefaultPosition, size = wx.Size( 850,700 ), style = wx.CAPTION|wx.DEFAULT_FRAME_STYLE )
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Aquaforum upload programma", pos = wx.DefaultPosition, size = wx.Size( 850,750 ), style = wx.CAPTION|wx.DEFAULT_FRAME_STYLE )
 		
-		self.SetSizeHintsSz( wx.Size( 850,700 ), wx.DefaultSize )
+		self.SetSizeHintsSz( wx.Size( 850,750 ), wx.DefaultSize )
 		self.SetBackgroundColour( wx.Colour( 116, 113, 162 ) )
 		
 		bSizer15 = wx.BoxSizer( wx.VERTICAL )
@@ -170,6 +170,15 @@ class Mainframe ( wx.Frame ):
 		
 		self.SetSizer( bSizer15 )
 		self.Layout()
+		self.m_menubar1 = wx.MenuBar( 0 )
+		self.m_menu1 = wx.Menu()
+		self.menuitemImport = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"Importeer", wx.EmptyString, wx.ITEM_NORMAL )
+		self.m_menu1.AppendItem( self.menuitemImport )
+		
+		self.m_menubar1.Append( self.m_menu1, u"Menu" ) 
+		
+		self.SetMenuBar( self.m_menubar1 )
+		
 		
 		self.Centre( wx.BOTH )
 		
@@ -183,6 +192,7 @@ class Mainframe ( wx.Frame ):
 		self.btnVoorbeeld.Bind( wx.EVT_BUTTON, self.onbtnVoorbeeldClick )
 		self.m_button811.Bind( wx.EVT_BUTTON, self.onbtnUploadClick )
 		self.btnArchief.Bind( wx.EVT_BUTTON, self.onbtnArchiefClick )
+		self.Bind( wx.EVT_MENU, self.onmenuitemClickImport, id = self.menuitemImport.GetId() )
 	
 	def __del__( self ):
 		pass
@@ -214,6 +224,58 @@ class Mainframe ( wx.Frame ):
 		event.Skip()
 	
 	def onbtnArchiefClick( self, event ):
+		event.Skip()
+	
+	def onmenuitemClickImport( self, event ):
+		event.Skip()
+	
+
+###########################################################################
+## Class dlgImport
+###########################################################################
+
+class dlgImport ( wx.Dialog ):
+	
+	def __init__( self, parent ):
+		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.DefaultSize, style = wx.CAPTION|wx.CLOSE_BOX )
+		
+		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
+		
+		bSizer23 = wx.BoxSizer( wx.VERTICAL )
+		
+		bSizer25 = wx.BoxSizer( wx.VERTICAL )
+		
+		self.m_staticText4 = wx.StaticText( self, wx.ID_ANY, u"Alleen voor gebruikers van Aquaforumuploader van Riba!\n\nHier kun je de oude data importeren..\n\nHet data-bestand heet \"IMAGES.JSON\" en zal te vinden zijn op de volgende locatie..\nC:\\Program Files\\aquaforumuploader\\\n(tenzij er tijdens de installatie is gekozen voor een ander locatie)\n\n1 - Zoek/selecteer \"IMAGES.JSON\"\n2 - Druk op \"Importeer\" om de data te importeren in de nieuwe versie.\n(het oude data-bestand zal gewoon blijven bestaan)", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText4.Wrap( -1 )
+		bSizer25.Add( self.m_staticText4, 0, wx.ALL, 5 )
+		
+		
+		bSizer23.Add( bSizer25, 1, wx.EXPAND, 5 )
+		
+		bSizer27 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.btnSelectJSON = wx.Button( self, wx.ID_ANY, u"Selecteer en importeer data-bestand \"IMAGES.JSON\"", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer27.Add( self.btnSelectJSON, 0, wx.ALL, 5 )
+		
+		
+		bSizer23.Add( bSizer27, 0, wx.ALL|wx.EXPAND, 5 )
+		
+		
+		self.SetSizer( bSizer23 )
+		self.Layout()
+		bSizer23.Fit( self )
+		
+		self.Centre( wx.BOTH )
+		
+		# Connect Events
+		self.btnSelectJSON.Bind( wx.EVT_BUTTON, self.onclickselectjson )
+	
+	def __del__( self ):
+		pass
+	
+	
+	# Virtual event handlers, overide them in your derived class
+	def onclickselectjson( self, event ):
 		event.Skip()
 	
 
