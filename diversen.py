@@ -90,6 +90,8 @@ def DumpImage(im, username, filename):
                  48, 46, 44, 42, 40, 38, 36]
     for _x in kwaliteit:
         try:
+            if im.mode != "RGB":
+                im = im.convert("RGB")
             im.save(path, "JPEG", quality=_x, optimize=True)
             filesize = os.path.getsize(path)
             if filesize <= 200000:
@@ -108,12 +110,34 @@ def DumpImage(im, username, filename):
 # def stripJSON():
 #    print 'empty'
 #    path = appdirs.user_data_dir('aquaf', False, False, False)
-#    filepath = os.path.join(path, 'images.json')
-#    with open(filepath, 'rw') as lines:
-# for line in lines:
- #           if line.strip():
- #               lines.write(line)
- #   lines.close()
+#    filepath = os.path.join(path, 'aquaf.json')
+#    text = ''' { items: [
+#]}
+#'''
+#    try:
+#        with open(filepath, "rw") as f:
+#            for line in f:
+#                f.write(rstrip(line))
+#            f.close()
+# except:  # bestand bestaat niet.
+#        with open(filepath, "w") as nieuw:
+#            nieuw.write(text)
+#            nieuw.close()
+
+def Initialize_JSON():
+    path = appdirs.user_data_dir('aquaf', False, False, False)
+#    check_path_exists(os.path.join(path, 'aquaf.db'))
+    filepath = os.path.join(path, 'aquaf.json')
+    text = '''{ items: [
+]}
+'''
+    try:
+        fp = open(filepath)
+    except IOError:
+        # If not exists, create the file
+        fp = open(filepath, "w+")
+        fp.write(text)
+    fp.close()
 
 
 def addToHistory(url):
