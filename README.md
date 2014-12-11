@@ -9,7 +9,7 @@ verder ontwikkeld door Mark labordus - kellemes (bordumar@gmail.com)
 Bij deze een nieuwe versie van Riba's uploadtooltje.
 De veranderingen 'under the hood' zijn aanzienlijk.. vandaar dat ik er voor kies
 om het programma naast de (eventueel aanwezige) versie van Riba te installeren.
-Riba's versie wordt dus niet overschreven.
+Riba's versie wordt dus niet overschreven en zal gewoon blijven functioneren.
 
 
 # Wat is er veranderd?
@@ -29,6 +29,17 @@ Ik heb inderdaad problemen geconstateerd bij het gebruik van met name
 Opera en Chrome. Heb dat opgelost door gebruik te maken van een eigen
 browser-component die los van de geinstalleerde browser functioneerd.
 
+# Instructies voor installatie (alleen voor gebruikers die al gebruik maken
+van Riba's versie)
+De gegevens in het data-bestand van Riba's versie kunnen indien gewenst
+worden geimporteerd, dit gebeurd automatisch tijdens de eerste opstart, en kan
+ook nog vanuit menu -> importeren worden gedaan.
+Dit importeren 'dumpt' de oude gegevens in een nieuwe data-bestand, het oude
+data-bestand zal blijven bestaan en de nieuwe zal worden overschreven..
+Dit doe je dus maar 1 keer.
+
+Nieuwe gebruikers kunnen direct na de instalatie de applicatie opstarten.
+
 # Bij problemen.
 Laat het me weten.. maar liefst wel met zoveel mogelijk informatie, een duidelijke
 beschrijving van wat er mis gaat.. en info over het besturingsysteem
@@ -36,17 +47,6 @@ dat je gebruikt, liefst ook architectuur (32bit/64bit).
 Alle informatie helpt mij om de oorzaak te vinden en op te lossen.
 Je kunt je vragen/opmerkingen poneren in dit forum-topic of via een PB'tje.
 
-# Instructies voor installatie (alleen voor gebruikers van Riba's versie)
-Ik maak gebruik van hetzelfde databestand als waar Riba's versie gebruik
-van maakt.. maar daarvoor dient deze wel gekopieerd te worden
-naar de nieuwe installatie-map.
-Locatie van databestand zal waarschijnlijk zijn:
-C:\Program Files\aquaforumuploader\images.json
-En die moet hier naartoe (tenzij je een andere locatie hebt gekozen
-tijdens de setup):
-C:\Program Files\aquaf\ 
-
-Nieuwe gebruikers kunnen direct na de instalatie de applicatie opstarten.
 
 # Instructies voor gebruik..
 * Voer gebruikersnaam in.
@@ -61,8 +61,7 @@ je de URL's kunt kopieren om in je forumbericht te plakken.
 Download hier het Windows installatiepakket.
 ......
 
-Als er mensen zijn die zich geroepen voelen om mee te helpen met het ontwikkelen
-van dit tooltje dan zijn die meer dan welkom.
+
 * Code home page: https://github.com/labordus/aquaf
 * Issue tracker: https://github.com/labordus/aquaf/issues
 
@@ -72,5 +71,4 @@ aquaf maakt gebruik van Python 2.7, wxwidgets, Pillow 2.5.1-26.1
 (python-wxWidgets-3_0) 3.0.1.1-8.1
 appdirs (https://github.com/ActiveState/appdirs)
 
-
-[Todo](TODO.md)
+Groet, Mark.
