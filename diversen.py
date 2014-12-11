@@ -101,12 +101,12 @@ def DumpImage(im, username, filename):
             return
 
     desiredName = constructUploadName(username, filename)
-#    uploadFileToAquaforum(path, desiredName)
+    uploadFileToAquaforum(path, desiredName)
     return desiredName
 
 
-def stripJSON():
-    print 'empty'
+# def stripJSON():
+#    print 'empty'
 #    path = appdirs.user_data_dir('aquaf', False, False, False)
 #    filepath = os.path.join(path, 'images.json')
 #    with open(filepath, 'rw') as lines:
@@ -121,7 +121,7 @@ def addToHistory(url):
     '''
     path = appdirs.user_data_dir('aquaf', False, False, False)
 #    check_path_exists(os.path.join(path, 'aquaf.db'))
-    filepath = os.path.join(path, 'images.json')
+    filepath = os.path.join(path, 'aquaf.json')
 
 #    f = open('images.json', 'r')
     f = open(filepath, 'r')
@@ -140,7 +140,7 @@ def addToHistory(url):
 ''' % url
     text = text + template
     content = content.replace("]}", text)
-#    f = open('images.json', 'w')
+#    f = open('aquaf.json', 'w')
     f = open(filepath, 'w')
     f.write(content)
     f.close()
