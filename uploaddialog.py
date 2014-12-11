@@ -6,7 +6,6 @@ import os
 import imp
 import sys
 import maingui
-# from maingui import dlgUploadDone
 
 
 def main_is_frozen():
