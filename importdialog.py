@@ -37,7 +37,7 @@ class ImportDialog(maingui.dlgImport):
             standaarddir = "@HOME/.local/share"  # dit werkt niet
 
         dlg = wx.FileDialog(
-            self, message="Choose a file",
+            self, message="Selecteer images.json",
             #            defaultDir=os.getcwd(),
             defaultDir=standaarddir,
             defaultFile="",
@@ -65,7 +65,7 @@ class ImportDialog(maingui.dlgImport):
 # else: # wx.ID_CANCEL
         dlg.Destroy()
 
-    def onbtnImportClick(self, event):
+    def onbtnAfsluitenCLick(self, event):
         self.EndModal(wx.ID_OK)
 #        self.Destroy()
 #        self.btnCopyToClipboard.Hide(True)
