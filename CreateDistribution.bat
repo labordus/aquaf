@@ -1,2 +1,2 @@
-python setup.py py2exe -b 1
-pause
+\Python27\Scripts\pyinstaller.exe -F -w aquaf.py
+pauze
