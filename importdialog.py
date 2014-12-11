@@ -6,8 +6,6 @@ import os
 import imp
 import sys
 import maingui
-#from string import rstrip
-# from maingui import dlgUploadDone
 
 
 def main_is_frozen():
