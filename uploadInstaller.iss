@@ -9,25 +9,21 @@ DefaultDirName={pf}\Aquaf
 DefaultGroupName=Aquaf
 Compression=lzma
 SolidCompression=yes
-AppReadmeFile=README.md
 VersionInfoVersion=0.84
 OutputBaseFilename=aquaf
+AppPublisher=kellemes
 
 [Files]
 Source: "aquaf.exe"; DestDir: "{app}"
-Source: "aquaf.db"; DestDir: "{localappdata}\aquaf"; Flags: onlyifdoesntexist uninsneveruninstall
-Source: "README.md"; DestDir: "{app}"; Flags: isreadme
+Source: "README.md"; DestDir: "{app}"
 Source: "MSVCR90.dll"; DestDir: "{app}"
 Source: "forumbanner.gif"; DestDir: "{app}"
 Source: "icon.ico"; DestDir: "{app}"
-Source: "favicon.ico"; DestDir: "{app}"
-Source: "test.jpg"; DestDir: "{app}"
+Source: "favicon.ico"; DestDir: "{localappdata}\aquaf"
 Source: "dagterug.bmp"; DestDir: "{app}"
 Source: "dagverder.bmp"; DestDir: "{app}"
 Source: "test.jpg"; DestDir: "{app}"
-Source: "archive.html"; DestDir: "{app}"; Flags: uninsneveruninstall
-Source: "image.css"; DestDir: "{app}"; Flags: uninsneveruninstall
-Source: "aquaf.json"; DestDir: "{app}"; Flags: onlyifdoesntexist uninsneveruninstall
+Source: "archive.html"; DestDir: "{localappdata}\aquaf"
 
 [Icons]
 Name: "{group}\Aquaf v0.84-alpha"; Filename: "{app}\aquaf.exe"
@@ -37,7 +33,6 @@ Name: "{group}\Uninstall Aquaf"; Filename: "{uninstallexe}"
 Filename: "{app}\aquaf.exe"; Description: "Start het programma"; Flags: postinstall nowait skipifsilent unchecked
 
 [UninstallDelete]
-Type: files; Name: "{app}\tempfile.dat"
 Type: files; Name: "{app}\aquaf.exe.log"
 
 [LangOptions]
