@@ -6,6 +6,7 @@ import os
 import imp
 import sys
 import maingui
+#from string import rstrip
 # from maingui import dlgUploadDone
 
 
@@ -31,7 +32,7 @@ class ImportDialog(maingui.dlgImport):
     def onclickselectjson(self, event):
         import appdirs
         if (sys.platform.startswith('win')):  # dan win32 of win64
-            standaarddir = "C:\Program Files\aquaforumuploader"
+            standaarddir = "C:\Program Files\AquaforumUploader"
         else:  # posix
             standaarddir = "@HOME/.local/share"  # dit werkt niet
 
@@ -57,7 +58,8 @@ class ImportDialog(maingui.dlgImport):
                 with open(oudejson) as f:
                     with open(filepath, "w") as f1:
                         for line in f:
-                            #                            if "ROW" in line:
+                            #                            if "]}" in line:
+                            #                            f1.write(rstrip(line))
                             f1.write(line)
                 self.m_staticText4.Label = 'Data is geimporteerd, je kunt dit venster nu afsluiten'
 # else: # wx.ID_CANCEL
