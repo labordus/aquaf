@@ -29,8 +29,7 @@ Ik heb inderdaad problemen geconstateerd bij het gebruik van met name
 Opera en Chrome. Heb dat opgelost door gebruik te maken van een eigen
 browser-component die los van de geinstalleerde browser functioneerd.
 
-# Instructies voor installatie (alleen voor gebruikers die al gebruik maken
-van Riba's versie)
+# Instructies voor installatie (alleen voor gebruikers die al gebruik maken van Riba's versie)
 De gegevens in het data-bestand van Riba's versie kunnen indien gewenst
 worden geimporteerd, dit gebeurd automatisch tijdens de eerste opstart, en kan
 ook nog vanuit menu -> importeren worden gedaan.
