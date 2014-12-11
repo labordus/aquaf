@@ -140,6 +140,20 @@ def Initialize_JSON():
     fp.close()
 
 
+def IsEmpty_JSON():
+    path = appdirs.user_data_dir('aquaf', False, False, False)
+    filepath = os.path.join(path, 'aquaf.json')
+
+    f = open(filepath, 'r')
+    content = f.read()
+    f.close()
+    if content.find("link") != -1:
+        # already got content
+        return False
+    else:
+        return True
+
+
 def addToHistory(url):
     '''adds the url to the json archive
     '''
