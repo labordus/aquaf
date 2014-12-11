@@ -17,8 +17,6 @@ def Initialize_db():
         conn.commit()
         c.execute('SELECT USERNM FROM tblApp')
         if not c.fetchone():  # geen record/row gevonden
-            #            c.execute('''INSERT INTO tblApp(USERID,FIRSTRUN)
-            #                    VALUES(?,?)''', (1, 1))
             c.execute('''INSERT INTO tblApp(USERID,USERNM,FIRSTRUN)
                     VALUES(?,?,?)''', (1, '', 1))
 
