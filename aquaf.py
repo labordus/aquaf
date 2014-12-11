@@ -110,8 +110,6 @@ class AquaFrame(maingui.Mainframe):
         dlgimport.Destroy()
 
     def onedtLoginNameKillFocus(self, event):
-        #        if len(self.edtLoginName.GetValue()) == 0:
-        #            print("Geen loginnaam ingevoerd")
         if self.edtLoginName.IsModified():
             if len(self.edtLoginName.GetValue()) == 0:
                 print "Niets ingevoerd"
