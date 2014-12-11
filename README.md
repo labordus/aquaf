@@ -30,20 +30,19 @@ Opera en Chrome. Heb dat opgelost door gebruik te maken van een eigen
 browser-component die los van de geinstalleerde browser functioneerd.
 
 # Instructies voor installatie (alleen voor gebruikers die al gebruik maken van Riba's versie)
-De gegevens in het data-bestand van Riba's versie kunnen indien gewenst
-worden geimporteerd, dit gebeurd automatisch tijdens de eerste opstart, en kan
-ook nog vanuit menu -> importeren worden gedaan.
-Dit importeren 'dumpt' de oude gegevens in een nieuwe data-bestand, het oude
-data-bestand zal blijven bestaan en de nieuwe zal worden overschreven..
+De gegevens in het data-bestand van Riba's versie kunnen indien gewenst worden
+geimporteerd, dit kan worden gedaan tijdens de eerste opstart van de applicatie,
+of later vanuit menu -> importeren.
+Dit importeren 'dumpt' de gegevens in het nieuwe (lege) data-bestand, het oude
+data-bestand zal blijven bestaan en de nieuwe zal dus worden overschreven..
 Dit doe je dus maar 1 keer.
 
 Nieuwe gebruikers kunnen direct na de instalatie de applicatie opstarten.
 
 # Bij problemen.
-Laat het me weten.. maar liefst wel met zoveel mogelijk informatie, een duidelijke
+Laat het me weten.. liefst met zoveel mogelijk informatie, een duidelijke
 beschrijving van wat er mis gaat.. en info over het besturingsysteem
 dat je gebruikt, liefst ook architectuur (32bit/64bit).
-Alle informatie helpt mij om de oorzaak te vinden en op te lossen.
 Je kunt je vragen/opmerkingen poneren in dit forum-topic of via een PB'tje.
 
 
