@@ -245,7 +245,7 @@ class dlgImport ( wx.Dialog ):
 		
 		bSizer25 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.m_staticText4 = wx.StaticText( self, wx.ID_ANY, u"Alleen voor gebruikers van Aquaforumuploader van Riba!\n\nHier kun je de oude data importeren..\n\nHet data-bestand heet \"IMAGES.JSON\" en zal te vinden zijn op de volgende locatie..\nC:Program Files\\AquaforumUploader\\\n(tenzij er tijdens de installatie is gekozen voor een ander locatie)\n\n1 - Zoek/selecteer \"IMAGES.JSON\"\n2 - Druk op \"Importeer\" om de data te importeren in de nieuwe versie.\n(het oude data-bestand zal gewoon blijven bestaan)", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText4 = wx.StaticText( self, wx.ID_ANY, u"Alleen voor gebruikers van Aquaforumuploader van Riba!\n\nHier kun je de oude data importeren in het nieuwe data-bestand.\n\nHet data-bestand heet \"IMAGES.JSON\" en zal te vinden zijn op de volgende locatie..\nC:\\Program Files\\AquaforumUploader\\\n(tenzij er tijdens de installatie is gekozen voor een ander locatie)", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText4.Wrap( -1 )
 		bSizer25.Add( self.m_staticText4, 0, wx.ALL, 5 )
 		
@@ -256,6 +256,9 @@ class dlgImport ( wx.Dialog ):
 		
 		self.btnSelectJSON = wx.Button( self, wx.ID_ANY, u"Selecteer en importeer data-bestand \"IMAGES.JSON\"", wx.DefaultPosition, wx.DefaultSize, 0 )
 		bSizer27.Add( self.btnSelectJSON, 0, wx.ALL, 5 )
+		
+		self.btnAfsluiten = wx.Button( self, wx.ID_ANY, u"Afsluiten", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer27.Add( self.btnAfsluiten, 0, wx.ALL, 5 )
 		
 		
 		bSizer23.Add( bSizer27, 0, wx.ALL|wx.EXPAND, 5 )
@@ -269,6 +272,7 @@ class dlgImport ( wx.Dialog ):
 		
 		# Connect Events
 		self.btnSelectJSON.Bind( wx.EVT_BUTTON, self.onclickselectjson )
+		self.btnAfsluiten.Bind( wx.EVT_BUTTON, self.onbtnAfsluitenCLick )
 	
 	def __del__( self ):
 		pass
@@ -276,6 +280,9 @@ class dlgImport ( wx.Dialog ):
 	
 	# Virtual event handlers, overide them in your derived class
 	def onclickselectjson( self, event ):
+		event.Skip()
+	
+	def onbtnAfsluitenCLick( self, event ):
 		event.Skip()
 	
 
