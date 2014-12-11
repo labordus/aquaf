@@ -124,7 +124,9 @@ class AquaFrame(maingui.Mainframe):
     def onbtnArchiefClick(self, event):
         #        webbrowser.get("chrome").open_new_tab(theArchive)
         #        webbrowser.get("firefox").open_new(theArchive)
-
+        if IsEmpty_JSON():
+            print 'Niets te tonen'
+            return
         weburl = "http://127.0.0.1:8000/archive.html"
         dialog = MyBrowser(None, -1)
         dialog.browser.LoadURL(weburl)
