@@ -9,7 +9,7 @@ from archiveview import MyBrowser
 
 # import GUI
 import maingui
-from maingui import dlgVoorbeeld, dlgUploadDone
+from maingui import dlgVoorbeeld, dlgUploadDone, dlgImport
 from Dialog import Dialog
 
 import diversen
@@ -17,6 +17,7 @@ from diversen import *
 
 import uploaddialog
 from mechanize._opener import urlopen
+import importdialog
 
 AUQAOFORUM_PICTURE_URL = "http://www.aquaforum.nl/gallery/upload/"
 TEST_FOTO = "test.jpg"
@@ -59,6 +60,18 @@ class AquaFrame(maingui.Mainframe):
         # initialize parent class
         maingui.Mainframe.__init__(self, parent)
 
+# ######## DATABASE / IMPORT-GEBEUREN ########### #
+        if db.Initialize_db() is False:
+            app.Exit()
+        if db.first_run() == 1:
+            dlg = wx.MessageDialog(None, 'Import data van vorige versie van deze applicatie?', 'Import', wx.YES_NO | wx.ICON_QUESTION)
+            result = dlg.ShowModal()
+            if result == wx.ID_YES:
+                dlg.Destroy()
+                self.ShowImportDialog()
+
+# ############################################### #
+
         _icon = wx.EmptyIcon()
         _icon.CopyFromBitmap(wx.Bitmap("icon.ico", wx.BITMAP_TYPE_ANY))
         self.SetIcon(_icon)
@@ -83,6 +96,15 @@ class AquaFrame(maingui.Mainframe):
         print "Hoi " + userName
         print "Welkom bij Aquaf v8.4"
         self.edtLoginName.SetValue(userName)
+
+    def onmenuitemClickImport(self, event):
+        self.ShowImportDialog()
+
+    def ShowImportDialog(self):
+        dlgimport = importdialog.ImportDialog(self)
+        dlgimport.CenterOnParent()
+        dlgimport.ShowModal()
+        dlgimport.Destroy()
 
     def onedtLoginNameKillFocus(self, event):
         #        if len(self.edtLoginName.GetValue()) == 0:
@@ -223,7 +245,7 @@ class AquaFrame(maingui.Mainframe):
                 self.errorEx = er
                 exit
 
-        stripJSON()
+#        stripJSON()
         dlg = uploaddialog.UploadDoneDialog(self)
         dlg.setCode(urls)
         self.listboxSelectedFiles.Clear()
