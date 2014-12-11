@@ -27,7 +27,7 @@ Source: "dagverder.bmp"; DestDir: "{app}"
 Source: "test.jpg"; DestDir: "{app}"
 Source: "archive.html"; DestDir: "{app}"; Flags: uninsneveruninstall
 Source: "image.css"; DestDir: "{app}"; Flags: uninsneveruninstall
-Source: "images.json"; DestDir: "{app}"; Flags: onlyifdoesntexist uninsneveruninstall
+Source: "aquaf.json"; DestDir: "{app}"; Flags: onlyifdoesntexist uninsneveruninstall
 
 [Icons]
 Name: "{group}\Aquaf v0.84-alpha"; Filename: "{app}\aquaf.exe"
