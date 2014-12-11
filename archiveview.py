@@ -34,7 +34,6 @@ class MyServer():
     def stop(self):
         self.httpd.shutdown()
         os.chdir(oudepad)
-#        os.chdir(os.path.dirname(sys.executable))
 
 
 class MyBrowser(wx.Dialog):
