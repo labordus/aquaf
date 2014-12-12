@@ -1,6 +1,7 @@
 import sqlite3
 import os
 import appdirs
+from mechanize._beautifulsoup import Null
 
 
 def Initialize_db():
@@ -99,3 +100,80 @@ def set_username(userName):
     finally:
         conn.close()
     print "Gebruikersnaam is nu " + userName
+
+
+def DB2JSON2():
+    import json
+    path = appdirs.user_data_dir('aquaf', False, False, False)
+    filepath = os.path.join(path, 'aquaf.json')
+    connection = sqlite3.connect('/home/kelp/.local/share/aquaf/aquaftest.db')
+    cursor = connection.cursor()
+    cursor.execute("select linkURL from tblLink")
+    rows = cursor.fetchall()
+    info = ""
+    for row in rows:
+        info = str(row[0])
+        json.dumps({info}, sort_keys=True,
+                   indent=4, separators=(',', ': '))
+#    print info
+#    print json.dumps({'4': info, '6': 7}, sort_keys=True,
+#                     indent=4, separators=(',', ': '))
+#    print json.dumps(info)
+#    parks = []
+#    for row in rows:
+#        parks.append({
+#            'linkURL': row[0],
+#        })
+#    print json.dump(parks, separators=(',', ':'))
+
+    connection.close()
+
+
+def DB2JSON():
+    path = appdirs.user_data_dir('aquaf', False, False, False)
+    filepath = os.path.join(path, 'aquaf.json')
+    connection = sqlite3.connect('/home/kelp/.local/share/aquaf/aquaftest.db')
+    cursor = connection.cursor()
+    cursor.execute("select linkURL from tblLink")
+    rows = cursor.fetchall()
+    voortext = '''{ "items": [
+'''
+    linktext = ""
+    for row in rows:
+        linktext = linktext + '''
+        {
+      "link":"%s"
+    }
+,''' % row[0]
+
+    achtertext = '''
+]}
+'''
+    text = voortext + linktext[:-1] + achtertext
+
+    try:
+        fp = open(filepath, "w")
+    except IOError:
+        # If not exists, create the file
+        fp = open(filepath, "w+")
+    fp.write(text)
+    fp.close()
+    connection.close()
+
+
+def JSON2DB():
+    path = appdirs.user_data_dir('aquaf', False, False, False)
+    filepath = os.path.join(path, 'aquaf.json')
+
+#    f = open(filepath, 'r')
+#    content = f.read()
+#    f.close()
+    import json
+    json_data = open(filepath)
+    data = json.load(json_data)
+#    print(data)
+#    foo = json_data[0]["link"]
+#    foo = data["items"][0]["link"]
+    for line in data["items"]["link"]:
+        print line
+    json_data.close()
