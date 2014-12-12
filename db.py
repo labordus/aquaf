@@ -102,34 +102,7 @@ def set_username(userName):
     print "Gebruikersnaam is nu " + userName
 
 
-def DB2JSON2():
-    import json
-    path = appdirs.user_data_dir('aquaf', False, False, False)
-    filepath = os.path.join(path, 'aquaf.json')
-    connection = sqlite3.connect('/home/kelp/.local/share/aquaf/aquaftest.db')
-    cursor = connection.cursor()
-    cursor.execute("select linkURL from tblLink")
-    rows = cursor.fetchall()
-    info = ""
-    for row in rows:
-        info = str(row[0])
-        json.dumps({info}, sort_keys=True,
-                   indent=4, separators=(',', ': '))
-#    print info
-#    print json.dumps({'4': info, '6': 7}, sort_keys=True,
-#                     indent=4, separators=(',', ': '))
-#    print json.dumps(info)
-#    parks = []
-#    for row in rows:
-#        parks.append({
-#            'linkURL': row[0],
-#        })
-#    print json.dump(parks, separators=(',', ':'))
-
-    connection.close()
-
-
-def DB2JSON():
+def DB2JSONONGEBUIKT():
     path = appdirs.user_data_dir('aquaf', False, False, False)
     filepath = os.path.join(path, 'aquaf.json')
     connection = sqlite3.connect('/home/kelp/.local/share/aquaf/aquaftest.db')
@@ -161,6 +134,31 @@ def DB2JSON():
     connection.close()
 
 
+def DB2JSON():
+    import json
+    path = appdirs.user_data_dir('aquaf', False, False, False)
+    filepath = os.path.join(path, 'aquaf.json')
+    connection = sqlite3.connect('/home/kelp/.local/share/aquaf/aquaftest.db')
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM tblLink")
+    rows = cursor.fetchall()
+
+    rowarray_list = []
+    for row in rows:
+        t = str((row[1]))
+        rowarray_list.append({"link": t})
+    j = json.dumps({'items': rowarray_list}, indent=2, separators=(',', ': '))
+
+    try:
+        fp = open(filepath, "w")
+    except IOError:
+        # If not exists, create the file
+        fp = open(filepath, "w+")
+    fp.write(j)
+    fp.close()
+    connection.close()
+
+
 def JSON2DB():
     path = appdirs.user_data_dir('aquaf', False, False, False)
     filepath = os.path.join(path, 'aquaf.json')
@@ -174,6 +172,9 @@ def JSON2DB():
 #    print(data)
 #    foo = json_data[0]["link"]
 #    foo = data["items"][0]["link"]
-    for line in data["items"]["link"]:
-        print line
+#    for line in data["items"][0]["link"]:
+    for line in data["items"]:
+        print line["link"]
+# ########### HIER DATA IMPORTEREN #############
+# ########### EENMALIG NEEM IK AAN? #############
     json_data.close()
