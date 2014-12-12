@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
 encoding/aquagui.py=ISO-8859-1
+encoding/importdialog.py=ISO-8859-1
 encoding/maingui.py=utf-8
 encoding/uploaddialog.py=ISO-8859-1
