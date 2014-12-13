@@ -2,6 +2,8 @@ import sqlite3
 import os
 import appdirs
 from mechanize._beautifulsoup import Null
+import json
+import re
 
 
 def Initialize_db():
@@ -16,11 +18,17 @@ def Initialize_db():
                       USERNM VARCHAR(30),
                       FIRSTRUN BOOLEAN DEFAULT (1))''')
         conn.commit()
+        c.execute('''CREATE TABLE IF NOT EXISTS
+                      tblLink(
+                      linkID INTEGER PRIMARY KEY NOT NULL,
+                      linkURL VARCHAR(200))''')
+        conn.commit()
         c.execute('SELECT USERNM FROM tblApp')
         if not c.fetchone():  # geen record/row gevonden
             c.execute('''INSERT INTO tblApp(USERID,USERNM,FIRSTRUN)
                     VALUES(?,?,?)''', (1, '', 1))
-
+#            c.execute('''INSERT INTO tblLink(linkURL)
+#                    VALUES(?)''', ("testurlie_1"))
             conn.commit()
     except Exception as e:
         conn.rollback()
@@ -102,43 +110,12 @@ def set_username(userName):
     print "Gebruikersnaam is nu " + userName
 
 
-def DB2JSONONGEBUIKT():
-    path = appdirs.user_data_dir('aquaf', False, False, False)
-    filepath = os.path.join(path, 'aquaf.json')
-    connection = sqlite3.connect('/home/kelp/.local/share/aquaf/aquaftest.db')
-    cursor = connection.cursor()
-    cursor.execute("select linkURL from tblLink")
-    rows = cursor.fetchall()
-    voortext = '''{ "items": [
-'''
-    linktext = ""
-    for row in rows:
-        linktext = linktext + '''
-        {
-      "link":"%s"
-    }
-,''' % row[0]
-
-    achtertext = '''
-]}
-'''
-    text = voortext + linktext[:-1] + achtertext
-
-    try:
-        fp = open(filepath, "w")
-    except IOError:
-        # If not exists, create the file
-        fp = open(filepath, "w+")
-    fp.write(text)
-    fp.close()
-    connection.close()
-
-
 def DB2JSON():
-    import json
     path = appdirs.user_data_dir('aquaf', False, False, False)
     filepath = os.path.join(path, 'aquaf.json')
-    connection = sqlite3.connect('/home/kelp/.local/share/aquaf/aquaftest.db')
+    dbpath = path_to_db()
+#    connection = sqlite3.connect('/home/kelp/.local/share/aquaf/aquaftest.db')
+    connection = sqlite3.connect(dbpath)
     cursor = connection.cursor()
     cursor.execute("SELECT * FROM tblLink")
     rows = cursor.fetchall()
@@ -159,22 +136,27 @@ def DB2JSON():
     connection.close()
 
 
-def JSON2DB():
-    path = appdirs.user_data_dir('aquaf', False, False, False)
-    filepath = os.path.join(path, 'aquaf.json')
+def ImportJSON2DB(fileJSON):
+    dbpath = path_to_db()
 
-#    f = open(filepath, 'r')
-#    content = f.read()
-#    f.close()
-    import json
-    json_data = open(filepath)
-    data = json.load(json_data)
-#    print(data)
-#    foo = json_data[0]["link"]
-#    foo = data["items"][0]["link"]
-#    for line in data["items"][0]["link"]:
-    for line in data["items"]:
-        print line["link"]
-# ########### HIER DATA IMPORTEREN #############
-# ########### EENMALIG NEEM IK AAN? #############
-    json_data.close()
+# ### FIX (oude) JSON.. het is namelijk geen valid JSON. ### #
+# Hier zet ik 'items' tussen double quotes.
+    raw_objs_string = open(fileJSON).read()  # read in raw data
+    raw_objs_string = raw_objs_string.replace('items:', '"items":')  # insert a comma between each object
+    objs_string = '[%s]' % (raw_objs_string)  # wrap in a list, to make valid json
+    data = json.loads(objs_string)  # parse json
+#    data = json.loads("[%s]" % (open(fileJSON).read().replace('items:', '"items":')))
+
+    conn = sqlite3.connect(dbpath)
+    c = conn.cursor()
+
+    for line in data[0]["items"]:
+        try:
+            c.execute("INSERT INTO tblLink(linkURL) VALUES(?)", (line["link"],))
+            conn.commit()
+        except sqlite3.IntegrityError:
+            conn.rollback()
+            raise sqlite3.IntegrityError
+
+    conn.close()
+#    json_data.close()
