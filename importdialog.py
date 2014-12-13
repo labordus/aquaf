@@ -6,6 +6,7 @@ import os
 import imp
 import sys
 import maingui
+from db import ImportJSON2DB
 
 
 def main_is_frozen():
@@ -29,6 +30,7 @@ class ImportDialog(maingui.dlgImport):
 
     def onclickselectjson(self, event):
         import appdirs
+        import db
         if (sys.platform.startswith('win')):  # dan win32 of win64
             standaarddir = "C:\Program Files\AquaforumUploader"
         else:  # posix
@@ -44,21 +46,13 @@ class ImportDialog(maingui.dlgImport):
         )
 
         if dlg.ShowModal() == wx.ID_OK:
-            oudejson = dlg.GetPath()
+            oudeJSON = dlg.GetPath()
             # nog effe voor de zekerheid testen..
-            head, tail = os.path.split(oudejson)
+            head, tail = os.path.split(oudeJSON)
             if tail != 'images.json':
                 print 'verkeerd bestand gekozen'
             else:
-                path = appdirs.user_data_dir('aquaf', False, False, False)
-                #    check_path_exists(os.path.join(path, 'aquaf.db'))
-                filepath = os.path.join(path, 'aquaf.json')
-                with open(oudejson) as f:
-                    with open(filepath, "w") as f1:
-                        for line in f:
-                            #                            if "]}" in line:
-                            #                            f1.write(rstrip(line))
-                            f1.write(line)
+                ImportJSON2DB(oudeJSON)
                 self.m_staticText4.Label = 'Data is geimporteerd, je kunt dit venster nu afsluiten'
 # else: # wx.ID_CANCEL
         dlg.Destroy()
