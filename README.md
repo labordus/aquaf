@@ -14,10 +14,6 @@ Riba's versie wordt dus niet overschreven en zal gewoon blijven functioneren.
 
 # Wat is er veranderd?
 
-* T'is nu cross-platform, werkt op Linux, OSX en Windows.
-Windows 95/98/ME wordt niet meer ondersteund!
-Heb het kunnen testen op..
-Linux(64bit)/WindowsXP(32bit)/WindowsVista(64bit)/Windows7(32bit)
 * Je kunt nu meerdere plaatjes klaarzetten om in 1 ruk te kunnen uploaden.
 Wel is het zo dat de geselecteerde dimensie van de te uploaden plaatjes
 geldt voor alle klaargezette plaatjes.. je kunt dat (vooralsnog) niet
@@ -55,20 +51,25 @@ Ga zo door totdat je alle plaatjes hebt toegevoegd die je wilt uploaden.
 * Klik op knop "upload naar aquaforum" en wacht op het volgende venster alwaar
 je de URL's kunt kopieren om in je forumbericht te plakken.
 
-0.84
-Download hier het Windows installatiepakket.
-......
 
-Ik heb geen installatieprocedures gemaakt voor OSX en/of Linux.
-Als daar behoefte aan is dan hoor ik het wel..
+Aquaf 0.84 is getest op..
+Arch Linux, openSUSE Linux 13.1, Linux Mint 17 
+Windows XP, Windows Vista, Windows 7
+Windows 95/98/ME wordt niet meer ondersteund!
+Als er behoefte is aan een installatiepakket voor OSX of Linux dan hoor ik het wel. 
+Download hier het installatiepakket voor Windows.
+.....
+
 
 * Code home page: https://github.com/labordus/aquaf
-* Issue tracker: https://github.com/labordus/aquaf/issues
 
 # Building
+Python 2.7.9-1
+wxgtk 3.0.2-2
+wxpython 3.0.2.0-1
+python2-pillow 2.6.1-1
+python2-appdirs 1.4.0-1
+python2-mechanize 0.2.5-4
 
-aquaf maakt gebruik van Python 2.7, wxwidgets, Pillow 2.5.1-26.1
-(python-wxWidgets-3_0) 3.0.1.1-8.1
-appdirs (https://github.com/ActiveState/appdirs)
 
 Groet, Mark.
