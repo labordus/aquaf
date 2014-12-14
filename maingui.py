@@ -140,7 +140,7 @@ class Mainframe ( wx.Frame ):
 		
 		bSizer5.AddSpacer( ( 20,  20), 0, wx.FIXED_MINSIZE, 0 )
 		
-		self.btnVoorbeeld = wx.Button( self, wx.ID_ANY, u"Voorbeeld van de dimensie", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.btnVoorbeeld = wx.Button( self, wx.ID_ANY, u"Voorbeeld van upload-dimensie", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.btnVoorbeeld.SetDefault() 
 		bSizer5.Add( self.btnVoorbeeld, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 0 )
 		
