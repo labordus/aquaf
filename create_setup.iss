@@ -1,16 +1,16 @@
 ; -- aquaf.iss --
-; Versie 0.84-alpha 
+; Versie 0.84
 
 [Setup]
 AppName=Aquaf
-AppVersion=0.84-alpha
-;AppVerName=version 0.84-alpha
+AppVersion=0.84
+;AppVerName=version 0.84
 DefaultDirName={pf}\Aquaf
 DefaultGroupName=Aquaf
 Compression=lzma
 SolidCompression=yes
 VersionInfoVersion=0.84
-OutputBaseFilename=aquaf
+OutputBaseFilename=aquafsetup
 AppPublisher=kellemes
 
 [Files]
@@ -24,11 +24,11 @@ Source: "archive.html"; DestDir: "{localappdata}\aquaf"
 Source: "favicon.ico"; DestDir: "{localappdata}\aquaf"
 
 [Icons]
-Name: "{group}\Aquaf v0.84-alpha"; Filename: "{app}\aquaf.exe"
+Name: "{group}\Aquaf v0.84"; Filename: "{app}\aquaf.exe"
 Name: "{group}\Uninstall Aquaf"; Filename: "{uninstallexe}"
 
 [Run]
-Filename: "{app}\aquaf.exe"; Description: "Start het programma"; Flags: postinstall nowait skipifsilent unchecked
+Filename: "{app}\aquaf.exe"; Flags: postinstall nowait skipifsilent; Description: "Start het programma"
 
 [UninstallDelete]
 Type: files; Name: "{app}\aquaf.exe.log"
