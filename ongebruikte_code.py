@@ -1,3 +1,74 @@
+    def onclickselectjson(self, event):
+        import appdirs
+        if (sys.platform.startswith('win')):  # dan win32 of win64
+            standaarddir = "C:\Program Files\AquaforumUploader"
+        else:  # posix
+            standaarddir = "@HOME/.local/share"  # dit werkt niet
+
+        dlg = wx.FileDialog(
+            self, message="Selecteer images.json",
+            #            defaultDir=os.getcwd(),
+            defaultDir=standaarddir,
+            defaultFile="",
+            wildcard='images.json',
+            style=wx.OPEN
+        )
+
+        if dlg.ShowModal() == wx.ID_OK:
+            oudejson = dlg.GetPath()
+            # nog effe voor de zekerheid testen..
+            head, tail = os.path.split(oudejson)
+            if tail != 'images.json':
+                print 'verkeerd bestand gekozen'
+            else:
+                path = appdirs.user_data_dir('aquaf', False, False, False)
+                #    check_path_exists(os.path.join(path, 'aquaf.db'))
+                filepath = os.path.join(path, 'aquaf.json')
+                with open(oudejson) as f:
+                    with open(filepath, "w") as f1:
+                        for line in f:
+                            #                            if "]}" in line:
+                            #                            f1.write(rstrip(line))
+                            f1.write(line)
+                self.m_staticText4.Label = 'Data is geimporteerd, je kunt dit venster nu afsluiten'
+# else: # wx.ID_CANCEL
+        dlg.Destroy()
+
+##############################################################################
+
+def DB2JSONONGEBUIKT():
+    path = appdirs.user_data_dir('aquaf', False, False, False)
+    filepath = os.path.join(path, 'aquaf.json')
+    connection = sqlite3.connect('/home/kelp/.local/share/aquaf/aquaftest.db')
+    cursor = connection.cursor()
+    cursor.execute("select linkURL from tblLink")
+    rows = cursor.fetchall()
+    voortext = '''{ "items": [
+'''
+    linktext = ""
+    for row in rows:
+        linktext = linktext + '''
+        {
+      "link":"%s"
+    }
+,''' % row[0]
+
+    achtertext = '''
+]}
+'''
+    text = voortext + linktext[:-1] + achtertext
+
+    try:
+        fp = open(filepath, "w")
+    except IOError:
+        # If not exists, create the file
+        fp = open(filepath, "w+")
+    fp.write(text)
+    fp.close()
+    connection.close()
+
+
+
 ###############################################################################
 
         # scale the image, preserving the aspect ratio
