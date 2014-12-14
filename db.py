@@ -141,22 +141,42 @@ def ImportJSON2DB(fileJSON):
 
 # ### FIX (oude) JSON.. het is namelijk geen valid JSON. ### #
 # Hier zet ik 'items' tussen double quotes.
-    raw_objs_string = open(fileJSON).read()  # read in raw data
-    raw_objs_string = raw_objs_string.replace('items:', '"items":')  # insert a comma between each object
-    objs_string = '[%s]' % (raw_objs_string)  # wrap in a list, to make valid json
-    data = json.loads(objs_string)  # parse json
-#    data = json.loads("[%s]" % (open(fileJSON).read().replace('items:', '"items":')))
+
+    try:
+        raw_objs_string = open(fileJSON).read()  # read in raw data
+        raw_objs_string = raw_objs_string.replace('items:', '"items":')  # insert a comma between each object
+        objs_string = '[%s]' % (raw_objs_string)  # wrap in a list, to make valid json
+        data = json.loads(objs_string)  # parse json
+    #    data = json.loads("[%s]" % (open(fileJSON).read().replace('items:', '"items":')))
+    except ValueError:  # includes simplejson.decoder.JSONDecodeError
+        print 'Decoding JSON has failed'
+        raise ValueError
 
     conn = sqlite3.connect(dbpath)
     c = conn.cursor()
-
+    aantal = 0
     for line in data[0]["items"]:
         try:
+            aantal += 1
             c.execute("INSERT INTO tblLink(linkURL) VALUES(?)", (line["link"],))
             conn.commit()
         except sqlite3.IntegrityError:
             conn.rollback()
             raise sqlite3.IntegrityError
+    conn.close()
+    return aantal
+#    json_data.close()
+
+
+def addURL2DB(url):
+    dbpath = path_to_db()
+    conn = sqlite3.connect(dbpath)
+    c = conn.cursor()
+    try:
+        c.execute("INSERT INTO tblLink(linkURL) VALUES(?)", (url,))
+        conn.commit()
+    except sqlite3.IntegrityError:
+        conn.rollback()
+        raise sqlite3.IntegrityError
 
     conn.close()
-#    json_data.close()
