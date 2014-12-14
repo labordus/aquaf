@@ -1,4 +1,14 @@
 - [ ] taborder
 - [x] add to history to db
-- [ ] foutafhandeling bij het importeren.
+- [x] foutafhandeling bij het importeren. (wat als JSON nog steeds niet kan worden verwerkt? Test!!)
 - [ ] dubbele entries verwijderen uit db?
+- [ ] Progressindicatie bij.. genereren preview, uploaden
+- [ ] alpha eruit slopen.
+
+
+# Punten bij release..
+* github release aanmaken.
+* webserver-address 8000 / 8080
+* archive.html nalopen.
+* alle verwijzingen naar testpaden etc.. terugzetten.
+* addURL2DB() en ook uploadblabla() uitvinken/aanzetten.
