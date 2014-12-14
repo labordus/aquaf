@@ -102,7 +102,7 @@ def DumpImage(im, username, filename):
             return
 
     desiredName = constructUploadName(username, filename)
-    uploadFileToAquaforum(path, desiredName)
+#    uploadFileToAquaforum(path, desiredName)
     return desiredName
 
 
@@ -154,6 +154,7 @@ def IsEmpty_JSON():
 
 
 def addToHistory(url):
+    # ########### Add to DB!!! #############
     '''adds the url to the json archive
     '''
     path = appdirs.user_data_dir('aquaf', False, False, False)
