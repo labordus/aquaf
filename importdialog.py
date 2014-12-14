@@ -29,8 +29,6 @@ class ImportDialog(maingui.dlgImport):
         maingui.dlgImport.__init__(self, parent)
 
     def onclickselectjson(self, event):
-        import appdirs
-        import db
         if (sys.platform.startswith('win')):  # dan win32 of win64
             standaarddir = "C:\Program Files\AquaforumUploader"
         else:  # posix
@@ -47,17 +45,14 @@ class ImportDialog(maingui.dlgImport):
 
         if dlg.ShowModal() == wx.ID_OK:
             oudeJSON = dlg.GetPath()
-            # nog effe voor de zekerheid testen..
-            head, tail = os.path.split(oudeJSON)
-            if tail != 'images.json':
-                print 'verkeerd bestand gekozen'
-            else:
-                try:
-                    self.btnSelectJSON.Disable()
-                    aantal = ImportJSON2DB(oudeJSON)
-                except:
-                    self.m_staticText4.Label = 'Data kon niet worden geimporteerd, bordumar@gmail.com'
+            self.btnSelectJSON.Disable()
+            try:
+                aantal = ImportJSON2DB(oudeJSON)
                 self.m_staticText4.Label = 'Er zijn ' + str(aantal) + ' plaatjes geimporteerd, dit venster kan nu afgesloten worden.'
+            except Exception as e:
+                self.e = e
+                print('Run-time error:', e)
+                self.m_staticText4.Label = 'Data kon niet worden geimporteerd, bordumar@gmail.com'
 # else: # wx.ID_CANCEL
         dlg.Destroy()
 
