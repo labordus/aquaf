@@ -1,4 +1,4 @@
 - [ ] taborder
-- [ ] save url to db
+- [x] add to history to db
 - [ ] foutafhandeling bij het importeren.
 - [ ] dubbele entries verwijderen uit db?
