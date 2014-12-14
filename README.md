@@ -33,7 +33,7 @@ browser-component die los van de geinstalleerde browser functioneerd.
 De gegevens in het data-bestand van Riba's versie kunnen indien gewenst worden
 geimporteerd, dit kan worden gedaan tijdens de eerste opstart van de applicatie,
 of later vanuit menu -> importeren.
-Dit importeren 'dumpt' de gegevens in het nieuwe (lege) data-bestand, het oude
+Dit importeren 'dumpt' de gegevens in de nieuwe (lege) database, het oude
 data-bestand zal blijven bestaan en de nieuwe zal dus worden overschreven..
 Dit doe je dus maar 1 keer.
 
@@ -55,7 +55,7 @@ Ga zo door totdat je alle plaatjes hebt toegevoegd die je wilt uploaden.
 * Klik op knop "upload naar aquaforum" en wacht op het volgende venster alwaar
 je de URL's kunt kopieren om in je forumbericht te plakken.
 
-0.84-Alpha
+0.84
 Download hier het Windows installatiepakket.
 ......
 
