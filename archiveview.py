@@ -40,12 +40,12 @@ class MyBrowser(wx.Dialog):
 
     def __init__(self, *args, **kwds):
         wx.Dialog.__init__(self, *args, **kwds)
-#        self.SetWindowStyleFlag(wx.RESIZE_BORDER)
+        self.SetWindowStyleFlag(wx.RESIZE_BORDER)
         sizer = wx.BoxSizer(wx.VERTICAL)
         self.browser = wx.html2.WebView.New(self)
         sizer.Add(self.browser, 1, wx.EXPAND, 10)
         self.SetSizer(sizer)
-        self.SetSize((700, 700))
+        self.SetSize((800, 800))
         self.Bind(wx.EVT_CLOSE, self.oncloseMyBrowser)
         serve = MyServer()
         MyServer.run(serve)
