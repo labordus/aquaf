@@ -18,6 +18,7 @@ from diversen import *
 import uploaddialog
 from mechanize._opener import urlopen
 import importdialog
+from db import DB2JSON, addURL2DB
 
 AUQAOFORUM_PICTURE_URL = "http://www.aquaforum.nl/gallery/upload/"
 TEST_FOTO = "test.jpg"
@@ -122,6 +123,7 @@ class AquaFrame(maingui.Mainframe):
     def onbtnArchiefClick(self, event):
         #        webbrowser.get("chrome").open_new_tab(theArchive)
         #        webbrowser.get("firefox").open_new(theArchive)
+        DB2JSON()
         if IsEmpty_JSON():
             print 'Niets te tonen'
             return
@@ -240,7 +242,8 @@ class AquaFrame(maingui.Mainframe):
                 resizedFilename = ResizeImage(
                     self.listboxSelectedFiles.GetClientData(_i), dimensions)
                 desiredName = DumpImage(resizedFilename, self.edtLoginName.GetValue(), self.listboxSelectedFiles.GetClientData(_i))
-                addToHistory(AUQAOFORUM_PICTURE_URL + desiredName)
+#                addToHistory(AUQAOFORUM_PICTURE_URL + desiredName)
+                addURL2DB(AUQAOFORUM_PICTURE_URL + desiredName)
                 urls = urls + " [IMG]" + AUQAOFORUM_PICTURE_URL + desiredName + "[/IMG]" + "\n"
 
             except Exception as er:
