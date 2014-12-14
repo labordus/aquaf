@@ -73,7 +73,6 @@ class AquaFrame(maingui.Mainframe):
 
 # ############################################### #
 
-#        stripJSON()
         Initialize_JSON()
 
         _icon = wx.EmptyIcon()
