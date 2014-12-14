@@ -52,8 +52,12 @@ class ImportDialog(maingui.dlgImport):
             if tail != 'images.json':
                 print 'verkeerd bestand gekozen'
             else:
-                ImportJSON2DB(oudeJSON)
-                self.m_staticText4.Label = 'Data is geimporteerd, je kunt dit venster nu afsluiten'
+                try:
+                    self.btnSelectJSON.Disable()
+                    aantal = ImportJSON2DB(oudeJSON)
+                except:
+                    self.m_staticText4.Label = 'Data kon niet worden geimporteerd, bordumar@gmail.com'
+                self.m_staticText4.Label = 'Er zijn ' + str(aantal) + ' plaatjes geimporteerd, dit venster kan nu afgesloten worden.'
 # else: # wx.ID_CANCEL
         dlg.Destroy()
 
