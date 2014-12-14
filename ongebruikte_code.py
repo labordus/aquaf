@@ -1,3 +1,36 @@
+def addToHistory(url):
+    # ########### Add to DB!!! #############
+    '''adds the url to the json archive
+    '''
+    path = appdirs.user_data_dir('aquaf', False, False, False)
+#    check_path_exists(os.path.join(path, 'aquaf.db'))
+    filepath = os.path.join(path, 'aquaf.json')
+
+#    f = open('images.json', 'r')
+    f = open(filepath, 'r')
+    content = f.read()
+    f.close()
+    text = ""
+    if content.find("link") != -1:
+        # already got content
+        text = ","
+    template = '''
+        {
+      "link":"%s"
+    }
+]}
+
+''' % url
+    text = text + template
+    content = content.replace("]}", text)
+#    f = open('aquaf.json', 'w')
+    f = open(filepath, 'w')
+    f.write(content)
+    f.close()
+    return
+
+##############################################################################
+    
     def onclickselectjson(self, event):
         import appdirs
         if (sys.platform.startswith('win')):  # dan win32 of win64
