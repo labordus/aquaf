@@ -1,9 +1,7 @@
 import sqlite3
 import os
 import appdirs
-from mechanize._beautifulsoup import Null
 import json
-import re
 
 
 def Initialize_db():
@@ -149,7 +147,7 @@ def ImportJSON2DB(fileJSON):
         data = json.loads(objs_string)  # parse json
     #    data = json.loads("[%s]" % (open(fileJSON).read().replace('items:', '"items":')))
     except ValueError:  # includes simplejson.decoder.JSONDecodeError
-        print 'Decoding JSON has failed'
+        #        print 'Decoding JSON has failed'
         raise ValueError
 
     conn = sqlite3.connect(dbpath)
