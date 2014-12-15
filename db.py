@@ -12,7 +12,7 @@ def Initialize_db():
         c = conn.cursor()
         c.execute('''CREATE TABLE IF NOT EXISTS
                       tblApp(
-                      USERID INT PRIMARY KEY NOT NULL  DEFAULT (1),
+                      VERSIE INTEGER,
                       USERNM VARCHAR(30),
                       FIRSTRUN BOOLEAN DEFAULT (1))''')
         conn.commit()
@@ -23,8 +23,8 @@ def Initialize_db():
         conn.commit()
         c.execute('SELECT USERNM FROM tblApp')
         if not c.fetchone():  # geen record/row gevonden
-            c.execute('''INSERT INTO tblApp(USERID,USERNM,FIRSTRUN)
-                    VALUES(?,?,?)''', (1, '', 1))
+            c.execute('''INSERT INTO tblApp(VERSIE,USERNM,FIRSTRUN)
+                    VALUES(?,?,?)''', (int(84), '', 1))
 #            c.execute('''INSERT INTO tblLink(linkURL)
 #                    VALUES(?)''', ("testurlie_1"))
             conn.commit()
@@ -60,7 +60,7 @@ def first_run():
 #        firstrun = bool(c.fetchone()[0])
         firstrun = int(c.fetchone()[0])
         if firstrun == 1:
-            c.execute('''UPDATE tblApp SET FIRSTRUN = ? WHERE USERID = ? ''', (0, 1))
+            c.execute('''UPDATE tblApp SET FIRSTRUN = ? WHERE ROWID = ? ''', (0, 1))
             conn.commit()
         else:
             firstrun = 0
