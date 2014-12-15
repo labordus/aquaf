@@ -6,7 +6,7 @@ import os
 import imp
 import sys
 import maingui
-from db import ImportJSON2DB
+from db import ImportJSON2DB, SetImported
 
 
 def main_is_frozen():
@@ -49,6 +49,7 @@ class ImportDialog(maingui.dlgImport):
             try:
                 aantal = ImportJSON2DB(oudeJSON)
                 self.m_staticText4.Label = 'Er zijn ' + str(aantal) + ' plaatjes geimporteerd, dit venster kan nu afgesloten worden.'
+                SetImported()
             except Exception as e:
                 self.e = e
                 print('Run-time error:', e)
