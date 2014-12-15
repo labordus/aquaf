@@ -1,6 +1,9 @@
 aquaf
 =====
 
+Voor het uploaden van foto's naar http://www.aquaforum.nl/
+En ook het (op de computer) opslaan van een persoonlijk archief van foto's die zijn ge-upload. 
+
 Origineel ontwikkeld door Riba.
 Riba's aquazone - Aquaforum uploadprogramma: http://aquazone.leeuwen.nu/blog/uploadprogramma
 
@@ -30,17 +33,10 @@ De gegevens in het data-bestand van Riba's versie kunnen indien gewenst worden
 geimporteerd, dit kan worden gedaan tijdens de eerste opstart van de applicatie,
 of later vanuit menu -> importeren.
 Dit importeren 'dumpt' de gegevens in de nieuwe (lege) database, het oude
-data-bestand zal blijven bestaan en de nieuwe zal dus worden overschreven..
-Dit doe je dus maar 1 keer.
+data-bestand zal gewoon blijven bestaan..
+Dit doe je dus maar 1 keer, anders zullen er dubbele entries in de database ontstaan.
 
-Nieuwe gebruikers kunnen direct na de instalatie de applicatie opstarten.
-
-# Bij problemen.
-Laat het me weten.. liefst met zoveel mogelijk informatie, een duidelijke
-beschrijving van wat er mis gaat.. en info over het besturingsysteem
-dat je gebruikt, liefst ook architectuur (32bit/64bit).
-Je kunt je vragen/opmerkingen poneren in dit forum-topic of via een PB'tje.
-
+Nieuwe gebruikers hebben niets te importeren en kunnen direct aan de slag.
 
 # Instructies voor gebruik..
 * Voer gebruikersnaam in.
@@ -51,6 +47,11 @@ Ga zo door totdat je alle plaatjes hebt toegevoegd die je wilt uploaden.
 * Klik op knop "upload naar aquaforum" en wacht op het volgende venster alwaar
 je de URL's kunt kopieren om in je forumbericht te plakken.
 
+# Bij problemen.
+Laat het me weten.. liefst met zoveel mogelijk informatie, een duidelijke
+beschrijving van wat er mis gaat.. en info over het besturingsysteem
+dat je gebruikt, liefst ook architectuur (32bit/64bit).
+Je kunt je vragen/opmerkingen poneren in dit forum-topic of via een PB'tje.
 
 Aquaf 0.84 is getest op..
 Arch Linux, openSUSE Linux 13.1, Linux Mint 17 
