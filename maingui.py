@@ -175,6 +175,9 @@ class Mainframe ( wx.Frame ):
 		self.menuitemImport = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"Importeer", wx.EmptyString, wx.ITEM_NORMAL )
 		self.m_menu1.AppendItem( self.menuitemImport )
 		
+		self.menuAbout = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"About", wx.EmptyString, wx.ITEM_NORMAL )
+		self.m_menu1.AppendItem( self.menuAbout )
+		
 		self.m_menubar1.Append( self.m_menu1, u"Menu" ) 
 		
 		self.SetMenuBar( self.m_menubar1 )
@@ -193,6 +196,7 @@ class Mainframe ( wx.Frame ):
 		self.m_button811.Bind( wx.EVT_BUTTON, self.onbtnUploadClick )
 		self.btnArchief.Bind( wx.EVT_BUTTON, self.onbtnArchiefClick )
 		self.Bind( wx.EVT_MENU, self.onmenuitemClickImport, id = self.menuitemImport.GetId() )
+		self.Bind( wx.EVT_MENU, self.onmenuitemClickAbout, id = self.menuAbout.GetId() )
 	
 	def __del__( self ):
 		pass
@@ -227,6 +231,9 @@ class Mainframe ( wx.Frame ):
 		event.Skip()
 	
 	def onmenuitemClickImport( self, event ):
+		event.Skip()
+	
+	def onmenuitemClickAbout( self, event ):
 		event.Skip()
 	
 
