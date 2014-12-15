@@ -104,6 +104,16 @@ class AquaFrame(maingui.Mainframe):
         self.ShowImportDialog()
 
     def ShowImportDialog(self):
+        if db.IfAlreadyImported():
+            dlg = wx.MessageDialog(None, 'Je hebt al eens eerder geimporteerd \n' +
+                                   'Nogmaals importeren betekend dat de oude gegevens nogmaals ' +
+                                   'zullen worden toegevoegd aan de huidige database, met dubbele entries tot gevolg.' +
+                                   'Weet je zeker dat je dit wilt doen?', 'Import', wx.YES_NO | wx.ICON_QUESTION)
+            result = dlg.ShowModal()
+            if result == wx.ID_NO:
+                dlg.Destroy()
+                return
+
         dlgimport = importdialog.ImportDialog(self)
         dlgimport.CenterOnParent()
         dlgimport.ShowModal()
