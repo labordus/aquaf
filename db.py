@@ -14,7 +14,8 @@ def Initialize_db():
                       tblApp(
                       VERSIE INTEGER,
                       USERNM VARCHAR(30),
-                      FIRSTRUN BOOLEAN DEFAULT (1))''')
+                      FIRSTRUN BOOLEAN DEFAULT (1),
+                      IMPORTED BOOLEAN DEFAULT (0))''')
         conn.commit()
         c.execute('''CREATE TABLE IF NOT EXISTS
                       tblLink(
@@ -132,6 +133,38 @@ def DB2JSON():
     fp.write(j)
     fp.close()
     connection.close()
+
+
+def IfAlreadyImported():
+    filepath = path_to_db()
+    try:
+        conn = sqlite3.connect(filepath)
+        c = conn.cursor()
+        c.execute('SELECT IMPORTED FROM tblApp')
+        imported = int(c.fetchone()[0])
+        if imported == 1:
+            return True
+        else:
+            return False
+    except Exception as e:
+        raise e
+    finally:
+        conn.close()
+
+
+def SetImported():
+    filepath = path_to_db()
+    try:
+        conn = sqlite3.connect(filepath)
+        c = conn.cursor()
+#        c.execute('SELECT IMPORTED FROM tblApp')
+        c.execute('''UPDATE tblApp SET IMPORTED = ? WHERE ROWID = ? ''', (1, 1))
+        conn.commit()
+    except Exception as e:
+        conn.rollback()
+        raise e
+    finally:
+        conn.close()
 
 
 def ImportJSON2DB(fileJSON):
