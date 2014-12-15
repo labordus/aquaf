@@ -6,6 +6,7 @@ import imp
 from PIL import Image
 import db
 from archiveview import MyBrowser
+from wx.lib.wordwrap import wordwrap
 
 # import GUI
 import maingui
@@ -22,6 +23,7 @@ from db import DB2JSON, addURL2DB
 
 AUQAOFORUM_PICTURE_URL = "http://www.aquaforum.nl/gallery/upload/"
 TEST_FOTO = "test.jpg"
+VERSION = "0_84"
 
 
 def main_is_frozen():
@@ -103,6 +105,24 @@ class AquaFrame(maingui.Mainframe):
     def onmenuitemClickImport(self, event):
         self.ShowImportDialog()
 
+    def onmenuitemClickAbout(self, event):
+        # First we create and fill the info object
+        info = wx.AboutDialogInfo()
+        info.Name = "Aquaf"
+        info.Version = VERSION
+        info.Copyright = "(C) 2010-2014"
+        info.Description = wordwrap(
+            "Voor het uploaden van foto's naar http://www.aquaforum.nl/ "
+            "en ook het (op de computer) opslaan van een persoonlijk archief "
+            "van foto's die zijn ge-upload. ",
+            400, wx.ClientDC(self))
+        info.WebSite = ("https://github.com/labordus/aquaf", "Aquaf home page")
+        info.Developers = ["Riba",
+                           "kellemes"]
+
+        # Then we call wx.AboutBox giving it that info object
+        wx.AboutBox(info)
+
     def ShowImportDialog(self):
         if db.IfAlreadyImported():
             dlg = wx.MessageDialog(None, 'Je hebt al eens eerder geimporteerd \n' +
@@ -176,9 +196,11 @@ class AquaFrame(maingui.Mainframe):
         if pad != () and pad != "":
             # file selected
             if IsValidImage(pad):
+                busyDlg = wx.BusyInfo('Bezig met genereren preview...')
                 img = ResizeImage(pad, (400, 300))
-            else:  # als geen geldige image.. return
-                return
+                del busyDlg
+            else:  # als geen geldige image..
+                img = ResizeImage(TEST_FOTO, (400, 300))
         else:  # directory selected
             img = ResizeImage(TEST_FOTO, (400, 300))
 
