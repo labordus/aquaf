@@ -42,7 +42,7 @@ class MyBrowser(wx.Dialog):
         wx.Dialog.__init__(self, *args, **kwds)
 #        self.SetWindowStyleFlag(wx.RESIZE_BORDER)
 #        self.SetWindowStyle(wx.RESIZE_BORDER | wx.CAPTION)
-        self.SetWindowStyle(wx.CAPTION)
+        self.SetWindowStyleFlag(wx.RESIZE_BORDER | wx.DEFAULT_DIALOG_STYLE | wx.MAXIMIZE_BOX)
         sizer = wx.BoxSizer(wx.VERTICAL)
         self.browser = wx.html2.WebView.New(self)
         sizer.Add(self.browser, 1, wx.EXPAND, 10)
