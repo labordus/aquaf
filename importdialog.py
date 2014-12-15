@@ -47,7 +47,9 @@ class ImportDialog(maingui.dlgImport):
             oudeJSON = dlg.GetPath()
             self.btnSelectJSON.Disable()
             try:
+                busyDlg = wx.BusyInfo('Bezig met importeren van plaatjes...')
                 aantal = ImportJSON2DB(oudeJSON)
+                del busyDlg
                 self.m_staticText4.Label = 'Er zijn ' + str(aantal) + ' plaatjes geimporteerd, dit venster kan nu afgesloten worden.'
                 SetImported()
             except Exception as e:
