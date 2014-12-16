@@ -56,8 +56,8 @@ Je kunt je vragen/opmerkingen poneren in dit forum-topic of via een PB'tje.
 Aquaf 0.84 is getest op..
 Arch Linux, openSUSE Linux 13.1, Linux Mint 17 
 Windows XP, Windows Vista, Windows 7
-Windows 95/98/ME wordt niet meer ondersteund!
-Als er behoefte is aan een installatiepakket voor OSX of Linux dan hoor ik het wel. 
+Windows 95/98/ME wordt niet (meer) ondersteund!
+
 Download hier het installatiepakket voor Windows.
 .....
 
