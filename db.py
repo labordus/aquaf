@@ -26,8 +26,6 @@ def Initialize_db():
         if not c.fetchone():  # geen record/row gevonden
             c.execute('''INSERT INTO tblApp(VERSIE,USERNM,FIRSTRUN)
                     VALUES(?,?,?)''', (int(84), '', 1))
-#            c.execute('''INSERT INTO tblLink(linkURL)
-#                    VALUES(?)''', ("testurlie_1"))
             conn.commit()
     except Exception as e:
         conn.rollback()
@@ -113,11 +111,12 @@ def DB2JSON():
     path = appdirs.user_data_dir('aquaf', False, False, False)
     filepath = os.path.join(path, 'aquaf.json')
     dbpath = path_to_db()
-#    connection = sqlite3.connect('/home/kelp/.local/share/aquaf/aquaftest.db')
     connection = sqlite3.connect(dbpath)
     cursor = connection.cursor()
     cursor.execute("SELECT * FROM tblLink")
     rows = cursor.fetchall()
+    if len(rows) == 0:  # Geen data? Return False
+        return False
 
     rowarray_list = []
     for row in rows:
@@ -133,6 +132,8 @@ def DB2JSON():
     fp.write(j)
     fp.close()
     connection.close()
+
+    return True
 
 
 def IfAlreadyImported():
