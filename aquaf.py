@@ -5,7 +5,6 @@ import sys
 import imp
 from PIL import Image
 import db
-from archiveview import MyBrowser
 
 # import GUI
 import maingui
@@ -46,16 +45,16 @@ def get_main_dir():
     return result
 
 
-def opschonen():
-    path = appdirs.user_data_dir('aquaf', False, False, False)
-    filepath = os.path.join(path, 'aquaf.json')
-    try:
-        os.remove(filepath)
-    except OSError:
-        pass
+# def opschonen():
+#    path = appdirs.user_data_dir('aquaf', False, False, False)
+#    filepath = os.path.join(path, 'aquaf.json')
+#    try:
+#       os.remove(filepath)
+#    except OSError:
+#        pass
 
-import atexit
-atexit.register(opschonen)
+#import atexit
+# atexit.register(opschonen)
 
 
 class RedirectText(object):
@@ -86,7 +85,7 @@ class AquaFrame(maingui.Mainframe):
 
 # ############################################### #
 
-        Initialize_JSON()
+#        Initialize_JSON()
 
         _icon = wx.EmptyIcon()
         _icon.CopyFromBitmap(wx.Bitmap("icon.ico", wx.BITMAP_TYPE_ANY))
@@ -162,11 +161,13 @@ class AquaFrame(maingui.Mainframe):
     def onbtnArchiefClick(self, event):
         #        webbrowser.get("chrome").open_new_tab(theArchive)
         #        webbrowser.get("firefox").open_new(theArchive)
-        DB2JSON()
-        if IsEmpty_JSON():
+        if not DB2JSON():
             print 'Niets te tonen'
             return
+
+        from archiveview import MyBrowser
         weburl = "http://127.0.0.1:8000/archive.html"
+
         dialog = MyBrowser(None, -1)
         dialog.browser.LoadURL(weburl)
         dialog.CenterOnParent()
@@ -275,6 +276,7 @@ class AquaFrame(maingui.Mainframe):
             print("Geen bestand geselecteerd")
             return
 
+        busyDlg = wx.BusyInfo('Bezig met converten en uploaden van de plaatjes...')
         dimensions = getDimensions(self.radio_box_3.GetSelection())
         urls = ""
         for _i in range(filecount):
@@ -283,15 +285,16 @@ class AquaFrame(maingui.Mainframe):
                 resizedFilename = ResizeImage(
                     self.listboxSelectedFiles.GetClientData(_i), dimensions)
                 desiredName = DumpImage(resizedFilename, self.edtLoginName.GetValue(), self.listboxSelectedFiles.GetClientData(_i))
-#                addToHistory(AUQAOFORUM_PICTURE_URL + desiredName)
                 addURL2DB(AUQAOFORUM_PICTURE_URL + desiredName)
                 urls = urls + " [IMG]" + AUQAOFORUM_PICTURE_URL + desiredName + "[/IMG]" + "\n"
 
             except Exception as er:
                 self.error = True
                 self.errorEx = er
+                del busyDlg
                 exit
 
+        del busyDlg
         dlg = uploaddialog.UploadDoneDialog(self)
         dlg.setCode(urls)
         self.listboxSelectedFiles.Clear()
