@@ -6,7 +6,6 @@ import imp
 from PIL import Image
 import db
 from archiveview import MyBrowser
-from wx.lib.wordwrap import wordwrap
 
 # import GUI
 import maingui
@@ -45,6 +44,18 @@ def get_main_dir():
     if result == "":
         result = "."
     return result
+
+
+def opschonen():
+    path = appdirs.user_data_dir('aquaf', False, False, False)
+    filepath = os.path.join(path, 'aquaf.json')
+    try:
+        os.remove(filepath)
+    except OSError:
+        pass
+
+import atexit
+atexit.register(opschonen)
 
 
 class RedirectText(object):
@@ -106,21 +117,20 @@ class AquaFrame(maingui.Mainframe):
         self.ShowImportDialog()
 
     def onmenuitemClickAbout(self, event):
-        # First we create and fill the info object
         info = wx.AboutDialogInfo()
         info.Name = "Aquaf"
         info.Version = VERSION
         info.Copyright = "(C) 2010-2014"
-        info.Description = wordwrap(
-            "Voor het uploaden van foto's naar http://www.aquaforum.nl/ "
-            "en ook het (op de computer) opslaan van een persoonlijk archief "
-            "van foto's die zijn ge-upload. ",
-            400, wx.ClientDC(self))
+        info.Description = "Voor het uploaden van plaatjes naar http://www.aquaforum.nl/" + "\n" "en ook het (op de computer) opslaan van een persoonlijk archief van plaatjes die zijn ge-upload."
+#        info.Description = wordwrap(
+#            "Voor het uploaden van foto's naar http://www.aquaforum.nl/ "
+#            "en ook het (op de computer) opslaan van een persoonlijk archief "
+#            "van foto's die zijn ge-upload. ",
+#            400, wx.ClientDC(self))
         info.WebSite = ("https://github.com/labordus/aquaf", "Aquaf home page")
         info.Developers = ["Riba",
                            "kellemes"]
 
-        # Then we call wx.AboutBox giving it that info object
         wx.AboutBox(info)
 
     def ShowImportDialog(self):
