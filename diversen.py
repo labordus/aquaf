@@ -80,7 +80,6 @@ def ResizeImage(pad, dim):
 
 def DumpImage(im, username, filename):
     import tempfile
-    busyDlg = wx.BusyInfo('Bezig met converten en uploaden van de plaatjes...')
     fd, path = tempfile.mkstemp()
     # quality hoger dan 95 heeft geen nut,
     # zie http://pillow.readthedocs.org/en/latest/handbook/image-file-formats.html
@@ -103,38 +102,7 @@ def DumpImage(im, username, filename):
 
     desiredName = constructUploadName(username, filename)
     uploadFileToAquaforum(path, desiredName)
-    del busyDlg
     return desiredName
-
-
-def Initialize_JSON():
-    path = appdirs.user_data_dir('aquaf', False, False, False)
-#    check_path_exists(os.path.join(path, 'aquaf.db'))
-    filepath = os.path.join(path, 'aquaf.json')
-    text = '''{ items: [
-]}
-'''
-    try:
-        fp = open(filepath)
-    except IOError:
-        # If not exists, create the file
-        fp = open(filepath, "w+")
-        fp.write(text)
-    fp.close()
-
-
-def IsEmpty_JSON():
-    path = appdirs.user_data_dir('aquaf', False, False, False)
-    filepath = os.path.join(path, 'aquaf.json')
-
-    f = open(filepath, 'r')
-    content = f.read()
-    f.close()
-    if content.find("link") != -1:
-        # already got content
-        return False
-    else:
-        return True
 
 
 def uploadFileToAquaforum(uploadFilename, requestedFileName):
