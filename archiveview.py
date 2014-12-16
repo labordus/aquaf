@@ -5,6 +5,7 @@ from SimpleHTTPServer import SimpleHTTPRequestHandler
 import threading
 from time import sleep
 import os
+from mechanize._mechanize import Browser
 
 oudepad = os.getcwd()
 
@@ -13,9 +14,7 @@ class MyServer():
     HandlerClass = SimpleHTTPRequestHandler
     ServerClass = BaseHTTPServer.HTTPServer
     Protocol = "HTTP/1.0"
-
     server_address = ("127.0.0.1", 8000)
-
     HandlerClass.protocol_version = Protocol
     httpd = ServerClass(server_address, HandlerClass)
 
@@ -56,3 +55,12 @@ class MyBrowser(wx.Dialog):
         serve = MyServer()
         MyServer.stop(serve)
         event.Skip()
+
+# verwijder aquaf.json
+        import appdirs
+        path = appdirs.user_data_dir('aquaf', False, False, False)
+        filepath = os.path.join(path, 'aquaf.json')
+        try:
+            os.remove(filepath)
+        except OSError:
+            pass
