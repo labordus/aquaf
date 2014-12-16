@@ -1,3 +1,35 @@
+def IsEmpty_JSON():
+    path = appdirs.user_data_dir('aquaf', False, False, False)
+    filepath = os.path.join(path, 'aquaf.json')
+
+    f = open(filepath, 'r')
+    content = f.read()
+    f.close()
+    if content.find("link") != -1:
+        # already got content
+        return False
+    else:
+        return True
+
+##############################################################################
+
+def Initialize_JSON():
+    path = appdirs.user_data_dir('aquaf', False, False, False)
+#    check_path_exists(os.path.join(path, 'aquaf.db'))
+    filepath = os.path.join(path, 'aquaf.json')
+    text = '''{ items: [
+]}
+'''
+    try:
+        fp = open(filepath)
+    except IOError:
+        # If not exists, create the file
+        fp = open(filepath, "w+")
+        fp.write(text)
+    fp.close()
+
+##############################################################################
+
 def addToHistory(url):
     # ########### Add to DB!!! #############
     '''adds the url to the json archive
