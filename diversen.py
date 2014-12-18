@@ -17,7 +17,6 @@ except ImportError:
 
 Image._initialized = 2
 
-# FORUM_UPLOAD_URL = "http://www.aquaforum.nl/gallery/upload.php"
 FORUM_UPLOAD_URL = "http://www.aquaforum.nl/ubb/scripts/upload.php"
 VERSION = "0_84"
 ALLOWED_CHARS = "qwertyuioplkjhgfdsazxcvbnm0123456789._"
