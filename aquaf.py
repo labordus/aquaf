@@ -21,7 +21,6 @@ from db import DB2JSON, addURL2DB
 
 AUQAOFORUM_PICTURE_URL = "http://www.aquaforum.nl/gallery/upload/"
 TEST_FOTO = "test.jpg"
-VERSION = "0_84"
 
 
 def main_is_frozen():
