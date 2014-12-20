@@ -8,7 +8,7 @@ import db
 
 # import GUI
 import maingui
-from maingui import dlgVoorbeeld, dlgUploadDone, dlgImport
+from maingui import dlgVoorbeeld, dlgUploadDone, dlgImport, dlgConf
 from Dialog import Dialog
 
 import diversen
@@ -17,6 +17,7 @@ from diversen import *
 import uploaddialog
 from mechanize._opener import urlopen
 import importdialog
+import confdialog
 from db import DB2JSON, addURL2DB
 
 AUQAOFORUM_PICTURE_URL = "http://www.aquaforum.nl/gallery/upload/"
@@ -113,6 +114,12 @@ class AquaFrame(maingui.Mainframe):
 
     def onmenuitemClickImport(self, event):
         self.ShowImportDialog()
+
+    def onmenuitemClickConf(self, event):
+        dlgConf = confdialog.ConfDialog(self)
+        dlgConf.CenterOnParent()
+        dlgConf.ShowModal()
+        dlgConf.Destroy()
 
     def onmenuitemClickAbout(self, event):
         info = wx.AboutDialogInfo()
