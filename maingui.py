@@ -172,8 +172,13 @@ class Mainframe ( wx.Frame ):
 		self.Layout()
 		self.m_menubar1 = wx.MenuBar( 0 )
 		self.m_menu1 = wx.Menu()
+		self.menuitemConf = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"Configureer", wx.EmptyString, wx.ITEM_NORMAL )
+		self.m_menu1.AppendItem( self.menuitemConf )
+		
 		self.menuitemImport = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"Importeer", wx.EmptyString, wx.ITEM_NORMAL )
 		self.m_menu1.AppendItem( self.menuitemImport )
+		
+		self.m_menu1.AppendSeparator()
 		
 		self.menuAbout = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"About", wx.EmptyString, wx.ITEM_NORMAL )
 		self.m_menu1.AppendItem( self.menuAbout )
@@ -195,6 +200,7 @@ class Mainframe ( wx.Frame ):
 		self.btnVoorbeeld.Bind( wx.EVT_BUTTON, self.onbtnVoorbeeldClick )
 		self.m_button811.Bind( wx.EVT_BUTTON, self.onbtnUploadClick )
 		self.btnArchief.Bind( wx.EVT_BUTTON, self.onbtnArchiefClick )
+		self.Bind( wx.EVT_MENU, self.onmenuitemClickConf, id = self.menuitemConf.GetId() )
 		self.Bind( wx.EVT_MENU, self.onmenuitemClickImport, id = self.menuitemImport.GetId() )
 		self.Bind( wx.EVT_MENU, self.onmenuitemClickAbout, id = self.menuAbout.GetId() )
 	
@@ -228,6 +234,9 @@ class Mainframe ( wx.Frame ):
 		event.Skip()
 	
 	def onbtnArchiefClick( self, event ):
+		event.Skip()
+	
+	def onmenuitemClickConf( self, event ):
 		event.Skip()
 	
 	def onmenuitemClickImport( self, event ):
@@ -401,5 +410,119 @@ class dlgVoorbeeld ( wx.Dialog ):
 	
 	def __del__( self ):
 		pass
+	
+
+###########################################################################
+## Class dlgConf
+###########################################################################
+
+class dlgConf ( wx.Dialog ):
+	
+	def __init__( self, parent ):
+		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.DefaultSize, style = wx.CAPTION|wx.CLOSE_BOX )
+		
+		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
+		
+		bSizer42 = wx.BoxSizer( wx.VERTICAL )
+		
+		bSizer35 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		bSizer26 = wx.BoxSizer( wx.VERTICAL )
+		
+		bSizer38 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.checkPreview = wx.CheckBox( self, wx.ID_ANY, u"Preview foto's?", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer38.Add( self.checkPreview, 0, wx.ALL, 5 )
+		
+		
+		bSizer26.Add( bSizer38, 1, wx.EXPAND, 5 )
+		
+		bSizer39 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		choiceDimensieChoices = []
+		self.choiceDimensie = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, choiceDimensieChoices, 0 )
+		self.choiceDimensie.SetSelection( 0 )
+		bSizer39.Add( self.choiceDimensie, 0, wx.ALL, 5 )
+		
+		
+		bSizer26.Add( bSizer39, 1, wx.EXPAND, 5 )
+		
+		bSizer40 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.btnImport = wx.Button( self, wx.ID_ANY, u"Importeer oude data", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
+		bSizer40.Add( self.btnImport, 0, wx.ALL, 5 )
+		
+		
+		bSizer26.Add( bSizer40, 1, wx.EXPAND, 5 )
+		
+		
+		bSizer35.Add( bSizer26, 0, wx.ALL|wx.EXPAND, 5 )
+		
+		self.m_staticline2 = wx.StaticLine( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LI_VERTICAL )
+		bSizer35.Add( self.m_staticline2, 0, wx.EXPAND |wx.ALL, 5 )
+		
+		bSizer41 = wx.BoxSizer( wx.VERTICAL )
+		
+		bSizer44 = wx.BoxSizer( wx.VERTICAL )
+		
+		self.m_staticText15 = wx.StaticText( self, wx.ID_ANY, u"Wil je een preview zien bij het selecteren van een foto?", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText15.Wrap( -1 )
+		bSizer44.Add( self.m_staticText15, 0, wx.ALL, 5 )
+		
+		
+		bSizer41.Add( bSizer44, 1, wx.EXPAND, 5 )
+		
+		bSizer45 = wx.BoxSizer( wx.VERTICAL )
+		
+		self.m_staticText16 = wx.StaticText( self, wx.ID_ANY, u"Standaard in te stellen dimensies", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText16.Wrap( -1 )
+		bSizer45.Add( self.m_staticText16, 0, wx.ALL, 5 )
+		
+		
+		bSizer41.Add( bSizer45, 1, wx.EXPAND, 5 )
+		
+		bSizer47 = wx.BoxSizer( wx.VERTICAL )
+		
+		self.m_staticText17 = wx.StaticText( self, wx.ID_ANY, u"Importeer gedoe", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText17.Wrap( -1 )
+		bSizer47.Add( self.m_staticText17, 0, wx.ALL, 5 )
+		
+		
+		bSizer41.Add( bSizer47, 1, wx.EXPAND, 5 )
+		
+		
+		bSizer35.Add( bSizer41, 0, wx.ALL|wx.EXPAND, 5 )
+		
+		
+		bSizer42.Add( bSizer35, 0, wx.EXPAND, 5 )
+		
+		bSizer34 = wx.BoxSizer( wx.VERTICAL )
+		
+		self.m_staticline3 = wx.StaticLine( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LI_HORIZONTAL )
+		bSizer34.Add( self.m_staticline3, 0, wx.EXPAND |wx.ALL, 5 )
+		
+		self.btnAfsluiten = wx.Button( self, wx.ID_ANY, u"Afsluiten", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
+		bSizer34.Add( self.btnAfsluiten, 0, wx.ALL, 5 )
+		
+		
+		bSizer42.Add( bSizer34, 0, wx.ALL|wx.EXPAND, 5 )
+		
+		
+		self.SetSizer( bSizer42 )
+		self.Layout()
+		bSizer42.Fit( self )
+		
+		self.Centre( wx.BOTH )
+		
+		# Connect Events
+		self.btnAfsluiten.Bind( wx.EVT_BUTTON, self.onbtnAfsluitenClick )
+	
+	def __del__( self ):
+		pass
+	
+	
+	# Virtual event handlers, overide them in your derived class
+	def onbtnAfsluitenClick( self, event ):
+		event.Skip()
 	
 
