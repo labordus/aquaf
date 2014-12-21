@@ -212,3 +212,56 @@ def addURL2DB(url):
         raise sqlite3.IntegrityError
 
     conn.close()
+
+
+def setUserDimensie(sDim):
+    filepath = path_to_db()
+    try:
+        conn = sqlite3.connect(filepath)
+        c = conn.cursor()
+        c.execute('''SELECT dimID FROM tblDim WHERE dimOM = ? ''', (sDim, ))
+        iDim = c.fetchone()[0]
+        c.execute('''UPDATE tblApp SET dimID = ? WHERE ROWID = ? ''', (iDim, 1))
+        conn.commit()
+    except Exception as e:
+        conn.rollback()
+        raise e
+    finally:
+        conn.close()
+
+
+def getUserDimensie():
+    filepath = path_to_db()
+    try:
+        conn = sqlite3.connect(filepath)
+#        conn.text_factory = str
+        c = conn.cursor()
+        c.execute('''SELECT dimID FROM tblApp''')
+        iDim = c.fetchone()[0]
+        c.execute('''SELECT dimOM FROM tblDim WHERE dimID = ? ''', (iDim, ))
+        Dimensie = c.fetchone()[0]
+    except Exception as e:
+        raise e
+    finally:
+        conn.close()
+
+    return Dimensie
+
+
+def getDimensies():  # return list of dims en return listindex?
+    filepath = path_to_db()
+    try:
+        conn = sqlite3.connect(filepath)
+        conn.text_factory = str
+        c = conn.cursor()
+#        c.execute('SELECT dimID FROM tblApp')
+#        dimID = int(c.fetchone()[0])
+#        c.execute('''SELECT dimOM FROM tblDim WHERE dimID = ? ''', (dimID))
+        c.execute('''SELECT dimOM FROM tblDim''')
+        dims = [r[0] for r in c.fetchall()]  # convert list of tuples to a list
+    except Exception as e:
+        raise e
+    finally:
+        conn.close()
+
+    return dims
