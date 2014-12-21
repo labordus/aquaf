@@ -6,6 +6,9 @@ import os
 import sys
 import imp
 import maingui
+import db
+from db import getDimensies, getUserDimensie, setUserDimensie
+from _codecs import encode, decode
 
 
 def main_is_frozen():
@@ -26,6 +29,15 @@ class ConfDialog(maingui.dlgConf):
     def __init__(self, parent):
         # initialize parent class
         maingui.dlgConf.__init__(self, parent)
+
+    def oninitConfDialog(self, event):
+        dims = getDimensies()
+        self.choiceDimensie.SetItems(dims)
+#        self.choiceDimensie.SetSelection(3)
+        self.choiceDimensie.SetStringSelection(getUserDimensie())
+
+    def onChoiceDimensies(self, event):
+        setUserDimensie(self.choiceDimensie.GetStringSelection())
 
     def onbtnAfsluitenClick(self, event):
         self.EndModal(wx.ID_OK)
