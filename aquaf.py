@@ -114,6 +114,10 @@ class AquaFrame(maingui.Mainframe):
 
         self.radio_box_3.SetSelection(getUserDimensie() - 1)
 
+        from os.path import expanduser
+        home = expanduser("~")
+        self.tvFiles.SetPath(home)
+
     def onmenuitemClickImport(self, event):
         self.ShowImportDialog()
 
