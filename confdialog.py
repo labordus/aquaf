@@ -23,7 +23,7 @@ def get_main_dir():
     return os.path.dirname(sys.argv[0])
 
 
-class ConfDialog(maingui.dlgConf):
+class Configure(maingui.dlgConf):
     # constructor
 
     def __init__(self, parent):
@@ -34,7 +34,8 @@ class ConfDialog(maingui.dlgConf):
         dims = getDimensies()
         self.choiceDimensie.SetItems(dims)
 #        self.choiceDimensie.SetSelection(3)
-        self.choiceDimensie.SetStringSelection(getUserDimensie())
+#        self.choiceDimensie.SetStringSelection(getUserDimensie())
+        self.choiceDimensie.SetSelection(getUserDimensie() - 1)
 
     def onChoiceDimensies(self, event):
         setUserDimensie(self.choiceDimensie.GetStringSelection())
