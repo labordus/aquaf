@@ -75,7 +75,7 @@ class Mainframe ( wx.Frame ):
 		bSizer4 = wx.BoxSizer( wx.HORIZONTAL )
 		
 		bSizer4.SetMinSize( wx.Size( 250,-1 ) ) 
-		self.tvFiles = wx.GenericDirCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.DIRCTRL_3D_INTERNAL|wx.DIRCTRL_MULTIPLE|wx.SUNKEN_BORDER, wx.EmptyString, 0 )
+		self.tvFiles = wx.GenericDirCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0|wx.SUNKEN_BORDER, wx.EmptyString, 0 )
 		
 		self.tvFiles.ShowHidden( False )
 		bSizer4.Add( self.tvFiles, 1, wx.EXPAND |wx.ALL, 5 )
