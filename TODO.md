@@ -5,6 +5,9 @@
 - [ ] Progressindicatie bij.. genereren preview, uploaden
 - [ ] alpha eruit slopen.
 
+##############
+Moet nu bij INIT van mainform dimensie-lijst zetten aan de hand van DB-waarde.
+##############
 
 # Punten bij release..
 * github release aanmaken.
