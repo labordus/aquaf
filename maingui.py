@@ -75,7 +75,7 @@ class Mainframe ( wx.Frame ):
 		bSizer4 = wx.BoxSizer( wx.HORIZONTAL )
 		
 		bSizer4.SetMinSize( wx.Size( 250,-1 ) ) 
-		self.tvFiles = wx.GenericDirCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.DIRCTRL_3D_INTERNAL|wx.SUNKEN_BORDER, wx.EmptyString, 0 )
+		self.tvFiles = wx.GenericDirCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.DIRCTRL_3D_INTERNAL|wx.DIRCTRL_MULTIPLE|wx.SUNKEN_BORDER, wx.EmptyString, 0 )
 		
 		self.tvFiles.ShowHidden( False )
 		bSizer4.Add( self.tvFiles, 1, wx.EXPAND |wx.ALL, 5 )
@@ -132,7 +132,7 @@ class Mainframe ( wx.Frame ):
 		
 		radio_box_3Choices = [ u"800x600(standaard, groot)", u"640x480 (middelgroot)", u"320x240 (klein)", u"160x120(heel klein, handig voor avatar)" ]
 		self.radio_box_3 = wx.RadioBox( self, wx.ID_ANY, u"Dimensies", wx.DefaultPosition, wx.DefaultSize, radio_box_3Choices, 4, wx.RA_SPECIFY_ROWS )
-		self.radio_box_3.SetSelection( 1 )
+		self.radio_box_3.SetSelection( 0 )
 		self.radio_box_3.SetBackgroundColour( wx.Colour( 0, 127, 255 ) )
 		
 		bSizer5.Add( self.radio_box_3, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 0 )
@@ -172,7 +172,7 @@ class Mainframe ( wx.Frame ):
 		self.Layout()
 		self.m_menubar1 = wx.MenuBar( 0 )
 		self.m_menu1 = wx.Menu()
-		self.menuitemConf = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"Configureer", wx.EmptyString, wx.ITEM_NORMAL )
+		self.menuitemConf = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"Configuratiescherm", wx.EmptyString, wx.ITEM_NORMAL )
 		self.m_menu1.AppendItem( self.menuitemConf )
 		
 		self.menuitemImport = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"Importeer", wx.EmptyString, wx.ITEM_NORMAL )
@@ -419,7 +419,7 @@ class dlgVoorbeeld ( wx.Dialog ):
 class dlgConf ( wx.Dialog ):
 	
 	def __init__( self, parent ):
-		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.DefaultSize, style = wx.CAPTION|wx.CLOSE_BOX )
+		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Configuratiescherm", pos = wx.DefaultPosition, size = wx.DefaultSize, style = wx.CAPTION|wx.CLOSE_BOX )
 		
 		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
 		
@@ -428,6 +428,15 @@ class dlgConf ( wx.Dialog ):
 		bSizer35 = wx.BoxSizer( wx.HORIZONTAL )
 		
 		bSizer26 = wx.BoxSizer( wx.VERTICAL )
+		
+		bSizer381 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.edtLoginName = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 180,-1 ), 0 )
+		self.edtLoginName.SetMaxLength( 0 ) 
+		bSizer381.Add( self.edtLoginName, 0, wx.ALL, 5 )
+		
+		
+		bSizer26.Add( bSizer381, 1, wx.EXPAND, 5 )
 		
 		bSizer38 = wx.BoxSizer( wx.HORIZONTAL )
 		
@@ -463,6 +472,15 @@ class dlgConf ( wx.Dialog ):
 		
 		bSizer41 = wx.BoxSizer( wx.VERTICAL )
 		
+		bSizer441 = wx.BoxSizer( wx.VERTICAL )
+		
+		self.m_staticText151 = wx.StaticText( self, wx.ID_ANY, u"Gebruikersnaam", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText151.Wrap( -1 )
+		bSizer441.Add( self.m_staticText151, 0, wx.ALL, 5 )
+		
+		
+		bSizer41.Add( bSizer441, 1, wx.EXPAND, 5 )
+		
 		bSizer44 = wx.BoxSizer( wx.VERTICAL )
 		
 		self.m_staticText15 = wx.StaticText( self, wx.ID_ANY, u"Wil je een preview zien bij het selecteren van een foto?", wx.DefaultPosition, wx.DefaultSize, 0 )
@@ -474,7 +492,7 @@ class dlgConf ( wx.Dialog ):
 		
 		bSizer45 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.m_staticText16 = wx.StaticText( self, wx.ID_ANY, u"Standaard in te stellen dimensies", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText16 = wx.StaticText( self, wx.ID_ANY, u"Standaardwaarde voor dimensies", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText16.Wrap( -1 )
 		bSizer45.Add( self.m_staticText16, 0, wx.ALL, 5 )
 		
@@ -502,10 +520,10 @@ class dlgConf ( wx.Dialog ):
 		bSizer34.Add( self.m_staticline3, 0, wx.EXPAND |wx.ALL, 5 )
 		
 		self.btnAfsluiten = wx.Button( self, wx.ID_ANY, u"Afsluiten", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
-		bSizer34.Add( self.btnAfsluiten, 0, wx.ALL, 5 )
+		bSizer34.Add( self.btnAfsluiten, 0, wx.ALIGN_RIGHT|wx.ALL, 5 )
 		
 		
-		bSizer42.Add( bSizer34, 0, wx.ALL|wx.EXPAND, 5 )
+		bSizer42.Add( bSizer34, 0, wx.EXPAND, 5 )
 		
 		
 		self.SetSizer( bSizer42 )
@@ -515,6 +533,8 @@ class dlgConf ( wx.Dialog ):
 		self.Centre( wx.BOTH )
 		
 		# Connect Events
+		self.Bind( wx.EVT_INIT_DIALOG, self.oninitConfDialog )
+		self.choiceDimensie.Bind( wx.EVT_CHOICE, self.onChoiceDimensies )
 		self.btnAfsluiten.Bind( wx.EVT_BUTTON, self.onbtnAfsluitenClick )
 	
 	def __del__( self ):
@@ -522,6 +542,12 @@ class dlgConf ( wx.Dialog ):
 	
 	
 	# Virtual event handlers, overide them in your derived class
+	def oninitConfDialog( self, event ):
+		event.Skip()
+	
+	def onChoiceDimensies( self, event ):
+		event.Skip()
+	
 	def onbtnAfsluitenClick( self, event ):
 		event.Skip()
 	
