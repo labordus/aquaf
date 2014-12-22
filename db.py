@@ -3,9 +3,44 @@ import os
 import appdirs
 import json
 
+rowarray_list_url = []
+
+
+def DBVersion():
+    filepath = path_to_db()
+
+    if os.path.exists(filepath):
+        try:
+            conn = sqlite3.connect(filepath)
+            cursor = conn.cursor()
+            cursor.execute("SELECT VERSIE FROM tblApp")
+            sVersie = str(cursor.fetchone()[0])
+            if sVersie != '85':
+                cursor.execute("SELECT linkURL FROM tblLink")
+                rows = cursor.fetchall()
+                for row in rows:
+                    sUrl = str((row[0]))
+                    rowarray_list_url.append(sUrl)
+        except Exception as e:
+            conn.rollback()
+            raise e
+        finally:
+            conn.close()
+        try:
+            os.remove(filepath)
+        except OSError as e:
+            print ("Error: %s - %s." % (e.filename, e.strerror))
+
 
 def Initialize_db():
     returnvalue = True
+
+# ##############
+#    if DBVersion() != 85:
+#        print 'andere versie'
+    DBVersion()
+# ##############
+
     filepath = path_to_db()
     try:
         conn = sqlite3.connect(filepath)
@@ -32,9 +67,13 @@ def Initialize_db():
             sDims = [['800x600'], ['640x480'], ['320x240'], ['160x120']]
             c.executemany('''INSERT INTO tblDim(dimOM)
                     VALUES(?)''', sDims)
-#            conn.commit()
             c.execute('''INSERT INTO tblApp(VERSIE,USERNM,FIRSTRUN,dimID)
-                    VALUES(?,?,?,?)''', (int(84), '', 1, 2))
+                    VALUES(?,?,?,?)''', (int(85), '', 1, 2))
+        if len(rowarray_list_url[0]) != 0:  # Er zijn nog urls weg te schrijven
+            for r in rowarray_list_url:
+                c.execute("INSERT INTO tblLink(linkURL) VALUES(?)", (r,))
+#                c.executemany('''INSERT INTO tblLink(linkURL)
+#                    VALUES(?)''', rowarray_list_url)
             conn.commit()
     except Exception as e:
         conn.rollback()
