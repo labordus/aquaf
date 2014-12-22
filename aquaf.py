@@ -18,7 +18,7 @@ import uploaddialog
 from mechanize._opener import urlopen
 import importdialog
 import confdialog
-from db import DB2JSON, addURL2DB
+from db import DB2JSON, addURL2DB, getUserDimensie
 
 AUQAOFORUM_PICTURE_URL = "http://www.aquaforum.nl/gallery/upload/"
 TEST_FOTO = "test.jpg"
@@ -112,14 +112,17 @@ class AquaFrame(maingui.Mainframe):
         print "Welkom bij Aquaf v8.4"
         self.edtLoginName.SetValue(userName)
 
+        self.radio_box_3.SetSelection(getUserDimensie() - 1)
+
     def onmenuitemClickImport(self, event):
         self.ShowImportDialog()
 
     def onmenuitemClickConf(self, event):
-        dlgConf = confdialog.ConfDialog(self)
-        dlgConf.CenterOnParent()
-        dlgConf.ShowModal()
-        dlgConf.Destroy()
+        conf = confdialog.Configure(self)
+        conf.CenterOnParent()
+        conf.ShowModal()
+        conf.Destroy()
+        self.radio_box_3.SetSelection(getUserDimensie() - 1)
 
     def onmenuitemClickAbout(self, event):
         info = wx.AboutDialogInfo()
