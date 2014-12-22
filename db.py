@@ -10,22 +10,31 @@ def Initialize_db():
     try:
         conn = sqlite3.connect(filepath)
         c = conn.cursor()
+        c.execute("PRAGMA foreign_keys = ON")
         c.execute('''CREATE TABLE IF NOT EXISTS
                       tblApp(
                       VERSIE INTEGER,
                       USERNM VARCHAR(30),
                       FIRSTRUN BOOLEAN DEFAULT (1),
-                      IMPORTED BOOLEAN DEFAULT (0))''')
-        conn.commit()
+                      IMPORTED BOOLEAN DEFAULT (0),
+                      DIMID INTEGER REFERENCES tblDim(dimID))''')
         c.execute('''CREATE TABLE IF NOT EXISTS
                       tblLink(
                       linkID INTEGER PRIMARY KEY NOT NULL,
                       linkURL VARCHAR(200))''')
+        c.execute('''CREATE TABLE IF NOT EXISTS
+                      tblDim(
+                      dimID INTEGER PRIMARY KEY AUTOINCREMENT,
+                      dimOM TXT)''')
         conn.commit()
         c.execute('SELECT USERNM FROM tblApp')
         if not c.fetchone():  # geen record/row gevonden
-            c.execute('''INSERT INTO tblApp(VERSIE,USERNM,FIRSTRUN)
-                    VALUES(?,?,?)''', (int(84), '', 1))
+            sDims = [['800x600'], ['640x480'], ['320x240'], ['160x120']]
+            c.executemany('''INSERT INTO tblDim(dimOM)
+                    VALUES(?)''', sDims)
+#            conn.commit()
+            c.execute('''INSERT INTO tblApp(VERSIE,USERNM,FIRSTRUN,dimID)
+                    VALUES(?,?,?,?)''', (int(84), '', 1, 2))
             conn.commit()
     except Exception as e:
         conn.rollback()
@@ -55,6 +64,7 @@ def first_run():
     try:
         conn = sqlite3.connect(filepath)
         c = conn.cursor()
+        c.execute("PRAGMA foreign_keys = ON")
         c.execute('SELECT FIRSTRUN FROM tblApp')
 #        firstrun = bool(c.fetchone()[0])
         firstrun = int(c.fetchone()[0])
@@ -77,6 +87,7 @@ def get_username():
     try:
         conn = sqlite3.connect(filepath)
         c = conn.cursor()
+        c.execute("PRAGMA foreign_keys = ON")
         c.execute('SELECT USERNM FROM tblApp')
         try:
             userName = str(c.fetchone()[0])
@@ -95,6 +106,7 @@ def set_username(userName):
     filepath = path_to_db()
     conn = sqlite3.connect(filepath)
     c = conn.cursor()
+    c.execute("PRAGMA foreign_keys = ON")
     try:
         c.execute('''UPDATE tblApp SET USERNM = ? WHERE ROWID = ? ''',
                   (userName, 1))
@@ -113,6 +125,7 @@ def DB2JSON():
     dbpath = path_to_db()
     connection = sqlite3.connect(dbpath)
     cursor = connection.cursor()
+    cursor.execute("PRAGMA foreign_keys = ON")
     cursor.execute("SELECT * FROM tblLink")
     rows = cursor.fetchall()
     if len(rows) == 0:  # Geen data? Return False
@@ -141,6 +154,7 @@ def IfAlreadyImported():
     try:
         conn = sqlite3.connect(filepath)
         c = conn.cursor()
+        c.execute("PRAGMA foreign_keys = ON")
         c.execute('SELECT IMPORTED FROM tblApp')
         imported = int(c.fetchone()[0])
         if imported == 1:
@@ -158,6 +172,7 @@ def SetImported():
     try:
         conn = sqlite3.connect(filepath)
         c = conn.cursor()
+        c.execute("PRAGMA foreign_keys = ON")
 #        c.execute('SELECT IMPORTED FROM tblApp')
         c.execute('''UPDATE tblApp SET IMPORTED = ? WHERE ROWID = ? ''', (1, 1))
         conn.commit()
@@ -186,6 +201,7 @@ def ImportJSON2DB(fileJSON):
 
     conn = sqlite3.connect(dbpath)
     c = conn.cursor()
+    c.execute("PRAGMA foreign_keys = ON")
     aantal = 0
     for line in data[0]["items"]:
         try:
@@ -204,6 +220,7 @@ def addURL2DB(url):
     dbpath = path_to_db()
     conn = sqlite3.connect(dbpath)
     c = conn.cursor()
+    c.execute("PRAGMA foreign_keys = ON")
     try:
         c.execute("INSERT INTO tblLink(linkURL) VALUES(?)", (url,))
         conn.commit()
@@ -219,6 +236,7 @@ def setUserDimensie(sDim):
     try:
         conn = sqlite3.connect(filepath)
         c = conn.cursor()
+        c.execute("PRAGMA foreign_keys = ON")
         c.execute('''SELECT dimID FROM tblDim WHERE dimOM = ? ''', (sDim, ))
         iDim = c.fetchone()[0]
         c.execute('''UPDATE tblApp SET dimID = ? WHERE ROWID = ? ''', (iDim, 1))
@@ -236,16 +254,17 @@ def getUserDimensie():
         conn = sqlite3.connect(filepath)
 #        conn.text_factory = str
         c = conn.cursor()
+        c.execute("PRAGMA foreign_keys = ON")
         c.execute('''SELECT dimID FROM tblApp''')
         iDim = c.fetchone()[0]
-        c.execute('''SELECT dimOM FROM tblDim WHERE dimID = ? ''', (iDim, ))
-        Dimensie = c.fetchone()[0]
+#        c.execute('''SELECT dimOM FROM tblDim WHERE dimID = ? ''', (iDim, ))
+#        Dimensie = c.fetchone()[0]
     except Exception as e:
         raise e
     finally:
         conn.close()
 
-    return Dimensie
+    return iDim
 
 
 def getDimensies():  # return list of dims en return listindex?
@@ -254,6 +273,7 @@ def getDimensies():  # return list of dims en return listindex?
         conn = sqlite3.connect(filepath)
         conn.text_factory = str
         c = conn.cursor()
+        c.execute("PRAGMA foreign_keys = ON")
 #        c.execute('SELECT dimID FROM tblApp')
 #        dimID = int(c.fetchone()[0])
 #        c.execute('''SELECT dimOM FROM tblDim WHERE dimID = ? ''', (dimID))
