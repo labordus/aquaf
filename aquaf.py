@@ -18,7 +18,7 @@ import uploaddialog
 from mechanize._opener import urlopen
 import importdialog
 import confdialog
-from db import DB2JSON, addURL2DB, getUserDimensie
+from db import DB2JSON, addURL2DB, getUserDimensieID, DBVersion
 
 AUQAOFORUM_PICTURE_URL = "http://www.aquaforum.nl/gallery/upload/"
 TEST_FOTO = "test.jpg"
@@ -112,7 +112,7 @@ class AquaFrame(maingui.Mainframe):
         print "Welkom bij Aquaf v8.4"
         self.edtLoginName.SetValue(userName)
 
-        self.radio_box_3.SetSelection(getUserDimensie() - 1)
+        self.radio_box_3.SetSelection(getUserDimensieID() - 1)
 
         from os.path import expanduser
         home = expanduser("~")
@@ -126,12 +126,12 @@ class AquaFrame(maingui.Mainframe):
         conf.CenterOnParent()
         conf.ShowModal()
         conf.Destroy()
-        self.radio_box_3.SetSelection(getUserDimensie() - 1)
+        self.radio_box_3.SetSelection(getUserDimensieID() - 1)
 
     def onmenuitemClickAbout(self, event):
         info = wx.AboutDialogInfo()
         info.Name = "Aquaf"
-        info.Version = VERSION
+        info.Version = APP_VERSION
         info.Copyright = "(C) 2010-2014"
         info.Description = "Voor het uploaden van plaatjes naar http://www.aquaforum.nl/" + "\n" "en ook het (op de computer) opslaan van een persoonlijk archief van plaatjes die zijn ge-upload."
 #        info.Description = wordwrap(
