@@ -18,8 +18,9 @@ except ImportError:
 Image._initialized = 2
 
 FORUM_UPLOAD_URL = "http://www.aquaforum.nl/ubb/scripts/upload.php"
-APP_VERSION_STR = "0_84"
-APP_VERSION = "0.84"
+APP_VERSION_STR = "0_85"
+APP_VERSION = "0.85"
+PREVIEW = None
 ALLOWED_CHARS = "qwertyuioplkjhgfdsazxcvbnm0123456789._"
 
 ALPHA_ONLY = 1
