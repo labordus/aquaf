@@ -7,7 +7,7 @@ import sys
 import imp
 import maingui
 import db
-from db import getDimensies, getUserDimensie, setUserDimensie
+from db import getDimensies, getUserDimensieID, setUserDimensie, getUserPreview
 from _codecs import encode, decode
 
 
@@ -35,7 +35,8 @@ class Configure(maingui.dlgConf):
         self.choiceDimensie.SetItems(dims)
 #        self.choiceDimensie.SetSelection(3)
 #        self.choiceDimensie.SetStringSelection(getUserDimensie())
-        self.choiceDimensie.SetSelection(getUserDimensie() - 1)
+        self.choiceDimensie.SetSelection(getUserDimensieID() - 1)  # index loopt anders dus -1
+        self.checkPreview.SetValue(getUserPreview())
 
     def onChoiceDimensies(self, event):
         setUserDimensie(self.choiceDimensie.GetStringSelection())
