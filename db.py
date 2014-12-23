@@ -2,8 +2,18 @@ import sqlite3
 import os
 import appdirs
 import json
+from diversen import APP_VERSION
 
-rowarray_list_url = []
+old_urls = []
+old_username = None
+old_preview = None
+old_dim = None
+
+default_username = ''
+default_dim = 2
+default_firstrun = 1
+
+default_dimensies = [['800x600'], ['640x480'], ['320x240'], ['160x120']]
 
 
 def DBVersion():
@@ -20,7 +30,7 @@ def DBVersion():
                 rows = cursor.fetchall()
                 for row in rows:
                     sUrl = str((row[0]))
-                    rowarray_list_url.append(sUrl)
+                    old_urls.append(sUrl)
         except Exception as e:
             conn.rollback()
             raise e
@@ -35,11 +45,7 @@ def DBVersion():
 def Initialize_db():
     returnvalue = True
 
-# ##############
-#    if DBVersion() != 85:
-#        print 'andere versie'
     DBVersion()
-# ##############
 
     filepath = path_to_db()
     try:
@@ -48,7 +54,7 @@ def Initialize_db():
         c.execute("PRAGMA foreign_keys = ON")
         c.execute('''CREATE TABLE IF NOT EXISTS
                       tblApp(
-                      VERSIE INTEGER,
+                      VERSIE VARCHAR(7),
                       USERNM VARCHAR(30),
                       FIRSTRUN BOOLEAN DEFAULT (1),
                       IMPORTED BOOLEAN DEFAULT (0),
@@ -64,13 +70,13 @@ def Initialize_db():
         conn.commit()
         c.execute('SELECT USERNM FROM tblApp')
         if not c.fetchone():  # geen record/row gevonden
-            sDims = [['800x600'], ['640x480'], ['320x240'], ['160x120']]
             c.executemany('''INSERT INTO tblDim(dimOM)
-                    VALUES(?)''', sDims)
+                    VALUES(?)''', default_dimensies)
             c.execute('''INSERT INTO tblApp(VERSIE,USERNM,FIRSTRUN,dimID)
-                    VALUES(?,?,?,?)''', (int(85), '', 1, 2))
-        if len(rowarray_list_url[0]) != 0:  # Er zijn nog urls weg te schrijven
-            for r in rowarray_list_url:
+                    VALUES(?,?,?,?)''', (APP_VERSION, default_username, default_firstrun, default_dim))
+# if len(rowarray_list_url[0]) != 0:  # Er zijn nog urls weg te schrijven
+        if old_urls is not None:  # Er zijn nog urls weg te schrijven
+            for r in old_urls:
                 c.execute("INSERT INTO tblLink(linkURL) VALUES(?)", (r,))
 #                c.executemany('''INSERT INTO tblLink(linkURL)
 #                    VALUES(?)''', rowarray_list_url)
