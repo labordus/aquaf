@@ -24,8 +24,10 @@ def DBVersion():
             conn = sqlite3.connect(filepath)
             cursor = conn.cursor()
             cursor.execute("SELECT VERSIE FROM tblApp")
-            sVersie = str(cursor.fetchone()[0])
-            if sVersie != '85':
+            rows = cursor.fetchall()
+#            for row in rows:
+            s = str(rows[0][0])
+            if s != '0.85':
                 cursor.execute("SELECT linkURL FROM tblLink")
                 rows = cursor.fetchall()
                 for row in rows:
@@ -43,10 +45,9 @@ def DBVersion():
 
 
 def Initialize_db():
-    returnvalue = True
-
     DBVersion()
 
+    returnvalue = True
     filepath = path_to_db()
     try:
         conn = sqlite3.connect(filepath)
@@ -58,6 +59,7 @@ def Initialize_db():
                       USERNM VARCHAR(30),
                       FIRSTRUN BOOLEAN DEFAULT (1),
                       IMPORTED BOOLEAN DEFAULT (0),
+                      PREVIEW BOOLEAN DEFAULT (1),
                       DIMID INTEGER REFERENCES tblDim(dimID))''')
         c.execute('''CREATE TABLE IF NOT EXISTS
                       tblLink(
@@ -68,10 +70,15 @@ def Initialize_db():
                       dimID INTEGER PRIMARY KEY AUTOINCREMENT,
                       dimOM TXT)''')
         conn.commit()
-        c.execute('SELECT USERNM FROM tblApp')
-        if not c.fetchone():  # geen record/row gevonden
+# geen record/row gevonden in tblDIM
+        c.execute('SELECT * FROM tblDim')
+        if not c.fetchone():
             c.executemany('''INSERT INTO tblDim(dimOM)
                     VALUES(?)''', default_dimensies)
+# geen record/row gevonden in tblApp
+        c.execute('SELECT * FROM tblApp')
+        data = c.fetchall()
+        if len(data) == 0:
             c.execute('''INSERT INTO tblApp(VERSIE,USERNM,FIRSTRUN,dimID)
                     VALUES(?,?,?,?)''', (APP_VERSION, default_username, default_firstrun, default_dim))
 # if len(rowarray_list_url[0]) != 0:  # Er zijn nog urls weg te schrijven
@@ -276,6 +283,24 @@ def addURL2DB(url):
     conn.close()
 
 
+def getUserPreview(sDim):
+    filepath = path_to_db()
+    try:
+        conn = sqlite3.connect(filepath)
+        c = conn.cursor()
+        c.execute("PRAGMA foreign_keys = ON")
+        c.execute('''SELECT PREVIEW FROM tblApp''')
+        bPreview = c.fetchone()[0]
+        conn.commit()
+    except Exception as e:
+        conn.rollback()
+        raise e
+    finally:
+        conn.close()
+
+    return bPreview
+
+
 def setUserDimensie(sDim):
     filepath = path_to_db()
     try:
@@ -293,7 +318,7 @@ def setUserDimensie(sDim):
         conn.close()
 
 
-def getUserDimensie():
+def getUserDimensieID():
     filepath = path_to_db()
     try:
         conn = sqlite3.connect(filepath)
@@ -302,8 +327,6 @@ def getUserDimensie():
         c.execute("PRAGMA foreign_keys = ON")
         c.execute('''SELECT dimID FROM tblApp''')
         iDim = c.fetchone()[0]
-#        c.execute('''SELECT dimOM FROM tblDim WHERE dimID = ? ''', (iDim, ))
-#        Dimensie = c.fetchone()[0]
     except Exception as e:
         raise e
     finally:
