@@ -18,7 +18,8 @@ except ImportError:
 Image._initialized = 2
 
 FORUM_UPLOAD_URL = "http://www.aquaforum.nl/ubb/scripts/upload.php"
-VERSION = "0_84"
+APP_VERSION_STR = "0_84"
+APP_VERSION = "0.84"
 ALLOWED_CHARS = "qwertyuioplkjhgfdsazxcvbnm0123456789._"
 
 ALPHA_ONLY = 1
@@ -136,7 +137,7 @@ def constructUploadName(loginname, requestedfilename):
     import random
     filename = os.path.split(requestedfilename)[1]
     filename = filename[:string.find(filename, ".")] + ".jpg"  # construct jpg extension
-    resultName = string.lower(loginname + "_" + VERSION + "_" + filename)  # prepend loginname
+    resultName = string.lower(loginname + "_" + APP_VERSION_STR + "_" + filename)  # prepend loginname
     resultName = string.replace(resultName, " ", "_")  # replace spaces
     resultName = string.replace(resultName, "'", "_")  # replace '
     # resultName = urllib.quote(resultName) #make safe url
