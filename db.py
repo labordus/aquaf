@@ -33,15 +33,15 @@ def DBVersion():
                 for row in rows:
                     sUrl = str((row[0]))
                     old_urls.append(sUrl)
+                try:
+                    os.remove(filepath)
+                except OSError as e:
+                    print ("Error: %s - %s." % (e.filename, e.strerror))
         except Exception as e:
             conn.rollback()
             raise e
         finally:
             conn.close()
-        try:
-            os.remove(filepath)
-        except OSError as e:
-            print ("Error: %s - %s." % (e.filename, e.strerror))
 
 
 def Initialize_db():
@@ -81,7 +81,7 @@ def Initialize_db():
         if len(data) == 0:
             c.execute('''INSERT INTO tblApp(VERSIE,USERNM,FIRSTRUN,dimID)
                     VALUES(?,?,?,?)''', (APP_VERSION, default_username, default_firstrun, default_dim))
-# if len(rowarray_list_url[0]) != 0:  # Er zijn nog urls weg te schrijven
+# if len(rowarray_list_url[0]) != 0:
         if old_urls is not None:  # Er zijn nog urls weg te schrijven
             for r in old_urls:
                 c.execute("INSERT INTO tblLink(linkURL) VALUES(?)", (r,))
@@ -283,7 +283,7 @@ def addURL2DB(url):
     conn.close()
 
 
-def getUserPreview(sDim):
+def getUserPreview():
     filepath = path_to_db()
     try:
         conn = sqlite3.connect(filepath)
@@ -299,6 +299,25 @@ def getUserPreview(sDim):
         conn.close()
 
     return bPreview
+
+
+def setUserPreview(bPreview):
+    filepath = path_to_db()
+    bPreview = 0
+    if bPreview:
+        bPreview = 1
+    try:
+        conn = sqlite3.connect(filepath)
+        c = conn.cursor()
+        c.execute("PRAGMA foreign_keys = ON")
+        c.execute('''UPDATE tblApp SET PREVIEW = ? ''', (bPreview,))
+#        bPreview = c.fetchone()[0]
+        conn.commit()
+    except Exception as e:
+        conn.rollback()
+        raise e
+    finally:
+        conn.close()
 
 
 def setUserDimensie(sDim):
