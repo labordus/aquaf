@@ -175,9 +175,6 @@ class Mainframe ( wx.Frame ):
 		self.menuitemConf = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"Configuratiescherm", wx.EmptyString, wx.ITEM_NORMAL )
 		self.m_menu1.AppendItem( self.menuitemConf )
 		
-		self.menuitemImport = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"Importeer", wx.EmptyString, wx.ITEM_NORMAL )
-		self.m_menu1.AppendItem( self.menuitemImport )
-		
 		self.m_menu1.AppendSeparator()
 		
 		self.menuAbout = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"About", wx.EmptyString, wx.ITEM_NORMAL )
@@ -201,7 +198,6 @@ class Mainframe ( wx.Frame ):
 		self.m_button811.Bind( wx.EVT_BUTTON, self.onbtnUploadClick )
 		self.btnArchief.Bind( wx.EVT_BUTTON, self.onbtnArchiefClick )
 		self.Bind( wx.EVT_MENU, self.onmenuitemClickConf, id = self.menuitemConf.GetId() )
-		self.Bind( wx.EVT_MENU, self.onmenuitemClickImport, id = self.menuitemImport.GetId() )
 		self.Bind( wx.EVT_MENU, self.onmenuitemClickAbout, id = self.menuAbout.GetId() )
 	
 	def __del__( self ):
@@ -237,9 +233,6 @@ class Mainframe ( wx.Frame ):
 		event.Skip()
 	
 	def onmenuitemClickConf( self, event ):
-		event.Skip()
-	
-	def onmenuitemClickImport( self, event ):
 		event.Skip()
 	
 	def onmenuitemClickAbout( self, event ):
@@ -431,9 +424,9 @@ class dlgConf ( wx.Dialog ):
 		
 		bSizer381 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		self.edtLoginName = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 180,-1 ), 0 )
-		self.edtLoginName.SetMaxLength( 0 ) 
-		bSizer381.Add( self.edtLoginName, 0, wx.ALL, 5 )
+		self.confedtLoginName = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 180,-1 ), 0 )
+		self.confedtLoginName.SetMaxLength( 0 ) 
+		bSizer381.Add( self.confedtLoginName, 0, wx.ALL, 5 )
 		
 		
 		bSizer26.Add( bSizer381, 1, wx.EXPAND, 5 )
@@ -458,7 +451,7 @@ class dlgConf ( wx.Dialog ):
 		
 		bSizer40 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		self.btnImport = wx.Button( self, wx.ID_ANY, u"Importeer oude data", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
+		self.btnImport = wx.Button( self, wx.ID_ANY, u"Importeer", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
 		bSizer40.Add( self.btnImport, 0, wx.ALL, 5 )
 		
 		
@@ -501,7 +494,7 @@ class dlgConf ( wx.Dialog ):
 		
 		bSizer47 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.m_staticText17 = wx.StaticText( self, wx.ID_ANY, u"Importeer gedoe", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText17 = wx.StaticText( self, wx.ID_ANY, u"Importeer de gegevens van de vroegere (Riba)-versie van deze applicatie.", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText17.Wrap( -1 )
 		bSizer47.Add( self.m_staticText17, 0, wx.ALL, 5 )
 		
@@ -534,7 +527,10 @@ class dlgConf ( wx.Dialog ):
 		
 		# Connect Events
 		self.Bind( wx.EVT_INIT_DIALOG, self.oninitConfDialog )
+		self.confedtLoginName.Bind( wx.EVT_KILL_FOCUS, self.onconfedtLoginNameKillFocus )
+		self.checkPreview.Bind( wx.EVT_CHECKBOX, self.oncheckPreviewClick )
 		self.choiceDimensie.Bind( wx.EVT_CHOICE, self.onChoiceDimensies )
+		self.btnImport.Bind( wx.EVT_BUTTON, self.onbtnImportClick )
 		self.btnAfsluiten.Bind( wx.EVT_BUTTON, self.onbtnAfsluitenClick )
 	
 	def __del__( self ):
@@ -545,7 +541,16 @@ class dlgConf ( wx.Dialog ):
 	def oninitConfDialog( self, event ):
 		event.Skip()
 	
+	def onconfedtLoginNameKillFocus( self, event ):
+		event.Skip()
+	
+	def oncheckPreviewClick( self, event ):
+		event.Skip()
+	
 	def onChoiceDimensies( self, event ):
+		event.Skip()
+	
+	def onbtnImportClick( self, event ):
 		event.Skip()
 	
 	def onbtnAfsluitenClick( self, event ):
