@@ -76,12 +76,11 @@ class AquaFrame(maingui.Mainframe):
 # ######## DATABASE / IMPORT-GEBEUREN ########### #
         if db.Initialize_db() is False:
             app.Exit()
-        if db.first_run() == 1:
-            dlg = wx.MessageDialog(None, 'Import data van vorige versie van deze applicatie?', 'Import', wx.YES_NO | wx.ICON_QUESTION)
-            result = dlg.ShowModal()
-            if result == wx.ID_YES:
-                dlg.Destroy()
-                self.ShowImportDialog()
+#        if db.first_run() == 1:
+#            dlg = wx.MessageDialog(None, 'Import data van vorige versie van deze applicatie?', 'Import', wx.YES_NO | wx.ICON_QUESTION)
+#            result = dlg.ShowModal()
+#            if result == wx.ID_YES:
+#                dlg.Destroy()
 
 # ############################################### #
 
@@ -127,6 +126,8 @@ class AquaFrame(maingui.Mainframe):
         conf.ShowModal()
         conf.Destroy()
         self.radio_box_3.SetSelection(getUserDimensieID() - 1)
+        userName = db.get_username()
+        self.edtLoginName.SetValue(userName)
 
     def onmenuitemClickAbout(self, event):
         info = wx.AboutDialogInfo()
@@ -144,22 +145,6 @@ class AquaFrame(maingui.Mainframe):
                            "kellemes"]
 
         wx.AboutBox(info)
-
-    def ShowImportDialog(self):
-        if db.IfAlreadyImported():
-            dlg = wx.MessageDialog(None, 'Je hebt al eens eerder geimporteerd \n' +
-                                   'Nogmaals importeren betekend dat de oude gegevens nogmaals ' +
-                                   'zullen worden toegevoegd aan de huidige database, met dubbele entries tot gevolg.' +
-                                   'Weet je zeker dat je dit wilt doen?', 'Import', wx.YES_NO | wx.ICON_QUESTION)
-            result = dlg.ShowModal()
-            if result == wx.ID_NO:
-                dlg.Destroy()
-                return
-
-        dlgimport = importdialog.ImportDialog(self)
-        dlgimport.CenterOnParent()
-        dlgimport.ShowModal()
-        dlgimport.Destroy()
 
     def onedtLoginNameKillFocus(self, event):
         if self.edtLoginName.IsModified():
