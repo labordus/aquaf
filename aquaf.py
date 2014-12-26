@@ -18,10 +18,11 @@ import uploaddialog
 from mechanize._opener import urlopen
 import importdialog
 import confdialog
-from db import DB2JSON, addURL2DB, getUserDimensieID, DBVersion
+from db import DB2JSON, addURL2DB, getUserDimensieID, DBVersion, getUserName
 
 AUQAOFORUM_PICTURE_URL = "http://www.aquaforum.nl/gallery/upload/"
 TEST_FOTO = "test.jpg"
+FRONT_FOTO = "front.jpg"
 
 
 def main_is_frozen():
@@ -45,18 +46,6 @@ def get_main_dir():
     return result
 
 
-# def opschonen():
-#    path = appdirs.user_data_dir('aquaf', False, False, False)
-#    filepath = os.path.join(path, 'aquaf.json')
-#    try:
-#       os.remove(filepath)
-#    except OSError:
-#        pass
-
-#import atexit
-# atexit.register(opschonen)
-
-
 class RedirectText(object):
 
     def __init__(self, aWxTextCtrl):
@@ -73,7 +62,6 @@ class AquaFrame(maingui.Mainframe):
         # initialize parent class
         maingui.Mainframe.__init__(self, parent)
 
-# ######## DATABASE / IMPORT-GEBEUREN ########### #
         if db.Initialize_db() is False:
             app.Exit()
 #        if db.first_run() == 1:
@@ -82,9 +70,7 @@ class AquaFrame(maingui.Mainframe):
 #            if result == wx.ID_YES:
 #                dlg.Destroy()
 
-# ############################################### #
-
-#        Initialize_JSON()
+        diversen.PREVIEW = db.getUserPreview()
 
         _icon = wx.EmptyIcon()
         _icon.CopyFromBitmap(wx.Bitmap("icon.ico", wx.BITMAP_TYPE_ANY))
@@ -104,17 +90,16 @@ class AquaFrame(maingui.Mainframe):
         else:  # posix
             self.tvFiles.SetFilter("plaatjes(*.bmp;*.BMP;*.jpg;*.JPG;*.png;*.PNG;*.tiff;*.TIFF;*.tif;*.TIF)|*.bmp;*.BMP;*.jpg;*.JPG;*.png;*.PNG;*.tiff;*.TIFF;*.tif;*.TIF")
 
-        self.PreviewImage(TEST_FOTO)
-
-        userName = db.get_username()
+        userName = db.getUsername()
         print "Hoi " + userName
-        print "Welkom bij Aquaf v8.4"
-        self.edtLoginName.SetValue(userName)
+        print "Welkom bij Aquaf " + APP_VERSION
 
         self.radio_box_3.SetSelection(getUserDimensieID() - 1)
 
         from os.path import expanduser
         home = expanduser("~")
+        # SetPath() triggert ontvFilesSelChanged()
+        # en dus ook PreviewImage()
         self.tvFiles.SetPath(home)
 
     def onmenuitemClickImport(self, event):
@@ -126,8 +111,6 @@ class AquaFrame(maingui.Mainframe):
         conf.ShowModal()
         conf.Destroy()
         self.radio_box_3.SetSelection(getUserDimensieID() - 1)
-        userName = db.get_username()
-        self.edtLoginName.SetValue(userName)
 
     def onmenuitemClickAbout(self, event):
         info = wx.AboutDialogInfo()
@@ -145,16 +128,6 @@ class AquaFrame(maingui.Mainframe):
                            "kellemes"]
 
         wx.AboutBox(info)
-
-    def onedtLoginNameKillFocus(self, event):
-        if self.edtLoginName.IsModified():
-            if len(self.edtLoginName.GetValue()) == 0:
-                print "Niets ingevoerd"
-                self.edtLoginName.SetValue(db.get_username())
-            else:
-                db.set_username(self.edtLoginName.GetValue())
-                self.edtLoginName.SetModified(False)
-        event.Skip()
 
     def onbtnArchiefClick(self, event):
         #        webbrowser.get("chrome").open_new_tab(theArchive)
@@ -202,6 +175,10 @@ class AquaFrame(maingui.Mainframe):
         Voorbeeld.Destroy()
 
     def PreviewImage(self, pad):
+        if not diversen.PREVIEW:
+            self.bitmapSelectedFile.SetBitmap(wx.Bitmap(FRONT_FOTO))
+            return
+
         if pad != () and pad != "":
             # file selected
             if IsValidImage(pad):
@@ -209,10 +186,11 @@ class AquaFrame(maingui.Mainframe):
                 img = ResizeImage(pad, (400, 300))
                 del busyDlg
             else:  # als geen geldige image..
-                img = ResizeImage(TEST_FOTO, (400, 300))
+                #                img = ResizeImage(TEST_FOTO, (400, 300))
+                img = WxBitmapToPilImage(wx.Bitmap(FRONT_FOTO))
         else:  # directory selected
-            img = ResizeImage(TEST_FOTO, (400, 300))
-
+            #            img = ResizeImage(TEST_FOTO, (400, 300))
+            img = WxBitmapToPilImage(wx.Bitmap(FRONT_FOTO))
         self.bitmapSelectedFile.SetSize(img.size)
         self.bitmapSelectedFile.SetBitmap(PilImageToWxBitmap(img))
 
@@ -265,9 +243,26 @@ class AquaFrame(maingui.Mainframe):
         print bl + " verwijderd"
 
     def onbtnUploadClick(self, event):
-        if len(self.edtLoginName.GetValue()) == 0:
-            print("Geen loginnaam ingevoerd")
-            return
+        #        if len(self.edtLoginName.GetValue()) == 0:
+        if not getUserName():
+            dlg = wx.TextEntryDialog(
+                self, 'Voer hier je aquaforum.nl gebruikersnaam in..',
+                'Gebruikersnaam')
+            if dlg.ShowModal() == wx.ID_OK:
+                if dlg.GetValue() == "":
+                    print("Geen gebruikersnaam ingevoerd")
+                    dlg.Destroy()
+                    return
+                else:
+                    db.setUsername(dlg.GetValue())
+            else:
+                print("Geen gebruikersnaam ingevoerd")
+                dlg.Destroy()
+                return
+            dlg.Destroy()
+
+#        db.set_username(sUsername)
+#        db.set_username(self.edtLoginName.GetValue())
 
         filecount = self.listboxSelectedFiles.GetCount()
         if filecount <= 0:
