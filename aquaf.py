@@ -1,24 +1,23 @@
 # importing wx files
-import wx
-import os
-import sys
-import imp
-from PIL import Image
+# import wx
+# import os
+# import sys
+# import imp
+# from PIL import Image
 import db
 
 # import GUI
 import maingui
-from maingui import dlgVoorbeeld, dlgUploadDone, dlgImport, dlgConf
-from Dialog import Dialog
+from maingui import dlgVoorbeeld  # , dlgUploadDone, dlgImport, dlgConf
+# from Dialog import Dialog
 
 import diversen
 from diversen import *
 
 import uploaddialog
-from mechanize._opener import urlopen
-import importdialog
+# from mechanize._opener import urlopen
 import confdialog
-from db import DB2JSON, addURL2DB, getUserDimensieID, DBVersion, getUserName
+from db import DB2JSON, addURL2DB, getUserDimensieID, getUserName  # DBVersion
 
 AUQAOFORUM_PICTURE_URL = "http://www.aquaforum.nl/gallery/upload/"
 TEST_FOTO = "test.jpg"
@@ -182,9 +181,9 @@ class AquaFrame(maingui.Mainframe):
         if pad != () and pad != "":
             # file selected
             if IsValidImage(pad):
-                busyDlg = wx.BusyInfo('Bezig met genereren preview...')
+                #                busyDlg = wx.BusyInfo('Bezig met genereren preview...')
                 img = ResizeImage(pad, (400, 300))
-                del busyDlg
+#                del busyDlg
             else:  # als geen geldige image..
                 #                img = ResizeImage(TEST_FOTO, (400, 300))
                 img = WxBitmapToPilImage(wx.Bitmap(FRONT_FOTO))
