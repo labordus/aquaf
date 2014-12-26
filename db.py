@@ -2,7 +2,8 @@ import sqlite3
 import os
 import appdirs
 import json
-from diversen import APP_VERSION
+from diversen import APP_VERSION, PREVIEW
+import diversen
 
 old_urls = []
 old_username = None
@@ -60,6 +61,7 @@ def Initialize_db():
                       FIRSTRUN BOOLEAN DEFAULT (1),
                       IMPORTED BOOLEAN DEFAULT (0),
                       PREVIEW BOOLEAN DEFAULT (1),
+                      FOLDER VARCHAR(120),
                       DIMID INTEGER REFERENCES tblDim(dimID))''')
         c.execute('''CREATE TABLE IF NOT EXISTS
                       tblLink(
@@ -134,7 +136,7 @@ def first_run():
     return firstrun
 
 
-def get_username():
+def getUsername():
     filepath = path_to_db()
     try:
         conn = sqlite3.connect(filepath)
@@ -154,7 +156,7 @@ def get_username():
     return userName
 
 
-def set_username(userName):
+def setUsername(userName):
     filepath = path_to_db()
     conn = sqlite3.connect(filepath)
     c = conn.cursor()
@@ -283,6 +285,24 @@ def addURL2DB(url):
     conn.close()
 
 
+def getUserName():
+    filepath = path_to_db()
+    try:
+        conn = sqlite3.connect(filepath)
+        c = conn.cursor()
+        c.execute("PRAGMA foreign_keys = ON")
+        c.execute('''SELECT USERNM FROM tblApp''')
+        username = c.fetchone()[0]
+        conn.commit()
+    except Exception as e:
+        conn.rollback()
+        raise e
+    finally:
+        conn.close()
+
+    return username
+
+
 def getUserPreview():
     filepath = path_to_db()
     try:
@@ -303,9 +323,14 @@ def getUserPreview():
 
 def setUserPreview(bPreview):
     filepath = path_to_db()
-    bPreview = 0
+#    global PREVIEW
+#    PREVIEW = bPreview
+    diversen.PREVIEW = bPreview
     if bPreview:
         bPreview = 1
+    else:
+        bPreview = 0
+
     try:
         conn = sqlite3.connect(filepath)
         c = conn.cursor()
@@ -318,6 +343,10 @@ def setUserPreview(bPreview):
         raise e
     finally:
         conn.close()
+
+
+def getUserFolder():
+    print ''
 
 
 def setUserDimensie(sDim):
