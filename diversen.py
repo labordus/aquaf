@@ -221,3 +221,22 @@ def PilImageToWxImage(myPilImage, copyAlpha=True):
         myPilImageRgbData = myPilImageCopyRGB.tostring()
         myWxImage.SetData(myPilImageRgbData)
     return myWxImage
+
+
+def WxImageToPilImage(wxImage):
+    """ trans Wx.Image to PIL Image
+        GetData() -> PyProject: Returns a string containing a copy of the RGB bytes of the image.
+    """
+    pilImage = Image.new('RGB', wxImage.GetSize())  # new
+    pilImage.fromstring(wxImage.GetData())  # copy
+    return pilImage
+
+
+def WxBitmapToWxImage(wxBitmap):
+    """ trans wx.Bitmap to wx.Image """
+    return wx.ImageFromBitmap(wxBitmap)
+
+
+def WxBitmapToPilImage(wxBitmap):
+    """ trans wx.Bitmap to PIL Image """
+    return WxImageToPilImage(WxBitmapToWxImage(wxBitmap))
