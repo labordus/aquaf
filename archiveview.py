@@ -5,7 +5,7 @@ from SimpleHTTPServer import SimpleHTTPRequestHandler
 import threading
 from time import sleep
 import os
-from mechanize._mechanize import Browser
+# from mechanize._mechanize import Browser
 
 oudepad = os.getcwd()
 
