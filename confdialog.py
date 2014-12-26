@@ -2,26 +2,10 @@
 # -*- coding: ISO-8859-1 -*-
 
 import wx
-import os
-import sys
-import imp
 import maingui
 import db
 from db import getDimensies, getUserDimensieID, setUserDimensie, getUserPreview
-from _codecs import encode, decode
 import importdialog
-
-
-def main_is_frozen():
-    return (hasattr(sys, "frozen") or  # new py2exe
-            hasattr(sys, "importers")  # old py2exe
-            or imp.is_frozen("__main__"))  # tools/freeze
-
-
-def get_main_dir():
-    if main_is_frozen():
-        return os.path.dirname(sys.executable)
-    return os.path.dirname(sys.argv[0])
 
 
 class Configure(maingui.dlgConf):
