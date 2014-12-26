@@ -17,9 +17,9 @@ import wx.xrc
 class Mainframe ( wx.Frame ):
 	
 	def __init__( self, parent ):
-		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Aquaforum upload programma", pos = wx.DefaultPosition, size = wx.Size( 850,750 ), style = wx.CAPTION|wx.DEFAULT_FRAME_STYLE )
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Aquaforum upload programma", pos = wx.DefaultPosition, size = wx.Size( 850,720 ), style = wx.CAPTION|wx.DEFAULT_FRAME_STYLE )
 		
-		self.SetSizeHintsSz( wx.Size( 850,750 ), wx.DefaultSize )
+		self.SetSizeHintsSz( wx.Size( 850,720 ), wx.DefaultSize )
 		self.SetBackgroundColour( wx.Colour( 116, 113, 162 ) )
 		
 		bSizer15 = wx.BoxSizer( wx.VERTICAL )
@@ -44,12 +44,7 @@ class Mainframe ( wx.Frame ):
 		bSizer2.Add( bSizer25, 1, wx.ALL|wx.EXPAND, 1 )
 		
 		
-		bSizer1.Add( bSizer2, 1, wx.ALL|wx.EXPAND, 0 )
-		
-		bSizer3 = wx.BoxSizer( wx.HORIZONTAL )
-		
-		
-		bSizer1.Add( bSizer3, 0, wx.EXPAND, 0 )
+		bSizer1.Add( bSizer2, 0, wx.ALL|wx.EXPAND, 0 )
 		
 		bSizer13 = wx.BoxSizer( wx.HORIZONTAL )
 		
@@ -147,7 +142,7 @@ class Mainframe ( wx.Frame ):
 		bSizer1.Add( self.btnArchief, 0, wx.FIXED_MINSIZE, 3 )
 		
 		
-		bSizer15.Add( bSizer1, 1, wx.ALL|wx.EXPAND, 5 )
+		bSizer15.Add( bSizer1, 1, wx.ALL|wx.EXPAND, 3 )
 		
 		
 		self.SetSizer( bSizer15 )
