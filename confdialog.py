@@ -38,8 +38,9 @@ class Configure(maingui.dlgConf):
 #        self.choiceDimensie.SetStringSelection(getUserDimensie())
         self.choiceDimensie.SetSelection(getUserDimensieID() - 1)  # index loopt anders dus -1
         self.checkPreview.SetValue(getUserPreview())
-        userName = db.get_username()
+        userName = db.getUsername()
         self.confedtLoginName.SetValue(userName)
+        self.dirpickFolder.SetPath('/home/kelp/dev/aquap')
 
     def onChoiceDimensies(self, event):
         setUserDimensie(self.choiceDimensie.GetStringSelection())
@@ -64,14 +65,15 @@ class Configure(maingui.dlgConf):
         if self.confedtLoginName.IsModified():
             if len(self.confedtLoginName.GetValue()) == 0:
                 print "Niets ingevoerd"
-                self.confedtLoginName.SetValue(db.get_username())
+                self.confedtLoginName.SetValue(db.getUsername())
             else:
-                db.set_username(self.confedtLoginName.GetValue())
+                db.setUsername(self.confedtLoginName.GetValue())
                 self.confedtLoginName.SetModified(False)
         event.Skip()
 
     def oncheckPreviewClick(self, event):
-        db.setUserPreview(self.checkPreview.GetValue)
+        #        db.setUserPreview(self.checkPreview.GetValue)
+        db.setUserPreview(self.checkPreview.IsChecked())
 
     def onbtnAfsluitenClick(self, event):
         self.EndModal(wx.ID_OK)
