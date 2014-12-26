@@ -46,24 +46,6 @@ class Mainframe ( wx.Frame ):
 		
 		bSizer1.Add( bSizer2, 1, wx.ALL|wx.EXPAND, 0 )
 		
-		bSizer23 = wx.BoxSizer( wx.HORIZONTAL )
-		
-		self.label_3 = wx.StaticText( self, wx.ID_ANY, u"Aquaforum login naam", wx.DefaultPosition, wx.DefaultSize, wx.ALIGN_RIGHT )
-		self.label_3.Wrap( -2 )
-		self.label_3.SetBackgroundColour( wx.Colour( 0, 127, 255 ) )
-		
-		bSizer23.Add( self.label_3, 0, wx.ALIGN_CENTER|wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.FIXED_MINSIZE, 0 )
-		
-		
-		bSizer23.AddSpacer( ( 0, 0), 0, wx.ALIGN_CENTER|wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.EXPAND, 0 )
-		
-		self.edtLoginName = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 180,-1 ), 0 )
-		self.edtLoginName.SetMaxLength( 0 ) 
-		bSizer23.Add( self.edtLoginName, 0, wx.ALIGN_CENTER|wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.FIXED_MINSIZE, 0 )
-		
-		
-		bSizer1.Add( bSizer23, 1, wx.ALL|wx.EXPAND, 0 )
-		
 		bSizer3 = wx.BoxSizer( wx.HORIZONTAL )
 		
 		
@@ -172,12 +154,12 @@ class Mainframe ( wx.Frame ):
 		self.Layout()
 		self.m_menubar1 = wx.MenuBar( 0 )
 		self.m_menu1 = wx.Menu()
-		self.menuitemConf = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"Configuratiescherm", wx.EmptyString, wx.ITEM_NORMAL )
+		self.menuitemConf = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"Configuratie", wx.EmptyString, wx.ITEM_NORMAL )
 		self.m_menu1.AppendItem( self.menuitemConf )
 		
 		self.m_menu1.AppendSeparator()
 		
-		self.menuAbout = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"About", wx.EmptyString, wx.ITEM_NORMAL )
+		self.menuAbout = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"Info", wx.EmptyString, wx.ITEM_NORMAL )
 		self.m_menu1.AppendItem( self.menuAbout )
 		
 		self.m_menubar1.Append( self.m_menu1, u"Menu" ) 
@@ -188,7 +170,6 @@ class Mainframe ( wx.Frame ):
 		self.Centre( wx.BOTH )
 		
 		# Connect Events
-		self.edtLoginName.Bind( wx.EVT_KILL_FOCUS, self.onedtLoginNameKillFocus )
 		self.tvFiles.Bind( wx.EVT_TREE_SEL_CHANGED, self.ontvFilesSelChanged )
 		self.btnSelectFile.Bind( wx.EVT_BUTTON, self.onbtnSelectFileClick )
 		self.btnUnselectFile.Bind( wx.EVT_BUTTON, self.onbtnUnselectFileClick )
@@ -205,9 +186,6 @@ class Mainframe ( wx.Frame ):
 	
 	
 	# Virtual event handlers, overide them in your derived class
-	def onedtLoginNameKillFocus( self, event ):
-		event.Skip()
-	
 	def ontvFilesSelChanged( self, event ):
 		event.Skip()
 	
@@ -429,7 +407,15 @@ class dlgConf ( wx.Dialog ):
 		bSizer381.Add( self.confedtLoginName, 0, wx.ALL, 5 )
 		
 		
-		bSizer26.Add( bSizer381, 1, wx.EXPAND, 5 )
+		bSizer26.Add( bSizer381, 0, wx.EXPAND, 5 )
+		
+		bSizer391 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.dirpickFolder = wx.DirPickerCtrl( self, wx.ID_ANY, u"/home/kelp", u"Selecteer een folder", wx.DefaultPosition, wx.DefaultSize, wx.DIRP_DEFAULT_STYLE|wx.DIRP_USE_TEXTCTRL )
+		bSizer391.Add( self.dirpickFolder, 0, 0, 5 )
+		
+		
+		bSizer26.Add( bSizer391, 0, wx.EXPAND, 5 )
 		
 		bSizer38 = wx.BoxSizer( wx.HORIZONTAL )
 		
@@ -437,7 +423,7 @@ class dlgConf ( wx.Dialog ):
 		bSizer38.Add( self.checkPreview, 0, wx.ALL, 5 )
 		
 		
-		bSizer26.Add( bSizer38, 1, wx.EXPAND, 5 )
+		bSizer26.Add( bSizer38, 0, wx.EXPAND, 5 )
 		
 		bSizer39 = wx.BoxSizer( wx.HORIZONTAL )
 		
@@ -447,7 +433,7 @@ class dlgConf ( wx.Dialog ):
 		bSizer39.Add( self.choiceDimensie, 0, wx.ALL, 5 )
 		
 		
-		bSizer26.Add( bSizer39, 1, wx.EXPAND, 5 )
+		bSizer26.Add( bSizer39, 0, wx.EXPAND, 5 )
 		
 		bSizer40 = wx.BoxSizer( wx.HORIZONTAL )
 		
@@ -455,10 +441,10 @@ class dlgConf ( wx.Dialog ):
 		bSizer40.Add( self.btnImport, 0, wx.ALL, 5 )
 		
 		
-		bSizer26.Add( bSizer40, 1, wx.EXPAND, 5 )
+		bSizer26.Add( bSizer40, 0, wx.EXPAND, 5 )
 		
 		
-		bSizer35.Add( bSizer26, 0, wx.ALL|wx.EXPAND, 5 )
+		bSizer35.Add( bSizer26, 0, wx.EXPAND, 5 )
 		
 		self.m_staticline2 = wx.StaticLine( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LI_VERTICAL )
 		bSizer35.Add( self.m_staticline2, 0, wx.EXPAND |wx.ALL, 5 )
@@ -473,6 +459,15 @@ class dlgConf ( wx.Dialog ):
 		
 		
 		bSizer41.Add( bSizer441, 1, wx.EXPAND, 5 )
+		
+		bSizer401 = wx.BoxSizer( wx.VERTICAL )
+		
+		self.m_staticText9 = wx.StaticText( self, wx.ID_ANY, u"Standaard folder", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText9.Wrap( -1 )
+		bSizer401.Add( self.m_staticText9, 0, wx.ALL, 5 )
+		
+		
+		bSizer41.Add( bSizer401, 1, wx.EXPAND, 5 )
 		
 		bSizer44 = wx.BoxSizer( wx.VERTICAL )
 		
@@ -494,7 +489,7 @@ class dlgConf ( wx.Dialog ):
 		
 		bSizer47 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.m_staticText17 = wx.StaticText( self, wx.ID_ANY, u"Importeer de gegevens van de vroegere (Riba)-versie van deze applicatie.", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText17 = wx.StaticText( self, wx.ID_ANY, u"Importeer data van Riba's-versie van deze applicatie.", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText17.Wrap( -1 )
 		bSizer47.Add( self.m_staticText17, 0, wx.ALL, 5 )
 		
@@ -502,7 +497,7 @@ class dlgConf ( wx.Dialog ):
 		bSizer41.Add( bSizer47, 1, wx.EXPAND, 5 )
 		
 		
-		bSizer35.Add( bSizer41, 0, wx.ALL|wx.EXPAND, 5 )
+		bSizer35.Add( bSizer41, 0, wx.EXPAND, 5 )
 		
 		
 		bSizer42.Add( bSizer35, 0, wx.EXPAND, 5 )
