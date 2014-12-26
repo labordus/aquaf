@@ -1,45 +1,32 @@
-aquaf
+aquaf v0.85
 =====
 
+Bij deze een nieuwe versie van Riba's uploadtooltje.
 Voor het uploaden van foto's naar http://www.aquaforum.nl/
 En ook het (op de computer) opslaan van een persoonlijk archief van foto's die zijn ge-upload. 
 
 Origineel ontwikkeld door Riba.
 Riba's aquazone - Aquaforum uploadprogramma: http://aquazone.leeuwen.nu/blog/uploadprogramma
 
-verder ontwikkeld door Mark labordus - kellemes (bordumar@gmail.com)
-
-Bij deze een nieuwe versie van Riba's uploadtooltje.
-De veranderingen 'under the hood' zijn aanzienlijk.. vandaar dat ik er voor kies
-om het programma naast de (eventueel aanwezige) versie van Riba te installeren.
-Riba's versie wordt dus niet overschreven en zal gewoon blijven functioneren.
+verder ontwikkeld door Mark Labordus - kellemes (bordumar@gmail.com)
 
 
-# Wat is er veranderd?
+# Wat is er veranderd t.o.v v0.84
 
-* Je kunt nu meerdere plaatjes klaarzetten om in 1 ruk te kunnen uploaden.
-Wel is het zo dat de geselecteerde dimensie van de te uploaden plaatjes
-geldt voor alle klaargezette plaatjes.. je kunt dat (vooralsnog) niet
-per individueel plaatje aangeven..
-* Kwaliteit van de plaatjes wordt zo maximaal mogelijk gehouden voor upload.
-* Gebruikersnaam hoeft niet telkens opnieuw te worden ingevoerd.
-* Bij sommige gebruikers werkte de archiefpagina schijnbaar niet..
-Ik heb inderdaad problemen geconstateerd bij het gebruik van met name
-Opera en Chrome. Heb dat opgelost door gebruik te maken van een eigen
-browser-component die los van de geinstalleerde browser functioneerd.
+* Configuratiescherm waarin je de volgende defaults kunt vastleggen..
+1- Of je een preview wilt zien bij het selecteren van een plaatje.
+2- Een beginwaarde voor de dimensies waarin je plaatjes wilt uploaden.
+3- Wat het beginpad moet zijn van de bestand-lijst.
+4- Gebruikersnaam.
 
-# Instructies voor installatie (alleen voor gebruikers die al gebruik maken van Riba's versie)
-De gegevens in het data-bestand van Riba's versie kunnen indien gewenst worden
-geimporteerd, dit kan worden gedaan tijdens de eerste opstart van de applicatie,
-of later vanuit menu -> importeren.
+# Instructies voor installatie
+Gebruikers die nog gegevens van Riba's versie willen importeren kunnen dat doen vanuit het configuratiescherm.
+menu -> importeren.
 Dit importeren 'dumpt' de gegevens in de nieuwe (lege) database, het oude
 data-bestand zal gewoon blijven bestaan..
 Dit doe je dus maar 1 keer, anders zullen er dubbele entries in de database ontstaan.
 
-Nieuwe gebruikers hebben niets te importeren en kunnen direct aan de slag.
-
 # Instructies voor gebruik..
-* Voer gebruikersnaam in.
 * Selecteer in de lijst links op het scherm een plaatje die je uploaden wilt,
 klik op de knop "toevoegen" zodat die wordt toegevoegd aan de lijst aan de rechter kant.
 Ga zo door totdat je alle plaatjes hebt toegevoegd die je wilt uploaden.
@@ -53,8 +40,8 @@ beschrijving van wat er mis gaat.. en info over het besturingsysteem
 dat je gebruikt, liefst ook architectuur (32bit/64bit).
 Je kunt je vragen/opmerkingen poneren in dit forum-topic of via een PB'tje.
 
-Aquaf 0.84 is getest op..
-Arch Linux, openSUSE Linux 13.1, Linux Mint 17 
+Aquaf 0.85 is getest op..
+Arch Linux 
 Windows XP, Windows Vista, Windows 7
 Windows 95/98/ME wordt niet (meer) ondersteund!
 
@@ -63,14 +50,5 @@ Download hier het installatiepakket voor Windows.
 
 
 * Code home page: https://github.com/labordus/aquaf
-
-# Building
-Python 2.7.9-1
-wxgtk 3.0.2-2
-wxpython 3.0.2.0-1
-python2-pillow 2.6.1-1
-python2-appdirs 1.4.0-1
-python2-mechanize 0.2.5-4
-
 
 Groet, Mark.
