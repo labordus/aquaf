@@ -2,7 +2,7 @@ import sqlite3
 import os
 import appdirs
 import json
-from diversen import APP_VERSION, PREVIEW
+from diversen import APP_VERSION  # , PREVIEW
 import diversen
 
 old_urls = []
