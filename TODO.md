@@ -6,7 +6,9 @@
 - [ ] alpha eruit slopen.
 
 ##############
-Moet nu bij INIT van mainform dimensie-lijst zetten aan de hand van DB-waarde.
+'sceleton' db's bij de releases zetten
+Of nee.. staat toch al in de code?
+Misschien wel de verschillende DB's in een aparte map bijhouden?
 ##############
 
 # Punten bij release..
