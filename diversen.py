@@ -4,7 +4,6 @@ import wx
 import string
 import sys
 import imp
-import appdirs
 
 try:
     from PIL import Image
