@@ -5,6 +5,7 @@
 # import imp
 # from PIL import Image
 import db
+# import wx.lib.agw.ultimatelistctrl as ULC
 
 # import GUI
 import maingui
@@ -17,7 +18,7 @@ from diversen import *
 import uploaddialog
 # from mechanize._opener import urlopen
 import confdialog
-from db import DB2JSON, addURL2DB, getUserDimensieID, getUserName  # DBVersion
+from db import DB2JSON, addURL2DB, getUserDimensieID, getUserName, getDimensies  # DBVersion
 
 AUQAOFORUM_PICTURE_URL = "http://www.aquaforum.nl/gallery/upload/"
 TEST_FOTO = "test.jpg"
@@ -61,6 +62,22 @@ class AquaFrame(maingui.Mainframe):
         # initialize parent class
         maingui.Mainframe.__init__(self, parent)
 
+#        listTEST = ULC.UltimateListCtrl(self, wx.ID_ANY, agwStyle=wx.LC_REPORT | wx.LC_VRULES | wx.LC_HRULES | wx.LC_SINGLE_SEL | ULC.ULC_HAS_VARIABLE_ROW_HEIGHT)
+#        listTEST.InsertColumn(0, "Column 1")
+#        listTEST.InsertColumn(1, "Column 2")
+#        index = listTEST.InsertStringItem(sys.maxsize, "Item 1")
+#        listTEST.SetStringItem(index, 1, "Sub-item 1")
+#        index = listTEST.InsertStringItem(sys.maxsize, "Item 2")
+#        listTEST.SetStringItem(index, 1, "Sub-item 2")
+#        choice = wx.Choice(listTEST, -1, choices=["one", "two"])
+#        index = listTEST.InsertStringItem(sys.maxsize, "A widget")
+#        listTEST.SetItemWindow(index, 1, choice, expand=True)
+
+#        sizer = wx.BoxSizer(wx.VERTICAL)
+# sizer = self.m_panel1.GetSizer()
+#        sizer.Add(listTEST, 1, wx.EXPAND)
+#        self.SetSizer(sizer)
+
         if db.Initialize_db() is False:
             app.Exit()
 #        if db.first_run() == 1:
@@ -93,13 +110,23 @@ class AquaFrame(maingui.Mainframe):
         print "Hoi " + userName
         print "Welkom bij Aquaf " + APP_VERSION
 
-        self.radio_box_3.SetSelection(getUserDimensieID() - 1)
+#        self.radio_box_3.SetSelection(getUserDimensieID() - 1)
+        self.choiceDimensie.SetSelection(getUserDimensieID() - 1)
 
         from os.path import expanduser
         home = expanduser("~")
         # SetPath() triggert ontvFilesSelChanged()
         # en dus ook PreviewImage()
         self.tvFiles.SetPath(home)
+
+        dims = getDimensies()
+        self.choiceDimensie.SetItems(dims)
+        self.choiceDimensie.SetSelection(getUserDimensieID() - 1)  # index loopt anders dus -1
+
+        self.listFiles.InsertColumn(0, 'Bestand', width=120)
+        self.listFiles.InsertColumn(1, 'Dimensie', width=100)
+        # hidden-column(2) om het hele pad in te zetten.
+        self.listFiles.InsertColumn(2, 'Pad-hidden', width=0)
 
     def onmenuitemClickImport(self, event):
         self.ShowImportDialog()
@@ -109,7 +136,8 @@ class AquaFrame(maingui.Mainframe):
         conf.CenterOnParent()
         conf.ShowModal()
         conf.Destroy()
-        self.radio_box_3.SetSelection(getUserDimensieID() - 1)
+#        self.radio_box_3.SetSelection(getUserDimensieID() - 1)
+        self.choiceDimensie.SetSelection(getUserDimensieID() - 1)
 
     def onmenuitemClickAbout(self, event):
         info = wx.AboutDialogInfo()
@@ -147,15 +175,28 @@ class AquaFrame(maingui.Mainframe):
         return
 
     def onbtnVoorbeeldClick(self, event):
-        dimensions = getDimensions(self.radio_box_3.GetSelection())
+        #        dimensions = getDimensions(self.radio_box_3.GetSelection())
+        # Als er een plaatje is geselecteerd..
+        # gebruik die voor de preview
+        _pad = self.tvFiles.GetFilePath()
+        if _pad != () and _pad != "":
+            if IsValidImage(_pad):
+                PLAATJE = self.tvFiles.GetFilePath()
+            else:
+                PLAATJE = TEST_FOTO
+        else:
+            PLAATJE = TEST_FOTO
+
+        index = self.choiceDimensie.GetSelection()
+        dimensions = getDimensions(index)
         resizedFileName = None
         try:
-            if not (os.path.exists(TEST_FOTO)):
-                wx.MessageDialog(self, TEST_FOTO + " bestaat niet", "Bericht", style=wx.OK).ShowModal()
+            if not (os.path.exists(PLAATJE)):
+                wx.MessageDialog(self, PLAATJE + " bestaat niet", "Bericht", style=wx.OK).ShowModal()
                 resizedFileName = None
                 return
             else:
-                resizedFileName = ResizeImage(TEST_FOTO, dimensions)
+                resizedFileName = ResizeImage(PLAATJE, dimensions)
         except Exception as er:
             resizedFileName = None
             wx.MessageDialog(
@@ -225,12 +266,28 @@ class AquaFrame(maingui.Mainframe):
             bestandsnaam = os.path.basename(helepad)
             # sla het hele pad op in pyobject clientdata.. toch?
             self.listboxSelectedFiles.Append(bestandsnaam, helepad)
+
+            # ################################################
+            index = self.listFiles.InsertStringItem(sys.maxsize, bestandsnaam)
+            s = self.choiceDimensie.GetString(self.choiceDimensie.GetSelection())
+#            s = self.radio_box_3.GetItemLabel(self.radio_box_3.GetSelection())
+            self.listFiles.SetStringItem(index, 1, s)
+            # Zet het hele pad in de hidden-column(2)
+            self.listFiles.SetStringItem(index, 2, helepad)
+            # ################################################
+
             print bestandsnaam + " toegevoegd"
         # else directory
         else:
             print "Geen geldige image"
 
     def onbtnUnselectFileClick(self, event):
+
+        # ################################################
+        sel2 = self.listFiles.GetFirstSelected()
+        self.listFiles.DeleteItem(sel2)
+        # ################################################
+
         sel = self.listboxSelectedFiles.GetSelection()
         if sel < 0:  # nothing selected
             return
@@ -239,7 +296,20 @@ class AquaFrame(maingui.Mainframe):
 #        if self.listboxSelectedFiles.getsel
         self.listboxSelectedFiles.Delete(sel)
 #        bl = self.listboxSelectedFiles.GetClientData(self.listboxSelectedFiles.GetSelection())
+
         print bl + " verwijderd"
+
+    def onlistFilesActivate(self, event):
+        dlg = wx.SingleChoiceDialog(
+            self, 'Test Single Choice', 'Selecteer een uploaddimensie',
+            ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight'],
+            wx.CHOICEDLG_STYLE
+        )
+
+        if dlg.ShowModal() == wx.ID_OK:
+            self.log.WriteText('You selected: %s\n' % dlg.GetStringSelection())
+
+        dlg.Destroy()
 
     def onbtnUploadClick(self, event):
         #        if len(self.edtLoginName.GetValue()) == 0:
