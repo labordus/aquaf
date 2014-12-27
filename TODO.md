@@ -1,9 +1,14 @@
+- [ ] dimensie per individueel plaatje
+- [ ] Beschrijving kunnen meegeven
 - [ ] taborder
 - [x] add to history to db
 - [x] foutafhandeling bij het importeren. (wat als JSON nog steeds niet kan worden verwerkt? Test!!)
 - [ ] dubbele entries verwijderen uit db?
 - [ ] Progressindicatie bij.. genereren preview, uploaden
 - [ ] alpha eruit slopen.
+- [ ] Beginpad configuratie functioneel maken
+- [ ] met dubbelklik plaatje in uploadijst zetten
+- [ ] Previewknop -> preview tonen van geselecteerde plaatje
 
 ##############
 'sceleton' db's bij de releases zetten
