@@ -17,9 +17,9 @@ import wx.xrc
 class Mainframe ( wx.Frame ):
 	
 	def __init__( self, parent ):
-		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Aquaforum upload programma", pos = wx.DefaultPosition, size = wx.Size( 850,720 ), style = wx.CAPTION|wx.DEFAULT_FRAME_STYLE )
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Aquaforum upload programma", pos = wx.DefaultPosition, size = wx.Size( 900,750 ), style = wx.CAPTION|wx.DEFAULT_FRAME_STYLE )
 		
-		self.SetSizeHintsSz( wx.Size( 850,720 ), wx.DefaultSize )
+		self.SetSizeHintsSz( wx.Size( 900,720 ), wx.DefaultSize )
 		self.SetBackgroundColour( wx.Colour( 116, 113, 162 ) )
 		
 		bSizer15 = wx.BoxSizer( wx.VERTICAL )
@@ -70,7 +70,26 @@ class Mainframe ( wx.Frame ):
 		bSizer152.Add( self.bitmapSelectedFile, 1, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.ALL|wx.EXPAND, 0 )
 		
 		
-		bSizer22.Add( bSizer152, 1, wx.ALL|wx.EXPAND|wx.SHAPED, 0 )
+		bSizer22.Add( bSizer152, 0, wx.ALL|wx.EXPAND|wx.SHAPED, 0 )
+		
+		bSizer42 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		bSizer43 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		choiceDimensieChoices = []
+		self.choiceDimensie = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, choiceDimensieChoices, 0 )
+		self.choiceDimensie.SetSelection( 0 )
+		self.choiceDimensie.SetToolTipString( u"Selecteer de gewenste upload-dimensie" )
+		
+		bSizer43.Add( self.choiceDimensie, 0, wx.ALL, 5 )
+		
+		self.btnVoorbeeld = wx.BitmapButton( self, wx.ID_ANY, wx.ArtProvider.GetBitmap( wx.ART_TIP, wx.ART_BUTTON ), wx.DefaultPosition, wx.DefaultSize, wx.BU_AUTODRAW )
+		self.btnVoorbeeld.SetToolTipString( u"Preview" )
+		
+		bSizer43.Add( self.btnVoorbeeld, 0, wx.ALL, 5 )
+		
+		
+		bSizer42.Add( bSizer43, 1, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		bSizer151 = wx.BoxSizer( wx.VERTICAL )
 		
@@ -81,24 +100,25 @@ class Mainframe ( wx.Frame ):
 		bSizer151.Add( self.btnUnselectFile, 0, wx.ALL, 5 )
 		
 		
-		bSizer22.Add( bSizer151, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 5 )
+		bSizer42.Add( bSizer151, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 5 )
+		
+		
+		bSizer22.Add( bSizer42, 0, wx.ALL|wx.EXPAND, 5 )
 		
 		
 		bSizer13.Add( bSizer22, 1, wx.ALL|wx.EXPAND, 5 )
 		
-		bSizer14 = wx.BoxSizer( wx.VERTICAL )
+		bSizer39 = wx.BoxSizer( wx.HORIZONTAL )
 		
 		listboxSelectedFilesChoices = []
 		self.listboxSelectedFiles = wx.ListBox( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, listboxSelectedFilesChoices, 0 )
-		bSizer14.Add( self.listboxSelectedFiles, 1, wx.ALL|wx.EXPAND, 5 )
+		bSizer39.Add( self.listboxSelectedFiles, 1, wx.ALL|wx.EXPAND, 5 )
 		
-		bSizer21 = wx.BoxSizer( wx.VERTICAL )
-		
-		
-		bSizer14.Add( bSizer21, 1, wx.EXPAND, 5 )
+		self.listFiles = wx.ListCtrl( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LC_REPORT|wx.LC_SINGLE_SEL|wx.LC_VRULES )
+		bSizer39.Add( self.listFiles, 0, wx.ALL|wx.EXPAND, 5 )
 		
 		
-		bSizer13.Add( bSizer14, 1, wx.EXPAND, 5 )
+		bSizer13.Add( bSizer39, 1, wx.EXPAND, 5 )
 		
 		
 		bSizer1.Add( bSizer13, 1, wx.EXPAND, 5 )
@@ -106,23 +126,6 @@ class Mainframe ( wx.Frame ):
 		bSizer20 = wx.BoxSizer( wx.HORIZONTAL )
 		
 		bSizer5 = wx.BoxSizer( wx.HORIZONTAL )
-		
-		radio_box_3Choices = [ u"800x600(standaard, groot)", u"640x480 (middelgroot)", u"320x240 (klein)", u"160x120(heel klein, handig voor avatar)" ]
-		self.radio_box_3 = wx.RadioBox( self, wx.ID_ANY, u"Dimensies", wx.DefaultPosition, wx.DefaultSize, radio_box_3Choices, 4, wx.RA_SPECIFY_ROWS )
-		self.radio_box_3.SetSelection( 0 )
-		self.radio_box_3.SetBackgroundColour( wx.Colour( 0, 127, 255 ) )
-		
-		bSizer5.Add( self.radio_box_3, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 0 )
-		
-		
-		bSizer5.AddSpacer( ( 20,  20), 0, wx.FIXED_MINSIZE, 0 )
-		
-		self.btnVoorbeeld = wx.Button( self, wx.ID_ANY, u"Voorbeeld van upload-dimensie", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.btnVoorbeeld.SetDefault() 
-		bSizer5.Add( self.btnVoorbeeld, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 0 )
-		
-		
-		bSizer5.AddSpacer( ( 20,  20), 1, wx.EXPAND, 5 )
 		
 		self.m_button811 = wx.Button( self, wx.ID_ANY, u"Upload naar aquaforum", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_button811.SetFont( wx.Font( wx.NORMAL_FONT.GetPointSize(), 70, 90, 92, False, wx.EmptyString ) )
@@ -166,11 +169,12 @@ class Mainframe ( wx.Frame ):
 		
 		# Connect Events
 		self.tvFiles.Bind( wx.EVT_TREE_SEL_CHANGED, self.ontvFilesSelChanged )
+		self.btnVoorbeeld.Bind( wx.EVT_BUTTON, self.onbtnVoorbeeldClick )
 		self.btnSelectFile.Bind( wx.EVT_BUTTON, self.onbtnSelectFileClick )
 		self.btnUnselectFile.Bind( wx.EVT_BUTTON, self.onbtnUnselectFileClick )
 		self.listboxSelectedFiles.Bind( wx.EVT_LISTBOX, self.onlistboxSelectedFile )
 		self.listboxSelectedFiles.Bind( wx.EVT_SET_FOCUS, self.onlistboxSelectedFileSetFocus )
-		self.btnVoorbeeld.Bind( wx.EVT_BUTTON, self.onbtnVoorbeeldClick )
+		self.listFiles.Bind( wx.EVT_LIST_ITEM_ACTIVATED, self.onlistFilesActivate )
 		self.m_button811.Bind( wx.EVT_BUTTON, self.onbtnUploadClick )
 		self.btnArchief.Bind( wx.EVT_BUTTON, self.onbtnArchiefClick )
 		self.Bind( wx.EVT_MENU, self.onmenuitemClickConf, id = self.menuitemConf.GetId() )
@@ -182,6 +186,9 @@ class Mainframe ( wx.Frame ):
 	
 	# Virtual event handlers, overide them in your derived class
 	def ontvFilesSelChanged( self, event ):
+		event.Skip()
+	
+	def onbtnVoorbeeldClick( self, event ):
 		event.Skip()
 	
 	def onbtnSelectFileClick( self, event ):
@@ -196,7 +203,7 @@ class Mainframe ( wx.Frame ):
 	def onlistboxSelectedFileSetFocus( self, event ):
 		event.Skip()
 	
-	def onbtnVoorbeeldClick( self, event ):
+	def onlistFilesActivate( self, event ):
 		event.Skip()
 	
 	def onbtnUploadClick( self, event ):
