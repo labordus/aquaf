@@ -1,14 +1,17 @@
-- [ ] dimensie per individueel plaatje
+- [x] dimensie per individueel plaatje
 - [ ] Beschrijving kunnen meegeven
 - [ ] taborder
 - [x] add to history to db
 - [x] foutafhandeling bij het importeren. (wat als JSON nog steeds niet kan worden verwerkt? Test!!)
 - [ ] dubbele entries verwijderen uit db?
-- [ ] Progressindicatie bij.. genereren preview, uploaden
-- [ ] alpha eruit slopen.
+- [x] Progressindicatie bij.. genereren preview, uploaden
+- [x] alpha eruit slopen.
 - [ ] Beginpad configuratie functioneel maken
-- [ ] met dubbelklik plaatje in uploadijst zetten
-- [ ] Previewknop -> preview tonen van geselecteerde plaatje
+- [x] met dubbelklik plaatje in uploadijst zetten
+- [x] Previewknop -> preview tonen van geselecteerde plaatje
+- [ ] Werken met toetsenbord (tab/enter) is een chaos.
+- [ ] Na upload listFiles wissen
+- [ ] Bij "geen Preview" .. preview-bitmap verwijderen. 
 
 ##############
 'sceleton' db's bij de releases zetten
