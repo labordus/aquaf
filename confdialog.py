@@ -25,6 +25,9 @@ class Configure(maingui.dlgConf):
         userName = db.getUsername()
         self.confedtLoginName.SetValue(userName)
         self.dirpickFolder.SetPath('/home/kelp/dev/aquap')
+        pick = self.dirpickFolder.GetPickerCtrl()
+        if pick is not None:
+            pick.SetLabel('Selecteer')
 
     def onChoiceDimensies(self, event):
         setUserDimensie(self.choiceDimensie.GetStringSelection())
