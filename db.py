@@ -383,7 +383,7 @@ def getUserDimensieID():
     return iDim
 
 
-def getDimensies():  # return list of dims en return listindex?
+def getDimensies():  # return list of dims.. en return listindex?
     filepath = path_to_db()
     try:
         conn = sqlite3.connect(filepath)
