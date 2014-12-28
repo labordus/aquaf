@@ -123,8 +123,8 @@ class AquaFrame(maingui.Mainframe):
         self.choiceDimensie.SetItems(dims)
         self.choiceDimensie.SetSelection(getUserDimensieID() - 1)  # index loopt anders dus -1
 
-        self.listFiles.InsertColumn(0, 'Bestand', width=120)
-        self.listFiles.InsertColumn(1, 'Dimensie', width=100)
+        self.listFiles.InsertColumn(0, 'Bestand', width=135)
+        self.listFiles.InsertColumn(1, 'Dimensie', width=80)
         # hidden-column(2) om het hele pad in te zetten.
         self.listFiles.InsertColumn(2, 'Pad-hidden', width=0)
 
@@ -237,8 +237,8 @@ class AquaFrame(maingui.Mainframe):
     def ontvFilesSelChanged(self, event):
         self.PreviewImage(self.tvFiles.GetFilePath())
 
-    def onlistboxSelectedFile(self, event):
-        pad = self.listboxSelectedFiles.GetClientData(self.listboxSelectedFiles.GetSelection())
+    def onlistFilesSelected(self, event):
+        pad = self.listFiles.GetItemText(self.listFiles.GetFirstSelected(), 2)
         self.PreviewImage(pad)
 
 # FOLGENDE FUNCTIE LEVERT PROBLEMEN OP MET WINDOWS
@@ -248,15 +248,25 @@ class AquaFrame(maingui.Mainframe):
 #        pad = self.listboxSelectedFiles.GetClientData(self.listboxSelectedFiles.GetSelection())
 #        self.PreviewImage(pad)
 
+    def ontvFilesItemActivate(self, event):
+        self.onbtnSelectFileClick(event)
+        event.Skip()
+
     def onbtnSelectFileClick(self, event):
         _pad = self.tvFiles.GetFilePath()
 
-        # check of bestand al is toegevoegd..
-        for _i in range(self.listboxSelectedFiles.Count):
-            sPad = self.listboxSelectedFiles.GetClientData(_i)
+        for _i in range(self.listFiles.ItemCount):
+            sPad = self.listFiles.GetItemText(_i, 2)
             if _pad == sPad:
                 print("Image is al toegevoegd")
                 return
+
+        # check of bestand al is toegevoegd..
+#        for _i in range(self.listboxSelectedFiles.Count):
+#            sPad = self.listboxSelectedFiles.GetClientData(_i)
+#            if _pad == sPad:
+#                print("Image is al toegevoegd")
+#                return
 
         if _pad != () and _pad != "":
             # file
@@ -265,51 +275,36 @@ class AquaFrame(maingui.Mainframe):
             helepad = self.tvFiles.GetPath()
             bestandsnaam = os.path.basename(helepad)
             # sla het hele pad op in pyobject clientdata.. toch?
-            self.listboxSelectedFiles.Append(bestandsnaam, helepad)
+#            self.listboxSelectedFiles.Append(bestandsnaam, helepad)
 
-            # ################################################
             index = self.listFiles.InsertStringItem(sys.maxsize, bestandsnaam)
             s = self.choiceDimensie.GetString(self.choiceDimensie.GetSelection())
-#            s = self.radio_box_3.GetItemLabel(self.radio_box_3.GetSelection())
             self.listFiles.SetStringItem(index, 1, s)
             # Zet het hele pad in de hidden-column(2)
             self.listFiles.SetStringItem(index, 2, helepad)
-            # ################################################
 
             print bestandsnaam + " toegevoegd"
         # else directory
-        else:
-            print "Geen geldige image"
+#        else:
+#            print "Geen geldige image"
 
     def onbtnUnselectFileClick(self, event):
 
-        # ################################################
         sel2 = self.listFiles.GetFirstSelected()
-        self.listFiles.DeleteItem(sel2)
-        # ################################################
-
-        sel = self.listboxSelectedFiles.GetSelection()
-        if sel < 0:  # nothing selected
+        if sel2 == -1:
             return
-        # else
-        bl = self.listboxSelectedFiles.GetString(sel)
-#        if self.listboxSelectedFiles.getsel
-        self.listboxSelectedFiles.Delete(sel)
-#        bl = self.listboxSelectedFiles.GetClientData(self.listboxSelectedFiles.GetSelection())
-
+        bl = self.listFiles.GetItemText(sel2, 0)
+        self.listFiles.DeleteItem(sel2)
         print bl + " verwijderd"
 
-    def onlistFilesActivate(self, event):
-        dlg = wx.SingleChoiceDialog(
-            self, 'Test Single Choice', 'Selecteer een uploaddimensie',
-            ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight'],
-            wx.CHOICEDLG_STYLE
-        )
-
-        if dlg.ShowModal() == wx.ID_OK:
-            self.log.WriteText('You selected: %s\n' % dlg.GetStringSelection())
-
-        dlg.Destroy()
+#        sel = self.listboxSelectedFiles.GetSelection()
+# if sel < 0:  # nothing selected
+#            return
+        # else
+#        bl = self.listboxSelectedFiles.GetString(sel)
+#        if self.listboxSelectedFiles.getsel
+#        self.listboxSelectedFiles.Delete(sel)
+#        bl = self.listboxSelectedFiles.GetClientData(self.listboxSelectedFiles.GetSelection())
 
     def onbtnUploadClick(self, event):
         #        if len(self.edtLoginName.GetValue()) == 0:
@@ -333,20 +328,23 @@ class AquaFrame(maingui.Mainframe):
 #        db.set_username(sUsername)
 #        db.set_username(self.edtLoginName.GetValue())
 
-        filecount = self.listboxSelectedFiles.GetCount()
+#        filecount = self.listboxSelectedFiles.GetCount()
+        filecount = self.listFiles.GetItemCount()
         if filecount <= 0:
             print("Geen bestand geselecteerd")
             return
 
         busyDlg = wx.BusyInfo('Bezig met converten en uploaden van de plaatjes...')
-        dimensions = getDimensions(self.radio_box_3.GetSelection())
         urls = ""
         for _i in range(filecount):
-            print(self.listboxSelectedFiles.GetClientData(_i))
+            print('Uploading ' + self.listFiles.GetItemText(_i, 0))
             try:
+                #                resizedFilename = ResizeImage(
+                #                    self.listboxSelectedFiles.GetClientData(_i), dimensions)
+                dimensions = StringToTupleDimensions(self.listFiles.GetItemText(_i, 1))
                 resizedFilename = ResizeImage(
-                    self.listboxSelectedFiles.GetClientData(_i), dimensions)
-                desiredName = DumpImage(resizedFilename, self.edtLoginName.GetValue(), self.listboxSelectedFiles.GetClientData(_i))
+                    self.listFiles.GetItemText(_i, 2), dimensions)
+                desiredName = DumpImage(resizedFilename, getUserName(), self.listFiles.GetItemText(_i, 2))
                 addURL2DB(AUQAOFORUM_PICTURE_URL + desiredName)
                 urls = urls + " [IMG]" + AUQAOFORUM_PICTURE_URL + desiredName + "[/IMG]" + "\n"
 
