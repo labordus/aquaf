@@ -60,6 +60,18 @@ def getDimensions(index):
     return dimensions
 
 
+def StringToTupleDimensions(sDim):
+    if sDim == '800x600':
+        tDim = (800, 600)
+    if sDim == '640x480':
+        tDim = (640, 480)
+    if sDim == '320x240':
+        tDim = (320, 240)
+    if sDim == '160x120':
+        tDim = (160, 120)
+    return tDim
+
+
 def ResizeImage(pad, dim):
     # try except
     img = Image.open(pad)
