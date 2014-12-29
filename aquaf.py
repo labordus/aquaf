@@ -1,25 +1,16 @@
-# importing wx files
-# import wx
-# import os
-# import sys
-# import imp
-# from PIL import Image
 import db
-# import wx.lib.agw.ultimatelistctrl as ULC
 
 # import GUI
 import maingui
-from maingui import dlgVoorbeeld  # , dlgUploadDone, dlgImport, dlgConf
-# from Dialog import Dialog
+from maingui import dlgVoorbeeld
 
 import diversen
 from diversen import *
 
 import uploaddialog
-# from mechanize._opener import urlopen
 import confdialog
 from db import DB2JSON, addURL2DB, getUserDimensieID, getUserName, getDimensies  # DBVersion
-from db import getUserFolder
+from db import getUserFolder, getUserTooltip
 from wx import ToolTip
 
 AUQAOFORUM_PICTURE_URL = "http://www.aquaforum.nl/gallery/upload/"
@@ -64,22 +55,6 @@ class AquaFrame(maingui.Mainframe):
         # initialize parent class
         maingui.Mainframe.__init__(self, parent)
 
-#        listTEST = ULC.UltimateListCtrl(self, wx.ID_ANY, agwStyle=wx.LC_REPORT | wx.LC_VRULES | wx.LC_HRULES | wx.LC_SINGLE_SEL | ULC.ULC_HAS_VARIABLE_ROW_HEIGHT)
-#        listTEST.InsertColumn(0, "Column 1")
-#        listTEST.InsertColumn(1, "Column 2")
-#        index = listTEST.InsertStringItem(sys.maxsize, "Item 1")
-#        listTEST.SetStringItem(index, 1, "Sub-item 1")
-#        index = listTEST.InsertStringItem(sys.maxsize, "Item 2")
-#        listTEST.SetStringItem(index, 1, "Sub-item 2")
-#        choice = wx.Choice(listTEST, -1, choices=["one", "two"])
-#        index = listTEST.InsertStringItem(sys.maxsize, "A widget")
-#        listTEST.SetItemWindow(index, 1, choice, expand=True)
-
-#        sizer = wx.BoxSizer(wx.VERTICAL)
-# sizer = self.m_panel1.GetSizer()
-#        sizer.Add(listTEST, 1, wx.EXPAND)
-#        self.SetSizer(sizer)
-
         if db.Initialize_db() is False:
             app.Exit()
 #        if db.first_run() == 1:
@@ -113,13 +88,13 @@ class AquaFrame(maingui.Mainframe):
         print "Welkom bij Aquaf " + APP_VERSION
 
         self.choiceDimensie.SetSelection(getUserDimensieID() - 1)
+        diversen.USER_TOOLTIP = getUserTooltip()
         ToolTip.Enable(diversen.USER_TOOLTIP)
-
-# ##########
 
         diversen.USER_FOLDER = getUserFolder()
         if diversen.USER_FOLDER == '' or diversen.USER_FOLDER is None:
             from os.path import expanduser
+
             pad = expanduser("~")
             # SetPath() triggert ontvFilesSelChanged()
             # en dus ook PreviewImage()
@@ -127,15 +102,12 @@ class AquaFrame(maingui.Mainframe):
             pad = diversen.USER_FOLDER
         self.tvFiles.SetPath(pad)
 
-# ##########
-
         dims = getDimensies()
         self.choiceDimensie.SetItems(dims)
         self.choiceDimensie.SetSelection(getUserDimensieID() - 1)  # index loopt anders dus -1
 
         self.listFiles.InsertColumn(0, 'Bestand', width=150)
         self.listFiles.InsertColumn(1, 'Dimensie', width=75)
-        # hidden-column(2) om het hele pad in te zetten.
         self.listFiles.InsertColumn(2, 'Pad', width=140)
 
 #        self.Layout()
@@ -150,8 +122,8 @@ class AquaFrame(maingui.Mainframe):
 
         ToolTip.Enable(diversen.USER_TOOLTIP)
         self.choiceDimensie.SetSelection(getUserDimensieID() - 1)
-        if diversen.USER_FOLDER:
-            self.tvFiles.SetPath(diversen.USER_FOLDER)
+#        if diversen.USER_FOLDER:
+#            self.tvFiles.SetPath(diversen.USER_FOLDER)
 
         self.panelPreview.Show(diversen.PREVIEW)
         self.Fit()
@@ -162,11 +134,6 @@ class AquaFrame(maingui.Mainframe):
         info.Version = APP_VERSION
         info.Copyright = "(C) 2009-2014"
         info.Description = "Voor het uploaden van plaatjes naar http://www.aquaforum.nl/" + "\n" "en ook het (op de computer) opslaan van een persoonlijk archief van plaatjes die zijn ge-upload."
-#        info.Description = wordwrap(
-#            "Voor het uploaden van foto's naar http://www.aquaforum.nl/ "
-#            "en ook het (op de computer) opslaan van een persoonlijk archief "
-#            "van foto's die zijn ge-upload. ",
-#            400, wx.ClientDC(self))
         info.WebSite = ("https://github.com/labordus/aquaf", "Aquaf home page")
         info.Developers = ["Riba (2009)",
                            "kellemes (2014-2015)"]
@@ -192,7 +159,6 @@ class AquaFrame(maingui.Mainframe):
         return
 
     def onbtnVoorbeeldClick(self, event):
-        #        dimensions = getDimensions(self.radio_box_3.GetSelection())
         # Als er een plaatje is geselecteerd..
         # gebruik die voor de preview
         _pad = self.tvFiles.GetFilePath()
@@ -258,6 +224,7 @@ class AquaFrame(maingui.Mainframe):
         pad = self.listFiles.GetItemText(self.listFiles.GetFirstSelected(), 2)
         self.PreviewImage(pad)
 
+
 # FOLGENDE FUNCTIE LEVERT PROBLEMEN OP MET WINDOWS
 #    def onlistboxSelectedFileSetFocus(self, event):
 #        if self.listboxSelectedFiles.GetSelection() == wx.NOT_FOUND:
@@ -278,32 +245,19 @@ class AquaFrame(maingui.Mainframe):
                 print("Image is al toegevoegd")
                 return
 
-        # check of bestand al is toegevoegd..
-#        for _i in range(self.listboxSelectedFiles.Count):
-#            sPad = self.listboxSelectedFiles.GetClientData(_i)
-#            if _pad == sPad:
-#                print("Image is al toegevoegd")
-#                return
-
         if _pad != () and _pad != "":
             # file
             if not IsValidImage(_pad):
                 return
             helepad = self.tvFiles.GetPath()
             bestandsnaam = os.path.basename(helepad)
-            # sla het hele pad op in pyobject clientdata.. toch?
-#            self.listboxSelectedFiles.Append(bestandsnaam, helepad)
 
             index = self.listFiles.InsertStringItem(sys.maxsize, bestandsnaam)
             s = self.choiceDimensie.GetString(self.choiceDimensie.GetSelection())
             self.listFiles.SetStringItem(index, 1, s)
-            # Zet het hele pad in de hidden-column(2)
             self.listFiles.SetStringItem(index, 2, helepad)
 
             print bestandsnaam + " toegevoegd"
-        # else directory
-#        else:
-#            print "Geen geldige image"
 
     def onbtnUnselectFileClick(self, event):
 
@@ -324,7 +278,6 @@ class AquaFrame(maingui.Mainframe):
 #        bl = self.listboxSelectedFiles.GetClientData(self.listboxSelectedFiles.GetSelection())
 
     def onbtnUploadClick(self, event):
-        #        if len(self.edtLoginName.GetValue()) == 0:
         if not getUserName():
             dlg = wx.TextEntryDialog(
                 self, 'Voer hier je aquaforum.nl gebruikersnaam in..',
@@ -342,10 +295,6 @@ class AquaFrame(maingui.Mainframe):
                 return
             dlg.Destroy()
 
-#        db.set_username(sUsername)
-#        db.set_username(self.edtLoginName.GetValue())
-
-#        filecount = self.listboxSelectedFiles.GetCount()
         filecount = self.listFiles.GetItemCount()
         if filecount <= 0:
             print("Geen bestand geselecteerd")
@@ -356,8 +305,6 @@ class AquaFrame(maingui.Mainframe):
         for _i in range(filecount):
             print('Uploading ' + self.listFiles.GetItemText(_i, 0))
             try:
-                #                resizedFilename = ResizeImage(
-                #                    self.listboxSelectedFiles.GetClientData(_i), dimensions)
                 dimensions = StringToTupleDimensions(self.listFiles.GetItemText(_i, 1))
                 resizedFilename = ResizeImage(
                     self.listFiles.GetItemText(_i, 2), dimensions)
@@ -379,12 +326,8 @@ class AquaFrame(maingui.Mainframe):
         dlg.ShowModal()  # this one is non blocking!!
         dlg.Destroy()
 
-# mandatory in wx, create an app, False stands for not deteriction stdin/stdout
 app = wx.App(False)
 
-# create an object of AquaFrame
 frame = AquaFrame(None)
-# show the frame
 frame.Show(True)
-# start the applications
 app.MainLoop()
