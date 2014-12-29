@@ -15,7 +15,10 @@
 - [x] Bij "geen Preview" .. preview-bitmap verwijderen.
 - [x] Tooltips aan/uit
 - [ ] eerste keer sluiten confdialog en het scherm wordt is groter .. self.fit()
- 
+- [ ] bij Preview = False wil ik de knoppen in het midden van het scherm.
+- [x] bij sluiten confdialog niet het treeview-pad verzetten.
+- [x] Windows -- tooltips zijn aan bij UIT
+- [ ] Image/Plaatje/Foto.. wat gaat het worden? Overal aanpassen.
 
 ##############
 'sceleton' db's bij de releases zetten
