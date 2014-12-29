@@ -6,12 +6,15 @@
 - [ ] dubbele entries verwijderen uit db?
 - [x] Progressindicatie bij.. genereren preview, uploaden
 - [x] alpha eruit slopen.
-- [ ] Beginpad configuratie functioneel maken
+- [x] Beginpad configuratie functioneel maken
 - [x] met dubbelklik plaatje in uploadijst zetten
 - [x] Previewknop -> preview tonen van geselecteerde plaatje
 - [ ] Werken met toetsenbord (tab/enter) is een chaos.
 - [ ] Na upload listFiles wissen
-- [ ] Bij "geen Preview" .. preview-bitmap verwijderen. 
+- [x] Bij "geen Preview" .. preview-bitmap verwijderen.
+- [x] Tooltips aan/uit
+- [ ] eerste keer sluiten confdialog en het scherm wordt is groter .. self.fit()
+ 
 
 ##############
 'sceleton' db's bij de releases zetten
