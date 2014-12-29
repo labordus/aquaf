@@ -17,28 +17,30 @@ import wx.xrc
 class Mainframe ( wx.Frame ):
 	
 	def __init__( self, parent ):
-		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Aquaforum upload programma", pos = wx.DefaultPosition, size = wx.Size( 950,700 ), style = wx.CAPTION|wx.DEFAULT_FRAME_STYLE )
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Aquaforum upload programma", pos = wx.DefaultPosition, size = wx.Size( -1,-1 ), style = wx.CAPTION|wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
 		
-		self.SetSizeHintsSz( wx.Size( 900,700 ), wx.DefaultSize )
+		self.SetSizeHintsSz( wx.Size( 850,800 ), wx.DefaultSize )
 		self.SetBackgroundColour( wx.Colour( 116, 113, 162 ) )
 		
-		bSizer15 = wx.BoxSizer( wx.VERTICAL )
+		bSizer30 = wx.BoxSizer( wx.VERTICAL )
 		
 		bSizer1 = wx.BoxSizer( wx.VERTICAL )
 		
 		bSizer2 = wx.BoxSizer( wx.HORIZONTAL )
 		
 		self.bitmap_1 = wx.StaticBitmap( self, wx.ID_ANY, wx.Bitmap( u"forumbanner.gif", wx.BITMAP_TYPE_ANY ), wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer2.Add( self.bitmap_1, 0, wx.FIXED_MINSIZE, 0 )
+		bSizer2.Add( self.bitmap_1, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.FIXED_MINSIZE, 0 )
 		
-		bSizer25 = wx.BoxSizer( wx.VERTICAL )
+		bSizer25 = wx.BoxSizer( wx.HORIZONTAL )
 		
 		self.infoBox = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.HSCROLL|wx.TE_MULTILINE|wx.TE_READONLY|wx.TE_WORDWRAP )
 		self.infoBox.SetFont( wx.Font( 8, 70, 90, 90, False, wx.EmptyString ) )
 		self.infoBox.SetForegroundColour( wx.Colour( 255, 255, 255 ) )
 		self.infoBox.SetBackgroundColour( wx.Colour( 0, 0, 0 ) )
+		self.infoBox.SetMinSize( wx.Size( 150,80 ) )
+		self.infoBox.SetMaxSize( wx.Size( 200,-1 ) )
 		
-		bSizer25.Add( self.infoBox, 1, wx.ALL|wx.EXPAND, 1 )
+		bSizer25.Add( self.infoBox, 1, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 1 )
 		
 		
 		bSizer2.Add( bSizer25, 1, wx.ALL|wx.EXPAND, 1 )
@@ -48,99 +50,128 @@ class Mainframe ( wx.Frame ):
 		
 		bSizer13 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		bSizer13.SetMinSize( wx.Size( -1,350 ) ) 
 		bSizer4 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		bSizer4.SetMinSize( wx.Size( 250,-1 ) ) 
-		self.tvFiles = wx.GenericDirCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0|wx.SUNKEN_BORDER, wx.EmptyString, 0 )
+		bSizer4.SetMinSize( wx.Size( 300,-1 ) ) 
+		self.tvFiles = wx.GenericDirCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 300,-1 ), 0|wx.SUNKEN_BORDER, wx.EmptyString, 0 )
 		
-		self.tvFiles.ShowHidden( False )
+		self.tvFiles.ShowHidden( True )
 		bSizer4.Add( self.tvFiles, 1, wx.EXPAND |wx.ALL, 5 )
 		
 		
-		bSizer13.Add( bSizer4, 1, wx.EXPAND, 0 )
+		bSizer13.Add( bSizer4, 0, wx.EXPAND, 0 )
 		
 		bSizer22 = wx.BoxSizer( wx.VERTICAL )
 		
+		self.panelPreview = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( -1,-1 ), wx.TAB_TRAVERSAL )
+		self.panelPreview.SetBackgroundColour( wx.Colour( 116, 113, 162 ) )
+		
 		bSizer152 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.bitmapSelectedFile = wx.StaticBitmap( self, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.bitmapSelectedFile = wx.StaticBitmap( self.panelPreview, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.bitmapSelectedFile.SetMinSize( wx.Size( 400,300 ) )
 		
 		bSizer152.Add( self.bitmapSelectedFile, 1, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.ALL|wx.EXPAND, 0 )
 		
 		
-		bSizer22.Add( bSizer152, 0, wx.ALL|wx.EXPAND|wx.SHAPED, 0 )
+		self.panelPreview.SetSizer( bSizer152 )
+		self.panelPreview.Layout()
+		bSizer152.Fit( self.panelPreview )
+		bSizer22.Add( self.panelPreview, 0, wx.ALL|wx.EXPAND, 5 )
 		
-		bSizer42 = wx.BoxSizer( wx.HORIZONTAL )
+		bSizer42 = wx.BoxSizer( wx.VERTICAL )
 		
-		bSizer43 = wx.BoxSizer( wx.HORIZONTAL )
+		bSizer151 = wx.BoxSizer( wx.VERTICAL )
+		
+		bSizer301 = wx.BoxSizer( wx.HORIZONTAL )
 		
 		choiceDimensieChoices = []
 		self.choiceDimensie = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, choiceDimensieChoices, 0 )
 		self.choiceDimensie.SetSelection( 0 )
-		self.choiceDimensie.SetToolTipString( u"Selecteer de gewenste upload-dimensie" )
+		self.choiceDimensie.SetToolTipString( u"De betreffende foto zal in de gekozen dimensies worden\nge-upload naar de server van aquaforum.nl\n\nLet op: De conversie verkleind (zo nodig) een foto naar (maximaal) de geselecteerde dimensies.\nAls de originele dimensies van een foto kleiner zijn dan de gekozen dimensie dan zal er geen conversie plaatsvinden.\nM.a.w. foto-formaten worden niet vergroot ;)" )
 		
-		bSizer43.Add( self.choiceDimensie, 0, wx.ALL, 5 )
+		bSizer301.Add( self.choiceDimensie, 0, wx.ALL, 5 )
 		
-		self.btnVoorbeeld = wx.BitmapButton( self, wx.ID_ANY, wx.ArtProvider.GetBitmap( wx.ART_TIP, wx.ART_BUTTON ), wx.DefaultPosition, wx.DefaultSize, wx.BU_AUTODRAW )
-		self.btnVoorbeeld.SetToolTipString( u"Preview" )
+		self.btnVoorbeeld = wx.BitmapButton( self, wx.ID_ANY, wx.Bitmap( u"icon.ico", wx.BITMAP_TYPE_ANY ), wx.DefaultPosition, wx.DefaultSize, wx.BU_AUTODRAW )
+		self.btnVoorbeeld.SetToolTipString( u"Preview hoe de betreffende foto eruit zal zien\nmet de gekozen dimensies." )
 		
-		bSizer43.Add( self.btnVoorbeeld, 0, wx.ALL, 5 )
+		bSizer301.Add( self.btnVoorbeeld, 0, wx.ALL, 5 )
 		
 		
-		bSizer42.Add( bSizer43, 1, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 5 )
+		bSizer151.Add( bSizer301, 1, wx.EXPAND, 5 )
 		
-		bSizer151 = wx.BoxSizer( wx.VERTICAL )
+		self.btnSelectFile = wx.Button( self, wx.ID_ANY, u"Toevoegen  ->", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
+		self.btnSelectFile.SetFont( wx.Font( wx.NORMAL_FONT.GetPointSize(), 70, 90, 92, False, wx.EmptyString ) )
+		self.btnSelectFile.SetForegroundColour( wx.Colour( 60, 130, 50 ) )
+		self.btnSelectFile.SetToolTipString( u"Voeg foto toe aan uploadlijst" )
 		
-		self.btnSelectFile = wx.Button( self, wx.ID_ANY, u"Toevoegen aan uploadlijst ->", wx.DefaultPosition, wx.DefaultSize, 0 )
 		bSizer151.Add( self.btnSelectFile, 0, wx.ALL, 5 )
 		
-		self.btnUnselectFile = wx.Button( self, wx.ID_ANY, u"<- Verwijderen van uploadlijst", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.btnUnselectFile = wx.Button( self, wx.ID_ANY, u"<- Verwijderen", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
+		self.btnUnselectFile.SetFont( wx.Font( wx.NORMAL_FONT.GetPointSize(), 70, 90, 92, False, wx.EmptyString ) )
+		self.btnUnselectFile.SetForegroundColour( wx.Colour( 31, 37, 181 ) )
+		self.btnUnselectFile.SetToolTipString( u"Verwijder foto van uploadlijst" )
+		
 		bSizer151.Add( self.btnUnselectFile, 0, wx.ALL, 5 )
 		
 		
 		bSizer42.Add( bSizer151, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		
-		bSizer22.Add( bSizer42, 0, wx.ALL|wx.EXPAND, 5 )
+		bSizer22.Add( bSizer42, 0, wx.EXPAND, 5 )
 		
 		
-		bSizer13.Add( bSizer22, 1, wx.ALL|wx.EXPAND, 5 )
+		bSizer13.Add( bSizer22, 0, wx.ALL|wx.EXPAND, 5 )
 		
-		bSizer39 = wx.BoxSizer( wx.HORIZONTAL )
+		bSizer39 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.listFiles = wx.ListCtrl( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LC_HRULES|wx.LC_NO_SORT_HEADER|wx.LC_REPORT|wx.LC_SINGLE_SEL|wx.LC_VRULES )
-		bSizer39.Add( self.listFiles, 0, wx.ALL|wx.EXPAND, 5 )
+		bSizer39.SetMinSize( wx.Size( 300,-1 ) ) 
+		self.listFiles = wx.ListCtrl( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( -1,-1 ), wx.LC_HRULES|wx.LC_NO_SORT_HEADER|wx.LC_REPORT|wx.LC_SINGLE_SEL )
+		self.listFiles.SetMaxSize( wx.Size( 400,-1 ) )
 		
-		
-		bSizer13.Add( bSizer39, 1, wx.EXPAND, 5 )
-		
-		
-		bSizer1.Add( bSizer13, 0, wx.ALL|wx.EXPAND, 5 )
-		
-		bSizer20 = wx.BoxSizer( wx.VERTICAL )
+		bSizer39.Add( self.listFiles, 1, wx.ALL|wx.EXPAND, 5 )
 		
 		self.btnUpload = wx.Button( self, wx.ID_ANY, u"Upload naar aquaforum", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.btnUpload.SetFont( wx.Font( wx.NORMAL_FONT.GetPointSize(), 70, 90, 92, False, wx.EmptyString ) )
-		self.btnUpload.SetForegroundColour( wx.Colour( 116, 113, 162 ) )
-		self.btnUpload.SetBackgroundColour( wx.Colour( 172, 1, 1 ) )
+		self.btnUpload.SetForegroundColour( wx.Colour( 255, 42, 0 ) )
+		self.btnUpload.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
+		self.btnUpload.SetToolTipString( u"De foto's in de uploadlijst zullen (zo nodig) worden geconverteerd naar de gekozen dimensies en dan\nworden ge-upload naar de server van aquaforum.nl" )
 		
-		bSizer20.Add( self.btnUpload, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
+		bSizer39.Add( self.btnUpload, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
+		
+		
+		bSizer13.Add( bSizer39, 0, wx.EXPAND, 5 )
+		
+		
+		bSizer1.Add( bSizer13, 1, wx.ALL|wx.EXPAND, 5 )
+		
+		bSizer28 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		bSizer29 = wx.BoxSizer( wx.VERTICAL )
 		
 		self.btnArchief = wx.Button( self, wx.ID_ANY, u"Archief van de plaatjes", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.btnArchief.SetDefault() 
-		bSizer20.Add( self.btnArchief, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.FIXED_MINSIZE, 3 )
+		self.btnArchief.SetToolTipString( u"Klik hier voor een overzicht van alle foto's\ndie (met dit programma) zijn ge-upload\nnaar de server van aquaforum.nl" )
+		
+		bSizer29.Add( self.btnArchief, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.FIXED_MINSIZE, 3 )
 		
 		
-		bSizer1.Add( bSizer20, 0, wx.ALL|wx.EXPAND, 5 )
+		bSizer28.Add( bSizer29, 0, wx.ALL|wx.EXPAND, 5 )
+		
+		bSizer20 = wx.BoxSizer( wx.VERTICAL )
 		
 		
-		bSizer15.Add( bSizer1, 0, wx.ALL|wx.EXPAND, 3 )
+		bSizer28.Add( bSizer20, 0, wx.ALL|wx.EXPAND, 5 )
 		
 		
-		self.SetSizer( bSizer15 )
+		bSizer1.Add( bSizer28, 0, wx.EXPAND, 5 )
+		
+		
+		bSizer30.Add( bSizer1, 1, wx.ALL|wx.EXPAND, 3 )
+		
+		
+		self.SetSizer( bSizer30 )
 		self.Layout()
+		bSizer30.Fit( self )
 		self.m_menubar1 = wx.MenuBar( 0 )
 		self.m_menu1 = wx.Menu()
 		self.menuitemConf = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"Configuratie", wx.EmptyString, wx.ITEM_NORMAL )
@@ -216,6 +247,7 @@ class dlgImport ( wx.Dialog ):
 		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.DefaultSize, style = wx.CAPTION|wx.CLOSE_BOX )
 		
 		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
+		self.SetBackgroundColour( wx.Colour( 116, 113, 162 ) )
 		
 		bSizer23 = wx.BoxSizer( wx.VERTICAL )
 		
@@ -234,6 +266,7 @@ class dlgImport ( wx.Dialog ):
 		bSizer27.Add( self.btnSelectJSON, 0, wx.ALL, 5 )
 		
 		self.btnAfsluiten = wx.Button( self, wx.ID_ANY, u"Afsluiten", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.btnAfsluiten.SetDefault() 
 		bSizer27.Add( self.btnAfsluiten, 0, wx.ALL, 5 )
 		
 		
@@ -272,7 +305,7 @@ class dlgUploadDone ( wx.Dialog ):
 		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Bericht", pos = wx.DefaultPosition, size = wx.Size( 727,358 ), style = wx.CAPTION|wx.CLOSE_BOX )
 		
 		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
-		self.SetBackgroundColour( wx.Colour( 116, 113, 162 ) )
+		self.SetBackgroundColour( wx.Colour( 141, 139, 178 ) )
 		
 		bSizer16 = wx.BoxSizer( wx.VERTICAL )
 		
@@ -382,6 +415,7 @@ class dlgConf ( wx.Dialog ):
 		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Configuratiescherm", pos = wx.DefaultPosition, size = wx.Size( 579,266 ), style = wx.CAPTION|wx.CLOSE_BOX )
 		
 		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
+		self.SetBackgroundColour( wx.Colour( 141, 139, 178 ) )
 		
 		bSizer42 = wx.BoxSizer( wx.VERTICAL )
 		
@@ -395,7 +429,9 @@ class dlgConf ( wx.Dialog ):
 		self.m_staticText151.Wrap( -1 )
 		gSizer1.Add( self.m_staticText151, 0, wx.ALL, 5 )
 		
-		self.dirpickFolder = wx.DirPickerCtrl( self, wx.ID_ANY, u"/home/kelp", u"Selecteer een folder", wx.DefaultPosition, wx.DefaultSize, wx.DIRP_DEFAULT_STYLE|wx.DIRP_USE_TEXTCTRL )
+		self.dirpickFolder = wx.DirPickerCtrl( self, wx.ID_ANY, wx.EmptyString, u"Selecteer een folder", wx.Point( -1,-1 ), wx.DefaultSize, wx.DIRP_DEFAULT_STYLE|wx.DIRP_DIR_MUST_EXIST|wx.DIRP_USE_TEXTCTRL )
+		self.dirpickFolder.SetBackgroundColour( wx.Colour( 116, 113, 162 ) )
+		
 		gSizer1.Add( self.dirpickFolder, 0, wx.EXPAND, 5 )
 		
 		self.m_staticText9 = wx.StaticText( self, wx.ID_ANY, u"Standaard folder", wx.DefaultPosition, wx.DefaultSize, 0 )
@@ -418,6 +454,13 @@ class dlgConf ( wx.Dialog ):
 		self.m_staticText16.Wrap( -1 )
 		gSizer1.Add( self.m_staticText16, 0, wx.ALL, 5 )
 		
+		self.checkTooltip = wx.CheckBox( self, wx.ID_ANY, u"Tooltips laten zien?", wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer1.Add( self.checkTooltip, 0, wx.ALL, 5 )
+		
+		self.m_staticText91 = wx.StaticText( self, wx.ID_ANY, u"Tooltips aan/uitzetten", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText91.Wrap( -1 )
+		gSizer1.Add( self.m_staticText91, 0, wx.ALL, 5 )
+		
 		self.btnImport = wx.Button( self, wx.ID_ANY, u"Importeer", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
 		gSizer1.Add( self.btnImport, 0, wx.ALL, 5 )
 		
@@ -434,6 +477,7 @@ class dlgConf ( wx.Dialog ):
 		bSizer34.Add( self.m_staticline3, 0, wx.EXPAND |wx.ALL, 5 )
 		
 		self.btnAfsluiten = wx.Button( self, wx.ID_ANY, u"Afsluiten", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
+		self.btnAfsluiten.SetDefault() 
 		bSizer34.Add( self.btnAfsluiten, 0, wx.ALIGN_RIGHT|wx.ALL, 5 )
 		
 		
@@ -448,8 +492,10 @@ class dlgConf ( wx.Dialog ):
 		# Connect Events
 		self.Bind( wx.EVT_INIT_DIALOG, self.oninitConfDialog )
 		self.confedtLoginName.Bind( wx.EVT_KILL_FOCUS, self.onconfedtLoginNameKillFocus )
+		self.dirpickFolder.Bind( wx.EVT_DIRPICKER_CHANGED, self.ondirpickFolderChange )
 		self.checkPreview.Bind( wx.EVT_CHECKBOX, self.oncheckPreviewClick )
 		self.choiceDimensie.Bind( wx.EVT_CHOICE, self.onChoiceDimensies )
+		self.checkTooltip.Bind( wx.EVT_CHECKBOX, self.oncheckTooltipClick )
 		self.btnImport.Bind( wx.EVT_BUTTON, self.onbtnImportClick )
 		self.btnAfsluiten.Bind( wx.EVT_BUTTON, self.onbtnAfsluitenClick )
 	
@@ -464,10 +510,16 @@ class dlgConf ( wx.Dialog ):
 	def onconfedtLoginNameKillFocus( self, event ):
 		event.Skip()
 	
+	def ondirpickFolderChange( self, event ):
+		event.Skip()
+	
 	def oncheckPreviewClick( self, event ):
 		event.Skip()
 	
 	def onChoiceDimensies( self, event ):
+		event.Skip()
+	
+	def oncheckTooltipClick( self, event ):
 		event.Skip()
 	
 	def onbtnImportClick( self, event ):
