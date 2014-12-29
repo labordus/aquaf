@@ -34,15 +34,17 @@ def DBVersion():
                 for row in rows:
                     sUrl = str((row[0]))
                     old_urls.append(sUrl)
+                    conn.close()
                 try:
                     os.remove(filepath)
                 except OSError as e:
                     print ("Error: %s - %s." % (e.filename, e.strerror))
         except Exception as e:
             conn.rollback()
-            raise e
-        finally:
             conn.close()
+            raise e
+#        finally:
+#            conn.close()
 
 
 def Initialize_db():
