@@ -67,7 +67,7 @@ def Initialize_db():
         c.execute('''CREATE TABLE IF NOT EXISTS
                       tblLink(
                       linkID INTEGER PRIMARY KEY NOT NULL,
-                      linkURL VARCHAR(200))''')
+                      linkURL VARCHAR(200) UNIQUE)''')
         c.execute('''CREATE TABLE IF NOT EXISTS
                       tblDim(
                       dimID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -257,17 +257,20 @@ def ImportJSON2DB(fileJSON):
     conn = sqlite3.connect(dbpath)
     c = conn.cursor()
     c.execute("PRAGMA foreign_keys = ON")
-    aantal = 0
+    totaal = 0
+    mislukt = 0
     for line in data[0]["items"]:
         try:
-            aantal += 1
+            totaal += 1
             c.execute("INSERT INTO tblLink(linkURL) VALUES(?)", (line["link"],))
             conn.commit()
         except sqlite3.IntegrityError:
-            conn.rollback()
-            raise sqlite3.IntegrityError
+            # Zullen dubbele entries zijn.. dus laat maar waaien.
+            mislukt += 1
+            pass
     conn.close()
-    return aantal
+
+    return totaal, mislukt
 #    json_data.close()
 
 
