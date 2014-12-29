@@ -4,8 +4,10 @@
 import wx
 import maingui
 import db
-from db import getDimensies, getUserDimensieID, setUserDimensie, getUserPreview
+from db import getDimensies, getUserDimensieID, setUserDimensie, getUserPreview,\
+    setUserFolder, getUserFolder, getUserTooltip
 import importdialog
+import diversen
 
 
 class Configure(maingui.dlgConf):
@@ -22,12 +24,23 @@ class Configure(maingui.dlgConf):
 #        self.choiceDimensie.SetStringSelection(getUserDimensie())
         self.choiceDimensie.SetSelection(getUserDimensieID() - 1)  # index loopt anders dus -1
         self.checkPreview.SetValue(getUserPreview())
+        self.checkTooltip.SetValue(getUserTooltip())
         userName = db.getUsername()
         self.confedtLoginName.SetValue(userName)
-        self.dirpickFolder.SetPath('/home/kelp/dev/aquap')
+
+        if diversen.USER_FOLDER:
+            self.dirpickFolder.SetPath(diversen.USER_FOLDER)
+        else:
+            from os.path import expanduser
+            pad = expanduser("~")
+            self.dirpickFolder.SetPath(pad)
+
         pick = self.dirpickFolder.GetPickerCtrl()
         if pick is not None:
             pick.SetLabel('Selecteer')
+
+    def ondirpickFolderChange(self, event):
+        setUserFolder(self.dirpickFolder.GetPath())
 
     def onChoiceDimensies(self, event):
         setUserDimensie(self.choiceDimensie.GetStringSelection())
@@ -59,8 +72,10 @@ class Configure(maingui.dlgConf):
         event.Skip()
 
     def oncheckPreviewClick(self, event):
-        #        db.setUserPreview(self.checkPreview.GetValue)
         db.setUserPreview(self.checkPreview.IsChecked())
+
+    def oncheckTooltipClick(self, event):
+        db.setUserTooltip(self.checkTooltip.IsChecked())
 
     def onbtnAfsluitenClick(self, event):
         self.EndModal(wx.ID_OK)
