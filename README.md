@@ -26,6 +26,7 @@ menu -> importeren.
 Dit importeren 'dumpt' de gegevens in de nieuwe (lege) database, het oude
 data-bestand zal gewoon blijven bestaan..
 Dit doe je dus maar 1 keer, anders zullen er dubbele entries in de database ontstaan.
+Data van aquaf 0.84 worden automagically geimporteerd.
 
 # Instructies voor gebruik..
 * Selecteer in de lijst links op het scherm een plaatje die je uploaden wilt,
