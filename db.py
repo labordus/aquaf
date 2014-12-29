@@ -61,6 +61,7 @@ def Initialize_db():
                       FIRSTRUN BOOLEAN DEFAULT (1),
                       IMPORTED BOOLEAN DEFAULT (0),
                       PREVIEW BOOLEAN DEFAULT (1),
+                      TOOLTIP BOOLEAN DEFAULT (1),
                       FOLDER VARCHAR(120),
                       DIMID INTEGER REFERENCES tblDim(dimID))''')
         c.execute('''CREATE TABLE IF NOT EXISTS
@@ -345,8 +346,79 @@ def setUserPreview(bPreview):
         conn.close()
 
 
+def getUserTooltip():
+    filepath = path_to_db()
+    try:
+        conn = sqlite3.connect(filepath)
+        c = conn.cursor()
+        c.execute("PRAGMA foreign_keys = ON")
+        c.execute('''SELECT TOOLTIP FROM tblApp''')
+        bTooltip = c.fetchone()[0]
+        conn.commit()
+    except Exception as e:
+        conn.rollback()
+        raise e
+    finally:
+        conn.close()
+
+    return bTooltip
+
+
+def setUserTooltip(bTooltip):
+    filepath = path_to_db()
+    diversen.USER_TOOLTIP = bTooltip
+    if bTooltip:
+        bTooltip = 1
+    else:
+        bTooltip = 0
+
+    try:
+        conn = sqlite3.connect(filepath)
+        c = conn.cursor()
+        c.execute("PRAGMA foreign_keys = ON")
+        c.execute('''UPDATE tblApp SET TOOLTIP = ? ''', (bTooltip,))
+        conn.commit()
+    except Exception as e:
+        conn.rollback()
+        raise e
+    finally:
+        conn.close()
+
+
 def getUserFolder():
-    print ''
+    filepath = path_to_db()
+    try:
+        conn = sqlite3.connect(filepath)
+        c = conn.cursor()
+        c.execute("PRAGMA foreign_keys = ON")
+        c.execute('''SELECT FOLDER FROM tblApp''')
+        sFolder = c.fetchone()[0]
+        conn.commit()
+    except Exception as e:
+        conn.rollback()
+        raise e
+    finally:
+        conn.close()
+
+    return sFolder
+
+
+def setUserFolder(sFolder):
+    filepath = path_to_db()
+    diversen.USER_FOLDER = sFolder
+
+    try:
+        conn = sqlite3.connect(filepath)
+        c = conn.cursor()
+        c.execute("PRAGMA foreign_keys = ON")
+        c.execute('''UPDATE tblApp SET FOLDER = ? ''', (sFolder,))
+#        bPreview = c.fetchone()[0]
+        conn.commit()
+    except Exception as e:
+        conn.rollback()
+        raise e
+    finally:
+        conn.close()
 
 
 def setUserDimensie(sDim):
