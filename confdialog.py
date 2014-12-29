@@ -20,8 +20,6 @@ class Configure(maingui.dlgConf):
     def oninitConfDialog(self, event):
         dims = getDimensies()
         self.choiceDimensie.SetItems(dims)
-#        self.choiceDimensie.SetSelection(3)
-#        self.choiceDimensie.SetStringSelection(getUserDimensie())
         self.choiceDimensie.SetSelection(getUserDimensieID() - 1)  # index loopt anders dus -1
         self.checkPreview.SetValue(getUserPreview())
         self.checkTooltip.SetValue(getUserTooltip())
