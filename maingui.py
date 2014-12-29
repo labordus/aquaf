@@ -19,7 +19,7 @@ class Mainframe ( wx.Frame ):
 	def __init__( self, parent ):
 		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Aquaforum upload programma", pos = wx.DefaultPosition, size = wx.Size( -1,-1 ), style = wx.CAPTION|wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
 		
-		self.SetSizeHintsSz( wx.Size( 850,800 ), wx.DefaultSize )
+		self.SetSizeHintsSz( wx.Size( 850,650 ), wx.DefaultSize )
 		self.SetBackgroundColour( wx.Colour( 116, 113, 162 ) )
 		
 		bSizer30 = wx.BoxSizer( wx.VERTICAL )
@@ -126,10 +126,15 @@ class Mainframe ( wx.Frame ):
 		bSizer39 = wx.BoxSizer( wx.VERTICAL )
 		
 		bSizer39.SetMinSize( wx.Size( 300,-1 ) ) 
+		bSizer28 = wx.BoxSizer( wx.VERTICAL )
+		
 		self.listFiles = wx.ListCtrl( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( -1,-1 ), wx.LC_HRULES|wx.LC_NO_SORT_HEADER|wx.LC_REPORT|wx.LC_SINGLE_SEL )
 		self.listFiles.SetMaxSize( wx.Size( 400,-1 ) )
 		
-		bSizer39.Add( self.listFiles, 1, wx.ALL|wx.EXPAND, 5 )
+		bSizer28.Add( self.listFiles, 1, wx.ALL|wx.EXPAND, 5 )
+		
+		
+		bSizer39.Add( bSizer28, 1, wx.EXPAND, 5 )
 		
 		self.btnUpload = wx.Button( self, wx.ID_ANY, u"Upload naar aquaforum", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.btnUpload.SetFont( wx.Font( wx.NORMAL_FONT.GetPointSize(), 70, 90, 92, False, wx.EmptyString ) )
@@ -150,7 +155,7 @@ class Mainframe ( wx.Frame ):
 		bSizer29 = wx.BoxSizer( wx.VERTICAL )
 		
 		self.btnArchief = wx.Button( self, wx.ID_ANY, u"Archief van de plaatjes", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.btnArchief.SetToolTipString( u"Klik hier voor een overzicht van alle foto's\ndie (met dit programma) zijn ge-upload\nnaar de server van aquaforum.nl" )
+		self.btnArchief.SetToolTipString( u"Klik hier voor een overzicht van de foto's\ndie op de server van aquaforum.nl staan." )
 		
 		bSizer29.Add( self.btnArchief, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.FIXED_MINSIZE, 3 )
 		
@@ -412,7 +417,7 @@ class dlgVoorbeeld ( wx.Dialog ):
 class dlgConf ( wx.Dialog ):
 	
 	def __init__( self, parent ):
-		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Configuratiescherm", pos = wx.DefaultPosition, size = wx.Size( 579,266 ), style = wx.CAPTION|wx.CLOSE_BOX )
+		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Configuratiescherm", pos = wx.DefaultPosition, size = wx.Size( 579,266 ), style = wx.CAPTION|wx.CLOSE_BOX|wx.TAB_TRAVERSAL )
 		
 		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
 		self.SetBackgroundColour( wx.Colour( 141, 139, 178 ) )
@@ -477,7 +482,6 @@ class dlgConf ( wx.Dialog ):
 		bSizer34.Add( self.m_staticline3, 0, wx.EXPAND |wx.ALL, 5 )
 		
 		self.btnAfsluiten = wx.Button( self, wx.ID_ANY, u"Afsluiten", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
-		self.btnAfsluiten.SetDefault() 
 		bSizer34.Add( self.btnAfsluiten, 0, wx.ALIGN_RIGHT|wx.ALL, 5 )
 		
 		
