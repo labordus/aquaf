@@ -48,9 +48,9 @@ class Configure(maingui.dlgConf):
     def onbtnImportClick(self, event):
         if db.IfAlreadyImported():
             dlg = wx.MessageDialog(None, 'Je hebt al eens eerder geimporteerd \n' +
-                                   'Nogmaals importeren betekend dat de oude gegevens nogmaals ' +
-                                   'zullen worden toegevoegd aan de huidige database, met dubbele entries tot gevolg.' +
-                                   'Weet je zeker dat je dit wilt doen?', 'Import', wx.YES_NO | wx.ICON_QUESTION)
+                                   'Nogmaals importeren kan geen kwaad \r' +
+                                   'Dubbele entries zullen worden voorkomen. \r' +
+                                   'Nogmaal importeren?', 'Import', wx.YES_NO | wx.ICON_QUESTION)
             result = dlg.ShowModal()
             if result == wx.ID_NO:
                 dlg.Destroy()
