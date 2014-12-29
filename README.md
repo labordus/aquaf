@@ -13,11 +13,12 @@ verder ontwikkeld door Mark Labordus - kellemes (bordumar@gmail.com)
 
 # Wat is er veranderd t.o.v v0.84
 
-* Configuratiescherm waarin je de volgende defaults kunt vastleggen..
-1- Of je een preview wilt zien bij het selecteren van een plaatje.
-2- Een beginwaarde voor de dimensies waarin je plaatjes wilt uploaden.
-3- Wat het beginpad moet zijn van de bestand-lijst.
+* Configuratiescherm waarin je verschillende defaults kunt vastleggen..
+1- Preview ja/nee
+2- Default upload-dimensie
+3- beginpad bestand-lijst.
 4- Gebruikersnaam.
+5- Tooltips ja/nee
 
 # Instructies voor installatie
 Gebruikers die nog gegevens van Riba's versie willen importeren kunnen dat doen vanuit het configuratiescherm.
