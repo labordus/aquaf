@@ -4,6 +4,7 @@
 - [x] add to history to db
 - [x] foutafhandeling bij het importeren. (wat als JSON nog steeds niet kan worden verwerkt? Test!!)
 - [ ] dubbele entries verwijderen uit db?
+- [x] dubbele entries voorkomen tijdens de import
 - [x] Progressindicatie bij.. genereren preview, uploaden
 - [x] alpha eruit slopen.
 - [x] Beginpad configuratie functioneel maken
