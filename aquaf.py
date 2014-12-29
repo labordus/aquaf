@@ -19,6 +19,8 @@ import uploaddialog
 # from mechanize._opener import urlopen
 import confdialog
 from db import DB2JSON, addURL2DB, getUserDimensieID, getUserName, getDimensies  # DBVersion
+from db import getUserFolder
+from wx import ToolTip
 
 AUQAOFORUM_PICTURE_URL = "http://www.aquaforum.nl/gallery/upload/"
 TEST_FOTO = "test.jpg"
@@ -110,23 +112,35 @@ class AquaFrame(maingui.Mainframe):
         print "Hoi " + userName
         print "Welkom bij Aquaf " + APP_VERSION
 
-#        self.radio_box_3.SetSelection(getUserDimensieID() - 1)
         self.choiceDimensie.SetSelection(getUserDimensieID() - 1)
+        ToolTip.Enable(diversen.USER_TOOLTIP)
 
-        from os.path import expanduser
-        home = expanduser("~")
-        # SetPath() triggert ontvFilesSelChanged()
-        # en dus ook PreviewImage()
-        self.tvFiles.SetPath(home)
+# ##########
+
+        diversen.USER_FOLDER = getUserFolder()
+        if diversen.USER_FOLDER == '' or diversen.USER_FOLDER is None:
+            from os.path import expanduser
+            pad = expanduser("~")
+            # SetPath() triggert ontvFilesSelChanged()
+            # en dus ook PreviewImage()
+        else:
+            pad = diversen.USER_FOLDER
+        self.tvFiles.SetPath(pad)
+
+# ##########
 
         dims = getDimensies()
         self.choiceDimensie.SetItems(dims)
         self.choiceDimensie.SetSelection(getUserDimensieID() - 1)  # index loopt anders dus -1
 
-        self.listFiles.InsertColumn(0, 'Bestand', width=135)
-        self.listFiles.InsertColumn(1, 'Dimensie', width=80)
+        self.listFiles.InsertColumn(0, 'Bestand', width=150)
+        self.listFiles.InsertColumn(1, 'Dimensie', width=75)
         # hidden-column(2) om het hele pad in te zetten.
-        self.listFiles.InsertColumn(2, 'Pad-hidden', width=0)
+        self.listFiles.InsertColumn(2, 'Pad', width=140)
+
+#        self.Layout()
+        self.panelPreview.Show(diversen.PREVIEW)
+        self.Fit()
 
     def onmenuitemClickImport(self, event):
         self.ShowImportDialog()
@@ -136,14 +150,20 @@ class AquaFrame(maingui.Mainframe):
         conf.CenterOnParent()
         conf.ShowModal()
         conf.Destroy()
-#        self.radio_box_3.SetSelection(getUserDimensieID() - 1)
+
+        ToolTip.Enable(diversen.USER_TOOLTIP)
         self.choiceDimensie.SetSelection(getUserDimensieID() - 1)
+        if diversen.USER_FOLDER:
+            self.tvFiles.SetPath(diversen.USER_FOLDER)
+
+        self.panelPreview.Show(diversen.PREVIEW)
+        self.Fit()
 
     def onmenuitemClickAbout(self, event):
         info = wx.AboutDialogInfo()
         info.Name = "Aquaf"
         info.Version = APP_VERSION
-        info.Copyright = "(C) 2010-2014"
+        info.Copyright = "(C) 2009-2014"
         info.Description = "Voor het uploaden van plaatjes naar http://www.aquaforum.nl/" + "\n" "en ook het (op de computer) opslaan van een persoonlijk archief van plaatjes die zijn ge-upload."
 #        info.Description = wordwrap(
 #            "Voor het uploaden van foto's naar http://www.aquaforum.nl/ "
@@ -151,8 +171,8 @@ class AquaFrame(maingui.Mainframe):
 #            "van foto's die zijn ge-upload. ",
 #            400, wx.ClientDC(self))
         info.WebSite = ("https://github.com/labordus/aquaf", "Aquaf home page")
-        info.Developers = ["Riba",
-                           "kellemes"]
+        info.Developers = ["Riba (2009)",
+                           "kellemes (2014-2015)"]
 
         wx.AboutBox(info)
 
