@@ -142,9 +142,6 @@ class AquaFrame(maingui.Mainframe):
         self.panelPreview.Show(diversen.PREVIEW)
         self.Fit()
 
-    def onmenuitemClickImport(self, event):
-        self.ShowImportDialog()
-
     def onmenuitemClickConf(self, event):
         conf = confdialog.Configure(self)
         conf.CenterOnParent()
