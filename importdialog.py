@@ -33,11 +33,11 @@ class ImportDialog(maingui.dlgImport):
             oudeJSON = dlg.GetPath()
             self.btnSelectJSON.Disable()
             try:
-                busyDlg = wx.BusyInfo('Bezig met importeren van plaatjes...')
+                busyDlg = wx.BusyInfo("""Bezig met importeren van foto's...""")
                 totaal, mislukt = ImportJSON2DB(oudeJSON)
                 del busyDlg
 
-                teksie = str(totaal - mislukt) + ' van de ' + str(totaal) + ' plaatjes zijn geimporteerd, dit venster kan nu afgesloten worden.'
+                teksie = str(totaal - mislukt) + """ van de """ + str(totaal) + """ foto's zijn geimporteerd, dit venster kan nu afgesloten worden."""
 #                if mislukt != 0:
 #                    teksie = teksie + '/r' + 'Dan waren er ' + mislukt + ' dubbel aanwezig'
                 self.m_staticText4.Label = teksie
