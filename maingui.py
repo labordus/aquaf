@@ -154,7 +154,7 @@ class Mainframe ( wx.Frame ):
 		
 		bSizer29 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.btnArchief = wx.Button( self, wx.ID_ANY, u"Archief van de plaatjes", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.btnArchief = wx.Button( self, wx.ID_ANY, u"Archief van de foto's", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.btnArchief.SetToolTipString( u"Klik hier voor een overzicht van de foto's\ndie op de server van aquaforum.nl staan." )
 		
 		bSizer29.Add( self.btnArchief, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.FIXED_MINSIZE, 3 )
@@ -307,7 +307,7 @@ class dlgImport ( wx.Dialog ):
 class dlgUploadDone ( wx.Dialog ):
 	
 	def __init__( self, parent ):
-		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Bericht", pos = wx.DefaultPosition, size = wx.Size( 727,358 ), style = wx.CAPTION|wx.CLOSE_BOX )
+		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Upload gelukt", pos = wx.DefaultPosition, size = wx.Size( 727,380 ), style = wx.CAPTION|wx.CLOSE_BOX )
 		
 		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
 		self.SetBackgroundColour( wx.Colour( 141, 139, 178 ) )
@@ -316,16 +316,16 @@ class dlgUploadDone ( wx.Dialog ):
 		
 		bSizer18 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.m_staticText5 = wx.StaticText( self, wx.ID_ANY, u"Het bericht is geplaatst op aquaforum. Je kan de volgende code gebruiken in je bericht:", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText5 = wx.StaticText( self, wx.ID_ANY, u"De foto's zijn geplaatst op de server van aquaforum.nl. Je kan de volgende code gebruiken in je bericht:", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText5.Wrap( -1 )
 		bSizer18.Add( self.m_staticText5, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
 		
 		
-		bSizer16.Add( bSizer18, 1, wx.ALL|wx.EXPAND, 5 )
+		bSizer16.Add( bSizer18, 0, wx.ALL|wx.EXPAND, 5 )
 		
 		bSizer19 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.text_ctrl_Code1 = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( -1,-1 ), wx.TE_MULTILINE )
+		self.text_ctrl_Code1 = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( -1,-1 ), wx.TE_MULTILINE|wx.TE_READONLY )
 		self.text_ctrl_Code1.SetMinSize( wx.Size( -1,127 ) )
 		
 		bSizer19.Add( self.text_ctrl_Code1, 0, wx.ALL|wx.EXPAND, 5 )
@@ -344,7 +344,7 @@ class dlgUploadDone ( wx.Dialog ):
 		
 		bSizer20 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.m_staticText6 = wx.StaticText( self, wx.ID_ANY, u"Als je op de knop \"Zet de code in het klembord (clipboard)\" drukt, dan kan je vervolgens naar het aquaforum surfen met je browser. \nMaak een bericht waar je het plaatje in wilt hebben, klik rechts met de muis in het bericht  en kies \"plakken\" (of \"paste\"). \nDan staat de code in het bericht.", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText6 = wx.StaticText( self, wx.ID_ANY, u"Als je op de knop \"Zet de code in het klembord (clipboard)\" drukt, dan kan je vervolgens naar het aquaforum surfen met je browser. \nMaak een bericht waar je de foto in wilt hebben, klik rechts met de muis in het bericht  en kies \"plakken\" (of \"paste\"). \nDan staat de code in het bericht.", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText6.Wrap( -1 )
 		bSizer20.Add( self.m_staticText6, 1, wx.ALL|wx.EXPAND, 5 )
 		
@@ -353,11 +353,11 @@ class dlgUploadDone ( wx.Dialog ):
 		
 		bSizer191 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.btnKlaar = wx.Button( self, wx.ID_ANY, u"Klaar", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.btnKlaar = wx.Button( self, wx.ID_ANY, u"Afsluiten", wx.DefaultPosition, wx.DefaultSize, 0 )
 		bSizer191.Add( self.btnKlaar, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
 		
 		
-		bSizer16.Add( bSizer191, 1, wx.EXPAND, 5 )
+		bSizer16.Add( bSizer191, 0, wx.EXPAND, 5 )
 		
 		
 		self.SetSizer( bSizer16 )
@@ -430,16 +430,16 @@ class dlgConf ( wx.Dialog ):
 		self.confedtLoginName.SetMaxLength( 0 ) 
 		gSizer1.Add( self.confedtLoginName, 0, wx.ALL|wx.EXPAND, 5 )
 		
-		self.m_staticText151 = wx.StaticText( self, wx.ID_ANY, u"Gebruikersnaam", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText151 = wx.StaticText( self, wx.ID_ANY, u"aquaforum.nl gebruikersnaam", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText151.Wrap( -1 )
 		gSizer1.Add( self.m_staticText151, 0, wx.ALL, 5 )
 		
-		self.dirpickFolder = wx.DirPickerCtrl( self, wx.ID_ANY, wx.EmptyString, u"Selecteer een folder", wx.Point( -1,-1 ), wx.DefaultSize, wx.DIRP_DEFAULT_STYLE|wx.DIRP_DIR_MUST_EXIST|wx.DIRP_USE_TEXTCTRL )
-		self.dirpickFolder.SetBackgroundColour( wx.Colour( 116, 113, 162 ) )
+		self.dirpickFolder = wx.DirPickerCtrl( self, wx.ID_ANY, wx.EmptyString, u"Selecteer een map", wx.Point( -1,-1 ), wx.DefaultSize, wx.DIRP_DEFAULT_STYLE|wx.DIRP_DIR_MUST_EXIST|wx.DIRP_USE_TEXTCTRL )
+		self.dirpickFolder.SetBackgroundColour( wx.Colour( 141, 139, 178 ) )
 		
 		gSizer1.Add( self.dirpickFolder, 0, wx.EXPAND, 5 )
 		
-		self.m_staticText9 = wx.StaticText( self, wx.ID_ANY, u"Standaard folder", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText9 = wx.StaticText( self, wx.ID_ANY, u"Standaard map", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText9.Wrap( -1 )
 		gSizer1.Add( self.m_staticText9, 0, wx.ALL, 5 )
 		
