@@ -10,7 +10,7 @@ DefaultGroupName=Aquaf
 Compression=lzma
 SolidCompression=yes
 VersionInfoVersion=0.85
-OutputBaseFilename=aquafsetup
+OutputBaseFilename=aquaf085_setup
 AppPublisher=kellemes
 
 [Files]
@@ -39,3 +39,6 @@ LanguageID=$0413
 
 [Languages]
 Name: "dutch"; MessagesFile: "compiler:Languages\Dutch.isl"
+
+[InstallDelete]
+Type: files; Name: "{group}\Aquaf v0.84.lnk"
