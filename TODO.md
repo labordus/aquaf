@@ -11,14 +11,15 @@
 - [x] met dubbelklik plaatje in uploadijst zetten
 - [x] Previewknop -> preview tonen van geselecteerde plaatje
 - [ ] Werken met toetsenbord (tab/enter) is een chaos.
-- [ ] Na upload listFiles wissen
+- [x] Na upload listFiles wissen
 - [x] Bij "geen Preview" .. preview-bitmap verwijderen.
 - [x] Tooltips aan/uit
-- [ ] eerste keer sluiten confdialog en het scherm wordt is groter .. self.fit()
+- [ ] eerste keer sluiten confdialog en het scherm wordt is groter .. self.fit() (Alleen Windows)
 - [ ] bij Preview = False wil ik de knoppen in het midden van het scherm.
 - [x] bij sluiten confdialog niet het treeview-pad verzetten.
 - [x] Windows -- tooltips zijn aan bij UIT
-- [ ] Image/Plaatje/Foto.. wat gaat het worden? Overal aanpassen.
+- [x] Image/Plaatje/Foto.. wat gaat het worden? Overal aanpassen. En folder/dir wordt MAP
+- [ ] Maak huidige directory default
 
 ##############
 'sceleton' db's bij de releases zetten
