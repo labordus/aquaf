@@ -133,7 +133,7 @@ class AquaFrame(maingui.Mainframe):
         info.Name = "Aquaf"
         info.Version = APP_VERSION
         info.Copyright = "(C) 2009-2014"
-        info.Description = "Voor het uploaden van plaatjes naar http://www.aquaforum.nl/" + "\n" "en ook het (op de computer) opslaan van een persoonlijk archief van plaatjes die zijn ge-upload."
+        info.Description = """Voor het uploaden van foto's naar http://www.aquaforum.nl/""" + """\n""" """en ook het (op de computer) opslaan van een persoonlijk archief van foto's die zijn ge-upload."""
         info.WebSite = ("https://github.com/labordus/aquaf", "Aquaf home page")
         info.Developers = ["Riba (2009)",
                            "kellemes (2014-2015)"]
@@ -242,7 +242,7 @@ class AquaFrame(maingui.Mainframe):
         for _i in range(self.listFiles.ItemCount):
             sPad = self.listFiles.GetItemText(_i, 2)
             if _pad == sPad:
-                print("Image is al toegevoegd")
+                print("""Foto is al toegevoegd""")
                 return
 
         if _pad != () and _pad != "":
@@ -300,7 +300,7 @@ class AquaFrame(maingui.Mainframe):
             print("Geen bestand geselecteerd")
             return
 
-        busyDlg = wx.BusyInfo('Bezig met converten en uploaden van de plaatjes...')
+        busyDlg = wx.BusyInfo("""Bezig met converten en uploaden van de foto's...""")
         urls = ""
         for _i in range(filecount):
             print('Uploading ' + self.listFiles.GetItemText(_i, 0))
@@ -317,11 +317,10 @@ class AquaFrame(maingui.Mainframe):
                 self.errorEx = er
                 del busyDlg
                 exit
-
+        self.listFiles.ClearAll()
         del busyDlg
         dlg = uploaddialog.UploadDoneDialog(self)
         dlg.setCode(urls)
-        self.listboxSelectedFiles.Clear()
         dlg.CenterOnParent()
         dlg.ShowModal()  # this one is non blocking!!
         dlg.Destroy()
