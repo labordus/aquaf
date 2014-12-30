@@ -16,7 +16,7 @@ verder ontwikkeld door Mark Labordus - kellemes (bordumar@gmail.com)
 * Configuratiescherm waarin je verschillende defaults kunt vastleggen..
 1- Preview ja/nee
 2- Default upload-dimensie
-3- beginpad bestand-lijst.
+3- beginMAP bestand-lijst.
 4- Gebruikersnaam.
 5- Tooltips ja/nee
 
@@ -29,10 +29,10 @@ Dit doe je dus maar 1 keer, anders zullen er dubbele entries in de database onts
 Data van aquaf 0.84 worden automagically geimporteerd.
 
 # Instructies voor gebruik..
-* Selecteer in de lijst links op het scherm een plaatje die je uploaden wilt,
+* Selecteer in de lijst links op het scherm een foto die je uploaden wilt,
 klik op de knop "toevoegen" zodat die wordt toegevoegd aan de lijst aan de rechter kant.
-Ga zo door totdat je alle plaatjes hebt toegevoegd die je wilt uploaden.
-* Selecteer de gewenste dimensies voor de te uploaden plaatjes.
+Ga zo door totdat je alle foto's hebt toegevoegd die je wilt uploaden.
+* Selecteer de gewenste dimensies voor de te uploaden foto's.
 * Klik op knop "upload naar aquaforum" en wacht op het volgende venster alwaar
 je de URL's kunt kopieren om in je forumbericht te plakken.
 
