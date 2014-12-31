@@ -46,10 +46,8 @@ class Configure(maingui.dlgConf):
     def onbtnImportClick(self, event):
         if db.IfAlreadyImported():
             dlg = wx.MessageDialog(None, """Je hebt al eens eerder geimporteerd \n""" +
-                                   """Nogmaals importeren heeft alleen zin als je \r""" +
-                                   """foto's hebt geimporteerd met Riba's versie. \r""" +
-                                   """Dubbele entries zullen worden voorkomen. \r""" +
-                                   """Nogmaal importeren?""", 'Import', wx.YES_NO | wx.ICON_QUESTION)
+                                   """Alleen nog niet bestaande foto's zullen worden geimporteerd. \r""" +
+                                   """Nogmaals importeren?""", 'Import', wx.YES_NO | wx.ICON_QUESTION)
             result = dlg.ShowModal()
             if result == wx.ID_NO:
                 dlg.Destroy()
