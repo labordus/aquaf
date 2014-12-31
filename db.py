@@ -26,10 +26,10 @@ def DBVersion():
             cursor = conn.cursor()
             cursor.execute("SELECT VERSIE FROM tblApp")
             rows = cursor.fetchall()
-#            for row in rows:
             s = str(rows[0][0])
             if s != '0.85':
-                cursor.execute("SELECT linkURL FROM tblLink")
+                # DISTINCT om eventueel aanwezige dubbele entries uit te filteren.
+                cursor.execute("SELECT DISTINCT linkURL FROM tblLink")
                 rows = cursor.fetchall()
                 for row in rows:
                     sUrl = str((row[0]))
@@ -123,7 +123,6 @@ def first_run():
         c = conn.cursor()
         c.execute("PRAGMA foreign_keys = ON")
         c.execute('SELECT FIRSTRUN FROM tblApp')
-#        firstrun = bool(c.fetchone()[0])
         firstrun = int(c.fetchone()[0])
         if firstrun == 1:
             c.execute('''UPDATE tblApp SET FIRSTRUN = ? WHERE ROWID = ? ''', (0, 1))
@@ -230,7 +229,6 @@ def SetImported():
         conn = sqlite3.connect(filepath)
         c = conn.cursor()
         c.execute("PRAGMA foreign_keys = ON")
-#        c.execute('SELECT IMPORTED FROM tblApp')
         c.execute('''UPDATE tblApp SET IMPORTED = ? WHERE ROWID = ? ''', (1, 1))
         conn.commit()
     except Exception as e:
@@ -247,10 +245,14 @@ def ImportJSON2DB(fileJSON):
 # Hier zet ik 'items' tussen double quotes.
 
     try:
-        raw_objs_string = open(fileJSON).read()  # read in raw data
-        raw_objs_string = raw_objs_string.replace('items:', '"items":')  # insert a comma between each object
-        objs_string = '[%s]' % (raw_objs_string)  # wrap in a list, to make valid json
-        data = json.loads(objs_string)  # parse json
+        # read in raw data
+        raw_objs_string = open(fileJSON).read()
+        # insert a comma between each object
+        raw_objs_string = raw_objs_string.replace('items:', '"items":')
+        # wrap in a list, to make valid json
+        objs_string = '[%s]' % (raw_objs_string)
+        # parse json
+        data = json.loads(objs_string)
     #    data = json.loads("[%s]" % (open(fileJSON).read().replace('items:', '"items":')))
     except ValueError:  # includes simplejson.decoder.JSONDecodeError
         #        print 'Decoding JSON has failed'
@@ -285,8 +287,8 @@ def addURL2DB(url):
         c.execute("INSERT INTO tblLink(linkURL) VALUES(?)", (url,))
         conn.commit()
     except sqlite3.IntegrityError:
-        conn.rollback()
-        raise sqlite3.IntegrityError
+        # Zal dubbele entry zijn.. dus laat maar waaien.
+        pass
 
     conn.close()
 
@@ -329,8 +331,6 @@ def getUserPreview():
 
 def setUserPreview(bPreview):
     filepath = path_to_db()
-#    global PREVIEW
-#    PREVIEW = bPreview
     diversen.PREVIEW = bPreview
     if bPreview:
         bPreview = 1
