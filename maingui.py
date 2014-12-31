@@ -50,9 +50,13 @@ class Mainframe ( wx.Frame ):
 		
 		bSizer13 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		bSizer4 = wx.BoxSizer( wx.HORIZONTAL )
+		bSizer4 = wx.BoxSizer( wx.VERTICAL )
 		
 		bSizer4.SetMinSize( wx.Size( 300,-1 ) ) 
+		self.m_staticText10 = wx.StaticText( self, wx.ID_ANY, u" Getoonde en ondersteunde formaten:\n JPG/JPEG - PNG - TIFF - BMP", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText10.Wrap( -1 )
+		bSizer4.Add( self.m_staticText10, 0, wx.ALL|wx.EXPAND, 0 )
+		
 		self.tvFiles = wx.GenericDirCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 300,-1 ), 0|wx.SUNKEN_BORDER, wx.EmptyString, 0 )
 		
 		self.tvFiles.ShowHidden( True )
