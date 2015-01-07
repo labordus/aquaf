@@ -4,6 +4,7 @@ import appdirs
 import json
 from diversen import APP_VERSION  # , PREVIEW
 import diversen
+import datetime
 
 old_urls = []
 old_username = None
@@ -13,6 +14,7 @@ old_dim = None
 default_username = ''
 default_dim = 2
 default_firstrun = 1
+default_datetimestamp = datetime.datetime(year=1968, month=8, day=27)  # Time wordt 0:00
 
 default_dimensies = [['800x600'], ['640x480'], ['320x240'], ['160x120']]
 
@@ -53,7 +55,8 @@ def Initialize_db():
     returnvalue = True
     filepath = path_to_db()
     try:
-        conn = sqlite3.connect(filepath)
+        #        conn = sqlite3.connect(filepath, detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
+        conn = sqlite3.connect(filepath, detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
         c = conn.cursor()
         c.execute("PRAGMA foreign_keys = ON")
         c.execute('''CREATE TABLE IF NOT EXISTS
@@ -69,7 +72,9 @@ def Initialize_db():
         c.execute('''CREATE TABLE IF NOT EXISTS
                       tblLink(
                       linkID INTEGER PRIMARY KEY NOT NULL,
-                      linkURL VARCHAR(200) UNIQUE)''')
+                      linkURL VARCHAR(200) UNIQUE,
+                      linkDATETIME TIMESTAMP,
+                      linkOM VARCHAR(200))''')
         c.execute('''CREATE TABLE IF NOT EXISTS
                       tblDim(
                       dimID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -89,7 +94,7 @@ def Initialize_db():
 # if len(rowarray_list_url[0]) != 0:
         if old_urls is not None:  # Er zijn nog urls weg te schrijven
             for r in old_urls:
-                c.execute("INSERT INTO tblLink(linkURL) VALUES(?)", (r,))
+                c.execute("INSERT INTO tblLink(linkURL,linkDATETIME) VALUES(?,?)", (r, default_datetimestamp))
 #                c.executemany('''INSERT INTO tblLink(linkURL)
 #                    VALUES(?)''', rowarray_list_url)
             conn.commit()
@@ -175,31 +180,137 @@ def setUsername(userName):
     print "Gebruikersnaam is nu " + userName
 
 
-def DB2JSON():
+def DB2Webfile():
     path = appdirs.user_data_dir('aquaf', False, False, False)
-    filepath = os.path.join(path, 'aquaf.json')
+    filepath = os.path.join(path, 'archive.html')
     dbpath = path_to_db()
-    connection = sqlite3.connect(dbpath)
+    connection = sqlite3.connect(dbpath, detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
     cursor = connection.cursor()
     cursor.execute("PRAGMA foreign_keys = ON")
-    cursor.execute("SELECT * FROM tblLink")
+#    cursor.execute("SELECT * FROM tblLink")
+#    sql = 'SELECT jobid, startedTime as "[timestamp]" FROM job'
+    cursor.execute('''SELECT linkURL, linkDATETIME as "[timestamp]" FROM tblLink''')
     rows = cursor.fetchall()
     if len(rows) == 0:  # Geen data? Return False
+        connection.close()
         return False
 
     rowarray_list = []
     for row in rows:
-        t = str((row[1]))
-        rowarray_list.append({"link": t})
-    j = json.dumps({'items': rowarray_list}, indent=2, separators=(',', ': '))
+        t = str((row[0]))  # link
+# d = str((row[1]))  # stamp
+        d = (row[1])  # stamp
+        if d == default_datetimestamp:
+            d = "onbekend"
+        else:
+            d = d.strftime("%d %B %Y")
+
+        rowarray_list.append({"img": t, "stamp": d})
+    html_json = json.dumps({'data': rowarray_list}, indent=2, separators=(',', ': '))
+
+    html_header = '''<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<link
+    href="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.3/fotorama.css"
+    rel="stylesheet">
+<STYLE>
+body {
+    background-image: url(http://www.aquaforum.nl/ubb/images/back1.png);
+    background-repeat: repeat;
+}
+
+.logobar {
+    padding: 0;
+}
+
+.maindiv {
+    BORDER-RIGHT: #363466 1px solid;
+    PADDING-RIGHT: 2px;
+    BORDER-TOP: #363466 1px solid;
+    PADDING-LEFT: 2px;
+    PADDING-BOTTOM: 2pt;
+    MARGIN-LEFT: auto;
+    BORDER-LEFT: #363466 1px solid;
+    WIDTH: 630px;
+    MARGIN-RIGHT: auto;
+    PADDING-TOP: 2pt;
+    BORDER-BOTTOM: #363466 1px solid;
+    POSITION: relative;
+}
+
+.fotorama, .fotorama-caption {
+    width: 800px;
+    max-width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.fotorama-caption {
+    text-align: center;
+    line-height: 1.5;
+    color: #CC0000;
+    font-family: Georgia, serif; strong { font-weight : normal;
+    color: #eee;
+}
+
+}
+.fotorama__thumb-border {
+    border-color: #FF0000;
+}
+</STYLE>
+
+<BODY>
+    <div align="center">
+        <div class="maindiv">
+            <table>
+                <tr>
+                    <td class="logobar" colspan="2"><a
+                        href="http://www.aquaforum.nl/ubb/ubbthreads.php"> <img
+                            border="0" style="display: block;"
+                            src="http://www.aquaforum.nl/ubb/images/forumbanner.gif" />
+                    </a></td>
+                </tr>
+            </table>
+        </div>
+        <div class="fotorama" data-nav="thumbs" data-keyboard="true"
+            data-navposition="bottom" data-fit="scaledown" data-width="800"
+            data-height="600" data-click="true"></div>
+        <p class="fotorama-caption"></p>
+        <a>Gebruik de bovenstaande code in het forum bericht</a>
+    </div>
+</BODY>
+
+<script
+    src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script
+    src="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.3/fotorama.js"></script>
+<script>
+    $('.fotorama')
+            .fotorama('''
+    html_footer = ''');
+
+    $('.fotorama').on(
+            'fotorama:show',
+            function(e, fotorama) {
+                fotorama.$caption = fotorama.$caption
+                        || $(this).next('.fotorama-caption');
+                var activeFrame = fotorama.activeFrame;
+                fotorama.$caption.html('<strong>' + activeFrame.img
+                        + '</strong><br>' + activeFrame.stamp);
+            }).fotorama();
+</script>
+</HTML>
+'''
+    html_alles = html_header + html_json + html_footer
 
     try:
         fp = open(filepath, "w")
     except IOError:
         # If not exists, create the file
         fp = open(filepath, "w+")
-    fp.write(j)
+    fp.write(html_alles)
     fp.close()
+
     connection.close()
 
     return True
@@ -258,7 +369,7 @@ def ImportJSON2DB(fileJSON):
         #        print 'Decoding JSON has failed'
         raise ValueError
 
-    conn = sqlite3.connect(dbpath)
+    conn = sqlite3.connect(dbpath, detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
     c = conn.cursor()
     c.execute("PRAGMA foreign_keys = ON")
     totaal = 0
@@ -266,7 +377,7 @@ def ImportJSON2DB(fileJSON):
     for line in data[0]["items"]:
         try:
             totaal += 1
-            c.execute("INSERT INTO tblLink(linkURL) VALUES(?)", (line["link"],))
+            c.execute("INSERT INTO tblLink(linkURL,linkDATETIME) VALUES(?,?)", (line["link"], default_datetimestamp))
             conn.commit()
         except sqlite3.IntegrityError:
             # Zullen dubbele entries zijn.. dus laat maar waaien.
@@ -278,13 +389,14 @@ def ImportJSON2DB(fileJSON):
 #    json_data.close()
 
 
-def addURL2DB(url):
+def addDATA2DB(url):
     dbpath = path_to_db()
-    conn = sqlite3.connect(dbpath)
+    conn = sqlite3.connect(dbpath, detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
+    vandaag = datetime.datetime.now()
     c = conn.cursor()
     c.execute("PRAGMA foreign_keys = ON")
     try:
-        c.execute("INSERT INTO tblLink(linkURL) VALUES(?)", (url,))
+        c.execute("INSERT INTO tblLink(linkURL, linkDATETIME) VALUES(?,?)", (url, vandaag))
         conn.commit()
     except sqlite3.IntegrityError:
         # Zal dubbele entry zijn.. dus laat maar waaien.
