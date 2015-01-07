@@ -1,3 +1,91 @@
+def DB2JSONSeperateFile():
+    path = appdirs.user_data_dir('aquaf', False, False, False)
+    filepath = os.path.join(path, 'aquaf.json')
+    dbpath = path_to_db()
+    connection = sqlite3.connect(dbpath)
+    cursor = connection.cursor()
+    cursor.execute("PRAGMA foreign_keys = ON")
+    cursor.execute("SELECT * FROM tblLink")
+    rows = cursor.fetchall()
+    if len(rows) == 0:  # Geen data? Return False
+        return False
+
+    rowarray_list = []
+    for row in rows:
+        t = str((row[1]))  # link
+        d = str((row[2]))  # stamp
+        rowarray_list.append({"link": t, "stamp": d})
+    j = json.dumps({'items': rowarray_list}, indent=2, separators=(',', ': '))
+
+    try:
+        fp = open(filepath, "w")
+    except IOError:
+        # If not exists, create the file
+        fp = open(filepath, "w+")
+    fp.write(j)
+    fp.close()
+    connection.close()
+
+    return True
+
+#############################################################################
+
+# class MyServer():
+#     HandlerClass = SimpleHTTPRequestHandler
+#     ServerClass = BaseHTTPServer.HTTPServer
+#     Protocol = "HTTP/1.0"
+#     server_address = ("127.0.0.1", 8000)
+#     HandlerClass.protocol_version = Protocol
+#     httpd = ServerClass(server_address, HandlerClass)
+#
+#     def run(self):
+# sa = self.httpd.socket.getsockname()
+# print "Served HTTP on", sa[0], "port", sa[1], "..."
+#         import appdirs
+#         datapad = appdirs.user_data_dir('aquaf', False, False, False)
+#         os.chdir(datapad)
+#
+#         thread = threading.Thread(target=self.httpd.serve_forever)
+#         thread.deamon = True
+#         thread.start()
+#         sleep(0.25)
+#
+#     def stop(self):
+#         self.httpd.shutdown()
+#         os.chdir(oudepad)
+
+class MyBrowser(wx.Dialog):
+
+    def __init__(self, *args, **kwds):
+        wx.Dialog.__init__(self, *args, **kwds)
+#        self.SetWindowStyleFlag(wx.RESIZE_BORDER)
+#        self.SetWindowStyle(wx.RESIZE_BORDER | wx.CAPTION)
+        self.SetWindowStyleFlag(wx.RESIZE_BORDER | wx.DEFAULT_DIALOG_STYLE | wx.MAXIMIZE_BOX)
+        sizer = wx.BoxSizer(wx.VERTICAL)
+        self.browser = wx.html2.WebView.New(self)
+        sizer.Add(self.browser, 1, wx.EXPAND, 10)
+        self.SetSizer(sizer)
+        self.SetSize((800, 900))
+        self.Bind(wx.EVT_CLOSE, self.oncloseMyBrowser)
+#        serve = MyServer()
+#        MyServer.run(serve)
+
+    def oncloseMyBrowser(self, event):
+        #         serve = MyServer()
+        #         MyServer.stop(serve)
+        #         event.Skip()
+
+        # verwijder aquaf.json
+#         import appdirs
+#         path = appdirs.user_data_dir('aquaf', False, False, False)
+#         filepath = os.path.join(path, 'archive.html')
+#         try:
+#             os.remove(filepath)
+#         except OSError:
+#             pass
+
+#############################################################################
+
 def IsEmpty_JSON():
     path = appdirs.user_data_dir('aquaf', False, False, False)
     filepath = os.path.join(path, 'aquaf.json')
