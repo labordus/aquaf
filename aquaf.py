@@ -9,7 +9,7 @@ from diversen import *
 
 import uploaddialog
 import confdialog
-from db import DB2JSON, addURL2DB, getUserDimensieID, getUserName, getDimensies  # DBVersion
+from db import DB2Webfile, addDATA2DB, getUserDimensieID, getUserName, getDimensies  # DBVersion
 from db import getUserFolder, getUserTooltip
 from wx import ToolTip
 
@@ -139,24 +139,6 @@ class AquaFrame(maingui.Mainframe):
                            "kellemes (2014-2015)"]
 
         wx.AboutBox(info)
-
-    def onbtnArchiefClick(self, event):
-        #        webbrowser.get("chrome").open_new_tab(theArchive)
-        #        webbrowser.get("firefox").open_new(theArchive)
-        if not DB2JSON():
-            print 'Niets te tonen'
-            return
-
-        from archiveview import MyBrowser
-        weburl = "http://127.0.0.1:8000/archive.html"
-
-        dialog = MyBrowser(None, -1)
-        dialog.browser.LoadURL(weburl)
-        dialog.CenterOnParent()
-        dialog.ShowModal()
-        dialog.Destroy()
-        #        launch_archive('firefox')
-        return
 
     def onbtnVoorbeeldClick(self, event):
         # Als er een plaatje is geselecteerd..
@@ -309,7 +291,7 @@ class AquaFrame(maingui.Mainframe):
                 resizedFilename = ResizeImage(
                     self.listFiles.GetItemText(_i, 2), dimensions)
                 desiredName = DumpImage(resizedFilename, getUserName(), self.listFiles.GetItemText(_i, 2))
-                addURL2DB(AUQAOFORUM_PICTURE_URL + desiredName)
+                addDATA2DB(AUQAOFORUM_PICTURE_URL + desiredName)
                 urls = urls + " [IMG]" + AUQAOFORUM_PICTURE_URL + desiredName + "[/IMG]" + "\n"
 
             except Exception as er:
@@ -324,6 +306,30 @@ class AquaFrame(maingui.Mainframe):
         dlg.CenterOnParent()
         dlg.ShowModal()  # this one is non blocking!!
         dlg.Destroy()
+
+    def onbtnArchiefClick(self, event):
+        import appdirs
+        path = appdirs.user_data_dir('aquaf', False, False, False)
+# constructie van URL cross-safe?
+        weburl = "file://" + os.path.join(path, 'archive.html')
+
+        if not DB2Webfile():
+            print 'Niets te tonen'
+            return
+
+        from archiveview import MyBrowser
+
+        dialog = MyBrowser(None, -1)
+        dialog.browser.LoadURL(weburl)
+        dialog.CenterOnParent()
+        dialog.ShowModal()
+        dialog.Destroy()
+        return
+
+    def onTest(self, event):
+        import datetime
+        vandaag = datetime.datetime.now()
+        print vandaag
 
 app = wx.App(False)
 
