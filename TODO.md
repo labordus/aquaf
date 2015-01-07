@@ -1,5 +1,7 @@
 - [x] dimensie per individueel plaatje
 - [ ] Beschrijving kunnen meegeven
+- [ ] DateTime meegeven?
+- [ ] store size/dimensie van uploaded foto?
 - [x] add to history to db
 - [x] foutafhandeling bij het importeren. (wat als JSON nog steeds niet kan worden verwerkt? Test!!)
 - [x] dubbele entries verwijderen uit DB versie 0.84 voordat ik importeer .. DISTINCT?
