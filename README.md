@@ -4,6 +4,7 @@
 * Configuratiescherm waarin je verschillende defaults in de database kunt vastleggen..
 * Preview van foto's kan worden uitgeschakeld.
 * Eventuele dubbel aanwezige foto's in de database worden verwijderd en voorkomen.
+* Nieuwe archief-pagina.
 
 # 2014 29 november : Versie 0.84 :
 * Je kunt nu meerdere plaatjes klaarzetten om in 1 ruk te kunnen uploaden.
