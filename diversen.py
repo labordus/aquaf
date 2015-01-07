@@ -115,7 +115,7 @@ def DumpImage(im, username, filename):
             return
 
     desiredName = constructUploadName(username, filename)
-    uploadFileToAquaforum(path, desiredName)
+#    uploadFileToAquaforum(path, desiredName)
     return desiredName
 
 
