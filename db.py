@@ -187,9 +187,7 @@ def DB2Webfile():
     connection = sqlite3.connect(dbpath, detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
     cursor = connection.cursor()
     cursor.execute("PRAGMA foreign_keys = ON")
-#    cursor.execute("SELECT * FROM tblLink")
-#    sql = 'SELECT jobid, startedTime as "[timestamp]" FROM job'
-    cursor.execute('''SELECT linkURL, linkDATETIME as "[timestamp]" FROM tblLink''')
+    cursor.execute('''SELECT linkURL, linkDATETIME as "[timestamp]" FROM tblLink ORDER BY linkDATETIME''')
     rows = cursor.fetchall()
     if len(rows) == 0:  # Geen data? Return False
         connection.close()
@@ -198,7 +196,6 @@ def DB2Webfile():
     rowarray_list = []
     for row in rows:
         t = str((row[0]))  # link
-# d = str((row[1]))  # stamp
         d = (row[1])  # stamp
         if d == default_datetimestamp:
             d = "onbekend"
@@ -208,19 +205,26 @@ def DB2Webfile():
         rowarray_list.append({"img": t, "stamp": d})
     html_json = json.dumps({'data': rowarray_list}, indent=2, separators=(',', ': '))
 
-    html_header = '''<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<HTML>
+    html_header = '''<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Aquaf foto overzicht</title>
+<link rel="icon" type="image/png"
+    href="http://www.aquaforum.nl/favicon.ico">
 <link
     href="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.3/fotorama.css"
     rel="stylesheet">
-<STYLE>
+<style type="text/css">
 body {
     background-image: url(http://www.aquaforum.nl/ubb/images/back1.png);
     background-repeat: repeat;
+    text-align: center;
 }
 
 .logobar {
     padding: 0;
+    border: 0;
 }
 
 .maindiv {
@@ -257,49 +261,52 @@ body {
 .fotorama__thumb-border {
     border-color: #FF0000;
 }
-</STYLE>
-
-<BODY>
-    <div align="center">
-        <div class="maindiv">
-            <table>
-                <tr>
-                    <td class="logobar" colspan="2"><a
-                        href="http://www.aquaforum.nl/ubb/ubbthreads.php"> <img
-                            border="0" style="display: block;"
-                            src="http://www.aquaforum.nl/ubb/images/forumbanner.gif" />
-                    </a></td>
-                </tr>
-            </table>
-        </div>
-        <div class="fotorama" data-nav="thumbs" data-keyboard="true"
-            data-navposition="bottom" data-fit="scaledown" data-width="800"
-            data-height="600" data-click="true"></div>
-        <p class="fotorama-caption"></p>
-        <a>Gebruik de bovenstaande code in het forum bericht</a>
+</style>
+</head>
+<body>
+    <div class="maindiv">
+        <table>
+            <tr>
+                <td class="logobar"><a
+                    href="http://www.aquaforum.nl/ubb/ubbthreads.php"> <img
+                        style="display: block;"
+                        src="http://www.aquaforum.nl/ubb/images/forumbanner.gif"
+                        alt="Aquaforum.nl banner">
+                </a></td>
+            </tr>
+        </table>
     </div>
-</BODY>
+    <div class="fotorama" data-nav="thumbs" data-keyboard="true"
+        data-navposition="bottom" data-fit="scaledown" data-width="800"
+        data-height="600" data-click="true"></div>
+    <p class="fotorama-caption"></p>
+    <a>Gebruik de bovenstaande code (de [IMG]-tags en alles ertussen)
+        in het forum bericht</a>
 
-<script
-    src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script
-    src="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.3/fotorama.js"></script>
-<script>
-    $('.fotorama')
-            .fotorama('''
+
+    <script type="text/javascript"
+        src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript"
+        src="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.3/fotorama.js"></script>
+    <script type="text/javascript">
+        $('.fotorama')
+                .fotorama('''
     html_footer = ''');
 
-    $('.fotorama').on(
-            'fotorama:show',
-            function(e, fotorama) {
-                fotorama.$caption = fotorama.$caption
-                        || $(this).next('.fotorama-caption');
-                var activeFrame = fotorama.activeFrame;
-                fotorama.$caption.html('<strong>' + activeFrame.img
-                        + '</strong><br>' + activeFrame.stamp);
-            }).fotorama();
-</script>
-</HTML>
+        $('.fotorama').on(
+                'fotorama:show',
+                function(e, fotorama) {
+                    fotorama.$caption = fotorama.$caption
+                            || $(this).next('.fotorama-caption');
+                    var activeFrame = fotorama.activeFrame;
+                    fotorama.$caption.html('<strong>' + '[IMG]'
+                            + activeFrame.img + '[/IMG]' + '</strong><br>'
+                            + 'Uploaddatum: ' + activeFrame.stamp);
+                }).fotorama();
+    </script>
+</body>
+</html>
+
 '''
     html_alles = html_header + html_json + html_footer
 
