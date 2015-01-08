@@ -12,7 +12,6 @@ import confdialog
 from db import DB2Webfile, addDATA2DB, getUserDimensieID, getUserName, getDimensies  # DBVersion
 from db import getUserFolder, getUserTooltip
 from wx import ToolTip
-
 AUQAOFORUM_PICTURE_URL = "http://www.aquaforum.nl/gallery/upload/"
 TEST_FOTO = "test.jpg"
 FRONT_FOTO = "front.jpg"
@@ -327,9 +326,7 @@ class AquaFrame(maingui.Mainframe):
         return
 
     def onTest(self, event):
-        import datetime
-        vandaag = datetime.datetime.now()
-        print vandaag
+        print('onTest')
 
 app = wx.App(False)
 
