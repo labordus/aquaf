@@ -1,6 +1,5 @@
 - [ ] Toch nog even oude versie van webpagina blijven aanbieden.
 - [x] HTML/CSS/Javascript/JSON vanuit code genereren en in 1 bestand houden, kan ik de HTTPserver dumpen.
-- [x] dimensie per plaatje opslaan in DB
 - [x] DateTime-stamp per plaatje opslaan in DB
 - [x] size/dimensie per plaatje opslaan in DB
 - [ ] Beschrijving per plaatje opslaan in DB
