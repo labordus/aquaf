@@ -106,6 +106,7 @@ def DumpImage(im, username, filename):
                 im = im.convert("RGB")
             im.save(path, "JPEG", quality=_x, optimize=True)
             filesize = os.path.getsize(path)
+            dimWidth, dimHeight = (im.size[0], im.size[1])
             if filesize <= 200000:
                 break
         except IOError as er:
@@ -113,10 +114,9 @@ def DumpImage(im, username, filename):
             os.close(fd)
             os.remove(path)
             return
-
     desiredName = constructUploadName(username, filename)
-#    uploadFileToAquaforum(path, desiredName)
-    return desiredName
+    uploadFileToAquaforum(path, desiredName)
+    return desiredName, dimWidth, dimHeight
 
 
 def uploadFileToAquaforum(uploadFilename, requestedFileName):
