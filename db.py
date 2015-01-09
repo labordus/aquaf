@@ -74,6 +74,8 @@ def Initialize_db():
                       linkID INTEGER PRIMARY KEY NOT NULL,
                       linkURL VARCHAR(200) UNIQUE,
                       linkDATETIME TIMESTAMP,
+                      linkWIDTH INTEGER,
+                      linkHEIGHT INTEGER,
                       linkOM VARCHAR(200))''')
         c.execute('''CREATE TABLE IF NOT EXISTS
                       tblDim(
@@ -190,7 +192,7 @@ def DB2Webfile():
     connection = sqlite3.connect(dbpath, detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
     cursor = connection.cursor()
     cursor.execute("PRAGMA foreign_keys = ON")
-    cursor.execute('''SELECT linkURL, linkDATETIME as "[timestamp]" FROM tblLink ORDER BY linkDATETIME''')
+    cursor.execute('''SELECT linkURL, linkDATETIME as "[timestamp]", linkWidth, linkHeight FROM tblLink ORDER BY linkDATETIME''')
     rows = cursor.fetchall()
     if len(rows) == 0:  # Geen data? Return False
         connection.close()
@@ -200,11 +202,16 @@ def DB2Webfile():
     for row in rows:
         t = str((row[0]))  # link
         d = (row[1])  # stamp
+        w = (row[2])  # width
+        h = (row[3])  # height
         if d == default_datetimestamp:
             d = "onbekend"
         else:
             d = d.strftime("%d %B %Y")
-        rowarray_list.append({"img": t, "stamp": d})
+        if (w is None or h is None):
+            w = 0
+            h = 0
+        rowarray_list.append({"img": t, "stamp": d, "width": w, "height": h})
 
     html_json = json.dumps({'data': rowarray_list}, indent=2, separators=(',', ': '))
 
@@ -299,14 +306,14 @@ def ImportJSON2DB(fileJSON):
 #    json_data.close()
 
 
-def addDATA2DB(url):
+def addDATA2DB(url, dimWidth, dimHeight):
     dbpath = path_to_db()
     conn = sqlite3.connect(dbpath, detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
     vandaag = datetime.datetime.now()
     c = conn.cursor()
     c.execute("PRAGMA foreign_keys = ON")
     try:
-        c.execute("INSERT INTO tblLink(linkURL, linkDATETIME) VALUES(?,?)", (url, vandaag))
+        c.execute("INSERT INTO tblLink(linkURL, linkDATETIME, linkWIDTH, linkHeight) VALUES(?,?,?,?)", (url, vandaag, dimWidth, dimHeight))
         conn.commit()
     except sqlite3.IntegrityError:
         # Zal dubbele entry zijn.. dus laat maar waaien.
