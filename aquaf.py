@@ -289,8 +289,9 @@ class AquaFrame(maingui.Mainframe):
                 dimensions = StringToTupleDimensions(self.listFiles.GetItemText(_i, 1))
                 resizedFilename = ResizeImage(
                     self.listFiles.GetItemText(_i, 2), dimensions)
-                desiredName = DumpImage(resizedFilename, getUserName(), self.listFiles.GetItemText(_i, 2))
-                addDATA2DB(AUQAOFORUM_PICTURE_URL + desiredName)
+                desiredName, dimWidth, dimHeight = DumpImage(resizedFilename, getUserName(), self.listFiles.GetItemText(_i, 2))
+                url = AUQAOFORUM_PICTURE_URL + desiredName
+                addDATA2DB(url, dimWidth, dimHeight)
                 urls = urls + " [IMG]" + AUQAOFORUM_PICTURE_URL + desiredName + "[/IMG]" + "\n"
 
             except Exception as er:
@@ -324,9 +325,6 @@ class AquaFrame(maingui.Mainframe):
         dialog.ShowModal()
         dialog.Destroy()
         return
-
-    def onTest(self, event):
-        print('onTest')
 
 app = wx.App(False)
 
