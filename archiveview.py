@@ -16,7 +16,7 @@ class MyBrowser(wx.Dialog):
         self.browser = wx.html2.WebView.New(self)
         sizer.Add(self.browser, 1, wx.EXPAND, 10)
         self.SetSizer(sizer)
-        self.SetSize((800, 900))
+        self.SetSize((820, 960))
         self.Bind(wx.EVT_CLOSE, self.oncloseMyBrowser)
 
     def oncloseMyBrowser(self, event):
