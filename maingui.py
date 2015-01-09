@@ -156,15 +156,12 @@ class Mainframe ( wx.Frame ):
 		
 		bSizer28 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		bSizer29 = wx.BoxSizer( wx.HORIZONTAL )
+		bSizer29 = wx.BoxSizer( wx.VERTICAL )
 		
 		self.btnArchief = wx.Button( self, wx.ID_ANY, u"Archief van de foto's", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.btnArchief.SetToolTipString( u"Klik hier voor een overzicht van de foto's\ndie op de server van aquaforum.nl staan." )
 		
 		bSizer29.Add( self.btnArchief, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.FIXED_MINSIZE, 3 )
-		
-		self.m_button11 = wx.Button( self, wx.ID_ANY, u"MyButton", wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer29.Add( self.m_button11, 0, wx.ALL, 5 )
 		
 		
 		bSizer28.Add( bSizer29, 0, wx.ALL|wx.EXPAND, 5 )
@@ -210,7 +207,6 @@ class Mainframe ( wx.Frame ):
 		self.listFiles.Bind( wx.EVT_LIST_ITEM_SELECTED, self.onlistFilesSelected )
 		self.btnUpload.Bind( wx.EVT_BUTTON, self.onbtnUploadClick )
 		self.btnArchief.Bind( wx.EVT_BUTTON, self.onbtnArchiefClick )
-		self.m_button11.Bind( wx.EVT_BUTTON, self.onTest )
 		self.Bind( wx.EVT_MENU, self.onmenuitemClickConf, id = self.menuitemConf.GetId() )
 		self.Bind( wx.EVT_MENU, self.onmenuitemClickAbout, id = self.menuAbout.GetId() )
 	
@@ -241,9 +237,6 @@ class Mainframe ( wx.Frame ):
 		event.Skip()
 	
 	def onbtnArchiefClick( self, event ):
-		event.Skip()
-	
-	def onTest( self, event ):
 		event.Skip()
 	
 	def onmenuitemClickConf( self, event ):
