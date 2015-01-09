@@ -20,3 +20,5 @@ met foto's die met deze versie van Aquaf zijn geupload.
 * Kwaliteit van de plaatjes wordt zo maximaal mogelijk gehouden voor upload.
 * Gebruikersnaam hoeft niet telkens opnieuw te worden ingevoerd.
 * Eigen browser-component die los van de geinstalleerde browser(s) functioneerd.
+
+[ToDo](TODO.md)
