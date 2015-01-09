@@ -1,7 +1,9 @@
-- [x] dimensie per individueel plaatje
-- [ ] Beschrijving kunnen meegeven
-- [ ] DateTime meegeven?
-- [ ] store size/dimensie van uploaded foto?
+- [ ] Toch nog even oude versie van webpagina blijven aanbieden.
+- [x] HTML/CSS/Javascript/JSON vanuit code genereren en in 1 bestand houden, kan ik de HTTPserver dumpen.
+- [x] dimensie per plaatje opslaan in DB
+- [x] DateTime-stamp per plaatje opslaan in DB
+- [x] size/dimensie per plaatje opslaan in DB
+- [ ] Beschrijving per plaatje opslaan in DB
 - [x] add to history to db
 - [x] foutafhandeling bij het importeren. (wat als JSON nog steeds niet kan worden verwerkt? Test!!)
 - [x] dubbele entries verwijderen uit DB versie 0.84 voordat ik importeer .. DISTINCT?
@@ -23,7 +25,7 @@
 - [x] Windows -- tooltips zijn AAN bij UIT
 - [x] Image/Plaatje wordt FOTO en folder/directory wordt MAP.. overal aanpassen.
 - [ ] Maak huidige directory default. Knoppie of context-sensitive popupmenu op right-click?
-- [ ] Archive.html wil ik aanpakken.. is lastige klus.
+- [x] Archive.html wil ik aanpakken.. is lastige K-klus.
 - [ ] Gebruikershandleiding cq. stappenoverzicht met plaatjes maken.
 - [x] Tijdens installatie "aquaf v0.84" verwijderen uit het Windows-startmenu.
 - [ ] Moet iets verzinnen op de listctrl, setitemdata/getitemdata etc..
