@@ -3,7 +3,11 @@ wat moet ik anders in deze gure wintermaanden ;)
 Neemt niet weg dat ik het vooralsnog als een test/beta-versie zie..
 Bij een volgende versie zal ik me (proberen te) beperken tot de puntjes op de i.
 
-## Changelog
+Als er dingen zijn die anders moeten cq. beter kunnen cq niet goed gaan.. laat het me
+weten, dat kan gaan om crashes of andere 'ernstige' fouten tot aan spelfouten of wat ook.
+Stuur me dan even een PB'tje of zet het in het forum-draadje.
+
+
 # 2015 10 januari : Versie 0.85 :
 * Je kunt nu per individuele foto aangeven in welke dimensie je het wilt uploaden.
 * Configuratiescherm waarin je verschillende defaults in de database kunt vastleggen..
