@@ -436,7 +436,7 @@ class dlgConf ( wx.Dialog ):
 		
 		self.confedtLoginName = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 180,-1 ), 0 )
 		self.confedtLoginName.SetMaxLength( 0 ) 
-		gSizer1.Add( self.confedtLoginName, 0, wx.ALL|wx.EXPAND, 5 )
+		gSizer1.Add( self.confedtLoginName, 0, wx.ALL|wx.EXPAND, 1 )
 		
 		self.m_staticText151 = wx.StaticText( self, wx.ID_ANY, u"aquaforum.nl gebruikersnaam", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText151.Wrap( -1 )
@@ -450,6 +450,13 @@ class dlgConf ( wx.Dialog ):
 		self.m_staticText9 = wx.StaticText( self, wx.ID_ANY, u"Standaard map", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText9.Wrap( -1 )
 		gSizer1.Add( self.m_staticText9, 0, wx.ALL, 5 )
+		
+		self.checkWebNieuw = wx.CheckBox( self, wx.ID_ANY, u"Gebruik nieuwe archiefpagina (experimenteel)", wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer1.Add( self.checkWebNieuw, 0, wx.ALL, 5 )
+		
+		self.m_staticText12 = wx.StaticText( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText12.Wrap( -1 )
+		gSizer1.Add( self.m_staticText12, 0, wx.ALL, 5 )
 		
 		self.checkPreview = wx.CheckBox( self, wx.ID_ANY, u"Preview foto's?", wx.DefaultPosition, wx.DefaultSize, 0 )
 		gSizer1.Add( self.checkPreview, 0, wx.ALL, 5 )
@@ -505,6 +512,7 @@ class dlgConf ( wx.Dialog ):
 		self.Bind( wx.EVT_INIT_DIALOG, self.oninitConfDialog )
 		self.confedtLoginName.Bind( wx.EVT_KILL_FOCUS, self.onconfedtLoginNameKillFocus )
 		self.dirpickFolder.Bind( wx.EVT_DIRPICKER_CHANGED, self.ondirpickFolderChange )
+		self.checkWebNieuw.Bind( wx.EVT_CHECKBOX, self.oncheckWebNieuwClick )
 		self.checkPreview.Bind( wx.EVT_CHECKBOX, self.oncheckPreviewClick )
 		self.choiceDimensie.Bind( wx.EVT_CHOICE, self.onChoiceDimensies )
 		self.checkTooltip.Bind( wx.EVT_CHECKBOX, self.oncheckTooltipClick )
@@ -523,6 +531,9 @@ class dlgConf ( wx.Dialog ):
 		event.Skip()
 	
 	def ondirpickFolderChange( self, event ):
+		event.Skip()
+	
+	def oncheckWebNieuwClick( self, event ):
 		event.Skip()
 	
 	def oncheckPreviewClick( self, event ):
