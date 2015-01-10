@@ -4,8 +4,7 @@
 import wx
 import maingui
 import db
-from db import getDimensies, getUserDimensieID, setUserDimensie, getUserPreview,\
-    setUserFolder, getUserTooltip
+from db import getDimensies, getUserDimensieID, setUserDimensie, getUserPreview, setUserFolder, getUserTooltip, getUserWebNieuw
 import importdialog
 import diversen
 
@@ -23,6 +22,7 @@ class Configure(maingui.dlgConf):
         self.choiceDimensie.SetSelection(getUserDimensieID() - 1)  # index loopt anders dus -1
         self.checkPreview.SetValue(getUserPreview())
         self.checkTooltip.SetValue(getUserTooltip())
+        self.checkWebNieuw.SetValue(getUserWebNieuw())
         userName = db.getUsername()
         self.confedtLoginName.SetValue(userName)
 
@@ -73,6 +73,9 @@ class Configure(maingui.dlgConf):
 
     def oncheckTooltipClick(self, event):
         db.setUserTooltip(self.checkTooltip.IsChecked())
+
+    def oncheckWebNieuwClick(self, event):
+        db.setUserWebNieuw(self.checkWebNieuw.IsChecked())
 
     def onbtnAfsluitenClick(self, event):
         self.EndModal(wx.ID_OK)
