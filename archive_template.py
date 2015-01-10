@@ -77,7 +77,7 @@ body {
     <script type="text/javascript"
         src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script type="text/javascript"
-        src="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.3/fotorama.js"></script>
+        src="fotorama.js"></script>
     <script type="text/javascript">
         $('.fotorama')
                 .fotorama($jsoncontent);
