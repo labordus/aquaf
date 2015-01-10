@@ -9,7 +9,7 @@ from diversen import *
 
 import uploaddialog
 import confdialog
-from db import DB2Webfile, addDATA2DB, getUserDimensieID, getUserName, getDimensies  # DBVersion
+from db import DB2JSON, DB2Webfile, addDATA2DB, getUserDimensieID, getUserPreview, getUserWebNieuw, getUserName, getDimensies  # DBVersion
 from db import getUserFolder, getUserTooltip
 from wx import ToolTip
 AUQAOFORUM_PICTURE_URL = "http://www.aquaforum.nl/gallery/upload/"
@@ -62,7 +62,8 @@ class AquaFrame(maingui.Mainframe):
 #            if result == wx.ID_YES:
 #                dlg.Destroy()
 
-        diversen.PREVIEW = db.getUserPreview()
+        diversen.PREVIEW = getUserPreview()
+        diversen.USER_WEBNIEUW = getUserWebNieuw()
 
         _icon = wx.EmptyIcon()
         _icon.CopyFromBitmap(wx.Bitmap("icon.ico", wx.BITMAP_TYPE_ANY))
@@ -259,6 +260,11 @@ class AquaFrame(maingui.Mainframe):
 #        bl = self.listboxSelectedFiles.GetClientData(self.listboxSelectedFiles.GetSelection())
 
     def onbtnUploadClick(self, event):
+        filecount = self.listFiles.GetItemCount()
+        if filecount <= 0:
+            print("Geen bestand geselecteerd")
+            return
+
         if not getUserName():
             dlg = wx.TextEntryDialog(
                 self, 'Voer hier je aquaforum.nl gebruikersnaam in..',
@@ -275,11 +281,6 @@ class AquaFrame(maingui.Mainframe):
                 dlg.Destroy()
                 return
             dlg.Destroy()
-
-        filecount = self.listFiles.GetItemCount()
-        if filecount <= 0:
-            print("Geen bestand geselecteerd")
-            return
 
         busyDlg = wx.BusyInfo("""Bezig met converten en uploaden van de foto's...""")
         urls = ""
@@ -308,23 +309,42 @@ class AquaFrame(maingui.Mainframe):
         dlg.Destroy()
 
     def onbtnArchiefClick(self, event):
-        import appdirs
-        path = appdirs.user_data_dir('aquaf', False, False, False)
-# constructie van URL cross-safe?
-        weburl = "file://" + os.path.join(path, 'archive.html')
 
-        if not DB2Webfile():
-            print 'Niets te tonen'
+        if diversen.USER_WEBNIEUW:
+            # ########### NIEUWE WEBSITE ####################
+            import appdirs
+            path = appdirs.user_data_dir('aquaf', False, False, False)
+            # constructie van URL cross-safe?
+            weburl = "file://" + os.path.join(path, 'archivenew.html')
+
+            if not DB2Webfile():
+                print 'Niets te tonen'
+                return
+
+            from archiveview import MyBrowserNew
+
+            dialog = MyBrowserNew(None, -1)
+            dialog.browser.LoadURL(weburl)
+            dialog.CenterOnParent()
+            dialog.ShowModal()
+            dialog.Destroy()
             return
+        else:
+            # ########### OUDE WEBSITE ####################
+            if not DB2JSON():
+                print 'Niets te tonen'
+                return
 
-        from archiveview import MyBrowser
+            from archiveview import MyBrowser
+            weburl = "http://127.0.0.1:8000/archive.html"
 
-        dialog = MyBrowser(None, -1)
-        dialog.browser.LoadURL(weburl)
-        dialog.CenterOnParent()
-        dialog.ShowModal()
-        dialog.Destroy()
-        return
+            dialog = MyBrowser(None, -1)
+            dialog.browser.LoadURL(weburl)
+            dialog.CenterOnParent()
+            dialog.ShowModal()
+            dialog.Destroy()
+            #        launch_archive('firefox')
+            return
 
     def oncloseMainframe(self, event):
         # checken of er nog foto's klaar staan in de uploadlijst.
