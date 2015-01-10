@@ -1,6 +1,6 @@
 Zeer veel veranderd, meer als de bedoeling was, maar ach..
 wat moet ik anders in deze gure wintermaanden ;)
-Neemt niet weg dat ik het vooralsnog als een test/beta-versie zie..
+Gevolg is wel dat ik het vooralsnog als een test/beta-versie zie..
 Bij een volgende versie zal ik me (proberen te) beperken tot de puntjes op de i.
 
 Als er dingen zijn die anders moeten cq. beter kunnen cq niet goed gaan.. laat het me
