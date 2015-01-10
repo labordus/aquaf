@@ -13,9 +13,7 @@ Stuur me dan even een PB'tje of zet het in het forum-draadje.
 * Configuratiescherm waarin je verschillende defaults in de database kunt vastleggen..
 * Preview van foto's kan worden in/uitgeschakeld.
 * Eventuele dubbel aanwezige foto's in de database worden verwijderd en voorkomen.
-* Spiksplinternieuwe archief-pagina.
-Opmerking: Ook uploaddatum en opslag-dimensies worden nu getoond.. maar dit werkt alleen
-met foto's die met deze versie van Aquaf zijn geupload.
+* Nieuwe archief-pagina. (Als optie in configuratiemenu)
 * Met dubbelklik of Enter-toets een foto in uploadlijst kunnen zetten.
 
 
