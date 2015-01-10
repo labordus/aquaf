@@ -20,6 +20,7 @@ FORUM_UPLOAD_URL = "http://www.aquaforum.nl/ubb/scripts/upload.php"
 APP_VERSION_STR = "0_85"
 APP_VERSION = "0.85"
 PREVIEW = None
+USER_WEBNIEUW = 1
 USER_FOLDER = ''
 USER_TOOLTIP = 1
 ALLOWED_CHARS = "qwertyuioplkjhgfdsazxcvbnm0123456789._"
