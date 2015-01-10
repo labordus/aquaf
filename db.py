@@ -67,6 +67,7 @@ def Initialize_db():
                       IMPORTED BOOLEAN DEFAULT (0),
                       PREVIEW BOOLEAN DEFAULT (1),
                       TOOLTIP BOOLEAN DEFAULT (1),
+                      WEBNIEUW BOOLEAN DEFAULT (0),
                       FOLDER VARCHAR(120),
                       DIMID INTEGER REFERENCES tblDim(dimID))''')
         c.execute('''CREATE TABLE IF NOT EXISTS
@@ -182,12 +183,42 @@ def setUsername(userName):
     print "Gebruikersnaam is nu " + userName
 
 
+def DB2JSON():
+    path = appdirs.user_data_dir('aquaf', False, False, False)
+    filepath = os.path.join(path, 'aquaf.json')
+    dbpath = path_to_db()
+    connection = sqlite3.connect(dbpath)
+    cursor = connection.cursor()
+    cursor.execute("PRAGMA foreign_keys = ON")
+    cursor.execute("SELECT * FROM tblLink")
+    rows = cursor.fetchall()
+    if len(rows) == 0:  # Geen data? Return False
+        return False
+
+    rowarray_list = []
+    for row in rows:
+        t = str((row[1]))
+        rowarray_list.append({"link": t})
+    j = json.dumps({'items': rowarray_list}, indent=2, separators=(',', ': '))
+
+    try:
+        fp = open(filepath, "w")
+    except IOError:
+        # If not exists, create the file
+        fp = open(filepath, "w+")
+    fp.write(j)
+    fp.close()
+    connection.close()
+
+    return True
+
+
 def DB2Webfile():
     import string
     from archive_template import webpage
 
     path = appdirs.user_data_dir('aquaf', False, False, False)
-    filepath = os.path.join(path, 'archive.html')
+    filepath = os.path.join(path, 'archivenew.html')
     dbpath = path_to_db()
     connection = sqlite3.connect(dbpath, detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
     cursor = connection.cursor()
@@ -417,6 +448,45 @@ def setUserTooltip(bTooltip):
         raise e
     finally:
         conn.close()
+
+
+def setUserWebNieuw(bWebNieuw):
+    filepath = path_to_db()
+    diversen.USER_WEBNIEUW = bWebNieuw
+    if bWebNieuw:
+        bWebNieuw = 1
+    else:
+        bWebNieuw = 0
+
+    try:
+        conn = sqlite3.connect(filepath)
+        c = conn.cursor()
+        c.execute("PRAGMA foreign_keys = ON")
+        c.execute('''UPDATE tblApp SET WEBNIEUW = ? ''', (bWebNieuw,))
+        conn.commit()
+    except Exception as e:
+        conn.rollback()
+        raise e
+    finally:
+        conn.close()
+
+
+def getUserWebNieuw():
+    filepath = path_to_db()
+    try:
+        conn = sqlite3.connect(filepath)
+        c = conn.cursor()
+        c.execute("PRAGMA foreign_keys = ON")
+        c.execute('''SELECT WEBNIEUW FROM tblApp''')
+        bWebNieuw = c.fetchone()[0]
+        conn.commit()
+    except Exception as e:
+        conn.rollback()
+        raise e
+    finally:
+        conn.close()
+
+    return bWebNieuw
 
 
 def getUserFolder():
