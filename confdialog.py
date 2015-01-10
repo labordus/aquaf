@@ -5,7 +5,7 @@ import wx
 import maingui
 import db
 from db import getDimensies, getUserDimensieID, setUserDimensie, getUserPreview,\
-    setUserFolder, getUserFolder, getUserTooltip
+    setUserFolder, getUserTooltip
 import importdialog
 import diversen
 
