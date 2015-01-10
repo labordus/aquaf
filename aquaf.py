@@ -326,6 +326,16 @@ class AquaFrame(maingui.Mainframe):
         dialog.Destroy()
         return
 
+    def oncloseMainframe(self, event):
+        # checken of er nog foto's klaar staan in de uploadlijst.
+        if self.listFiles.GetItemCount() != 0:
+            dlg = wx.MessageDialog(None, '''Je hebt nog foto's in de uploadlijst staan \n''' +
+                                   '''Wil je toch afsluiten?''', 'Afsluiten of upload?', wx.YES_NO | wx.ICON_QUESTION)
+            result = dlg.ShowModal()
+            if result == wx.ID_NO:
+                return
+        event.Skip()
+
 app = wx.App(False)
 
 frame = AquaFrame(None)
