@@ -1,8 +1,11 @@
-- [x] HTML/CSS/Javascript/JSON vanuit code genereren en in 1 bestand houden, kan ik de HTTPserver dumpen.
+- [x] HTML/CSS/Javascript/JSON vanuit code genereren en in 1 bestand houden.
+- [x] Oude archive.html blijven aanbieden.
 - [x] DateTime-stamp per foto opslaan in DB
 - [x] size/dimensie per foto opslaan in DB
 - [ ] Beschrijving per foto opslaan in DB
+- [ ] Windows -> Klikken op Archief met lege DB laat geen melding zien.
 - [x] add to history to db
+- [ ] Fetch foto van remote URL? Flickr, Picasa etc..
 - [x] foutafhandeling bij het importeren. (wat als JSON nog steeds niet kan worden verwerkt? Test!!)
 - [x] dubbele entries verwijderen uit DB versie 0.84 voordat ik importeer .. DISTINCT?
 - [x] dubbele entries voorkomen tijdens de import vanuit JSON en bij het toevoegen van een URL
@@ -28,6 +31,7 @@
 - [x] Tijdens installatie "aquaf v0.84" verwijderen uit het Windows-startmenu.
 - [ ] Moet iets verzinnen op de listctrl, setitemdata/getitemdata etc..
 - [x] Bij afsluiten app: als er bestanden in listFiles staan.. vragen of die nog moeten worden ge-upload of niet.
+- [ ] Plaatjes van server downloaden om de dimensies op te slaan in DB?
 
 ##############
 'sceleton' db's bij de releases zetten
