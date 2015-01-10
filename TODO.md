@@ -1,8 +1,7 @@
-- [ ] Toch nog even oude versie van webpagina blijven aanbieden.
 - [x] HTML/CSS/Javascript/JSON vanuit code genereren en in 1 bestand houden, kan ik de HTTPserver dumpen.
-- [x] DateTime-stamp per plaatje opslaan in DB
-- [x] size/dimensie per plaatje opslaan in DB
-- [ ] Beschrijving per plaatje opslaan in DB
+- [x] DateTime-stamp per foto opslaan in DB
+- [x] size/dimensie per foto opslaan in DB
+- [ ] Beschrijving per foto opslaan in DB
 - [x] add to history to db
 - [x] foutafhandeling bij het importeren. (wat als JSON nog steeds niet kan worden verwerkt? Test!!)
 - [x] dubbele entries verwijderen uit DB versie 0.84 voordat ik importeer .. DISTINCT?
@@ -11,10 +10,10 @@
 - [x] alpha eruit slopen.
 - [ ] Archive-dialog sizable.
 - [x] Beginpad configuratie functioneel maken
-- [x] met dubbelklik plaatje in uploadlijst zetten
-- [x] Previewknop -> preview tonen van geselecteerde plaatje
+- [x] met dubbelklik en Enter-toets foto in uploadlijst zetten
+- [x] Previewknop -> preview tonen van geselecteerde foto
 - [ ] Werken met toetsenbord (tab/enter) is een chaos.
-- [ ] taborder.. Moet getest op Windows, Xfce laat veelal niet zien of een control focus heeft.
+- [ ] taborder.. Moet getest op Windows, Xfce laat veelal niet zien of een control focus heeft. (hangt af van 'the theme')
 - [x] Na upload listFiles wissen
 - [x] Bij "geen Preview" .. preview-bitmap verwijderen.
 - [x] Tooltips aan/uit
@@ -23,12 +22,12 @@
 - [x] bij sluiten confdialog niet het treeview-pad verzetten.
 - [x] Windows -- tooltips zijn AAN bij UIT
 - [x] Image/Plaatje wordt FOTO en folder/directory wordt MAP.. overal aanpassen.
-- [ ] Maak huidige directory default. Knoppie of context-sensitive popupmenu op right-click?
+- [ ] Maak huidige/actieve directory default. Knoppie of context-sensitive popupmenu op right-click?
 - [x] Archive.html wil ik aanpakken.. is lastige K-klus.
 - [ ] Gebruikershandleiding cq. stappenoverzicht met plaatjes maken.
 - [x] Tijdens installatie "aquaf v0.84" verwijderen uit het Windows-startmenu.
 - [ ] Moet iets verzinnen op de listctrl, setitemdata/getitemdata etc..
-- [ ] Bij afsluiten app: als er bestanden in listFiles staan.. vragen of die nog moeten worden ge-upload of niet.
+- [x] Bij afsluiten app: als er bestanden in listFiles staan.. vragen of die nog moeten worden ge-upload of niet.
 
 ##############
 'sceleton' db's bij de releases zetten
@@ -39,7 +38,5 @@ Of... 'juiste-versie Databases' bij de releases op github plaatsen?
 
 # Punten bij release..
 * github release aanmaken.
-* webserver-address 8000 / 8080
-* archive.html nalopen.
 * alle verwijzingen naar testpaden etc.. terugzetten.
 * addURL2DB() en ook uploadblabla() uitvinken/aanzetten.
