@@ -146,6 +146,26 @@ def first_run():
     return firstrun
 
 
+def getAppVersion():
+    filepath = path_to_db()
+    try:
+        conn = sqlite3.connect(filepath)
+        c = conn.cursor()
+        c.execute("PRAGMA foreign_keys = ON")
+        c.execute('SELECT VERSIE FROM tblApp')
+        try:
+            AppVersion = str(c.fetchone()[0])
+        except:  # leeg veld
+            AppVersion = ""
+    except Exception as e:
+        conn.rollback()
+        raise e
+    finally:
+        conn.close()
+
+    return AppVersion
+
+
 def getUsername():
     filepath = path_to_db()
     try:
