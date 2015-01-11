@@ -4,9 +4,11 @@
 import wx
 import maingui
 import db
-from db import getDimensies, getUserDimensieID, setUserDimensie, getUserPreview, setUserFolder, getUserTooltip, getUserWebNieuw
+from db import getDimensies, getUserDimensieID, setUserDimensie, getUserPreview, setUserFolder, getUserTooltip, getUserWebNieuw,\
+    getAppVersion
 import importdialog
 import diversen
+from diversen import APP_VERSION, APP_VERSION_STR
 
 
 class Configure(maingui.dlgConf):
@@ -25,6 +27,7 @@ class Configure(maingui.dlgConf):
         self.checkWebNieuw.SetValue(getUserWebNieuw())
         userName = db.getUsername()
         self.confedtLoginName.SetValue(userName)
+        self.txtVersie.SetLabel(self.txtVersie.GetLabelText() + APP_VERSION)
 
         if diversen.USER_FOLDER:
             self.dirpickFolder.SetPath(diversen.USER_FOLDER)
@@ -76,6 +79,27 @@ class Configure(maingui.dlgConf):
 
     def oncheckWebNieuwClick(self, event):
         db.setUserWebNieuw(self.checkWebNieuw.IsChecked())
+
+    def onbtnCheckForUpdateClick(self, event):
+        import urllib2
+        import json
+        req = urllib2.Request("https://raw.githubusercontent.com/labordus/aquaf/master/version.json")
+#        req = urllib2.Request("https://gist.githubusercontent.com/labordus/5c67b729991f8b585632/raw/0798969844ff4ad6d5b13365a03d9bf48a669bf6/aquaf_version")
+        opener = urllib2.build_opener()
+        f = opener.open(req)
+        json = json.loads(f.read())
+#        print json
+#        print json['reason']
+        AppversionOnline = json['version']
+        if APP_VERSION != AppversionOnline:
+            json['reason']
+
+#        Appversion = getAppVersion()
+        if APP_VERSION != AppversionOnline:
+            self.txtVersie.SetForegroundColour('#FF0000')
+            self.txtVersie.SetLabel('''Versie: ''' + AppversionOnline + ''' is beschikbaar, bezoek website voor download.''')
+        else:
+            self.txtVersie.SetLabel('Geen update beschikbaar, je gebruik de nieuwste versie.')
 
     def onbtnAfsluitenClick(self, event):
         self.EndModal(wx.ID_OK)
