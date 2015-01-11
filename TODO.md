@@ -1,25 +1,28 @@
-- [x] HTML/CSS/Javascript/JSON vanuit code genereren en in 1 bestand houden.
-- [x] Oude archive.html blijven aanbieden.
+- [x] HTML/CSS/Javascript/JSON vanuit code genereren en in 1 bestand houden, zonder HTTPServer.
+- [x] Oude archive.html blijven aanbieden, met HTTPServer.
 - [x] DateTime-stamp per foto opslaan in DB
 - [x] size/dimensie per foto opslaan in DB
 - [ ] Beschrijving per foto opslaan in DB
-- [ ] Windows -> Klikken op Archief met lege DB laat geen melding zien.
+- [ ] Windows -> Klikken op Archief met lege DB laat geen melding zien dat er geen foto's te tonen zijn.
 - [x] add to history to db
 - [ ] Fetch foto van remote URL? Flickr, Picasa etc..
 - [x] foutafhandeling bij het importeren. (wat als JSON nog steeds niet kan worden verwerkt? Test!!)
 - [x] dubbele entries verwijderen uit DB versie 0.84 voordat ik importeer .. DISTINCT?
 - [x] dubbele entries voorkomen tijdens de import vanuit JSON en bij het toevoegen van een URL
 - [x] Progressindicatie bij.. genereren preview, uploaden
+- [x] Waarschuwen bij dubbele import.
 - [x] alpha eruit slopen.
 - [ ] Archive-dialog sizable.
 - [x] Beginpad configuratie functioneel maken
-- [x] met dubbelklik en Enter-toets foto in uploadlijst zetten
-- [x] Previewknop -> preview tonen van geselecteerde foto
+- [x] met dubbelklik en Enter-toets foto in uploadlijst kunnen zetten.
+- [x] Previewknop -> preview tonen van eventueel geselecteerde foto, anders front.jpg
 - [ ] Werken met toetsenbord (tab/enter) is een chaos.
 - [ ] taborder.. Moet getest op Windows, Xfce laat veelal niet zien of een control focus heeft. (hangt af van 'the theme')
 - [x] Na upload listFiles wissen
 - [x] Bij "geen Preview" .. preview-bitmap verwijderen.
 - [x] Tooltips aan/uit
+- [ ] Check for update
+- [ ] sys-info kunnen versturen (optioneel), eventueel ook wanneer app wordt opgestart en hoe de gebruiker het heeft ingesteld? Dan krijg ik een beeld van hoe men het gebruikt.
 - [ ] Alleen GTK2/3? (Windows gaat prima) Alleen bij eerste keer sluiten confdialog wordt mainframe iets groter .. self.fit()
 - [ ] bij Preview = False wil ik de knoppen in het midden van het scherm.
 - [x] bij sluiten confdialog niet het treeview-pad verzetten.
@@ -29,9 +32,12 @@
 - [x] Archive.html wil ik aanpakken.. is lastige K-klus.
 - [ ] Gebruikershandleiding cq. stappenoverzicht met plaatjes maken.
 - [x] Tijdens installatie "aquaf v0.84" verwijderen uit het Windows-startmenu.
-- [ ] Moet iets verzinnen op de listctrl, setitemdata/getitemdata etc..
+- [ ] Moet iets verzinnen op de listctrl, setitemdata/getitemdata etc.. nu ben ik 'verplicht' pad te laten zien in een listctrl-column.
 - [x] Bij afsluiten app: als er bestanden in listFiles staan.. vragen of die nog moeten worden ge-upload of niet.
-- [ ] Plaatjes van server downloaden om de dimensies op te slaan in DB?
+- [ ] Foto's van aquaforum-server downloaden om de dimensies op te slaan in DB?
+      Opslagdatum lukt niet, alleen (eventueel aanwezige) EXIF-data met de aanmaakdatum, laatste wijzigingsdatum staat op de server? Heb niet voldoende rechten om die in de lezen.
+- [ ] Foto's die vanuit andere 'services' (photobucket, picasa, tinypic etc..) worden 'geserved'.. alsnog kunnen importeren en opslaan op de aquaforum-server.
+      Vrees dat dit niet kan aangezien ik de verwijzingen in de posts niet kan aanpassen, dan heeft het dus geen nut.
 
 ##############
 'sceleton' db's bij de releases zetten
