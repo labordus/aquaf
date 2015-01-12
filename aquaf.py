@@ -9,8 +9,8 @@ from diversen import *
 
 import uploaddialog
 import confdialog
-from db import DB2JSON, DB2Webfile, addDATA2DB, getUserDimensieID, getUserPreview, getUserWebNieuw, getUserName, getDimensies  # DBVersion
-from db import getUserFolder, getUserTooltip
+from db import DB2JSON, DB2Webfile, addDATA2DB, getUserDimensieID, getDimensies
+from db import FillGlobals
 from wx import ToolTip
 AUQAOFORUM_PICTURE_URL = "http://www.aquaforum.nl/gallery/upload/"
 TEST_FOTO = "test.jpg"
@@ -62,8 +62,9 @@ class AquaFrame(maingui.Mainframe):
 #            if result == wx.ID_YES:
 #                dlg.Destroy()
 
-        diversen.PREVIEW = getUserPreview()
-        diversen.USER_WEBNIEUW = getUserWebNieuw()
+        FillGlobals()
+
+#        diversen.USER_WEBNIEUW = getUserWebNieuw()
 
         _icon = wx.EmptyIcon()
         _icon.CopyFromBitmap(wx.Bitmap("icon.ico", wx.BITMAP_TYPE_ANY))
@@ -83,15 +84,12 @@ class AquaFrame(maingui.Mainframe):
         else:  # posix
             self.tvFiles.SetFilter("plaatjes(*.bmp;*.BMP;*.jpg;*.JPG;*.png;*.PNG;*.tiff;*.TIFF;*.tif;*.TIF)|*.bmp;*.BMP;*.jpg;*.JPG;*.png;*.PNG;*.tiff;*.TIFF;*.tif;*.TIF")
 
-        userName = db.getUsername()
-        print "Hoi " + userName
+        print "Hoi " + diversen.USER_USERNAME
         print "Welkom bij Aquaf " + APP_VERSION
 
         self.choiceDimensie.SetSelection(getUserDimensieID() - 1)
-        diversen.USER_TOOLTIP = getUserTooltip()
         ToolTip.Enable(diversen.USER_TOOLTIP)
 
-        diversen.USER_FOLDER = getUserFolder()
         if diversen.USER_FOLDER == '' or diversen.USER_FOLDER is None:
             from os.path import expanduser
 
@@ -111,7 +109,7 @@ class AquaFrame(maingui.Mainframe):
         self.listFiles.InsertColumn(2, 'Pad', width=140)
 
 #        self.Layout()
-        self.panelPreview.Show(diversen.PREVIEW)
+        self.panelPreview.Show(diversen.USER_PREVIEW)
         self.Fit()
 
     def onmenuitemClickConf(self, event):
@@ -125,7 +123,7 @@ class AquaFrame(maingui.Mainframe):
 #        if diversen.USER_FOLDER:
 #            self.tvFiles.SetPath(diversen.USER_FOLDER)
 
-        self.panelPreview.Show(diversen.PREVIEW)
+        self.panelPreview.Show(diversen.USER_PREVIEW)
         self.Fit()
 
     def onmenuitemClickAbout(self, event):
@@ -180,7 +178,7 @@ class AquaFrame(maingui.Mainframe):
         Voorbeeld.Destroy()
 
     def PreviewImage(self, pad):
-        if not diversen.PREVIEW:
+        if not diversen.USER_PREVIEW:
             self.bitmapSelectedFile.SetBitmap(wx.Bitmap(FRONT_FOTO))
             return
 
@@ -265,7 +263,7 @@ class AquaFrame(maingui.Mainframe):
             print("Geen bestand geselecteerd")
             return
 
-        if not getUserName():
+        if not diversen.USER_USERNAME:
             dlg = wx.TextEntryDialog(
                 self, 'Voer hier je aquaforum.nl gebruikersnaam in..',
                 'Gebruikersnaam')
@@ -290,7 +288,7 @@ class AquaFrame(maingui.Mainframe):
                 dimensions = StringToTupleDimensions(self.listFiles.GetItemText(_i, 1))
                 resizedFilename = ResizeImage(
                     self.listFiles.GetItemText(_i, 2), dimensions)
-                desiredName, dimWidth, dimHeight = DumpImage(resizedFilename, getUserName(), self.listFiles.GetItemText(_i, 2))
+                desiredName, dimWidth, dimHeight = DumpImage(resizedFilename, diversen.USER_USERNAME, self.listFiles.GetItemText(_i, 2))
                 url = AUQAOFORUM_PICTURE_URL + desiredName
                 addDATA2DB(url, dimWidth, dimHeight)
                 urls = urls + " [IMG]" + AUQAOFORUM_PICTURE_URL + desiredName + "[/IMG]" + "\n"
