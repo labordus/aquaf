@@ -1,3 +1,138 @@
+##############################################################################
+##############################################################################
+# def getUserName():
+#     filepath = path_to_db()
+#     try:
+#         conn = sqlite3.connect(filepath)
+#         c = conn.cursor()
+#         c.execute("PRAGMA foreign_keys = ON")
+#         c.execute('''SELECT USERNM FROM tblApp''')
+#         username = c.fetchone()[0]
+#         conn.commit()
+#     except Exception as e:
+#         conn.rollback()
+#         raise e
+#     finally:
+#         conn.close()
+#
+#     return username
+#
+#
+# def getUsername():
+#     filepath = path_to_db()
+#     try:
+#         conn = sqlite3.connect(filepath)
+#         c = conn.cursor()
+#         c.execute("PRAGMA foreign_keys = ON")
+#         c.execute('SELECT USERNM FROM tblApp')
+#         try:
+#             userName = str(c.fetchone()[0])
+# except:  # leeg veld
+#             userName = ""
+#     except Exception as e:
+#         conn.rollback()
+#         raise e
+#     finally:
+#         conn.close()
+#
+#     return userName
+
+
+##############################################################################
+def getUserUpdateCheck():
+    filepath = path_to_db()
+    try:
+        conn = sqlite3.connect(filepath)
+        c = conn.cursor()
+        c.execute("PRAGMA foreign_keys = ON")
+        c.execute('''SELECT UPDATECHECK FROM tblApp''')
+        bUpdateCheck = c.fetchone()[0]
+        conn.commit()
+    except Exception as e:
+        conn.rollback()
+        raise e
+    finally:
+        conn.close()
+
+    return bUpdateCheck
+
+
+##############################################################################
+def getUserFolder():
+    filepath = path_to_db()
+    try:
+        conn = sqlite3.connect(filepath)
+        c = conn.cursor()
+        c.execute("PRAGMA foreign_keys = ON")
+        c.execute('''SELECT FOLDER FROM tblApp''')
+        sFolder = c.fetchone()[0]
+        conn.commit()
+    except Exception as e:
+        conn.rollback()
+        raise e
+    finally:
+        conn.close()
+
+    return sFolder
+
+
+##############################################################################
+def getUserTooltip():
+    filepath = path_to_db()
+    try:
+        conn = sqlite3.connect(filepath)
+        c = conn.cursor()
+        c.execute("PRAGMA foreign_keys = ON")
+        c.execute('''SELECT TOOLTIP FROM tblApp''')
+        bTooltip = c.fetchone()[0]
+        conn.commit()
+    except Exception as e:
+        conn.rollback()
+        raise e
+    finally:
+        conn.close()
+
+    return bTooltip
+
+
+##############################################################################
+def getUserWebNieuw():
+    filepath = path_to_db()
+    try:
+        conn = sqlite3.connect(filepath)
+        c = conn.cursor()
+        c.execute("PRAGMA foreign_keys = ON")
+        c.execute('''SELECT WEBNIEUW FROM tblApp''')
+        bWebNieuw = c.fetchone()[0]
+        conn.commit()
+    except Exception as e:
+        conn.rollback()
+        raise e
+    finally:
+        conn.close()
+
+    return bWebNieuw
+##############################################################################
+
+def getUserPreview():
+    filepath = path_to_db()
+    try:
+        conn = sqlite3.connect(filepath)
+        c = conn.cursor()
+        c.execute("PRAGMA foreign_keys = ON")
+        c.execute('''SELECT PREVIEW FROM tblApp''')
+        bPreview = c.fetchone()[0]
+        conn.commit()
+    except Exception as e:
+        conn.rollback()
+        raise e
+    finally:
+        conn.close()
+
+    return bPreview
+
+##############################################################################
+
 def DB2JSONSeperateFile():
     path = appdirs.user_data_dir('aquaf', False, False, False)
     filepath = os.path.join(path, 'aquaf.json')
