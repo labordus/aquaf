@@ -188,8 +188,8 @@ class Mainframe ( wx.Frame ):
 		
 		self.m_menu1.AppendSeparator()
 		
-		self.menuAbout = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"Info", wx.EmptyString, wx.ITEM_NORMAL )
-		self.m_menu1.AppendItem( self.menuAbout )
+		self.menuitemAbout = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"Info", wx.EmptyString, wx.ITEM_NORMAL )
+		self.m_menu1.AppendItem( self.menuitemAbout )
 		
 		self.m_menubar1.Append( self.m_menu1, u"Menu" ) 
 		
@@ -209,7 +209,7 @@ class Mainframe ( wx.Frame ):
 		self.btnUpload.Bind( wx.EVT_BUTTON, self.onbtnUploadClick )
 		self.btnArchief.Bind( wx.EVT_BUTTON, self.onbtnArchiefClick )
 		self.Bind( wx.EVT_MENU, self.onmenuitemClickConf, id = self.menuitemConf.GetId() )
-		self.Bind( wx.EVT_MENU, self.onmenuitemClickAbout, id = self.menuAbout.GetId() )
+		self.Bind( wx.EVT_MENU, self.onmenuitemClickAbout, id = self.menuitemAbout.GetId() )
 	
 	def __del__( self ):
 		pass
@@ -517,7 +517,7 @@ class dlgConf ( wx.Dialog ):
 		
 		bSizer35.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
 		
-		self.m_hyperlink4 = wx.HyperlinkCtrl( self.m_panel3, wx.ID_ANY, u"Aquaf downloads", u"http://www.aquaforum.nl", wx.DefaultPosition, wx.DefaultSize, wx.HL_DEFAULT_STYLE )
+		self.m_hyperlink4 = wx.HyperlinkCtrl( self.m_panel3, wx.ID_ANY, u"Aquaf downloads", u"https://github.com/labordus/aquaf/releases/latest", wx.DefaultPosition, wx.DefaultSize, wx.HL_DEFAULT_STYLE )
 		bSizer35.Add( self.m_hyperlink4, 0, wx.ALL, 5 )
 		
 		
@@ -565,6 +565,7 @@ class dlgConf ( wx.Dialog ):
 		self.checkWebNieuw.Bind( wx.EVT_CHECKBOX, self.oncheckWebNieuwClick )
 		self.checkTooltip.Bind( wx.EVT_CHECKBOX, self.oncheckTooltipClick )
 		self.btnImport.Bind( wx.EVT_BUTTON, self.onbtnImportClick )
+		self.checkUpdate.Bind( wx.EVT_CHECKBOX, self.oncheckUpdateClick )
 		self.btnCheckForUpdate.Bind( wx.EVT_BUTTON, self.onbtnCheckForUpdateClick )
 		self.btnAfsluiten.Bind( wx.EVT_BUTTON, self.onbtnAfsluitenClick )
 	
@@ -595,6 +596,9 @@ class dlgConf ( wx.Dialog ):
 		event.Skip()
 	
 	def onbtnImportClick( self, event ):
+		event.Skip()
+	
+	def oncheckUpdateClick( self, event ):
 		event.Skip()
 	
 	def onbtnCheckForUpdateClick( self, event ):
