@@ -502,7 +502,7 @@ class dlgConf ( wx.Dialog ):
 		self.m_panel3 = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		bSizer33 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.checkUpdate = wx.CheckBox( self.m_panel3, wx.ID_ANY, u"Bij opstart van de applicatie checken voor een update.", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.checkUpdate = wx.CheckBox( self.m_panel3, wx.ID_ANY, u"Bij opstart applicatie checken of er een update is.", wx.DefaultPosition, wx.DefaultSize, 0 )
 		bSizer33.Add( self.checkUpdate, 0, wx.ALL, 5 )
 		
 		bSizer35 = wx.BoxSizer( wx.HORIZONTAL )
