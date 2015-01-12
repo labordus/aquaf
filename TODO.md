@@ -1,3 +1,5 @@
+- [x] Bij initialisatie app wat global variabelen zetten, zodat ik ze niet telkens uit de DB hoef te trekken.
+- [ ] APP_VERSIE en USER_DIMENSIE moeten nog maar dat ligt lastiger.
 - [x] HTML/CSS/Javascript/JSON vanuit code genereren en in 1 bestand houden, zonder HTTPServer.
 - [x] Oude archive.html blijven aanbieden, met HTTPServer.
 - [x] DateTime-stamp per foto opslaan in DB
@@ -21,7 +23,7 @@
 - [x] Na upload listFiles wissen
 - [x] Bij "geen Preview" .. preview-bitmap verwijderen.
 - [x] Tooltips aan/uit
-- [ ] Check for update
+- [ ] Check for update, let op: als er dan is ge-update voorkomen dat er (bij opstart app.) nogmaals wordt aangegeven dat er een update is.. github cache?
 - [ ] sys-info kunnen versturen (optioneel), eventueel ook wanneer app wordt opgestart en hoe de gebruiker het heeft ingesteld? Dan krijg ik een beeld van hoe men het gebruikt.
 - [ ] Alleen GTK2/3? (Windows gaat prima) Alleen bij eerste keer sluiten confdialog wordt mainframe iets groter .. self.fit()
 - [ ] bij Preview = False wil ik de knoppen in het midden van het scherm.
