@@ -23,7 +23,7 @@
 - [x] Na upload listFiles wissen
 - [x] Bij "geen Preview" .. preview-bitmap verwijderen.
 - [x] Tooltips aan/uit
-- [ ] Check for update, let op: als er dan is ge-update voorkomen dat er (bij opstart app.) nogmaals wordt aangegeven dat er een update is.. github cache?
+- [ ] Check for update (+ automatisch), let op: als er dan is ge-update voorkomen dat er (bij opstart app.) nogmaals wordt aangegeven dat er een update is.. github cache?
 - [ ] sys-info kunnen versturen (optioneel), eventueel ook wanneer app wordt opgestart en hoe de gebruiker het heeft ingesteld? Dan krijg ik een beeld van hoe men het gebruikt.
 - [ ] Alleen GTK2/3? (Windows gaat prima) Alleen bij eerste keer sluiten confdialog wordt mainframe iets groter .. self.fit()
 - [ ] bij Preview = False wil ik de knoppen in het midden van het scherm.
@@ -38,8 +38,6 @@
 - [x] Bij afsluiten app: als er bestanden in listFiles staan.. vragen of die nog moeten worden ge-upload of niet.
 - [ ] Foto's van aquaforum-server downloaden om de dimensies op te slaan in DB?
       Opslagdatum lukt niet, alleen (eventueel aanwezige) EXIF-data met de aanmaakdatum, laatste wijzigingsdatum staat op de server? Heb niet voldoende rechten om die in de lezen.
-- [ ] Foto's die vanuit andere 'services' (photobucket, picasa, tinypic etc..) worden 'geserved'.. alsnog kunnen importeren en opslaan op de aquaforum-server.
-      Vrees dat dit niet kan aangezien ik de verwijzingen in de posts niet kan aanpassen, dan heeft het dus geen nut.
 
 ##############
 'sceleton' db's bij de releases zetten
