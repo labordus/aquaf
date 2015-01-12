@@ -4,11 +4,10 @@
 import wx
 import maingui
 import db
-from db import getDimensies, getUserDimensieID, setUserDimensie, getUserPreview, setUserFolder, getUserTooltip, getUserWebNieuw,\
-    getAppVersion
+from db import getDimensies, getUserDimensieID, setUserDimensie, setUserFolder
 import importdialog
 import diversen
-from diversen import APP_VERSION, APP_VERSION_STR
+from diversen import APP_VERSION
 
 
 class Configure(maingui.dlgConf):
@@ -22,11 +21,11 @@ class Configure(maingui.dlgConf):
         dims = getDimensies()
         self.choiceDimensie.SetItems(dims)
         self.choiceDimensie.SetSelection(getUserDimensieID() - 1)  # index loopt anders dus -1
-        self.checkPreview.SetValue(getUserPreview())
-        self.checkTooltip.SetValue(getUserTooltip())
-        self.checkWebNieuw.SetValue(getUserWebNieuw())
-        userName = db.getUsername()
-        self.confedtLoginName.SetValue(userName)
+        self.checkPreview.SetValue(diversen.USER_PREVIEW)
+        self.checkTooltip.SetValue(diversen.USER_TOOLTIP)
+        self.checkWebNieuw.SetValue(diversen.USER_WEBNIEUW)
+        self.checkUpdate.SetValue(diversen.USER_UPDATECHECK)
+        self.confedtLoginName.SetValue(diversen.USER_USERNAME)
         self.txtVersie.SetLabel(self.txtVersie.GetLabelText() + APP_VERSION)
 
         if diversen.USER_FOLDER:
@@ -65,7 +64,7 @@ class Configure(maingui.dlgConf):
         if self.confedtLoginName.IsModified():
             if len(self.confedtLoginName.GetValue()) == 0:
                 print "Niets ingevoerd"
-                self.confedtLoginName.SetValue(db.getUsername())
+                self.confedtLoginName.SetValue(diversen.USER_USERNAME)
             else:
                 db.setUsername(self.confedtLoginName.GetValue())
                 self.confedtLoginName.SetModified(False)
@@ -80,6 +79,9 @@ class Configure(maingui.dlgConf):
     def oncheckWebNieuwClick(self, event):
         db.setUserWebNieuw(self.checkWebNieuw.IsChecked())
 
+    def oncheckUpdateClick(self, event):
+        db.setUserUpdateCheck(self.checkUpdate.IsChecked())
+
     def onbtnCheckForUpdateClick(self, event):
         import urllib2
         import json
@@ -91,10 +93,6 @@ class Configure(maingui.dlgConf):
 #        print json
 #        print json['reason']
         AppversionOnline = json['version']
-        if APP_VERSION != AppversionOnline:
-            json['reason']
-
-#        Appversion = getAppVersion()
         if APP_VERSION != AppversionOnline:
             self.txtVersie.SetForegroundColour('#FF0000')
             self.txtVersie.SetLabel('''Versie: ''' + AppversionOnline + ''' is beschikbaar, bezoek website voor download.''')
