@@ -5,6 +5,8 @@ import json
 from diversen import APP_VERSION  # , PREVIEW
 import diversen
 import datetime
+from diversen import USER_USERNAME, USER_FIRSTRUN, USER_IMPORTED, USER_PREVIEW,\
+    USER_WEBNIEUW, USER_UPDATECHECK
 
 old_urls = []
 old_username = None
@@ -69,6 +71,7 @@ def Initialize_db():
                       TOOLTIP BOOLEAN DEFAULT (1),
                       WEBNIEUW BOOLEAN DEFAULT (0),
                       FOLDER VARCHAR(120),
+                      UPDATECHECK BOOLEAN DEFAULT (1),
                       DIMID INTEGER REFERENCES tblDim(dimID))''')
         c.execute('''CREATE TABLE IF NOT EXISTS
                       tblLink(
@@ -166,26 +169,6 @@ def getAppVersion():
     return AppVersion
 
 
-def getUsername():
-    filepath = path_to_db()
-    try:
-        conn = sqlite3.connect(filepath)
-        c = conn.cursor()
-        c.execute("PRAGMA foreign_keys = ON")
-        c.execute('SELECT USERNM FROM tblApp')
-        try:
-            userName = str(c.fetchone()[0])
-        except:  # leeg veld
-            userName = ""
-    except Exception as e:
-        conn.rollback()
-        raise e
-    finally:
-        conn.close()
-
-    return userName
-
-
 def setUsername(userName):
     filepath = path_to_db()
     conn = sqlite3.connect(filepath)
@@ -195,6 +178,7 @@ def setUsername(userName):
         c.execute('''UPDATE tblApp SET USERNM = ? WHERE ROWID = ? ''',
                   (userName, 1))
         conn.commit()
+        diversen.USER_USERNAME = userName
     except sqlite3.IntegrityError:
         conn.rollback()
         raise sqlite3.IntegrityError
@@ -302,7 +286,7 @@ def IfAlreadyImported():
         conn.close()
 
 
-def SetImported():
+def setUserImported():
     filepath = path_to_db()
     try:
         conn = sqlite3.connect(filepath)
@@ -310,6 +294,7 @@ def SetImported():
         c.execute("PRAGMA foreign_keys = ON")
         c.execute('''UPDATE tblApp SET IMPORTED = ? WHERE ROWID = ? ''', (1, 1))
         conn.commit()
+        diversen.USER_IMPORTED = 1
     except Exception as e:
         conn.rollback()
         raise e
@@ -373,42 +358,6 @@ def addDATA2DB(url, dimWidth, dimHeight):
     conn.close()
 
 
-def getUserName():
-    filepath = path_to_db()
-    try:
-        conn = sqlite3.connect(filepath)
-        c = conn.cursor()
-        c.execute("PRAGMA foreign_keys = ON")
-        c.execute('''SELECT USERNM FROM tblApp''')
-        username = c.fetchone()[0]
-        conn.commit()
-    except Exception as e:
-        conn.rollback()
-        raise e
-    finally:
-        conn.close()
-
-    return username
-
-
-def getUserPreview():
-    filepath = path_to_db()
-    try:
-        conn = sqlite3.connect(filepath)
-        c = conn.cursor()
-        c.execute("PRAGMA foreign_keys = ON")
-        c.execute('''SELECT PREVIEW FROM tblApp''')
-        bPreview = c.fetchone()[0]
-        conn.commit()
-    except Exception as e:
-        conn.rollback()
-        raise e
-    finally:
-        conn.close()
-
-    return bPreview
-
-
 def setUserPreview(bPreview):
     filepath = path_to_db()
     diversen.PREVIEW = bPreview
@@ -424,29 +373,12 @@ def setUserPreview(bPreview):
         c.execute('''UPDATE tblApp SET PREVIEW = ? ''', (bPreview,))
 #        bPreview = c.fetchone()[0]
         conn.commit()
+        diversen.USER_PREVIEW = bPreview
     except Exception as e:
         conn.rollback()
         raise e
     finally:
         conn.close()
-
-
-def getUserTooltip():
-    filepath = path_to_db()
-    try:
-        conn = sqlite3.connect(filepath)
-        c = conn.cursor()
-        c.execute("PRAGMA foreign_keys = ON")
-        c.execute('''SELECT TOOLTIP FROM tblApp''')
-        bTooltip = c.fetchone()[0]
-        conn.commit()
-    except Exception as e:
-        conn.rollback()
-        raise e
-    finally:
-        conn.close()
-
-    return bTooltip
 
 
 def setUserTooltip(bTooltip):
@@ -463,6 +395,7 @@ def setUserTooltip(bTooltip):
         c.execute("PRAGMA foreign_keys = ON")
         c.execute('''UPDATE tblApp SET TOOLTIP = ? ''', (bTooltip,))
         conn.commit()
+        diversen.USER_TOOLTIP = bTooltip
     except Exception as e:
         conn.rollback()
         raise e
@@ -484,6 +417,7 @@ def setUserWebNieuw(bWebNieuw):
         c.execute("PRAGMA foreign_keys = ON")
         c.execute('''UPDATE tblApp SET WEBNIEUW = ? ''', (bWebNieuw,))
         conn.commit()
+        diversen.USER_WEBNIEUW = bWebNieuw
     except Exception as e:
         conn.rollback()
         raise e
@@ -491,45 +425,31 @@ def setUserWebNieuw(bWebNieuw):
         conn.close()
 
 
-def getUserWebNieuw():
+def setUserUpdateCheck(bUpdateCheck):
     filepath = path_to_db()
+#    diversen.USER_UPDATECHECK = bUpdateCheck
+    if bUpdateCheck:
+        bUpdateCheck = 1
+    else:
+        bUpdateCheck = 0
+
     try:
         conn = sqlite3.connect(filepath)
         c = conn.cursor()
         c.execute("PRAGMA foreign_keys = ON")
-        c.execute('''SELECT WEBNIEUW FROM tblApp''')
-        bWebNieuw = c.fetchone()[0]
+        c.execute('''UPDATE tblApp SET UPDATECHECK = ? ''', (bUpdateCheck,))
         conn.commit()
+        diversen.USER_UPDATECHECK = bUpdateCheck
     except Exception as e:
         conn.rollback()
         raise e
     finally:
         conn.close()
-
-    return bWebNieuw
-
-
-def getUserFolder():
-    filepath = path_to_db()
-    try:
-        conn = sqlite3.connect(filepath)
-        c = conn.cursor()
-        c.execute("PRAGMA foreign_keys = ON")
-        c.execute('''SELECT FOLDER FROM tblApp''')
-        sFolder = c.fetchone()[0]
-        conn.commit()
-    except Exception as e:
-        conn.rollback()
-        raise e
-    finally:
-        conn.close()
-
-    return sFolder
 
 
 def setUserFolder(sFolder):
     filepath = path_to_db()
-    diversen.USER_FOLDER = sFolder
+#    diversen.USER_FOLDER = sFolder
 
     try:
         conn = sqlite3.connect(filepath)
@@ -538,6 +458,7 @@ def setUserFolder(sFolder):
         c.execute('''UPDATE tblApp SET FOLDER = ? ''', (sFolder,))
 #        bPreview = c.fetchone()[0]
         conn.commit()
+        diversen.USER_FOLDER = sFolder
     except Exception as e:
         conn.rollback()
         raise e
@@ -597,3 +518,33 @@ def getDimensies():  # return list of dims.. en return listindex?
         conn.close()
 
     return dims
+
+
+def FillGlobals():
+    filepath = path_to_db()
+    try:
+        conn = sqlite3.connect(filepath)
+        c = conn.cursor()
+        c.execute("PRAGMA foreign_keys = ON")
+        c.execute('''SELECT USERNM, FIRSTRUN, IMPORTED, PREVIEW, TOOLTIP, WEBNIEUW, FOLDER, UPDATECHECK FROM tblApp''')
+        tpl = c.fetchone()
+        diversen.USER_USERNAME = tpl[0]
+        diversen.USER_FIRSTRUN = tpl[1]
+        diversen.USER_IMPORTED = tpl[2]
+        diversen.USER_PREVIEW = tpl[3]
+        diversen.USER_TOOLTIP = tpl[4]
+        diversen.USER_WEBNIEUW = tpl[5]
+        diversen.USER_FOLDER = tpl[6]
+        diversen.USER_UPDATECHECK = tpl[7]
+
+        conn.commit()
+#         imported = int(c.fetchone()[0])
+#         if imported == 1:
+#             return True
+#         else:
+#             return False
+    except Exception as e:
+        conn.rollback()
+        raise e
+    finally:
+        conn.close()
