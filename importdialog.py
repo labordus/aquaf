@@ -4,7 +4,7 @@
 import wx
 import sys
 import maingui
-from db import ImportJSON2DB, SetImported
+from db import ImportJSON2DB, setUserImported
 
 
 class ImportDialog(maingui.dlgImport):
@@ -42,7 +42,7 @@ class ImportDialog(maingui.dlgImport):
 #                    teksie = teksie + '/r' + 'Dan waren er ' + mislukt + ' dubbel aanwezig'
                 self.m_staticText4.Label = teksie
 
-                SetImported()
+                setUserImported()
             except Exception as e:
                 self.e = e
                 print('Run-time error:', e)
