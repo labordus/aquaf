@@ -186,6 +186,9 @@ class Mainframe ( wx.Frame ):
 		self.menuitemConf = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"Configuratie", wx.EmptyString, wx.ITEM_NORMAL )
 		self.m_menu1.AppendItem( self.menuitemConf )
 		
+		self.menuitemAfsluiten = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"Afsluiten", wx.EmptyString, wx.ITEM_NORMAL )
+		self.m_menu1.AppendItem( self.menuitemAfsluiten )
+		
 		self.m_menu1.AppendSeparator()
 		
 		self.menuitemAbout = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"Info", wx.EmptyString, wx.ITEM_NORMAL )
@@ -209,6 +212,7 @@ class Mainframe ( wx.Frame ):
 		self.btnUpload.Bind( wx.EVT_BUTTON, self.onbtnUploadClick )
 		self.btnArchief.Bind( wx.EVT_BUTTON, self.onbtnArchiefClick )
 		self.Bind( wx.EVT_MENU, self.onmenuitemClickConf, id = self.menuitemConf.GetId() )
+		self.Bind( wx.EVT_MENU, self.onmenuitemClickAfsluiten, id = self.menuitemAfsluiten.GetId() )
 		self.Bind( wx.EVT_MENU, self.onmenuitemClickAbout, id = self.menuitemAbout.GetId() )
 	
 	def __del__( self ):
@@ -244,6 +248,9 @@ class Mainframe ( wx.Frame ):
 		event.Skip()
 	
 	def onmenuitemClickConf( self, event ):
+		event.Skip()
+	
+	def onmenuitemClickAfsluiten( self, event ):
 		event.Skip()
 	
 	def onmenuitemClickAbout( self, event ):
@@ -517,7 +524,7 @@ class dlgConf ( wx.Dialog ):
 		
 		bSizer35.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
 		
-		self.m_hyperlink4 = wx.HyperlinkCtrl( self.m_panel3, wx.ID_ANY, u"Aquaf downloads", u"https://github.com/labordus/aquaf/releases/latest", wx.DefaultPosition, wx.DefaultSize, wx.HL_DEFAULT_STYLE )
+		self.m_hyperlink4 = wx.HyperlinkCtrl( self.m_panel3, wx.ID_ANY, u"Aquaf downloads", u"https://github.com/labordus/aquaf/releases/latest", wx.DefaultPosition, wx.DefaultSize, wx.HL_CONTEXTMENU|wx.HL_DEFAULT_STYLE )
 		bSizer35.Add( self.m_hyperlink4, 0, wx.ALL, 5 )
 		
 		
@@ -604,6 +611,64 @@ class dlgConf ( wx.Dialog ):
 	def onbtnCheckForUpdateClick( self, event ):
 		event.Skip()
 	
+	def onbtnAfsluitenClick( self, event ):
+		event.Skip()
+	
+
+###########################################################################
+## Class dlgUpdate
+###########################################################################
+
+class dlgUpdate ( wx.Dialog ):
+	
+	def __init__( self, parent ):
+		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Update", pos = wx.DefaultPosition, size = wx.DefaultSize, style = wx.CAPTION|wx.CLOSE_BOX|wx.TAB_TRAVERSAL )
+		
+		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
+		
+		bSizer32 = wx.BoxSizer( wx.VERTICAL )
+		
+		bSizer33 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.m_staticText14 = wx.StaticText( self, wx.ID_ANY, u"Er is een update beschikbaar..", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText14.Wrap( -1 )
+		bSizer33.Add( self.m_staticText14, 0, wx.ALIGN_CENTER|wx.ALL, 5 )
+		
+		self.m_hyperlink4 = wx.HyperlinkCtrl( self, wx.ID_ANY, u"Aquaf downloads", u"https://github.com/labordus/aquaf/releases/latest", wx.DefaultPosition, wx.DefaultSize, wx.HL_CONTEXTMENU|wx.HL_DEFAULT_STYLE )
+		bSizer33.Add( self.m_hyperlink4, 0, wx.ALL, 5 )
+		
+		
+		bSizer32.Add( bSizer33, 0, wx.EXPAND, 5 )
+		
+		bSizer34 = wx.BoxSizer( wx.VERTICAL )
+		
+		self.textUpdate = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_AUTO_URL|wx.TE_MULTILINE|wx.TE_READONLY|wx.TE_RICH )
+		self.textUpdate.SetMinSize( wx.Size( 250,200 ) )
+		
+		bSizer34.Add( self.textUpdate, 0, wx.ALL|wx.EXPAND, 5 )
+		
+		
+		bSizer32.Add( bSizer34, 1, wx.EXPAND, 5 )
+		
+		self.btnAfsluiten = wx.Button( self, wx.ID_ANY, u"Afsluiten", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
+		self.btnAfsluiten.SetDefault() 
+		bSizer32.Add( self.btnAfsluiten, 0, wx.ALIGN_CENTER|wx.ALL, 5 )
+		
+		
+		self.SetSizer( bSizer32 )
+		self.Layout()
+		bSizer32.Fit( self )
+		
+		self.Centre( wx.BOTH )
+		
+		# Connect Events
+		self.btnAfsluiten.Bind( wx.EVT_BUTTON, self.onbtnAfsluitenClick )
+	
+	def __del__( self ):
+		pass
+	
+	
+	# Virtual event handlers, overide them in your derived class
 	def onbtnAfsluitenClick( self, event ):
 		event.Skip()
 	
