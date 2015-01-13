@@ -215,6 +215,22 @@ def IsValidImage(pad):
         return True
 
 
+def UpdateAvailable():
+    import urllib2
+    import json
+    req = urllib2.Request("https://raw.githubusercontent.com/labordus/aquaf/master/version.json")
+#        req = urllib2.Request("https://gist.githubusercontent.com/labordus/5c67b729991f8b585632/raw/0798969844ff4ad6d5b13365a03d9bf48a669bf6/aquaf_version")
+    opener = urllib2.build_opener()
+    f = opener.open(req)
+    json = json.loads(f.read())
+#        print json
+    OnlineVersion = json['version']
+    OnlineReason = json['reason']
+    if APP_VERSION == OnlineVersion:
+        return ('', '')
+    return (OnlineVersion, OnlineReason)
+
+
 def PilImageToWxBitmap(myPilImage):
     return WxImageToWxBitmap(PilImageToWxImage(myPilImage))
 
