@@ -7,7 +7,7 @@ import db
 from db import getDimensies, getUserDimensieID, setUserDimensie, setUserFolder
 import importdialog
 import diversen
-from diversen import APP_VERSION
+from diversen import APP_VERSION, UpdateAvailable
 
 
 class Configure(maingui.dlgConf):
@@ -83,20 +83,13 @@ class Configure(maingui.dlgConf):
         db.setUserUpdateCheck(self.checkUpdate.IsChecked())
 
     def onbtnCheckForUpdateClick(self, event):
-        import urllib2
-        import json
-        req = urllib2.Request("https://raw.githubusercontent.com/labordus/aquaf/master/version.json")
-#        req = urllib2.Request("https://gist.githubusercontent.com/labordus/5c67b729991f8b585632/raw/0798969844ff4ad6d5b13365a03d9bf48a669bf6/aquaf_version")
-        opener = urllib2.build_opener()
-        f = opener.open(req)
-        json = json.loads(f.read())
-#        print json
-#        print json['reason']
-        AppversionOnline = json['version']
-        if APP_VERSION != AppversionOnline:
+        #        OnlineVersion, OnlineReason = ''
+        OnlineVersion, OnlineReason = UpdateAvailable()
+        if OnlineVersion != '':
             self.txtVersie.SetForegroundColour('#FF0000')
-            self.txtVersie.SetLabel('''Versie: ''' + AppversionOnline + ''' is beschikbaar, bezoek website voor download.''')
+            self.txtVersie.SetLabel('''Versie: ''' + OnlineVersion + ''' is beschikbaar, bezoek website voor download.''')
         else:
+            self.txtVersie.SetForegroundColour('#078910')
             self.txtVersie.SetLabel('Geen update beschikbaar, je gebruik de nieuwste versie.')
 
     def onbtnAfsluitenClick(self, event):
