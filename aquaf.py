@@ -9,6 +9,7 @@ from diversen import *
 
 import uploaddialog
 import confdialog
+import updatedialog
 from db import DB2JSON, DB2Webfile, addDATA2DB, getUserDimensieID, getDimensies
 from db import FillGlobals
 from wx import ToolTip
@@ -111,6 +112,15 @@ class AquaFrame(maingui.Mainframe):
 #        self.Layout()
         self.panelPreview.Show(diversen.USER_PREVIEW)
         self.Fit()
+
+        if diversen.USER_UPDATECHECK:
+            OnlineVersion, OnlineReason = UpdateAvailable()
+            if OnlineVersion != '':
+                update = updatedialog.Update(self)
+                update.LoadText(OnlineVersion, OnlineReason)
+                update.CenterOnParent()
+                update.ShowModal()
+                update.Destroy()
 
     def onmenuitemClickConf(self, event):
         conf = confdialog.Configure(self)
@@ -343,6 +353,9 @@ class AquaFrame(maingui.Mainframe):
             dialog.Destroy()
             #        launch_archive('firefox')
             return
+
+    def onmenuitemClickAfsluiten(self, event):
+        self.Close()
 
     def oncloseMainframe(self, event):
         # checken of er nog foto's klaar staan in de uploadlijst.
