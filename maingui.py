@@ -149,7 +149,7 @@ class Mainframe ( wx.Frame ):
 		bSizer39.Add( self.btnUpload, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
 		
 		
-		bSizer13.Add( bSizer39, 0, wx.EXPAND, 5 )
+		bSizer13.Add( bSizer39, 1, wx.EXPAND, 5 )
 		
 		
 		bSizer1.Add( bSizer13, 1, wx.ALL|wx.EXPAND, 5 )
@@ -643,9 +643,9 @@ class dlgUpdate ( wx.Dialog ):
 		bSizer34 = wx.BoxSizer( wx.VERTICAL )
 		
 		self.textUpdate = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_AUTO_URL|wx.TE_MULTILINE|wx.TE_READONLY|wx.TE_RICH )
-		self.textUpdate.SetMinSize( wx.Size( 250,200 ) )
+		self.textUpdate.SetMinSize( wx.Size( 250,250 ) )
 		
-		bSizer34.Add( self.textUpdate, 0, wx.ALL|wx.EXPAND, 5 )
+		bSizer34.Add( self.textUpdate, 1, wx.ALL|wx.EXPAND, 5 )
 		
 		
 		bSizer32.Add( bSizer34, 1, wx.EXPAND, 5 )
