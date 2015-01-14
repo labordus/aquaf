@@ -226,17 +226,17 @@ def UpdateAvailable():
         f = opener.open(req, timeout=8)
         t = f.read()
         json = json.loads(t)
-        OnlineVersion = json['version']
-        OnlineReason = json['reason']
-        if APP_VERSION == OnlineVersion:
-            return ('', '')
-        return (OnlineVersion, OnlineReason)
+        ReleaseVersion = json['version']
+        ReleaseDate = json['date']
+        ReleaseChanges = json['changes']
+        if APP_VERSION == ReleaseVersion:
+            return ('', '', '')
+        return (ReleaseVersion, ReleaseDate, ReleaseChanges)
     except URLError:  # Waarschijnlijk timeout-error maar doe net alsof er geen update is..
-        return ('', '')
-        #        print 'd'
+        return ('', '', '')
         #        print e.reason
         #        print e.code
-#        print e.read()
+        #        print e.read()
 
 
 def PilImageToWxBitmap(myPilImage):
