@@ -114,10 +114,10 @@ class AquaFrame(maingui.Mainframe):
         self.Fit()
 
         if diversen.USER_UPDATECHECK:
-            OnlineVersion, OnlineReason = UpdateAvailable()
-            if OnlineVersion != '':
+            ReleaseVersion, ReleaseDate, ReleaseChanges = UpdateAvailable()
+            if ReleaseVersion != '':
                 update = updatedialog.Update(self)
-                update.LoadText(OnlineVersion, OnlineReason)
+                update.LoadText(ReleaseVersion, ReleaseDate, ReleaseChanges)
                 update.CenterOnParent()
                 update.ShowModal()
                 update.Destroy()
