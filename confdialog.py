@@ -8,6 +8,7 @@ from db import getDimensies, getUserDimensieID, setUserDimensie, setUserFolder
 import importdialog
 import diversen
 from diversen import APP_VERSION, UpdateAvailable
+import updatedialog
 
 
 class Configure(maingui.dlgConf):
@@ -83,11 +84,16 @@ class Configure(maingui.dlgConf):
         db.setUserUpdateCheck(self.checkUpdate.IsChecked())
 
     def onbtnCheckForUpdateClick(self, event):
-        #        OnlineVersion, OnlineReason = ''
-        OnlineVersion, OnlineReason = UpdateAvailable()
-        if OnlineVersion != '':
-            self.txtVersie.SetForegroundColour('#FF0000')
-            self.txtVersie.SetLabel('''Versie: ''' + OnlineVersion + ''' is beschikbaar, bezoek website voor download.''')
+
+        ReleaseVersion, ReleaseDate, ReleaseChanges = UpdateAvailable()
+        if ReleaseVersion != '':
+            self.txtVersie.SetForegroundColour(wx.RED)
+            self.txtVersie.SetLabel('''Versie: ''' + ReleaseVersion + ''' is beschikbaar, bezoek website voor download.''')
+            update = updatedialog.Update(self)
+            update.LoadText(ReleaseVersion, ReleaseDate, ReleaseChanges)
+            update.CenterOnParent()
+            update.ShowModal()
+            update.Destroy()
         else:
             self.txtVersie.SetForegroundColour('#078910')
             self.txtVersie.SetLabel('Geen update beschikbaar, je gebruik de nieuwste versie.')
