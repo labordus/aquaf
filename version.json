@@ -1,16 +1,11 @@
 {
   "version": "0.86",
-  "link": "http://www.aquaforum.nl",
-  "reason": ["Iets toegevoegd.",
-             "Het 1 en ander enorm verbeterd.",
-             "Een wijzigingetje doorgevoerd, jazeker.",
-             
-"# 2015 10 januari : Versie 0.85 :",
-"* Je kunt nu per individuele foto aangeven in welke dimensie je het wilt uploaden.",
-"* Configuratiescherm waarin je verschillende defaults in de database kunt vastleggen..",
-"* Preview van foto's kan worden in/uitgeschakeld.",
-"* Eventuele dubbel aanwezige foto's in de database worden verwijderd en voorkomen.",
-"* Nieuwe archief-pagina. (Als optie in configuratiemenu)",
-"* Met dubbelklik of Enter-toets een foto in uploadlijst kunnen zetten."
-]
+  "date": "14 januari 2015",
+  "changes":["* Je kunt nu per individuele foto aangeven in welke dimensie je het wilt uploaden.",
+             "* Configuratiescherm waarin je verschillende defaults in de database kunt vastleggen..",
+             "* Preview van foto's kan worden in/uitgeschakeld.",
+             "* Eventuele dubbel aanwezige foto's in de database worden verwijderd en voorkomen.",
+             "* Nieuwe archief-pagina. (Als optie in configuratiemenu)",
+             "* Met dubbelklik of Enter-toets een foto in uploadlijst kunnen zetten."
+            ]
 }
