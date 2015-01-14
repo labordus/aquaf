@@ -23,8 +23,7 @@
 - [x] Na upload listFiles wissen
 - [x] Bij "geen Preview" .. preview-bitmap verwijderen.
 - [x] Tooltips aan/uit
-- [x] Check for update (+ automatisch), let op: als er dan is ge-update voorkomen dat er (bij opstart app.) nogmaals wordt aangegeven dat er een update is.. github cache?
-- [ ] sys-info kunnen versturen (optioneel), eventueel ook wanneer app wordt opgestart en hoe de gebruiker het heeft ingesteld? Dan krijg ik een beeld van hoe men het gebruikt.
+- [x] Check for update (+ automatisch), let op: als er dan is ge-update voorkomen dat er (bij opstart app.) nogmaals wordt aangegeven dat er een update is.. browser-cache?
 - [x] Menu -> Afsluiten
 - [ ] Alleen GTK2/3? (Windows gaat prima) Alleen bij eerste keer sluiten confdialog wordt mainframe iets groter .. self.fit()
 - [ ] bij Preview = False wil ik de knoppen in het midden van het scherm.
