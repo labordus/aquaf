@@ -1,5 +1,5 @@
 {
-  "version": "0.86",
+  "version": "0.85",
   "date": "14 januari 2015",
   "changes":["* Je kunt nu per individuele foto aangeven in welke dimensie je het wilt uploaden.",
              "* Configuratiescherm waarin je verschillende defaults in de database kunt vastleggen..",
