@@ -5,10 +5,10 @@
 - [x] Oude archive.html ook blijven aanbieden, met HTTPServer.
 - [x] DateTime-stamp per foto opslaan in DB
 - [x] size/dimensie per foto opslaan in DB
-- [ ] Beschrijving per foto opslaan in DB
+- [ ] Maak huidige/actieve directory default. Knoppie of context-sensitive popupmenu op right-click?
+- [ ] Alleen GTK2/3? (Windows gaat prima) Alleen bij eerste keer sluiten confdialog wordt mainframe iets groter .. self.fit()
 - [ ] Windows -> Klikken op Archief met lege DB laat geen melding zien dat er geen foto's te tonen zijn.
 - [x] add to history to db
-- [ ] Fetch foto van remote URL? Flickr, Picasa etc..
 - [x] foutafhandeling bij het importeren. (wat als JSON nog steeds niet kan worden verwerkt? Test!!)
 - [x] dubbele entries verwijderen uit DB versie 0.84 voordat ik importeer .. DISTINCT?
 - [x] dubbele entries voorkomen tijdens de import vanuit JSON en bij het toevoegen van een URL
@@ -16,6 +16,8 @@
 - [x] Waarschuwen bij dubbele import.
 - [x] alpha eruit slopen.
 - [ ] Archive-dialog sizable.
+- [ ] bij Preview = False wil ik de knoppen in het midden van het scherm.
+- [ ] Gebruikershandleiding cq. stappenoverzicht met plaatjes maken.
 - [x] Beginpad configuratie functioneel maken
 - [x] met dubbelklik en Enter-toets foto in uploadlijst kunnen zetten.
 - [x] Previewknop -> preview tonen van eventueel geselecteerde foto, anders front.jpg
@@ -26,19 +28,18 @@
 - [x] Tooltips aan/uit
 - [x] Check for update (+ automatisch), let op: als er dan is ge-update voorkomen dat er (bij opstart app.) nogmaals wordt aangegeven dat er een update is.. browser-cache?
 - [x] Menu -> Afsluiten
-- [ ] Alleen GTK2/3? (Windows gaat prima) Alleen bij eerste keer sluiten confdialog wordt mainframe iets groter .. self.fit()
-- [ ] bij Preview = False wil ik de knoppen in het midden van het scherm.
 - [x] bij sluiten confdialog niet het treeview-pad verzetten.
 - [x] Windows -- tooltips zijn AAN bij UIT
 - [x] Image/Plaatje wordt FOTO en folder/directory wordt MAP.. overal aanpassen.
-- [ ] Maak huidige/actieve directory default. Knoppie of context-sensitive popupmenu op right-click?
 - [x] Archive.html wil ik aanpakken.. is lastige K-klus.
-- [ ] Gebruikershandleiding cq. stappenoverzicht met plaatjes maken.
 - [x] Tijdens installatie "aquaf v0.84" verwijderen uit het Windows-startmenu.
-- [ ] Moet iets verzinnen op de listctrl, setitemdata/getitemdata etc.. nu ben ik 'verplicht' pad te laten zien in een listctrl-column.
 - [x] Bij afsluiten app: als er bestanden in listFiles staan.. vragen of die nog moeten worden ge-upload of niet.
+- [ ] Moet iets verzinnen op de listctrl, setitemdata/getitemdata etc.. nu ben ik 'verplicht' pad te laten zien in een listctrl-column.
 - [ ] Foto's van aquaforum-server downloaden om de dimensies op te slaan in DB?
       Opslagdatum lukt niet, alleen (eventueel aanwezige) EXIF-data met de aanmaakdatum, laatste wijzigingsdatum staat op de server? Heb niet voldoende rechten om die in de lezen.
+- [ ] Fetch foto van remote URL? Flickr, Picasa etc..
+- [ ] Beschrijving per foto opslaan in DB
+- [ ] "Maar mijn Norton antivirus scanner accepteert hem niet en gooit hem meteen weer van mijn pc af."
 
 ##############
 'sceleton' db's bij de releases zetten
