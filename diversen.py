@@ -4,6 +4,7 @@ import wx
 import string
 import sys
 import imp
+import urllib2
 
 try:
     from PIL import Image
@@ -19,7 +20,12 @@ Image._initialized = 2
 FORUM_UPLOAD_URL = "http://www.aquaforum.nl/ubb/scripts/upload.php"
 APP_VERSION_STR = "0_85"
 APP_VERSION = "0.85"
-PREVIEW = None
+USER_PREVIEW = 1
+USER_USERNAME = ''
+USER_WEBNIEUW = 1
+USER_FIRSTRUN = 1
+USER_IMPORTED = 0
+USER_UPDATECHECK = 1
 USER_FOLDER = ''
 USER_TOOLTIP = 1
 ALLOWED_CHARS = "qwertyuioplkjhgfdsazxcvbnm0123456789._"
@@ -106,6 +112,7 @@ def DumpImage(im, username, filename):
                 im = im.convert("RGB")
             im.save(path, "JPEG", quality=_x, optimize=True)
             filesize = os.path.getsize(path)
+            dimWidth, dimHeight = (im.size[0], im.size[1])
             if filesize <= 200000:
                 break
         except IOError as er:
@@ -113,10 +120,9 @@ def DumpImage(im, username, filename):
             os.close(fd)
             os.remove(path)
             return
-
     desiredName = constructUploadName(username, filename)
     uploadFileToAquaforum(path, desiredName)
-    return desiredName
+    return desiredName, dimWidth, dimHeight
 
 
 def uploadFileToAquaforum(uploadFilename, requestedFileName):
@@ -208,6 +214,29 @@ def IsValidImage(pad):
             print "Geen ondersteund image-formaat"
             return False
         return True
+
+
+def UpdateAvailable():
+    from urllib2 import URLError
+    import json
+    try:
+        req = urllib2.Request("https://raw.githubusercontent.com/labordus/aquaf/master/version.json")
+    #        req = urllib2.Request("https://gist.githubusercontent.com/labordus/5c67b729991f8b585632/raw/0798969844ff4ad6d5b13365a03d9bf48a669bf6/aquaf_version")
+        opener = urllib2.build_opener()
+        f = opener.open(req, timeout=8)
+        t = f.read()
+        json = json.loads(t)
+        ReleaseVersion = json['version']
+        ReleaseDate = json['date']
+        ReleaseChanges = json['changes']
+        if APP_VERSION == ReleaseVersion:
+            return ('', '', '')
+        return (ReleaseVersion, ReleaseDate, ReleaseChanges)
+    except URLError:  # Waarschijnlijk timeout-error maar doe net alsof er geen update is..
+        return ('', '', '')
+        #        print e.reason
+        #        print e.code
+        #        print e.read()
 
 
 def PilImageToWxBitmap(myPilImage):

@@ -50,9 +50,13 @@ class Mainframe ( wx.Frame ):
 		
 		bSizer13 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		bSizer4 = wx.BoxSizer( wx.HORIZONTAL )
+		bSizer4 = wx.BoxSizer( wx.VERTICAL )
 		
 		bSizer4.SetMinSize( wx.Size( 300,-1 ) ) 
+		self.m_staticText10 = wx.StaticText( self, wx.ID_ANY, u" Getoonde en ondersteunde formaten:\n JPG/JPEG - PNG - TIFF - BMP", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText10.Wrap( -1 )
+		bSizer4.Add( self.m_staticText10, 0, wx.ALL|wx.EXPAND, 0 )
+		
 		self.tvFiles = wx.GenericDirCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 300,-1 ), 0|wx.SUNKEN_BORDER, wx.EmptyString, 0 )
 		
 		self.tvFiles.ShowHidden( True )
@@ -145,7 +149,7 @@ class Mainframe ( wx.Frame ):
 		bSizer39.Add( self.btnUpload, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
 		
 		
-		bSizer13.Add( bSizer39, 0, wx.EXPAND, 5 )
+		bSizer13.Add( bSizer39, 1, wx.EXPAND, 5 )
 		
 		
 		bSizer1.Add( bSizer13, 1, wx.ALL|wx.EXPAND, 5 )
@@ -182,10 +186,13 @@ class Mainframe ( wx.Frame ):
 		self.menuitemConf = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"Configuratie", wx.EmptyString, wx.ITEM_NORMAL )
 		self.m_menu1.AppendItem( self.menuitemConf )
 		
+		self.menuitemAfsluiten = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"Afsluiten", wx.EmptyString, wx.ITEM_NORMAL )
+		self.m_menu1.AppendItem( self.menuitemAfsluiten )
+		
 		self.m_menu1.AppendSeparator()
 		
-		self.menuAbout = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"Info", wx.EmptyString, wx.ITEM_NORMAL )
-		self.m_menu1.AppendItem( self.menuAbout )
+		self.menuitemAbout = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"Info", wx.EmptyString, wx.ITEM_NORMAL )
+		self.m_menu1.AppendItem( self.menuitemAbout )
 		
 		self.m_menubar1.Append( self.m_menu1, u"Menu" ) 
 		
@@ -195,6 +202,7 @@ class Mainframe ( wx.Frame ):
 		self.Centre( wx.BOTH )
 		
 		# Connect Events
+		self.Bind( wx.EVT_CLOSE, self.oncloseMainframe )
 		self.tvFiles.Bind( wx.EVT_TREE_ITEM_ACTIVATED, self.ontvFilesItemActivate )
 		self.tvFiles.Bind( wx.EVT_TREE_SEL_CHANGED, self.ontvFilesSelChanged )
 		self.btnVoorbeeld.Bind( wx.EVT_BUTTON, self.onbtnVoorbeeldClick )
@@ -204,13 +212,17 @@ class Mainframe ( wx.Frame ):
 		self.btnUpload.Bind( wx.EVT_BUTTON, self.onbtnUploadClick )
 		self.btnArchief.Bind( wx.EVT_BUTTON, self.onbtnArchiefClick )
 		self.Bind( wx.EVT_MENU, self.onmenuitemClickConf, id = self.menuitemConf.GetId() )
-		self.Bind( wx.EVT_MENU, self.onmenuitemClickAbout, id = self.menuAbout.GetId() )
+		self.Bind( wx.EVT_MENU, self.onmenuitemClickAfsluiten, id = self.menuitemAfsluiten.GetId() )
+		self.Bind( wx.EVT_MENU, self.onmenuitemClickAbout, id = self.menuitemAbout.GetId() )
 	
 	def __del__( self ):
 		pass
 	
 	
 	# Virtual event handlers, overide them in your derived class
+	def oncloseMainframe( self, event ):
+		event.Skip()
+	
 	def ontvFilesItemActivate( self, event ):
 		event.Skip()
 	
@@ -236,6 +248,9 @@ class Mainframe ( wx.Frame ):
 		event.Skip()
 	
 	def onmenuitemClickConf( self, event ):
+		event.Skip()
+	
+	def onmenuitemClickAfsluiten( self, event ):
 		event.Skip()
 	
 	def onmenuitemClickAbout( self, event ):
@@ -417,79 +432,134 @@ class dlgVoorbeeld ( wx.Dialog ):
 class dlgConf ( wx.Dialog ):
 	
 	def __init__( self, parent ):
-		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Configuratiescherm", pos = wx.DefaultPosition, size = wx.Size( 579,266 ), style = wx.CAPTION|wx.CLOSE_BOX|wx.TAB_TRAVERSAL )
+		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Configuratiescherm", pos = wx.DefaultPosition, size = wx.Size( -1,-1 ), style = wx.CAPTION|wx.CLOSE_BOX|wx.TAB_TRAVERSAL )
 		
 		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
 		self.SetBackgroundColour( wx.Colour( 141, 139, 178 ) )
 		
 		bSizer42 = wx.BoxSizer( wx.VERTICAL )
 		
+		self.m_panel4 = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		gSizer1 = wx.GridSizer( 0, 2, 0, 0 )
 		
-		self.confedtLoginName = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 180,-1 ), 0 )
+		self.confedtLoginName = wx.TextCtrl( self.m_panel4, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( -1,-1 ), 0 )
 		self.confedtLoginName.SetMaxLength( 0 ) 
 		gSizer1.Add( self.confedtLoginName, 0, wx.ALL|wx.EXPAND, 5 )
 		
-		self.m_staticText151 = wx.StaticText( self, wx.ID_ANY, u"aquaforum.nl gebruikersnaam", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText151 = wx.StaticText( self.m_panel4, wx.ID_ANY, u"aquaforum.nl gebruikersnaam", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText151.Wrap( -1 )
 		gSizer1.Add( self.m_staticText151, 0, wx.ALL, 5 )
 		
-		self.dirpickFolder = wx.DirPickerCtrl( self, wx.ID_ANY, wx.EmptyString, u"Selecteer een map", wx.Point( -1,-1 ), wx.DefaultSize, wx.DIRP_DEFAULT_STYLE|wx.DIRP_DIR_MUST_EXIST|wx.DIRP_USE_TEXTCTRL )
-		self.dirpickFolder.SetBackgroundColour( wx.Colour( 141, 139, 178 ) )
+		self.dirpickFolder = wx.DirPickerCtrl( self.m_panel4, wx.ID_ANY, wx.EmptyString, u"Selecteer een map", wx.Point( -1,-1 ), wx.DefaultSize, wx.DIRP_DEFAULT_STYLE|wx.DIRP_DIR_MUST_EXIST|wx.DIRP_USE_TEXTCTRL )
+		self.dirpickFolder.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOWFRAME ) )
 		
 		gSizer1.Add( self.dirpickFolder, 0, wx.EXPAND, 5 )
 		
-		self.m_staticText9 = wx.StaticText( self, wx.ID_ANY, u"Standaard map", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText9 = wx.StaticText( self.m_panel4, wx.ID_ANY, u"Standaard map", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText9.Wrap( -1 )
 		gSizer1.Add( self.m_staticText9, 0, wx.ALL, 5 )
 		
-		self.checkPreview = wx.CheckBox( self, wx.ID_ANY, u"Preview foto's?", wx.DefaultPosition, wx.DefaultSize, 0 )
-		gSizer1.Add( self.checkPreview, 0, wx.ALL, 5 )
-		
-		self.m_staticText15 = wx.StaticText( self, wx.ID_ANY, u"Preview aan/uitzetten", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText15.Wrap( -1 )
-		gSizer1.Add( self.m_staticText15, 0, wx.ALL, 5 )
-		
 		choiceDimensieChoices = []
-		self.choiceDimensie = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, choiceDimensieChoices, 0 )
+		self.choiceDimensie = wx.Choice( self.m_panel4, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, choiceDimensieChoices, 0 )
 		self.choiceDimensie.SetSelection( 0 )
 		gSizer1.Add( self.choiceDimensie, 0, wx.ALL, 5 )
 		
-		self.m_staticText16 = wx.StaticText( self, wx.ID_ANY, u"Standaardwaarde voor dimensies", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText16 = wx.StaticText( self.m_panel4, wx.ID_ANY, u"Standaardwaarde voor dimensies", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText16.Wrap( -1 )
 		gSizer1.Add( self.m_staticText16, 0, wx.ALL, 5 )
 		
-		self.checkTooltip = wx.CheckBox( self, wx.ID_ANY, u"Tooltips laten zien?", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.checkPreview = wx.CheckBox( self.m_panel4, wx.ID_ANY, u"Bij aanklikken van een foto een preview tonen.", wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer1.Add( self.checkPreview, 0, wx.ALL, 5 )
+		
+		self.m_staticText15 = wx.StaticText( self.m_panel4, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText15.Wrap( -1 )
+		gSizer1.Add( self.m_staticText15, 0, wx.ALL, 5 )
+		
+		self.checkWebNieuw = wx.CheckBox( self.m_panel4, wx.ID_ANY, u"Gebruik nieuwe archiefpagina (experimenteel).", wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer1.Add( self.checkWebNieuw, 0, wx.ALL, 5 )
+		
+		self.m_staticText12 = wx.StaticText( self.m_panel4, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText12.Wrap( -1 )
+		gSizer1.Add( self.m_staticText12, 0, wx.ALL, 5 )
+		
+		self.checkTooltip = wx.CheckBox( self.m_panel4, wx.ID_ANY, u"Tooltips laten zien bij mouseover.", wx.DefaultPosition, wx.DefaultSize, 0 )
 		gSizer1.Add( self.checkTooltip, 0, wx.ALL, 5 )
 		
-		self.m_staticText91 = wx.StaticText( self, wx.ID_ANY, u"Tooltips aan/uitzetten", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText91 = wx.StaticText( self.m_panel4, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText91.Wrap( -1 )
 		gSizer1.Add( self.m_staticText91, 0, wx.ALL, 5 )
 		
-		self.btnImport = wx.Button( self, wx.ID_ANY, u"Importeer", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
+		self.btnImport = wx.Button( self.m_panel4, wx.ID_ANY, u"Importeer foto's uit AquaForumUploader van Riba.", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
 		gSizer1.Add( self.btnImport, 0, wx.ALL, 5 )
 		
-		self.m_staticText17 = wx.StaticText( self, wx.ID_ANY, u"Importeer gegevens van Riba's-versie.", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText17 = wx.StaticText( self.m_panel4, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText17.Wrap( -1 )
 		gSizer1.Add( self.m_staticText17, 0, wx.ALL, 5 )
 		
+		self.m_staticText13 = wx.StaticText( self.m_panel4, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText13.Wrap( -1 )
+		gSizer1.Add( self.m_staticText13, 0, wx.ALL, 5 )
 		
-		bSizer42.Add( gSizer1, 1, wx.EXPAND, 5 )
+		
+		self.m_panel4.SetSizer( gSizer1 )
+		self.m_panel4.Layout()
+		gSizer1.Fit( self.m_panel4 )
+		bSizer42.Add( self.m_panel4, 0, wx.ALL|wx.EXPAND, 0 )
+		
+		self.m_panel3 = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		bSizer33 = wx.BoxSizer( wx.VERTICAL )
+		
+		self.checkUpdate = wx.CheckBox( self.m_panel3, wx.ID_ANY, u"Bij opstart applicatie checken of er een update is.", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer33.Add( self.checkUpdate, 0, wx.ALL, 5 )
+		
+		bSizer35 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.btnCheckForUpdate = wx.Button( self.m_panel3, wx.ID_ANY, u"Check voor update", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
+		bSizer35.Add( self.btnCheckForUpdate, 0, wx.ALL, 5 )
+		
+		self.txtVersie = wx.StaticText( self.m_panel3, wx.ID_ANY, u"Huidige applicatie-versie: ", wx.Point( -1,-1 ), wx.DefaultSize, 0 )
+		self.txtVersie.Wrap( -1 )
+		bSizer35.Add( self.txtVersie, 1, wx.ALIGN_CENTER|wx.ALL, 5 )
+		
+		
+		bSizer35.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		
+		self.m_hyperlink4 = wx.HyperlinkCtrl( self.m_panel3, wx.ID_ANY, u"Aquaf downloads", u"https://github.com/labordus/aquaf/releases/latest", wx.DefaultPosition, wx.DefaultSize, wx.HL_CONTEXTMENU|wx.HL_DEFAULT_STYLE )
+		bSizer35.Add( self.m_hyperlink4, 0, wx.ALL, 5 )
+		
+		
+		bSizer33.Add( bSizer35, 1, wx.EXPAND, 5 )
+		
+		
+		self.m_panel3.SetSizer( bSizer33 )
+		self.m_panel3.Layout()
+		bSizer33.Fit( self.m_panel3 )
+		bSizer42.Add( self.m_panel3, 1, wx.ALL|wx.EXPAND, 0 )
 		
 		bSizer34 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.m_staticline3 = wx.StaticLine( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LI_HORIZONTAL )
-		bSizer34.Add( self.m_staticline3, 0, wx.EXPAND |wx.ALL, 5 )
+		self.m_panel5 = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		bSizer341 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.btnAfsluiten = wx.Button( self, wx.ID_ANY, u"Afsluiten", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
-		bSizer34.Add( self.btnAfsluiten, 0, wx.ALIGN_RIGHT|wx.ALL, 5 )
+		self.m_staticline3 = wx.StaticLine( self.m_panel5, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LI_HORIZONTAL )
+		bSizer341.Add( self.m_staticline3, 0, wx.EXPAND |wx.ALL, 5 )
+		
+		self.btnAfsluiten = wx.Button( self.m_panel5, wx.ID_ANY, u"Afsluiten", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
+		bSizer341.Add( self.btnAfsluiten, 0, wx.ALIGN_RIGHT|wx.ALL, 5 )
 		
 		
-		bSizer42.Add( bSizer34, 0, wx.EXPAND, 5 )
+		self.m_panel5.SetSizer( bSizer341 )
+		self.m_panel5.Layout()
+		bSizer341.Fit( self.m_panel5 )
+		bSizer34.Add( self.m_panel5, 0, wx.EXPAND |wx.ALL, 0 )
+		
+		
+		bSizer42.Add( bSizer34, 0, wx.EXPAND, 0 )
 		
 		
 		self.SetSizer( bSizer42 )
 		self.Layout()
+		bSizer42.Fit( self )
 		
 		self.Centre( wx.BOTH )
 		
@@ -497,10 +567,13 @@ class dlgConf ( wx.Dialog ):
 		self.Bind( wx.EVT_INIT_DIALOG, self.oninitConfDialog )
 		self.confedtLoginName.Bind( wx.EVT_KILL_FOCUS, self.onconfedtLoginNameKillFocus )
 		self.dirpickFolder.Bind( wx.EVT_DIRPICKER_CHANGED, self.ondirpickFolderChange )
-		self.checkPreview.Bind( wx.EVT_CHECKBOX, self.oncheckPreviewClick )
 		self.choiceDimensie.Bind( wx.EVT_CHOICE, self.onChoiceDimensies )
+		self.checkPreview.Bind( wx.EVT_CHECKBOX, self.oncheckPreviewClick )
+		self.checkWebNieuw.Bind( wx.EVT_CHECKBOX, self.oncheckWebNieuwClick )
 		self.checkTooltip.Bind( wx.EVT_CHECKBOX, self.oncheckTooltipClick )
 		self.btnImport.Bind( wx.EVT_BUTTON, self.onbtnImportClick )
+		self.checkUpdate.Bind( wx.EVT_CHECKBOX, self.oncheckUpdateClick )
+		self.btnCheckForUpdate.Bind( wx.EVT_BUTTON, self.onbtnCheckForUpdateClick )
 		self.btnAfsluiten.Bind( wx.EVT_BUTTON, self.onbtnAfsluitenClick )
 	
 	def __del__( self ):
@@ -517,10 +590,13 @@ class dlgConf ( wx.Dialog ):
 	def ondirpickFolderChange( self, event ):
 		event.Skip()
 	
+	def onChoiceDimensies( self, event ):
+		event.Skip()
+	
 	def oncheckPreviewClick( self, event ):
 		event.Skip()
 	
-	def onChoiceDimensies( self, event ):
+	def oncheckWebNieuwClick( self, event ):
 		event.Skip()
 	
 	def oncheckTooltipClick( self, event ):
@@ -529,6 +605,70 @@ class dlgConf ( wx.Dialog ):
 	def onbtnImportClick( self, event ):
 		event.Skip()
 	
+	def oncheckUpdateClick( self, event ):
+		event.Skip()
+	
+	def onbtnCheckForUpdateClick( self, event ):
+		event.Skip()
+	
+	def onbtnAfsluitenClick( self, event ):
+		event.Skip()
+	
+
+###########################################################################
+## Class dlgUpdate
+###########################################################################
+
+class dlgUpdate ( wx.Dialog ):
+	
+	def __init__( self, parent ):
+		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Update", pos = wx.DefaultPosition, size = wx.DefaultSize, style = wx.CAPTION|wx.CLOSE_BOX|wx.TAB_TRAVERSAL )
+		
+		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
+		
+		bSizer32 = wx.BoxSizer( wx.VERTICAL )
+		
+		bSizer33 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.m_staticText14 = wx.StaticText( self, wx.ID_ANY, u"Er is een update beschikbaar..", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText14.Wrap( -1 )
+		bSizer33.Add( self.m_staticText14, 0, wx.ALIGN_CENTER|wx.ALL, 5 )
+		
+		self.m_hyperlink4 = wx.HyperlinkCtrl( self, wx.ID_ANY, u"Aquaf downloads", u"https://github.com/labordus/aquaf/releases/latest", wx.DefaultPosition, wx.DefaultSize, wx.HL_CONTEXTMENU|wx.HL_DEFAULT_STYLE )
+		bSizer33.Add( self.m_hyperlink4, 0, wx.ALL, 5 )
+		
+		
+		bSizer32.Add( bSizer33, 0, wx.EXPAND, 5 )
+		
+		bSizer34 = wx.BoxSizer( wx.VERTICAL )
+		
+		self.textUpdate = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_AUTO_URL|wx.TE_MULTILINE|wx.TE_READONLY|wx.TE_RICH )
+		self.textUpdate.SetMinSize( wx.Size( 250,250 ) )
+		
+		bSizer34.Add( self.textUpdate, 1, wx.ALL|wx.EXPAND, 5 )
+		
+		
+		bSizer32.Add( bSizer34, 1, wx.EXPAND, 5 )
+		
+		self.btnAfsluiten = wx.Button( self, wx.ID_ANY, u"Afsluiten", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
+		self.btnAfsluiten.SetDefault() 
+		bSizer32.Add( self.btnAfsluiten, 0, wx.ALIGN_CENTER|wx.ALL, 5 )
+		
+		
+		self.SetSizer( bSizer32 )
+		self.Layout()
+		bSizer32.Fit( self )
+		
+		self.Centre( wx.BOTH )
+		
+		# Connect Events
+		self.btnAfsluiten.Bind( wx.EVT_BUTTON, self.onbtnAfsluitenClick )
+	
+	def __del__( self ):
+		pass
+	
+	
+	# Virtual event handlers, overide them in your derived class
 	def onbtnAfsluitenClick( self, event ):
 		event.Skip()
 	

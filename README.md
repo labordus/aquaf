@@ -1,56 +1,28 @@
-aquaf v0.85
-=====
+Zeer veel veranderd, meer als de bedoeling was, maar ach..
+wat moet ik anders in deze gure wintermaanden ;)
+Gevolg is wel dat ik het vooralsnog als een test/beta-versie zie..
+Bij een volgende versie zal ik me (proberen te) beperken tot de puntjes op de i.
 
-Bij deze een nieuwe versie van Riba's uploadtooltje.
-Voor het uploaden van foto's naar http://www.aquaforum.nl/
-En ook het (op de computer) opslaan van een persoonlijk archief van foto's die zijn ge-upload. 
+Als er dingen zijn die anders moeten cq. beter kunnen cq niet goed gaan.. laat het me
+weten, dat kan gaan om crashes of andere 'ernstige' fouten tot aan spelfouten of wat ook.
+Stuur me dan even een PB'tje of zet het in het forum-draadje.
 
-Origineel ontwikkeld door Riba.
-Riba's aquazone - Aquaforum uploadprogramma: http://aquazone.leeuwen.nu/blog/uploadprogramma
-
-verder ontwikkeld door Mark Labordus - kellemes (bordumar@gmail.com)
-
-
-# Wat is er veranderd t.o.v v0.84
-
-* Configuratiescherm waarin je verschillende defaults kunt vastleggen..
-1- Preview ja/nee
-2- Default upload-dimensie
-3- beginMAP bestand-lijst.
-4- Gebruikersnaam.
-5- Tooltips ja/nee
-
-# Instructies voor installatie
-Gebruikers die nog gegevens van Riba's versie willen importeren kunnen dat doen vanuit het configuratiescherm.
-menu -> importeren.
-Dit importeren 'dumpt' de gegevens in de nieuwe (lege) database, het oude
-data-bestand zal gewoon blijven bestaan..
-Dit doe je dus maar 1 keer, anders zullen er dubbele entries in de database ontstaan.
-Data van aquaf 0.84 worden automagically geimporteerd.
-
-# Instructies voor gebruik..
-* Selecteer in de lijst links op het scherm een foto die je uploaden wilt,
-klik op de knop "toevoegen" zodat die wordt toegevoegd aan de lijst aan de rechter kant.
-Ga zo door totdat je alle foto's hebt toegevoegd die je wilt uploaden.
-* Selecteer de gewenste dimensies voor de te uploaden foto's.
-* Klik op knop "upload naar aquaforum" en wacht op het volgende venster alwaar
-je de URL's kunt kopieren om in je forumbericht te plakken.
-
-# Bij problemen.
-Laat het me weten.. liefst met zoveel mogelijk informatie, een duidelijke
-beschrijving van wat er mis gaat.. en info over het besturingsysteem
-dat je gebruikt, liefst ook architectuur (32bit/64bit).
-Je kunt je vragen/opmerkingen poneren in dit forum-topic of via een PB'tje.
-
-Aquaf 0.85 is getest op..
-Arch Linux 
-Windows XP, Windows Vista, Windows 7
-Windows 95/98/ME wordt niet (meer) ondersteund!
-
-Download hier het installatiepakket voor Windows.
-.....
+# 2015 10 januari : Versie 0.85 :
+# Nieuwe archief-pagina (te kiezen in het configuratie-menu) die ook uploaddatum en dimensies
+van foto's laat zien, wel geldt dit alleen voor foto's die met de nieuwste Aquaf zijn ge-upload.
+* Je kunt nu per individuele foto aangeven in welke dimensie je het wilt uploaden.
+* Configuratiescherm waarin je verschillende defaults in de database kunt vastleggen..
+* Preview van foto's kan worden in/uitgeschakeld.
+* Eventuele dubbel aanwezige foto's in de database worden verwijderd en voorkomen.
+* Met dubbelklik of Enter-toets een foto in uploadlijst kunnen zetten.
+* Op de hoogte blijven van beschikbare updates.
+* Kleine verbeteringen.. en bug-fixes.
 
 
-* Code home page: https://github.com/labordus/aquaf
+# 2014 29 november : Versie 0.84 :
+* Je kunt nu meerdere plaatjes klaarzetten om in 1 ruk te kunnen uploaden.
+* Kwaliteit van de plaatjes wordt zo maximaal mogelijk gehouden voor upload.
+* Gebruikersnaam hoeft niet telkens opnieuw te worden ingevoerd.
+* Eigen browser-component die los van de geinstalleerde browser(s) functioneerd.
 
-Groet, Mark.
+[ToDo](TODO.md)

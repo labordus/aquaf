@@ -9,10 +9,10 @@ from diversen import *
 
 import uploaddialog
 import confdialog
-from db import DB2JSON, addURL2DB, getUserDimensieID, getUserName, getDimensies  # DBVersion
-from db import getUserFolder, getUserTooltip
+import updatedialog
+from db import DB2JSON, DB2Webfile, addDATA2DB, getUserDimensieID, getDimensies
+from db import FillGlobals
 from wx import ToolTip
-
 AUQAOFORUM_PICTURE_URL = "http://www.aquaforum.nl/gallery/upload/"
 TEST_FOTO = "test.jpg"
 FRONT_FOTO = "front.jpg"
@@ -63,7 +63,9 @@ class AquaFrame(maingui.Mainframe):
 #            if result == wx.ID_YES:
 #                dlg.Destroy()
 
-        diversen.PREVIEW = db.getUserPreview()
+        FillGlobals()
+
+#        diversen.USER_WEBNIEUW = getUserWebNieuw()
 
         _icon = wx.EmptyIcon()
         _icon.CopyFromBitmap(wx.Bitmap("icon.ico", wx.BITMAP_TYPE_ANY))
@@ -83,15 +85,12 @@ class AquaFrame(maingui.Mainframe):
         else:  # posix
             self.tvFiles.SetFilter("plaatjes(*.bmp;*.BMP;*.jpg;*.JPG;*.png;*.PNG;*.tiff;*.TIFF;*.tif;*.TIF)|*.bmp;*.BMP;*.jpg;*.JPG;*.png;*.PNG;*.tiff;*.TIFF;*.tif;*.TIF")
 
-        userName = db.getUsername()
-        print "Hoi " + userName
+        print "Hoi " + diversen.USER_USERNAME
         print "Welkom bij Aquaf " + APP_VERSION
 
         self.choiceDimensie.SetSelection(getUserDimensieID() - 1)
-        diversen.USER_TOOLTIP = getUserTooltip()
         ToolTip.Enable(diversen.USER_TOOLTIP)
 
-        diversen.USER_FOLDER = getUserFolder()
         if diversen.USER_FOLDER == '' or diversen.USER_FOLDER is None:
             from os.path import expanduser
 
@@ -111,8 +110,17 @@ class AquaFrame(maingui.Mainframe):
         self.listFiles.InsertColumn(2, 'Pad', width=140)
 
 #        self.Layout()
-        self.panelPreview.Show(diversen.PREVIEW)
+        self.panelPreview.Show(diversen.USER_PREVIEW)
         self.Fit()
+
+        if diversen.USER_UPDATECHECK:
+            ReleaseVersion, ReleaseDate, ReleaseChanges = UpdateAvailable()
+            if ReleaseVersion != '':
+                update = updatedialog.Update(self)
+                update.LoadText(ReleaseVersion, ReleaseDate, ReleaseChanges)
+                update.CenterOnParent()
+                update.ShowModal()
+                update.Destroy()
 
     def onmenuitemClickConf(self, event):
         conf = confdialog.Configure(self)
@@ -125,7 +133,7 @@ class AquaFrame(maingui.Mainframe):
 #        if diversen.USER_FOLDER:
 #            self.tvFiles.SetPath(diversen.USER_FOLDER)
 
-        self.panelPreview.Show(diversen.PREVIEW)
+        self.panelPreview.Show(diversen.USER_PREVIEW)
         self.Fit()
 
     def onmenuitemClickAbout(self, event):
@@ -139,24 +147,6 @@ class AquaFrame(maingui.Mainframe):
                            "kellemes (2014-2015)"]
 
         wx.AboutBox(info)
-
-    def onbtnArchiefClick(self, event):
-        #        webbrowser.get("chrome").open_new_tab(theArchive)
-        #        webbrowser.get("firefox").open_new(theArchive)
-        if not DB2JSON():
-            print 'Niets te tonen'
-            return
-
-        from archiveview import MyBrowser
-        weburl = "http://127.0.0.1:8000/archive.html"
-
-        dialog = MyBrowser(None, -1)
-        dialog.browser.LoadURL(weburl)
-        dialog.CenterOnParent()
-        dialog.ShowModal()
-        dialog.Destroy()
-        #        launch_archive('firefox')
-        return
 
     def onbtnVoorbeeldClick(self, event):
         # Als er een plaatje is geselecteerd..
@@ -198,7 +188,7 @@ class AquaFrame(maingui.Mainframe):
         Voorbeeld.Destroy()
 
     def PreviewImage(self, pad):
-        if not diversen.PREVIEW:
+        if not diversen.USER_PREVIEW:
             self.bitmapSelectedFile.SetBitmap(wx.Bitmap(FRONT_FOTO))
             return
 
@@ -278,7 +268,12 @@ class AquaFrame(maingui.Mainframe):
 #        bl = self.listboxSelectedFiles.GetClientData(self.listboxSelectedFiles.GetSelection())
 
     def onbtnUploadClick(self, event):
-        if not getUserName():
+        filecount = self.listFiles.GetItemCount()
+        if filecount <= 0:
+            print("Geen bestand geselecteerd")
+            return
+
+        if not diversen.USER_USERNAME:
             dlg = wx.TextEntryDialog(
                 self, 'Voer hier je aquaforum.nl gebruikersnaam in..',
                 'Gebruikersnaam')
@@ -295,11 +290,6 @@ class AquaFrame(maingui.Mainframe):
                 return
             dlg.Destroy()
 
-        filecount = self.listFiles.GetItemCount()
-        if filecount <= 0:
-            print("Geen bestand geselecteerd")
-            return
-
         busyDlg = wx.BusyInfo("""Bezig met converten en uploaden van de foto's...""")
         urls = ""
         for _i in range(filecount):
@@ -308,8 +298,9 @@ class AquaFrame(maingui.Mainframe):
                 dimensions = StringToTupleDimensions(self.listFiles.GetItemText(_i, 1))
                 resizedFilename = ResizeImage(
                     self.listFiles.GetItemText(_i, 2), dimensions)
-                desiredName = DumpImage(resizedFilename, getUserName(), self.listFiles.GetItemText(_i, 2))
-                addURL2DB(AUQAOFORUM_PICTURE_URL + desiredName)
+                desiredName, dimWidth, dimHeight = DumpImage(resizedFilename, diversen.USER_USERNAME, self.listFiles.GetItemText(_i, 2))
+                url = AUQAOFORUM_PICTURE_URL + desiredName
+                addDATA2DB(url, dimWidth, dimHeight)
                 urls = urls + " [IMG]" + AUQAOFORUM_PICTURE_URL + desiredName + "[/IMG]" + "\n"
 
             except Exception as er:
@@ -324,6 +315,57 @@ class AquaFrame(maingui.Mainframe):
         dlg.CenterOnParent()
         dlg.ShowModal()  # this one is non blocking!!
         dlg.Destroy()
+
+    def onbtnArchiefClick(self, event):
+
+        if diversen.USER_WEBNIEUW:
+            # ########### NIEUWE WEBSITE ####################
+            import appdirs
+            path = appdirs.user_data_dir('aquaf', False, False, False)
+            # constructie van URL cross-safe?
+            weburl = "file://" + os.path.join(path, 'archivenew.html')
+
+            if not DB2Webfile():
+                print 'Niets te tonen'
+                return
+
+            from archiveview import MyBrowserNew
+
+            dialog = MyBrowserNew(None, -1)
+            dialog.browser.LoadURL(weburl)
+            dialog.CenterOnParent()
+            dialog.ShowModal()
+            dialog.Destroy()
+            return
+        else:
+            # ########### OUDE WEBSITE ####################
+            if not DB2JSON():
+                print 'Niets te tonen'
+                return
+
+            from archiveview import MyBrowser
+            weburl = "http://127.0.0.1:8000/archive.html"
+
+            dialog = MyBrowser(None, -1)
+            dialog.browser.LoadURL(weburl)
+            dialog.CenterOnParent()
+            dialog.ShowModal()
+            dialog.Destroy()
+            #        launch_archive('firefox')
+            return
+
+    def onmenuitemClickAfsluiten(self, event):
+        self.Close()
+
+    def oncloseMainframe(self, event):
+        # checken of er nog foto's klaar staan in de uploadlijst.
+        if self.listFiles.GetItemCount() != 0:
+            dlg = wx.MessageDialog(None, '''Je hebt nog foto's in de uploadlijst staan \n''' +
+                                   '''Wil je toch afsluiten?''', 'Afsluiten of upload?', wx.YES_NO | wx.ICON_QUESTION)
+            result = dlg.ShowModal()
+            if result == wx.ID_NO:
+                return
+        event.Skip()
 
 app = wx.App(False)
 

@@ -5,9 +5,35 @@ from SimpleHTTPServer import SimpleHTTPRequestHandler
 import threading
 from time import sleep
 import os
-# from mechanize._mechanize import Browser
 
 oudepad = os.getcwd()
+
+
+class MyBrowserNew(wx.Dialog):
+
+    def __init__(self, *args, **kwds):
+        wx.Dialog.__init__(self, *args, **kwds)
+#        self.SetWindowStyleFlag(wx.RESIZE_BORDER)
+#        self.SetWindowStyle(wx.RESIZE_BORDER | wx.CAPTION)
+        self.SetWindowStyleFlag(wx.RESIZE_BORDER | wx.DEFAULT_DIALOG_STYLE | wx.MAXIMIZE_BOX)
+        sizer = wx.BoxSizer(wx.VERTICAL)
+        self.browser = wx.html2.WebView.New(self)
+        sizer.Add(self.browser, 1, wx.EXPAND, 10)
+        self.SetSizer(sizer)
+        self.SetSize((820, 960))
+        self.Bind(wx.EVT_CLOSE, self.oncloseMyBrowser)
+
+    def oncloseMyBrowser(self, event):
+        # verwijder archive.html
+        import appdirs
+        path = appdirs.user_data_dir('aquaf', False, False, False)
+        filepath = os.path.join(path, 'archivenew.html')
+        try:
+            os.remove(filepath)
+        except OSError:
+            pass
+
+        event.Skip()
 
 
 class MyServer():
