@@ -3,4 +3,5 @@ encoding/aquagui.py=ISO-8859-1
 encoding/confdialog.py=ISO-8859-1
 encoding/importdialog.py=ISO-8859-1
 encoding/maingui.py=utf-8
+encoding/updatedialog.py=ISO-8859-1
 encoding/uploaddialog.py=ISO-8859-1
