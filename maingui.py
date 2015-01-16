@@ -57,10 +57,10 @@ class Mainframe ( wx.Frame ):
 		self.m_staticText10.Wrap( -1 )
 		bSizer4.Add( self.m_staticText10, 0, wx.ALL|wx.EXPAND, 0 )
 		
-		self.tvFiles = wx.GenericDirCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 300,-1 ), 0|wx.SUNKEN_BORDER, wx.EmptyString, 0 )
+		self.tvFiles = wx.GenericDirCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 300,-1 ), wx.DIRCTRL_MULTIPLE|wx.SUNKEN_BORDER, wx.EmptyString, 0 )
 		
 		self.tvFiles.ShowHidden( True )
-		bSizer4.Add( self.tvFiles, 1, wx.EXPAND |wx.ALL, 5 )
+		bSizer4.Add( self.tvFiles, 1, wx.EXPAND |wx.ALL, 3 )
 		
 		
 		bSizer13.Add( bSizer4, 0, wx.EXPAND, 0 )
@@ -92,7 +92,7 @@ class Mainframe ( wx.Frame ):
 		choiceDimensieChoices = []
 		self.choiceDimensie = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, choiceDimensieChoices, 0 )
 		self.choiceDimensie.SetSelection( 0 )
-		self.choiceDimensie.SetToolTipString( u"De betreffende foto zal in de gekozen dimensies worden\nge-upload naar de server van aquaforum.nl\n\nLet op: De conversie verkleind (zo nodig) een foto naar (maximaal) de geselecteerde dimensies.\nAls de originele dimensies van een foto kleiner zijn dan de gekozen dimensie dan zal er geen conversie plaatsvinden.\nM.a.w. foto-formaten worden niet vergroot ;)" )
+		self.choiceDimensie.SetToolTipString( u"De betreffende foto's zullen in de gekozen dimensies worden ge-upload naar de aquaforum-server.\n\nLet op: De conversie verkleind (zo nodig) een foto naar (maximaal) de geselecteerde dimensies.\nAls de originele dimensies van een foto kleiner zijn dan de gekozen dimensie dan zal er geen conversie plaatsvinden.\nM.a.w. foto-formaten worden niet vergroot ;)" )
 		
 		bSizer301.Add( self.choiceDimensie, 0, wx.ALL, 5 )
 		
@@ -107,7 +107,7 @@ class Mainframe ( wx.Frame ):
 		self.btnSelectFile = wx.Button( self, wx.ID_ANY, u"Toevoegen  ->", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
 		self.btnSelectFile.SetFont( wx.Font( wx.NORMAL_FONT.GetPointSize(), 70, 90, 92, False, wx.EmptyString ) )
 		self.btnSelectFile.SetForegroundColour( wx.Colour( 60, 130, 50 ) )
-		self.btnSelectFile.SetToolTipString( u"Voeg foto toe aan uploadlijst" )
+		self.btnSelectFile.SetToolTipString( u"Voeg foto's toe aan uploadlijst" )
 		
 		bSizer151.Add( self.btnSelectFile, 0, wx.ALL, 5 )
 		
@@ -135,7 +135,10 @@ class Mainframe ( wx.Frame ):
 		self.listFiles = wx.ListCtrl( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( -1,-1 ), wx.LC_HRULES|wx.LC_NO_SORT_HEADER|wx.LC_REPORT|wx.LC_SINGLE_SEL )
 		self.listFiles.SetMaxSize( wx.Size( 400,-1 ) )
 		
-		bSizer28.Add( self.listFiles, 1, wx.ALL|wx.EXPAND, 5 )
+		bSizer28.Add( self.listFiles, 1, wx.ALL|wx.EXPAND, 3 )
+		
+		self.btnClearList = wx.Button( self, wx.ID_ANY, u"Wis lijst", wx.DefaultPosition, wx.Size( -1,24 ), wx.BU_EXACTFIT )
+		bSizer28.Add( self.btnClearList, 0, wx.ALIGN_RIGHT|wx.ALL, 3 )
 		
 		
 		bSizer39.Add( bSizer28, 1, wx.EXPAND, 5 )
@@ -209,6 +212,7 @@ class Mainframe ( wx.Frame ):
 		self.btnSelectFile.Bind( wx.EVT_BUTTON, self.onbtnSelectFileClick )
 		self.btnUnselectFile.Bind( wx.EVT_BUTTON, self.onbtnUnselectFileClick )
 		self.listFiles.Bind( wx.EVT_LIST_ITEM_SELECTED, self.onlistFilesSelected )
+		self.btnClearList.Bind( wx.EVT_BUTTON, self.onbtnClearListClick )
 		self.btnUpload.Bind( wx.EVT_BUTTON, self.onbtnUploadClick )
 		self.btnArchief.Bind( wx.EVT_BUTTON, self.onbtnArchiefClick )
 		self.Bind( wx.EVT_MENU, self.onmenuitemClickConf, id = self.menuitemConf.GetId() )
@@ -239,6 +243,9 @@ class Mainframe ( wx.Frame ):
 		event.Skip()
 	
 	def onlistFilesSelected( self, event ):
+		event.Skip()
+	
+	def onbtnClearListClick( self, event ):
 		event.Skip()
 	
 	def onbtnUploadClick( self, event ):
