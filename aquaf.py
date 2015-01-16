@@ -151,13 +151,24 @@ class AquaFrame(maingui.Mainframe):
     def onbtnVoorbeeldClick(self, event):
         # Als er een plaatje is geselecteerd..
         # gebruik die voor de preview
-        _pad = self.tvFiles.GetFilePath()
+
+        _pad = ''
+        padjes = self.tvFiles.GetFilePaths()
+        for pad in padjes:
+            _pad = pad
+            break
+
+#        _pad = self.tvFiles.GetFilePath()
         if _pad != () and _pad != "":
             if IsValidImage(_pad):
-                PLAATJE = self.tvFiles.GetFilePath()
+                #                PLAATJE = self.tvFiles.GetFilePath()
+                PLAATJE = _pad
             else:
                 PLAATJE = TEST_FOTO
         else:
+            PLAATJE = TEST_FOTO
+
+        if not diversen.USER_PREVIEW:
             PLAATJE = TEST_FOTO
 
         index = self.choiceDimensie.GetSelection()
@@ -208,10 +219,24 @@ class AquaFrame(maingui.Mainframe):
         self.bitmapSelectedFile.SetBitmap(PilImageToWxBitmap(img))
 
     def ontvFilesSelChanged(self, event):
-        self.PreviewImage(self.tvFiles.GetFilePath())
+        padjes = self.tvFiles.GetFilePaths()
+        for pad in padjes:
+            self.PreviewImage(pad)
+            return
+        self.PreviewImage(FRONT_FOTO)
+        #        self.PreviewImage(self.tvFiles.GetFilePath())
+
+#        padjes = self.tvFiles.GetFilePaths()
+#        print padjes
+
+        #        padjes = self.tvFiles.GetFilePaths()
+        #        for pad in padjes:
+        #            print pad
+#        print('SelChange')
 
     def onlistFilesSelected(self, event):
-        pad = self.listFiles.GetItemText(self.listFiles.GetFirstSelected(), 2)
+        pad = os.path.join(self.listFiles.GetItemText(self.listFiles.GetFirstSelected(), 2),
+                           self.listFiles.GetItemText(self.listFiles.GetFirstSelected(), 0))
         self.PreviewImage(pad)
 
 
@@ -226,28 +251,34 @@ class AquaFrame(maingui.Mainframe):
         self.onbtnSelectFileClick(event)
         event.Skip()
 
+    def VoegPadToe(self, pad):
+        #                helepad = self.tvFiles.GetPath()
+        helepad = os.path.dirname(pad)
+        bestandsnaam = os.path.basename(pad)
+
+        index = self.listFiles.InsertStringItem(sys.maxsize, bestandsnaam)
+        s = self.choiceDimensie.GetString(self.choiceDimensie.GetSelection())
+        self.listFiles.SetStringItem(index, 1, s)
+        self.listFiles.SetStringItem(index, 2, helepad)
+
+        print bestandsnaam + " toegevoegd"
+
     def onbtnSelectFileClick(self, event):
-        _pad = self.tvFiles.GetFilePath()
+        breaker = 0
+        padjes = self.tvFiles.GetFilePaths()
+        for _pad in padjes:
+            for _i in range(self.listFiles.ItemCount):
+                breaker = 0
+                sPad = os.path.join(self.listFiles.GetItemText(_i, 2),
+                                    self.listFiles.GetItemText(_i, 0))
+                if _pad == sPad:
+                    print("""Foto is al toegevoegd""")
+                    breaker = 1
+                    break
 
-        for _i in range(self.listFiles.ItemCount):
-            sPad = self.listFiles.GetItemText(_i, 2)
-            if _pad == sPad:
-                print("""Foto is al toegevoegd""")
-                return
-
-        if _pad != () and _pad != "":
-            # file
-            if not IsValidImage(_pad):
-                return
-            helepad = self.tvFiles.GetPath()
-            bestandsnaam = os.path.basename(helepad)
-
-            index = self.listFiles.InsertStringItem(sys.maxsize, bestandsnaam)
-            s = self.choiceDimensie.GetString(self.choiceDimensie.GetSelection())
-            self.listFiles.SetStringItem(index, 1, s)
-            self.listFiles.SetStringItem(index, 2, helepad)
-
-            print bestandsnaam + " toegevoegd"
+            if breaker == 0:
+                if IsValidImage(_pad):
+                    self.VoegPadToe(_pad)
 
     def onbtnUnselectFileClick(self, event):
 
@@ -257,15 +288,6 @@ class AquaFrame(maingui.Mainframe):
         bl = self.listFiles.GetItemText(sel2, 0)
         self.listFiles.DeleteItem(sel2)
         print bl + " verwijderd"
-
-#        sel = self.listboxSelectedFiles.GetSelection()
-# if sel < 0:  # nothing selected
-#            return
-        # else
-#        bl = self.listboxSelectedFiles.GetString(sel)
-#        if self.listboxSelectedFiles.getsel
-#        self.listboxSelectedFiles.Delete(sel)
-#        bl = self.listboxSelectedFiles.GetClientData(self.listboxSelectedFiles.GetSelection())
 
     def onbtnUploadClick(self, event):
         filecount = self.listFiles.GetItemCount()
@@ -308,7 +330,8 @@ class AquaFrame(maingui.Mainframe):
                 self.errorEx = er
                 del busyDlg
                 exit
-        self.listFiles.ClearAll()
+#        self.listFiles.ClearAll()
+        self.listFiles.DeleteAllItems()
         del busyDlg
         dlg = uploaddialog.UploadDoneDialog(self)
         dlg.setCode(urls)
@@ -353,6 +376,10 @@ class AquaFrame(maingui.Mainframe):
             dialog.Destroy()
             #        launch_archive('firefox')
             return
+
+    def onbtnClearListClick(self, event):
+        #        self.listFiles.ClearAll()
+        self.listFiles.DeleteAllItems()
 
     def onmenuitemClickAfsluiten(self, event):
         self.Close()
