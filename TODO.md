@@ -1,13 +1,18 @@
-- [ ] Meerdere foto's tegelijk kunnen selecteren om klaar te zetten voor upload.
+- [x] diversen.UpdateAvailable() -> timeout=x heeft geen effect bij geen internet.
+      Opgelost door eerst te checken voor internet-connectie.. is_connected()
+- [x] Meerdere foto's tegelijk kunnen selecteren om toe te voegen in de uploadlijst.
+- [x] Meerdere foto's tegelijk in uploadlijst kunnen selecteren.. en wissen.
 - [x] Bij initialisatie app wat global variabelen zetten, zodat ik ze niet telkens uit de DB hoef te trekken.
 - [ ] APP_VERSIE en USER_DIMENSIE moeten nog maar dat ligt lastiger.
 - [x] HTML/CSS/Javascript/JSON vanuit code genereren en in 1 bestand houden, zonder HTTPServer.
 - [x] Oude archive.html ook blijven aanbieden, met HTTPServer.
+- [ ] (tvFiles) Actieve (visible) node staat "onderin" de clientarea. Is dit alleen Linux??
 - [x] DateTime-stamp per foto opslaan in DB
 - [x] size/dimensie per foto opslaan in DB
 - [ ] Maak huidige/actieve directory default. Knoppie of context-sensitive popupmenu op right-click?
 - [ ] Alleen GTK2/3? (Windows gaat prima) Alleen bij eerste keer sluiten confdialog wordt mainframe iets groter .. self.fit()
 - [ ] Windows -> Klikken op Archief met lege DB laat geen melding zien dat er geen foto's te tonen zijn.
+- [x] listFiles leeg kunnen maken met knop.
 - [x] add to history to db
 - [x] foutafhandeling bij het importeren. (wat als JSON nog steeds niet kan worden verwerkt? Test!!)
 - [x] dubbele entries verwijderen uit DB versie 0.84 voordat ik importeer .. DISTINCT?
