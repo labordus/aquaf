@@ -490,7 +490,7 @@
                                                 <event name="OnTreeItemCollapsing"></event>
                                                 <event name="OnTreeItemExpanded"></event>
                                                 <event name="OnTreeItemExpanding"></event>
-                                                <event name="OnTreeItemMenu"></event>
+                                                <event name="OnTreeItemMenu">OntvFilesRightClick</event>
                                                 <event name="OnTreeItemMiddleClick"></event>
                                                 <event name="OnTreeItemRightClick"></event>
                                                 <event name="OnTreeKeyDown"></event>

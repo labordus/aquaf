@@ -203,6 +203,7 @@ class Mainframe ( wx.Frame ):
 		# Connect Events
 		self.Bind( wx.EVT_CLOSE, self.oncloseMainframe )
 		self.tvFiles.Bind( wx.EVT_TREE_ITEM_ACTIVATED, self.ontvFilesItemActivate )
+		self.tvFiles.Bind( wx.EVT_TREE_ITEM_MENU, self.OntvFilesRightClick )
 		self.tvFiles.Bind( wx.EVT_TREE_SEL_CHANGED, self.ontvFilesSelChanged )
 		self.btnVoorbeeld.Bind( wx.EVT_BUTTON, self.onbtnVoorbeeldClick )
 		self.btnSelectFile.Bind( wx.EVT_BUTTON, self.onbtnSelectFileClick )
@@ -224,6 +225,9 @@ class Mainframe ( wx.Frame ):
 		event.Skip()
 	
 	def ontvFilesItemActivate( self, event ):
+		event.Skip()
+	
+	def OntvFilesRightClick( self, event ):
 		event.Skip()
 	
 	def ontvFilesSelChanged( self, event ):
