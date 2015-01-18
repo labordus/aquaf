@@ -1,11 +1,11 @@
-import mechanize
+import imp
 import os
-import wx
 import string
 import sys
-import imp
 import urllib2
 
+import mechanize
+import wx
 try:
     from PIL import Image
     from PIL import JpegImagePlugin  # @UnusedImport
@@ -18,6 +18,8 @@ except ImportError:
 Image._initialized = 2
 
 FORUM_UPLOAD_URL = "http://www.aquaforum.nl/ubb/scripts/upload.php"
+REMOTE_SERVER = "www.github.com"
+UPDATE_URL = "https://raw.githubusercontent.com/labordus/aquaf/master/version.json"
 APP_VERSION_STR = "0_85"
 APP_VERSION = "0.85"
 USER_PREVIEW = 1
@@ -216,14 +218,32 @@ def IsValidImage(pad):
         return True
 
 
+def is_connected():
+    import socket
+    try:
+        # see if we can resolve the host name -- tells us if there is
+        # a DNS listening
+        host = socket.gethostbyname(REMOTE_SERVER)
+        # connect to the host -- tells us if the host is actually
+        # reachable
+        _s = socket.create_connection((host, 80), 2)
+        return True
+    except:
+        pass
+    return False
+
+
 def UpdateAvailable():
     from urllib2 import URLError
     import json
+    if not is_connected():
+        print 'update-server is onbereikbaar'
+        return ('', '', '')
     try:
-        req = urllib2.Request("https://raw.githubusercontent.com/labordus/aquaf/master/version.json")
+        req = urllib2.Request(UPDATE_URL)
     #        req = urllib2.Request("https://gist.githubusercontent.com/labordus/5c67b729991f8b585632/raw/0798969844ff4ad6d5b13365a03d9bf48a669bf6/aquaf_version")
         opener = urllib2.build_opener()
-        f = opener.open(req, timeout=8)
+        f = opener.open(req, timeout=5)
         t = f.read()
         json = json.loads(t)
         ReleaseVersion = json['version']
