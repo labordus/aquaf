@@ -261,8 +261,6 @@ class AquaFrame(maingui.Mainframe):
         self.listFiles.SetStringItem(index, 1, s)
         self.listFiles.SetStringItem(index, 2, helepad)
 
-        print bestandsnaam + " toegevoegd"
-
     def onbtnSelectFileClick(self, event):
         breaker = 0
         padjes = self.tvFiles.GetFilePaths()
@@ -281,13 +279,18 @@ class AquaFrame(maingui.Mainframe):
                     self.VoegPadToe(_pad)
 
     def onbtnUnselectFileClick(self, event):
+        # Zet hier de lijst met geselecteerde items in een array, en gebruik die array
+        # later in REVERSED-ORDER voor het wissen van de items.
+        # Dit aangezien bij het wissen van items ook de item-index veranderd..
+        # Zie hier: https://wiki.wxwidgets.org/WxListCtrl#Deleting_Selected_Rows
+        selItems = []
+        item = self.listFiles.GetFirstSelected()
+        while item != -1:
+            selItems.append(item)
+            item = self.listFiles.GetNextSelected(item)
 
-        sel2 = self.listFiles.GetFirstSelected()
-        if sel2 == -1:
-            return
-        bl = self.listFiles.GetItemText(sel2, 0)
-        self.listFiles.DeleteItem(sel2)
-        print bl + " verwijderd"
+        for _i in reversed(selItems):
+            self.listFiles.DeleteItem(_i)
 
     def onbtnUploadClick(self, event):
         filecount = self.listFiles.GetItemCount()
@@ -318,8 +321,8 @@ class AquaFrame(maingui.Mainframe):
             print('Uploading ' + self.listFiles.GetItemText(_i, 0))
             try:
                 dimensions = StringToTupleDimensions(self.listFiles.GetItemText(_i, 1))
-                resizedFilename = ResizeImage(
-                    self.listFiles.GetItemText(_i, 2), dimensions)
+                resizedFilename = ResizeImage(os.path.join(self.listFiles.GetItemText(_i, 2),
+                                                           self.listFiles.GetItemText(_i, 0)), dimensions)
                 desiredName, dimWidth, dimHeight = DumpImage(resizedFilename, diversen.USER_USERNAME, self.listFiles.GetItemText(_i, 2))
                 url = AUQAOFORUM_PICTURE_URL + desiredName
                 addDATA2DB(url, dimWidth, dimHeight)
