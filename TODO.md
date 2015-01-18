@@ -9,7 +9,7 @@
 - [ ] (tvFiles) Actieve (visible) node staat "onderin" de clientarea. Is dit alleen Linux??
 - [x] DateTime-stamp per foto opslaan in DB
 - [x] size/dimensie per foto opslaan in DB
-- [ ] Maak huidige/actieve directory default. Knoppie of context-sensitive popupmenu op right-click?
+- [ ] Beschrijving per foto opslaan in DB
 - [ ] Alleen GTK2/3? (Windows gaat prima) Alleen bij eerste keer sluiten confdialog wordt mainframe iets groter .. self.fit()
 - [ ] Windows -> Klikken op Archief met lege DB laat geen melding zien dat er geen foto's te tonen zijn.
 - [x] listFiles leeg kunnen maken met knop.
@@ -43,8 +43,9 @@
 - [ ] Foto's van aquaforum-server downloaden om de dimensies op te slaan in DB?
       Opslagdatum lukt niet, alleen (eventueel aanwezige) EXIF-data met de aanmaakdatum, laatste wijzigingsdatum staat op de server? Heb niet voldoende rechten om die in de lezen.
 - [ ] Fetch foto van remote URL? Flickr, Picasa etc..
-- [ ] Beschrijving per foto opslaan in DB
 - [ ] "Maar mijn Norton antivirus scanner accepteert hem niet en gooit hem meteen weer van mijn pc af."
+- [x] Context-sensitive popupmenu op tvFiles voor "upload selection"
+- [ ] Context-sensitive popupmenu op tvFiles voor "maak actieve map default"
 
 ##############
 'sceleton' db's bij de releases zetten
