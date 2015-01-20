@@ -1,4 +1,3 @@
-- [ ] Fetch foto van remote URL? Flickr, Picasa, http://postimage.org/ etc.. (next release)
 - [x] diversen.UpdateAvailable() -> timeout=x heeft geen effect bij geen internet.
       Opgelost door eerst te checken voor internet-connectie.. is_connected()
 - [x] Meerdere foto's tegelijk kunnen selecteren om toe te voegen in de uploadlijst.
@@ -8,7 +7,7 @@
 - [x] Archive.html (nu archivenew.html) wil ik aanpakken.. is lastige K-klus.
 - [x] HTML/CSS/Javascript/JSON vanuit code genereren en in 1 bestand houden, zonder HTTPServer.
 - [x] Oude archive.html ook blijven aanbieden, met HTTPServer.
-- [ ] (tvFiles) Actieve (visible) node staat "onderin" de clientarea. Is dit alleen Linux??
+- [x] (tvFiles) Actieve (visible) node staat "onderin" de clientarea. Alleen GTK2/3, Windows ok.
 - [x] DateTime-stamp per foto opslaan in DB
 - [x] size/dimensie per foto opslaan in DB
 - [ ] Beschrijving per foto opslaan in DB
@@ -47,14 +46,5 @@
 - [x] Context-sensitive popupmenu op tvFiles voor "upload selection"
 - [ ] Context-sensitive popupmenu op tvFiles voor "maak actieve map default"
 
-##############
-'sceleton' db's bij de releases zetten
-Of nee.. staat toch al in de code?
-Misschien wel de verschillende DB's in een aparte map bijhouden?
-Of... 'juiste-versie Databases' bij de releases op github plaatsen? 
-##############
-
-# Punten bij release..
-* github release aanmaken.
-* alle verwijzingen naar testpaden etc.. terugzetten.
-* addURL2DB() en ook uploadblabla() uitvinken/aanzetten.
+# Versie 0.86
+- [ ] Fetch foto van remote URL? Flickr, Picasa, http://postimage.org/ etc.. (next release)
