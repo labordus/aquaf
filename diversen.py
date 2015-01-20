@@ -83,7 +83,10 @@ def StringToTupleDimensions(sDim):
 
 
 def ResizeImage(pad, dim):
-    # try except
+    # try:
+    #    original = Image.open("Lenna.png")
+    # except:
+    #    print "Unable to load image"
     img = Image.open(pad)
     # scale the image, preserving the aspect ratio
     originalDimensions = img.size
