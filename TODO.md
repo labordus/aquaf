@@ -1,9 +1,11 @@
+- [ ] Fetch foto van remote URL? Flickr, Picasa, http://postimage.org/ etc.. (next release)
 - [x] diversen.UpdateAvailable() -> timeout=x heeft geen effect bij geen internet.
       Opgelost door eerst te checken voor internet-connectie.. is_connected()
 - [x] Meerdere foto's tegelijk kunnen selecteren om toe te voegen in de uploadlijst.
 - [x] Meerdere foto's tegelijk in uploadlijst kunnen selecteren.. en wissen.
 - [x] Bij initialisatie app wat global variabelen zetten, zodat ik ze niet telkens uit de DB hoef te trekken.
 - [ ] APP_VERSIE en USER_DIMENSIE moeten nog maar dat ligt lastiger.
+- [x] Archive.html (nu archivenew.html) wil ik aanpakken.. is lastige K-klus.
 - [x] HTML/CSS/Javascript/JSON vanuit code genereren en in 1 bestand houden, zonder HTTPServer.
 - [x] Oude archive.html ook blijven aanbieden, met HTTPServer.
 - [ ] (tvFiles) Actieve (visible) node staat "onderin" de clientarea. Is dit alleen Linux??
@@ -36,13 +38,11 @@
 - [x] bij sluiten confdialog niet het treeview-pad verzetten.
 - [x] Windows -- tooltips zijn AAN bij UIT
 - [x] Image/Plaatje wordt FOTO en folder/directory wordt MAP.. overal aanpassen.
-- [x] Archive.html wil ik aanpakken.. is lastige K-klus.
 - [x] Tijdens installatie "aquaf v0.84" verwijderen uit het Windows-startmenu.
 - [x] Bij afsluiten app: als er bestanden in listFiles staan.. vragen of die nog moeten worden ge-upload of niet.
 - [ ] Moet iets verzinnen op de listctrl, setitemdata/getitemdata etc.. nu ben ik 'verplicht' pad te laten zien in een listctrl-column.
 - [ ] Foto's van aquaforum-server downloaden om de dimensies op te slaan in DB?
       Opslagdatum lukt niet, alleen (eventueel aanwezige) EXIF-data met de aanmaakdatum, laatste wijzigingsdatum staat op de server? Heb niet voldoende rechten om die in de lezen.
-- [ ] Fetch foto van remote URL? Flickr, Picasa etc..
 - [ ] "Maar mijn Norton antivirus scanner accepteert hem niet en gooit hem meteen weer van mijn pc af."
 - [x] Context-sensitive popupmenu op tvFiles voor "upload selection"
 - [ ] Context-sensitive popupmenu op tvFiles voor "maak actieve map default"
