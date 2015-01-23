@@ -7,6 +7,7 @@ import diversen
 import datetime
 from diversen import USER_USERNAME, USER_FIRSTRUN, USER_IMPORTED, USER_PREVIEW,\
     USER_WEBNIEUW, USER_UPDATECHECK
+import wx
 
 old_urls = []
 old_username = None
@@ -22,6 +23,7 @@ default_dimensies = [['800x600'], ['640x480'], ['320x240'], ['160x120']]
 
 
 def DBVersion():
+    returnvalue = True
     filepath = path_to_db()
 
     if os.path.exists(filepath):
@@ -31,28 +33,39 @@ def DBVersion():
             cursor.execute("SELECT VERSIE FROM tblApp")
             rows = cursor.fetchall()
             s = str(rows[0][0])
-            if s != '0.85':
-                # DISTINCT om eventueel aanwezige dubbele entries uit te filteren.
-                cursor.execute("SELECT DISTINCT linkURL FROM tblLink")
-                rows = cursor.fetchall()
-                for row in rows:
-                    sUrl = str((row[0]))
-                    old_urls.append(sUrl)
+
+            if s > diversen.APP_VERSION:
+                if s == '84':
+                    # DISTINCT om eventueel aanwezige dubbele entries uit te filteren.
+                    cursor.execute("SELECT DISTINCT linkURL FROM tblLink")
+                    rows = cursor.fetchall()
                     conn.close()
-                try:
-                    os.remove(filepath)
-                except OSError as e:
-                    print ("Error: %s - %s." % (e.filename, e.strerror))
+                    for row in rows:
+                        sUrl = str((row[0]))
+                        old_urls.append(sUrl)
+                    try:
+                        os.remove(filepath)
+                    except OSError as e:
+                        print ("Error: %s - %s." % (e.filename, e.strerror))
+                else:
+                    # DB-Versie is groter dan de huidige.. maar niet v.84
+                    wx.MessageBox("Nieuwere Database gevonden.. Upgrade de applicatie aub.\n" +
+                                  "Bij vragen neem contact op met de ontwikkelaar (bordumar@gmail.com)",
+                                  "oeps!", style=wx.OK | wx.ICON_EXCLAMATION)
+                    conn.close()
+                    returnvalue = False
         except Exception as e:
             conn.rollback()
             conn.close()
             raise e
 #        finally:
 #            conn.close()
+    return returnvalue
 
 
 def Initialize_db():
-    DBVersion()
+    if not DBVersion():
+        return False
 
     returnvalue = True
     filepath = path_to_db()
