@@ -159,8 +159,9 @@ class AquaFrame(maingui.Mainframe):
 #        if diversen.USER_FOLDER:
 #            self.tvFiles.SetPath(diversen.USER_FOLDER)
 
-        self.panelPreview.Show(diversen.USER_PREVIEW)
-        self.Fit()
+        if self.panelPreview.IsShown() != diversen.USER_PREVIEW:
+            self.panelPreview.Show(diversen.USER_PREVIEW)
+            self.Fit()
 
     def onmenuitemClickAbout(self, event):
         info = wx.AboutDialogInfo()
@@ -243,6 +244,7 @@ class AquaFrame(maingui.Mainframe):
             img = WxBitmapToPilImage(wx.Bitmap(FRONT_FOTO))
         self.bitmapSelectedFile.SetSize(img.size)
         self.bitmapSelectedFile.SetBitmap(PilImageToWxBitmap(img))
+        self.bitmapSelectedFile.Center()
 
     def ontvFilesSelChanged(self, event):
         padjes = self.tvFiles.GetFilePaths()
