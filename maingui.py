@@ -64,23 +64,22 @@ class Mainframe ( wx.Frame ):
 		bSizer22 = wx.BoxSizer( wx.VERTICAL )
 		
 		
-		bSizer22.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		bSizer22.AddSpacer( ( 0, 0), 1, wx.ALIGN_CENTER|wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.ALL|wx.EXPAND, 5 )
 		
 		self.panelPreview = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( -1,-1 ), wx.TAB_TRAVERSAL )
 		self.panelPreview.SetBackgroundColour( wx.Colour( 116, 113, 162 ) )
 		
 		bSizer152 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.bitmapSelectedFile = wx.StaticBitmap( self.panelPreview, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.bitmapSelectedFile.SetMinSize( wx.Size( 400,300 ) )
-		
-		bSizer152.Add( self.bitmapSelectedFile, 1, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.ALL|wx.EXPAND, 0 )
+		bSizer152.SetMinSize( wx.Size( 400,300 ) ) 
+		self.bitmapSelectedFile = wx.StaticBitmap( self.panelPreview, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition, wx.Size( -1,-1 ), 0 )
+		bSizer152.Add( self.bitmapSelectedFile, 1, wx.ALIGN_CENTER|wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.ALL|wx.EXPAND, 0 )
 		
 		
 		self.panelPreview.SetSizer( bSizer152 )
 		self.panelPreview.Layout()
 		bSizer152.Fit( self.panelPreview )
-		bSizer22.Add( self.panelPreview, 0, wx.ALL|wx.EXPAND, 0 )
+		bSizer22.Add( self.panelPreview, 0, wx.ALIGN_CENTER|wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.ALL|wx.EXPAND, 0 )
 		
 		bSizer42 = wx.BoxSizer( wx.VERTICAL )
 		
@@ -124,7 +123,7 @@ class Mainframe ( wx.Frame ):
 		bSizer22.Add( bSizer42, 0, wx.EXPAND, 5 )
 		
 		
-		bSizer13.Add( bSizer22, 0, wx.ALL|wx.EXPAND, 0 )
+		bSizer13.Add( bSizer22, 0, wx.ALIGN_CENTER|wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.ALL|wx.EXPAND, 0 )
 		
 		bSizer39 = wx.BoxSizer( wx.VERTICAL )
 		
@@ -328,7 +327,7 @@ class dlgUploadDone ( wx.Dialog ):
 		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Upload gelukt", pos = wx.DefaultPosition, size = wx.Size( 727,380 ), style = wx.CAPTION|wx.CLOSE_BOX )
 		
 		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
-		self.SetBackgroundColour( wx.Colour( 141, 139, 178 ) )
+		self.SetBackgroundColour( wx.Colour( 116, 113, 162 ) )
 		
 		bSizer16 = wx.BoxSizer( wx.VERTICAL )
 		
@@ -438,11 +437,13 @@ class dlgConf ( wx.Dialog ):
 		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Configuratiescherm", pos = wx.DefaultPosition, size = wx.Size( -1,-1 ), style = wx.CAPTION|wx.CLOSE_BOX|wx.TAB_TRAVERSAL )
 		
 		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
-		self.SetBackgroundColour( wx.Colour( 141, 139, 178 ) )
+		self.SetBackgroundColour( wx.Colour( 116, 113, 162 ) )
 		
 		bSizer42 = wx.BoxSizer( wx.VERTICAL )
 		
 		self.m_panel4 = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		self.m_panel4.SetBackgroundColour( wx.Colour( 116, 113, 162 ) )
+		
 		gSizer1 = wx.GridSizer( 0, 2, 0, 0 )
 		
 		self.confedtLoginName = wx.TextCtrl( self.m_panel4, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( -1,-1 ), 0 )
@@ -454,7 +455,7 @@ class dlgConf ( wx.Dialog ):
 		gSizer1.Add( self.m_staticText151, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
 		
 		self.dirpickFolder = wx.DirPickerCtrl( self.m_panel4, wx.ID_ANY, wx.EmptyString, u"Selecteer een map", wx.Point( -1,-1 ), wx.DefaultSize, wx.DIRP_DEFAULT_STYLE|wx.DIRP_DIR_MUST_EXIST|wx.DIRP_USE_TEXTCTRL )
-		self.dirpickFolder.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOWFRAME ) )
+		self.dirpickFolder.SetBackgroundColour( wx.Colour( 116, 113, 162 ) )
 		
 		gSizer1.Add( self.dirpickFolder, 0, wx.ALIGN_CENTER_VERTICAL|wx.EXPAND, 5 )
 		
@@ -499,10 +500,6 @@ class dlgConf ( wx.Dialog ):
 		self.m_staticText17.Wrap( -1 )
 		gSizer1.Add( self.m_staticText17, 0, wx.ALL, 5 )
 		
-		self.m_staticText13 = wx.StaticText( self.m_panel4, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText13.Wrap( -1 )
-		gSizer1.Add( self.m_staticText13, 0, wx.ALL, 5 )
-		
 		
 		self.m_panel4.SetSizer( gSizer1 )
 		self.m_panel4.Layout()
@@ -510,14 +507,16 @@ class dlgConf ( wx.Dialog ):
 		bSizer42.Add( self.m_panel4, 0, wx.ALL|wx.EXPAND, 0 )
 		
 		self.m_panel3 = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		self.m_panel3.SetBackgroundColour( wx.Colour( 116, 113, 162 ) )
+		
 		bSizer33 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.checkUpdate = wx.CheckBox( self.m_panel3, wx.ID_ANY, u"Bij opstart applicatie checken of er een update is.", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.checkUpdate = wx.CheckBox( self.m_panel3, wx.ID_ANY, u"Bij opstart applicatie controleren of er een update is.", wx.DefaultPosition, wx.DefaultSize, 0 )
 		bSizer33.Add( self.checkUpdate, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
 		
 		bSizer35 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		self.btnCheckForUpdate = wx.Button( self.m_panel3, wx.ID_ANY, u"Check voor update", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
+		self.btnCheckForUpdate = wx.Button( self.m_panel3, wx.ID_ANY, u"Controleer voor update", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
 		bSizer35.Add( self.btnCheckForUpdate, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
 		
 		self.txtVersie = wx.StaticText( self.m_panel3, wx.ID_ANY, u"Huidige applicatie-versie: ", wx.Point( -1,-1 ), wx.DefaultSize, 0 )
@@ -542,6 +541,8 @@ class dlgConf ( wx.Dialog ):
 		bSizer34 = wx.BoxSizer( wx.VERTICAL )
 		
 		self.m_panel5 = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		self.m_panel5.SetBackgroundColour( wx.Colour( 116, 113, 162 ) )
+		
 		bSizer341 = wx.BoxSizer( wx.VERTICAL )
 		
 		self.m_staticline3 = wx.StaticLine( self.m_panel5, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LI_HORIZONTAL )
