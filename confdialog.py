@@ -95,7 +95,7 @@ class Configure(maingui.dlgConf):
             update.ShowModal()
             update.Destroy()
         else:
-            self.txtVersie.SetForegroundColour('#078910')
+            self.txtVersie.SetForegroundColour('#43F570')
             self.txtVersie.SetLabel('Geen update beschikbaar, je gebruik de nieuwste versie.')
 
     def onbtnAfsluitenClick(self, event):
