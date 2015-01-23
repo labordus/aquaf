@@ -1,21 +1,12 @@
-Zeer veel veranderd, meer als de bedoeling was, maar ach..
-wat moet ik anders in deze gure wintermaanden ;)
-Gevolg is wel dat ik het vooralsnog als een test/beta-versie zie..
-Bij een volgende versie zal ik me (proberen te) beperken tot de puntjes op de i.
-
-Als er dingen zijn die anders moeten cq. beter kunnen cq niet goed gaan.. laat het me
-weten, dat kan gaan om crashes of andere 'ernstige' fouten tot aan spelfouten of wat ook.
-Stuur me dan even een PB'tje of zet het in het forum-draadje.
-
-# 2015 10 januari : Versie 0.85 :
-# Meerdere foto's tegelijk selecteren.
+# 2015 23 januari : Versie 0.85 :
+* Meerdere foto's tegelijk selecteren.
 * Je kunt nu per individuele foto aangeven in welke dimensie je het wilt uploaden.
-* Configuratiescherm waarin je verschillende defaults in de database kunt vastleggen..
+* Configuratiescherm waarin je verschillende defaults in de database kunt vastleggen.
 * Preview van foto's kan worden in/uitgeschakeld.
 * Eventuele dubbel aanwezige foto's in de database worden verwijderd en voorkomen.
 * Met dubbelklik of Enter-toets een foto in uploadlijst kunnen zetten.
 * Op de hoogte blijven van beschikbare updates.
-# Nieuwe archief-pagina (te kiezen in het configuratie-menu) die ook uploaddatum en dimensies
+* Nieuwe archief-pagina (te kiezen in het configuratie-menu) die ook uploaddatum en dimensies
 van foto's laat zien, wel geldt dit alleen voor foto's die met de nieuwste Aquaf zijn ge-upload.
 * Kleine verbeteringen.. en bug-fixes.
 

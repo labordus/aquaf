@@ -1,3 +1,4 @@
+- [x] Als DB-versie = HOGER dan huidige App-versie.. verplicht nieuwste versie van App te installeren.
 - [x] diversen.UpdateAvailable() -> timeout=x heeft geen effect bij geen internet.
       Opgelost door eerst te checken voor internet-connectie.. is_connected()
 - [x] Meerdere foto's tegelijk kunnen selecteren om toe te voegen in de uploadlijst.
@@ -11,7 +12,8 @@
 - [x] DateTime-stamp per foto opslaan in DB
 - [x] size/dimensie per foto opslaan in DB
 - [ ] Beschrijving per foto opslaan in DB
-- [ ] Alleen GTK2/3? (Windows gaat prima) Alleen bij eerste keer sluiten confdialog wordt mainframe iets groter .. self.fit()
+- [x] Alleen GTK2/3? (Windows gaat prima) Alleen bij eerste keer sluiten confdialog wordt mainframe iets groter ..
+      fixed: self.fit() alleen als diversen.USER_PREVIEW is changed.
 - [ ] Windows -> Klikken op Archief met lege DB laat geen melding zien dat er geen foto's te tonen zijn.
 - [x] listFiles leeg kunnen maken met knop.
 - [x] add to history to db
@@ -45,6 +47,8 @@
 - [ ] "Maar mijn Norton antivirus scanner accepteert hem niet en gooit hem meteen weer van mijn pc af."
 - [x] Context-sensitive popupmenu op tvFiles voor "upload selection"
 - [ ] Context-sensitive popupmenu op tvFiles voor "maak actieve map default"
+- [ ] DB kunnen backupen, ook op externe server zoals DropBox of zo..
+- [ ] Extern opgeslagen DB kunnen gebruiken? Of alleen importeren?
 
 # Versie 0.86
 - [ ] Fetch foto van remote URL? Flickr, Picasa, http://postimage.org/ etc.. (next release)
