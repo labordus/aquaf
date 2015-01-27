@@ -15,6 +15,7 @@
 - [x] Alleen GTK2/3? (Windows gaat prima) Alleen bij eerste keer sluiten confdialog wordt mainframe iets groter ..
       fixed: self.fit() alleen als diversen.USER_PREVIEW is changed.
 - [ ] Windows -> Klikken op Archief met lege DB laat geen melding zien dat er geen foto's te tonen zijn.
+- [ ] Windows -> Sommige PNG's doen het niet in onbtnVoorbeeldClick() .. waaronder ChessMCE.png
 - [x] listFiles leeg kunnen maken met knop.
 - [x] add to history to db
 - [x] foutafhandeling bij het importeren. (wat als JSON nog steeds niet kan worden verwerkt? Test!!)
@@ -24,8 +25,8 @@
 - [x] Waarschuwen bij dubbele import.
 - [x] alpha eruit slopen.
 - [ ] Archive-dialog sizable.
-- [ ] bij Preview = False wil ik de knoppen in het midden van het scherm.
-- [ ] Gebruikershandleiding cq. stappenoverzicht met plaatjes maken.
+- [x] bij Preview = False wil ik de knoppen in het midden van het scherm.
+- [ ] Screencast maken.
 - [x] Beginpad configuratie functioneel maken
 - [x] met dubbelklik en Enter-toets foto in uploadlijst kunnen zetten.
 - [x] Previewknop -> preview tonen van eventueel geselecteerde foto, anders front.jpg
