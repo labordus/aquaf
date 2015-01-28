@@ -22,10 +22,11 @@ Source: "icon.ico"; DestDir: "{app}"
 Source: "test.jpg"; DestDir: "{app}"
 Source: "front.jpg"; DestDir: "{app}"
 Source: "archive.html"; DestDir: "{localappdata}\aquaf"
+Source: "fotorama.js"; DestDir: "{localappdata}\aquaf"
 Source: "favicon.ico"; DestDir: "{localappdata}\aquaf"
 
 [Icons]
-Name: "{group}\Aquaf v0.85"; Filename: "{app}\aquaf.exe"
+Name: "{group}\Aquaf"; Filename: "{app}\aquaf.exe"
 Name: "{group}\Uninstall Aquaf"; Filename: "{uninstallexe}"
 
 [Run]

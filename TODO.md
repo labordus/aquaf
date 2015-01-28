@@ -1,17 +1,21 @@
+- [x] Als DB-versie = HOGER dan huidige App-versie.. verplicht nieuwste versie van App te installeren.
 - [x] diversen.UpdateAvailable() -> timeout=x heeft geen effect bij geen internet.
       Opgelost door eerst te checken voor internet-connectie.. is_connected()
 - [x] Meerdere foto's tegelijk kunnen selecteren om toe te voegen in de uploadlijst.
 - [x] Meerdere foto's tegelijk in uploadlijst kunnen selecteren.. en wissen.
 - [x] Bij initialisatie app wat global variabelen zetten, zodat ik ze niet telkens uit de DB hoef te trekken.
 - [ ] APP_VERSIE en USER_DIMENSIE moeten nog maar dat ligt lastiger.
+- [x] Archive.html (nu archivenew.html) wil ik aanpakken.. is lastige K-klus.
 - [x] HTML/CSS/Javascript/JSON vanuit code genereren en in 1 bestand houden, zonder HTTPServer.
 - [x] Oude archive.html ook blijven aanbieden, met HTTPServer.
-- [ ] (tvFiles) Actieve (visible) node staat "onderin" de clientarea. Is dit alleen Linux??
+- [x] (tvFiles) Actieve (visible) node staat "onderin" de clientarea. Alleen GTK2/3, Windows ok.
 - [x] DateTime-stamp per foto opslaan in DB
 - [x] size/dimensie per foto opslaan in DB
-- [ ] Maak huidige/actieve directory default. Knoppie of context-sensitive popupmenu op right-click?
-- [ ] Alleen GTK2/3? (Windows gaat prima) Alleen bij eerste keer sluiten confdialog wordt mainframe iets groter .. self.fit()
+- [ ] Beschrijving per foto opslaan in DB
+- [x] Alleen GTK2/3? (Windows gaat prima) Alleen bij eerste keer sluiten confdialog wordt mainframe iets groter ..
+      fixed: self.fit() alleen als diversen.USER_PREVIEW is changed.
 - [ ] Windows -> Klikken op Archief met lege DB laat geen melding zien dat er geen foto's te tonen zijn.
+- [ ] Windows -> Sommige PNG's doen het niet in onbtnVoorbeeldClick() .. waaronder ChessMCE.png
 - [x] listFiles leeg kunnen maken met knop.
 - [x] add to history to db
 - [x] foutafhandeling bij het importeren. (wat als JSON nog steeds niet kan worden verwerkt? Test!!)
@@ -21,8 +25,8 @@
 - [x] Waarschuwen bij dubbele import.
 - [x] alpha eruit slopen.
 - [ ] Archive-dialog sizable.
-- [ ] bij Preview = False wil ik de knoppen in het midden van het scherm.
-- [ ] Gebruikershandleiding cq. stappenoverzicht met plaatjes maken.
+- [x] bij Preview = False wil ik de knoppen in het midden van het scherm.
+- [ ] Screencast maken.
 - [x] Beginpad configuratie functioneel maken
 - [x] met dubbelklik en Enter-toets foto in uploadlijst kunnen zetten.
 - [x] Previewknop -> preview tonen van eventueel geselecteerde foto, anders front.jpg
@@ -36,24 +40,16 @@
 - [x] bij sluiten confdialog niet het treeview-pad verzetten.
 - [x] Windows -- tooltips zijn AAN bij UIT
 - [x] Image/Plaatje wordt FOTO en folder/directory wordt MAP.. overal aanpassen.
-- [x] Archive.html wil ik aanpakken.. is lastige K-klus.
 - [x] Tijdens installatie "aquaf v0.84" verwijderen uit het Windows-startmenu.
 - [x] Bij afsluiten app: als er bestanden in listFiles staan.. vragen of die nog moeten worden ge-upload of niet.
 - [ ] Moet iets verzinnen op de listctrl, setitemdata/getitemdata etc.. nu ben ik 'verplicht' pad te laten zien in een listctrl-column.
 - [ ] Foto's van aquaforum-server downloaden om de dimensies op te slaan in DB?
       Opslagdatum lukt niet, alleen (eventueel aanwezige) EXIF-data met de aanmaakdatum, laatste wijzigingsdatum staat op de server? Heb niet voldoende rechten om die in de lezen.
-- [ ] Fetch foto van remote URL? Flickr, Picasa etc..
-- [ ] Beschrijving per foto opslaan in DB
 - [ ] "Maar mijn Norton antivirus scanner accepteert hem niet en gooit hem meteen weer van mijn pc af."
+- [x] Context-sensitive popupmenu op tvFiles voor "upload selection"
+- [ ] Context-sensitive popupmenu op tvFiles voor "maak actieve map default"
+- [ ] DB kunnen backupen, ook op externe server zoals DropBox of zo..
+- [ ] Extern opgeslagen DB kunnen gebruiken? Of alleen importeren?
 
-##############
-'sceleton' db's bij de releases zetten
-Of nee.. staat toch al in de code?
-Misschien wel de verschillende DB's in een aparte map bijhouden?
-Of... 'juiste-versie Databases' bij de releases op github plaatsen? 
-##############
-
-# Punten bij release..
-* github release aanmaken.
-* alle verwijzingen naar testpaden etc.. terugzetten.
-* addURL2DB() en ook uploadblabla() uitvinken/aanzetten.
+# Versie 0.86
+- [ ] Fetch foto van remote URL? Flickr, Picasa, http://postimage.org/ etc.. (next release)

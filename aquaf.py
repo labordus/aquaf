@@ -122,6 +122,32 @@ class AquaFrame(maingui.Mainframe):
                 update.ShowModal()
                 update.Destroy()
 
+        # for wxMSW
+#        self.tvFiles.Bind(wx.EVT_COMMAND_RIGHT_CLICK, self.OntvFilesRightClick)
+        # for wxGTK
+#        self.tvFiles.Bind(wx.EVT_RIGHT_UP, self.OntvFilesRightClick)
+
+    def OntvFilesRightClick(self, event):
+        #        self.log.WriteText("OnRightClick %s\n" % self.list.GetItemText(self.currentItem))
+        # only do this part the first time so the events are only bound once
+        if not hasattr(self.tvFiles, "popupUploadList"):
+            self.tvFiles.popupUploadList = wx.NewId()
+#            self.tvFiles.popupStandaardMap = wx.NewId()
+            self.tvFiles.Bind(wx.EVT_MENU, self.OnPopupUploadList, id=self.tvFiles.popupUploadList)
+#            self.tvFiles.Bind(wx.EVT_MENU, self.OnPopupStandaardMap, id=self.tvFiles.popupStandaardMap)
+
+        menu = wx.Menu()
+        menu.Append(self.tvFiles.popupUploadList, "Zet in uploadlijst")
+#        menu.Append(self.tvFiles.popupStandaardMap, "Maak standaard map")
+
+        # Popup the menu.  If an item is selected then its handler
+        # will be called before PopupMenu returns.
+        self.tvFiles.PopupMenu(menu)
+        menu.Destroy()
+
+    def OnPopupUploadList(self, event):
+        self.onbtnSelectFileClick(event)
+
     def onmenuitemClickConf(self, event):
         conf = confdialog.Configure(self)
         conf.CenterOnParent()
@@ -133,8 +159,9 @@ class AquaFrame(maingui.Mainframe):
 #        if diversen.USER_FOLDER:
 #            self.tvFiles.SetPath(diversen.USER_FOLDER)
 
-        self.panelPreview.Show(diversen.USER_PREVIEW)
-        self.Fit()
+        if self.panelPreview.IsShown() != diversen.USER_PREVIEW:
+            self.panelPreview.Show(diversen.USER_PREVIEW)
+            self.Fit()
 
     def onmenuitemClickAbout(self, event):
         info = wx.AboutDialogInfo()
@@ -217,6 +244,7 @@ class AquaFrame(maingui.Mainframe):
             img = WxBitmapToPilImage(wx.Bitmap(FRONT_FOTO))
         self.bitmapSelectedFile.SetSize(img.size)
         self.bitmapSelectedFile.SetBitmap(PilImageToWxBitmap(img))
+        self.bitmapSelectedFile.Center()
 
     def ontvFilesSelChanged(self, event):
         padjes = self.tvFiles.GetFilePaths()

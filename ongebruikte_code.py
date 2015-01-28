@@ -1,4 +1,74 @@
 ##############################################################################
+
+    def onbtnTest(self, event):
+        import cStringIO
+        sURL = "http://s23.postimg.org/g0c99r0tn/Tunnelaquarium_14_05_2009_15_54_09.jpg"
+        tplDim = (640, 480)
+        urls = ""
+
+        URLfile = cStringIO.StringIO(urllib2.urlopen(sURL).read())
+        try:
+            img = Image.open(URLfile)
+        except:
+            print('Kan image niet openen')
+            return
+
+#        img_file = urllib2.urlopen(self.image.url)
+#        im = StringIO(img_file.read())
+#        resized_image = Image.open(im)
+
+        resizedFilename = ResizeImage2(img, tplDim)
+        desiredName, dimWidth, dimHeight = DumpImage2(resizedFilename, diversen.USER_USERNAME, img)
+        url = AUQAOFORUM_PICTURE_URL + desiredName
+        addDATA2DB(url, dimWidth, dimHeight)
+        urls = urls + " [IMG]" + AUQAOFORUM_PICTURE_URL + desiredName + "[/IMG]" + "\n"
+        
+def ResizeImage2(img, dim):
+    # try except
+    #    img = Image.open(pad)
+    # scale the image, preserving the aspect ratio
+    originalDimensions = img.size
+    xRatio = float(dim[0]) / originalDimensions[0]
+    yRatio = float(dim[1]) / originalDimensions[1]
+    if xRatio < 1 or yRatio < 1:
+        # only resize when needed
+        minimumRatio = min([xRatio, yRatio])
+        img = img.resize(
+            (
+                int(originalDimensions[0] * minimumRatio),
+                int(originalDimensions[1] * minimumRatio)
+            ), Image.ANTIALIAS)  # resize
+    return img
+
+def DumpImage2(im, username, filename):
+    import tempfile
+    fd, path = tempfile.mkstemp()
+    # quality hoger dan 95 heeft geen nut,
+    # zie http://pillow.readthedocs.org/en/latest/handbook/image-file-formats.html
+    kwaliteit = [95, 94, 93, 92, 91, 90, 88, 86, 84, 82, 80, 78, 76,
+                 74, 72, 70, 68, 66, 64, 62, 60, 58, 56, 54, 52, 50,
+                 48, 46, 44, 42, 40, 38, 36]
+    for _x in kwaliteit:
+        try:
+            if im.mode != "RGB":
+                im = im.convert("RGB")
+            im.save(path, "JPEG", quality=_x, optimize=True)
+            filesize = os.path.getsize(path)
+            dimWidth, dimHeight = (im.size[0], im.size[1])
+            if filesize <= 200000:
+                break
+        except IOError as er:
+            print("ERROR : " + str(er))
+            os.close(fd)
+            os.remove(path)
+            return
+    desiredName = "testnaam.jpg"
+    uploadFileToAquaforum(path, desiredName)
+    return desiredName, dimWidth, dimHeight
+
+
+
+
 ##############################################################################
 # def getUserName():
 #     filepath = path_to_db()

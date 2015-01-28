@@ -1,11 +1,14 @@
 {
   "version": "0.85",
-  "date": "14 januari 2015",
-  "changes":["* Je kunt nu per individuele foto aangeven in welke dimensie je het wilt uploaden.",
-             "* Configuratiescherm waarin je verschillende defaults in de database kunt vastleggen..",
+  "date": "23 januari 2015",
+  "changes":["* Meerdere foto's tegelijk selecteren.",
+             "* Je kunt nu per individuele foto aangeven in welke dimensie je het wilt uploaden.",
+             "* Configuratiescherm waarin je verschillende defaults in de database kunt vastleggen.",
              "* Preview van foto's kan worden in/uitgeschakeld.",
              "* Eventuele dubbel aanwezige foto's in de database worden verwijderd en voorkomen.",
-             "* Nieuwe archief-pagina. (Als optie in configuratiemenu)",
-             "* Met dubbelklik of Enter-toets een foto in uploadlijst kunnen zetten."
+             "* Met dubbelklik of Enter-toets een foto in uploadlijst kunnen zetten.",
+             "* Op de hoogte blijven van beschikbare updates.",
+             "* Nieuwe archief-pagina (te kiezen in het configuratie-menu).",
+             "* Veel kleine verbeteringen.. en bug-fixes."
             ]
 }
