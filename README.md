@@ -1,4 +1,4 @@
-# 2015 24 januari : Versie 0.85 :
+# 2015 28 januari : Versie 0.85 :
 * Meerdere foto's tegelijk selecteren met SHIFT/Ctrl-toetsen en dan
   met Enter-toets in uploadlijst kunnen zetten, of dubbelklik met muis.
 * Je kunt nu per individuele foto aangeven in welke dimensie je het wilt uploaden.
