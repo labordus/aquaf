@@ -1,6 +1,8 @@
 # Versie 0.86
 - [x] Bij initialisatie app wat global variabelen zetten, zodat ik ze niet telkens uit de DB hoef te trekken.
 - [ ] APP_VERSIE en USER_DIMENSIE moeten nog maar dat ligt lastiger.
+- [ ] PreviewKnop laat alleen preview zien van geselecteerde foto links.. ookal is er een foto
+      uit de rechter lijst actief in de previewbox.
 - [ ] Fetch foto van remote URL? Photobucket, Flickr, Picasa, http://postimage.org/ etc..
 - [ ] Extern opgeslagen DB kunnen gebruiken? Of alleen importeren?
 - [ ] Context-sensitive popupmenu op tvFiles voor "maak actieve map default"
@@ -9,7 +11,7 @@
 - [ ] Foto's van aquaforum-server downloaden om de dimensies op te slaan in DB?
       Opslagdatum lukt niet, alleen (eventueel aanwezige) EXIF-data met de aanmaakdatum, laatste wijzigingsdatum staat op de server? Heb niet voldoende rechten om die in de lezen.
 - [ ] "Maar mijn Norton antivirus scanner accepteert hem niet en gooit hem meteen weer van mijn pc af."
-- [ ] Gaan deze namen goed?  "Lel!_fi$h" en "?!Aron!?" .. zonder aanhalingstekens.
+- [ ] Gaan deze namen goed?  "Lel!_fi$h" en "?!Aron!?" "Ad " .. zonder aanhalingstekens.
 - [ ] Kunnen draaien van een foto.
 - [ ] Screencast maken.
 - [ ] Werken met toetsenbord (tab/enter) is een chaos.
