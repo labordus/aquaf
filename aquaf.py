@@ -225,6 +225,12 @@ class AquaFrame(maingui.Mainframe):
         Voorbeeld.ShowModal()
         Voorbeeld.Destroy()
 
+    def onbtnDraaiLinksClick(self, event):
+        event.skip()
+
+    def onbtnDraaiRechtsClick(self, event):
+        event.skip()
+
     def PreviewImage(self, pad):
         if not diversen.USER_PREVIEW:
             self.bitmapSelectedFile.SetBitmap(wx.Bitmap(FRONT_FOTO))

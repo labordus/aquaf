@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*- 
 
 ###########################################################################
-## Python code generated with wxFormBuilder (version Nov  7 2014)
+## Python code generated with wxFormBuilder (version Mar  1 2015)
 ## http://www.wxformbuilder.org/
 ##
 ## PLEASE DO "NOT" EDIT THIS FILE!
@@ -98,6 +98,17 @@ class Mainframe ( wx.Frame ):
 		self.btnVoorbeeld.SetToolTipString( u"Preview hoe de betreffende foto eruit zal zien\nmet de gekozen dimensies." )
 		
 		bSizer301.Add( self.btnVoorbeeld, 0, wx.ALL, 5 )
+		
+		bSizer33 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.btnDraaiLinks = wx.Button( self, wx.ID_ANY, u"Links", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer33.Add( self.btnDraaiLinks, 0, wx.ALL, 5 )
+		
+		self.btnDraaiRechts = wx.Button( self, wx.ID_ANY, u"Rechts", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer33.Add( self.btnDraaiRechts, 0, wx.ALL, 5 )
+		
+		
+		bSizer301.Add( bSizer33, 1, wx.EXPAND, 5 )
 		
 		
 		bSizer151.Add( bSizer301, 1, wx.EXPAND, 5 )
@@ -201,6 +212,8 @@ class Mainframe ( wx.Frame ):
 		self.tvFiles.Bind( wx.EVT_TREE_ITEM_MENU, self.OntvFilesRightClick )
 		self.tvFiles.Bind( wx.EVT_TREE_SEL_CHANGED, self.ontvFilesSelChanged )
 		self.btnVoorbeeld.Bind( wx.EVT_BUTTON, self.onbtnVoorbeeldClick )
+		self.btnDraaiLinks.Bind( wx.EVT_BUTTON, self.onbtnDraaiLinksClick )
+		self.btnDraaiRechts.Bind( wx.EVT_BUTTON, self.onbtnDraaiRechtsClick )
 		self.btnSelectFile.Bind( wx.EVT_BUTTON, self.onbtnSelectFileClick )
 		self.btnUnselectFile.Bind( wx.EVT_BUTTON, self.onbtnUnselectFileClick )
 		self.btnClearList.Bind( wx.EVT_BUTTON, self.onbtnClearListClick )
@@ -229,6 +242,12 @@ class Mainframe ( wx.Frame ):
 		event.Skip()
 	
 	def onbtnVoorbeeldClick( self, event ):
+		event.Skip()
+	
+	def onbtnDraaiLinksClick( self, event ):
+		event.Skip()
+	
+	def onbtnDraaiRechtsClick( self, event ):
 		event.Skip()
 	
 	def onbtnSelectFileClick( self, event ):
