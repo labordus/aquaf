@@ -1,4 +1,7 @@
 # Versie 0.86
+- [ ] Foto's worden automatisch gedraaid? DSC_0001.JPG -> http://www.aquaforum.nl/gallery/upload/339568kellemes_0_85_download.jpg
+      http://stackoverflow.com/questions/4228530/pil-thumbnail-is-rotating-my-image
+- [ ] Kunnen draaien van een foto.
 - [x] Bij initialisatie app wat global variabelen zetten, zodat ik ze niet telkens uit de DB hoef te trekken.
 - [ ] APP_VERSIE en USER_DIMENSIE moeten nog maar dat ligt lastiger.
 - [ ] PreviewKnop laat alleen preview zien van geselecteerde foto links.. ookal is er een foto
@@ -12,7 +15,6 @@
       Opslagdatum lukt niet, alleen (eventueel aanwezige) EXIF-data met de aanmaakdatum, laatste wijzigingsdatum staat op de server? Heb niet voldoende rechten om die in de lezen.
 - [ ] "Maar mijn Norton antivirus scanner accepteert hem niet en gooit hem meteen weer van mijn pc af."
 - [ ] Gaan deze namen goed?  "Lel!_fi$h" en "?!Aron!?" "Ad " .. zonder aanhalingstekens.
-- [ ] Kunnen draaien van een foto.
 - [ ] Screencast maken.
 - [ ] Werken met toetsenbord (tab/enter) is een chaos.
 - [ ] taborder.. Moet getest op Windows, Xfce laat veelal niet zien of een control focus heeft. (hangt af van 'the theme')
