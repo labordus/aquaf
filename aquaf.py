@@ -16,6 +16,7 @@ from wx import ToolTip
 AUQAOFORUM_PICTURE_URL = "http://www.aquaforum.nl/gallery/upload/"
 TEST_FOTO = "test.jpg"
 FRONT_FOTO = "front.jpg"
+ROTATE_IMAGE = 0
 
 
 def main_is_frozen():
@@ -107,7 +108,8 @@ class AquaFrame(maingui.Mainframe):
 
         self.listFiles.InsertColumn(0, 'Bestand', width=150)
         self.listFiles.InsertColumn(1, 'Dimensie', width=75)
-        self.listFiles.InsertColumn(2, 'Pad', width=140)
+        self.listFiles.InsertColumn(2, 'Rotatie', width=60)
+        self.listFiles.InsertColumn(3, 'Pad', width=140)
 
 #        self.Layout()
         self.panelPreview.Show(diversen.USER_PREVIEW)
@@ -225,16 +227,24 @@ class AquaFrame(maingui.Mainframe):
         Voorbeeld.ShowModal()
         Voorbeeld.Destroy()
 
-    def onbtnDraaiLinksClick(self, event):
-        event.skip()
+    def onbtnRotateClick(self, event):
+        global ROTATE_IMAGE
+        if ROTATE_IMAGE == 270:
+            ROTATE_IMAGE = 0
+        else:
+            ROTATE_IMAGE += 90
 
-    def onbtnDraaiRechtsClick(self, event):
-        event.skip()
+        padjes = self.tvFiles.GetFilePaths()
+        for pad in padjes:
+            self.PreviewImage(pad)
+            return
+        self.PreviewImage(FRONT_FOTO)
 
     def PreviewImage(self, pad):
         if not diversen.USER_PREVIEW:
             self.bitmapSelectedFile.SetBitmap(wx.Bitmap(FRONT_FOTO))
             return
+        global ROTATE_IMAGE
 
         if pad != () and pad != "":
             # file selected
@@ -245,14 +255,23 @@ class AquaFrame(maingui.Mainframe):
             else:  # als geen geldige image..
                 #                img = ResizeImage(TEST_FOTO, (400, 300))
                 img = WxBitmapToPilImage(wx.Bitmap(FRONT_FOTO))
+                ROTATE_IMAGE = 0
         else:  # directory selected
             #            img = ResizeImage(TEST_FOTO, (400, 300))
             img = WxBitmapToPilImage(wx.Bitmap(FRONT_FOTO))
+#        img = img.rotate(90, expand=True)
+#        img = img.rotate(270)
+        if pad == FRONT_FOTO:
+            ROTATE_IMAGE = 0
+        img = img.rotate(ROTATE_IMAGE)
         self.bitmapSelectedFile.SetSize(img.size)
         self.bitmapSelectedFile.SetBitmap(PilImageToWxBitmap(img))
         self.bitmapSelectedFile.Center()
 
     def ontvFilesSelChanged(self, event):
+        global ROTATE_IMAGE
+        ROTATE_IMAGE = 0
+
         padjes = self.tvFiles.GetFilePaths()
         for pad in padjes:
             self.PreviewImage(pad)
@@ -269,7 +288,7 @@ class AquaFrame(maingui.Mainframe):
 #        print('SelChange')
 
     def onlistFilesSelected(self, event):
-        pad = os.path.join(self.listFiles.GetItemText(self.listFiles.GetFirstSelected(), 2),
+        pad = os.path.join(self.listFiles.GetItemText(self.listFiles.GetFirstSelected(), 3),
                            self.listFiles.GetItemText(self.listFiles.GetFirstSelected(), 0))
         self.PreviewImage(pad)
 
@@ -292,8 +311,10 @@ class AquaFrame(maingui.Mainframe):
 
         index = self.listFiles.InsertStringItem(sys.maxsize, bestandsnaam)
         s = self.choiceDimensie.GetString(self.choiceDimensie.GetSelection())
+        r = str(ROTATE_IMAGE)
         self.listFiles.SetStringItem(index, 1, s)
-        self.listFiles.SetStringItem(index, 2, helepad)
+        self.listFiles.SetStringItem(index, 2, r)
+        self.listFiles.SetStringItem(index, 3, helepad)
 
     def onbtnSelectFileClick(self, event):
         breaker = 0
@@ -301,7 +322,7 @@ class AquaFrame(maingui.Mainframe):
         for _pad in padjes:
             for _i in range(self.listFiles.ItemCount):
                 breaker = 0
-                sPad = os.path.join(self.listFiles.GetItemText(_i, 2),
+                sPad = os.path.join(self.listFiles.GetItemText(_i, 3),
                                     self.listFiles.GetItemText(_i, 0))
                 if _pad == sPad:
                     print("""Foto is al toegevoegd""")
@@ -355,9 +376,9 @@ class AquaFrame(maingui.Mainframe):
             print('Uploading ' + self.listFiles.GetItemText(_i, 0))
             try:
                 dimensions = StringToTupleDimensions(self.listFiles.GetItemText(_i, 1))
-                resizedFilename = ResizeImage(os.path.join(self.listFiles.GetItemText(_i, 2),
+                resizedFilename = ResizeImage(os.path.join(self.listFiles.GetItemText(_i, 3),
                                                            self.listFiles.GetItemText(_i, 0)), dimensions)
-                desiredName, dimWidth, dimHeight = DumpImage(resizedFilename, diversen.USER_USERNAME, self.listFiles.GetItemText(_i, 2))
+                desiredName, dimWidth, dimHeight = DumpImage(resizedFilename, diversen.USER_USERNAME, self.listFiles.GetItemText(_i, 3))
                 url = AUQAOFORUM_PICTURE_URL + desiredName
                 addDATA2DB(url, dimWidth, dimHeight)
                 urls = urls + " [IMG]" + AUQAOFORUM_PICTURE_URL + desiredName + "[/IMG]" + "\n"
