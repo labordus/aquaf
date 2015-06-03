@@ -101,11 +101,8 @@ class Mainframe ( wx.Frame ):
 		
 		bSizer33 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		self.btnDraaiLinks = wx.Button( self, wx.ID_ANY, u"Links", wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer33.Add( self.btnDraaiLinks, 0, wx.ALL, 5 )
-		
-		self.btnDraaiRechts = wx.Button( self, wx.ID_ANY, u"Rechts", wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer33.Add( self.btnDraaiRechts, 0, wx.ALL, 5 )
+		self.btnRotate = wx.Button( self, wx.ID_ANY, u"Roteer", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
+		bSizer33.Add( self.btnRotate, 0, wx.ALL, 5 )
 		
 		
 		bSizer301.Add( bSizer33, 1, wx.EXPAND, 5 )
@@ -212,8 +209,7 @@ class Mainframe ( wx.Frame ):
 		self.tvFiles.Bind( wx.EVT_TREE_ITEM_MENU, self.OntvFilesRightClick )
 		self.tvFiles.Bind( wx.EVT_TREE_SEL_CHANGED, self.ontvFilesSelChanged )
 		self.btnVoorbeeld.Bind( wx.EVT_BUTTON, self.onbtnVoorbeeldClick )
-		self.btnDraaiLinks.Bind( wx.EVT_BUTTON, self.onbtnDraaiLinksClick )
-		self.btnDraaiRechts.Bind( wx.EVT_BUTTON, self.onbtnDraaiRechtsClick )
+		self.btnRotate.Bind( wx.EVT_BUTTON, self.onbtnRotateClick )
 		self.btnSelectFile.Bind( wx.EVT_BUTTON, self.onbtnSelectFileClick )
 		self.btnUnselectFile.Bind( wx.EVT_BUTTON, self.onbtnUnselectFileClick )
 		self.btnClearList.Bind( wx.EVT_BUTTON, self.onbtnClearListClick )
@@ -244,10 +240,7 @@ class Mainframe ( wx.Frame ):
 	def onbtnVoorbeeldClick( self, event ):
 		event.Skip()
 	
-	def onbtnDraaiLinksClick( self, event ):
-		event.Skip()
-	
-	def onbtnDraaiRechtsClick( self, event ):
+	def onbtnRotateClick( self, event ):
 		event.Skip()
 	
 	def onbtnSelectFileClick( self, event ):
