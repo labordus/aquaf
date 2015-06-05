@@ -220,6 +220,7 @@ class AquaFrame(maingui.Mainframe):
             return
         Voorbeeld = dlgVoorbeeld(self)
         Voorbeeld.SetTitle(str(dimensions))
+        resizedFileName = resizedFileName.rotate(ROTATE_IMAGE)
         Voorbeeld.bitmapVoorbeeld.SetBitmap(PilImageToWxBitmap(resizedFileName))
         Voorbeeld.Fit()
         Voorbeeld.Layout()
@@ -288,8 +289,10 @@ class AquaFrame(maingui.Mainframe):
 #        print('SelChange')
 
     def onlistFilesSelected(self, event):
+        global ROTATE_IMAGE
         pad = os.path.join(self.listFiles.GetItemText(self.listFiles.GetFirstSelected(), 3),
                            self.listFiles.GetItemText(self.listFiles.GetFirstSelected(), 0))
+        ROTATE_IMAGE = int(self.listFiles.GetItemText(self.listFiles.GetFirstSelected(), 2))
         self.PreviewImage(pad)
 
 
