@@ -2,6 +2,7 @@
 - [ ] Heel bericht kunnen schrijven vanuit gui + ingevoegde foto's.
 
 # Versie 0.86
+- [ ] BUGBUGBUGBUGBUG bij 1 foto in db gaat 't mis?
 - [ ] Foto's worden automatisch gedraaid? DSC_0001.JPG -> http://www.aquaforum.nl/gallery/upload/339568kellemes_0_85_download.jpg
       http://stackoverflow.com/questions/4228530/pil-thumbnail-is-rotating-my-image
 - [ ] Kunnen draaien van een foto.
