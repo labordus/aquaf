@@ -2,10 +2,10 @@
 - [ ] Heel bericht kunnen schrijven vanuit gui + ingevoegde foto's.
 
 # Versie 0.86
-- [ ] BUGBUGBUGBUGBUG bij 1 foto in db gaat 't mis?
-- [ ] Foto's worden automatisch gedraaid? DSC_0001.JPG -> http://www.aquaforum.nl/gallery/upload/339568kellemes_0_85_download.jpg
+- [x] Foto's worden automatisch gedraaid? DSC_0001.JPG -> http://www.aquaforum.nl/gallery/upload/339568kellemes_0_85_download.jpg
       http://stackoverflow.com/questions/4228530/pil-thumbnail-is-rotating-my-image
-- [ ] Kunnen draaien van een foto.
+- [x] Kunnen draaien van een foto.
+- [ ] Druk UPLOAD -->> stel dat foto ondertussen niet meer bestaat, vang ik dit af?
 - [x] Bij initialisatie app wat global variabelen zetten, zodat ik ze niet telkens uit de DB hoef te trekken.
 - [ ] APP_VERSIE en USER_DIMENSIE moeten nog maar dat ligt lastiger.
 - [ ] PreviewKnop laat alleen preview zien van geselecteerde foto links.. ookal is er een foto
@@ -26,6 +26,7 @@
 - [ ] Windows -> Klikken op Archief met lege DB laat geen melding zien dat er geen foto's te tonen zijn.
 - [ ] Windows -> Sommige PNG's doen het niet in onbtnVoorbeeldClick() .. waaronder ChessMCE.png
 - [ ] Beschrijving per foto opslaan in DB
+- [x] fotorama 4.6.3 -> 4.6.4
 
 # Versie 0.85
 - [x] Als DB-versie = HOGER dan huidige App-versie.. verplicht nieuwste versie van App te installeren.
