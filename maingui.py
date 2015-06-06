@@ -53,6 +53,18 @@ class Mainframe ( wx.Frame ):
 		bSizer4 = wx.BoxSizer( wx.VERTICAL )
 		
 		bSizer4.SetMinSize( wx.Size( 300,-1 ) ) 
+		bSizer36 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.m_staticText13 = wx.StaticText( self, wx.ID_ANY, u"Online Foto:", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText13.Wrap( -1 )
+		bSizer36.Add( self.m_staticText13, 0, wx.ALIGN_CENTER|wx.ALL, 5 )
+		
+		self.edtURL = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer36.Add( self.edtURL, 1, wx.ALL, 2 )
+		
+		
+		bSizer4.Add( bSizer36, 0, wx.EXPAND, 0 )
+		
 		self.tvFiles = wx.GenericDirCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 300,-1 ), wx.DIRCTRL_MULTIPLE|wx.DIRCTRL_SELECT_FIRST|wx.SUNKEN_BORDER, wx.EmptyString, 0 )
 		
 		self.tvFiles.ShowHidden( True )
@@ -94,35 +106,42 @@ class Mainframe ( wx.Frame ):
 		
 		bSizer301.Add( self.choiceDimensie, 0, wx.ALL, 5 )
 		
-		self.btnVoorbeeld = wx.BitmapButton( self, wx.ID_ANY, wx.Bitmap( u"icon.ico", wx.BITMAP_TYPE_ANY ), wx.DefaultPosition, wx.DefaultSize, wx.BU_AUTODRAW )
-		self.btnVoorbeeld.SetToolTipString( u"Preview hoe de betreffende foto eruit zal zien\nmet de gekozen dimensies." )
-		
-		bSizer301.Add( self.btnVoorbeeld, 0, wx.ALL, 5 )
-		
-		bSizer33 = wx.BoxSizer( wx.HORIZONTAL )
-		
 		self.btnRotate = wx.Button( self, wx.ID_ANY, u"Roteer", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
-		bSizer33.Add( self.btnRotate, 0, wx.ALL, 5 )
+		bSizer301.Add( self.btnRotate, 0, wx.ALL, 5 )
 		
 		
-		bSizer301.Add( bSizer33, 1, wx.EXPAND, 5 )
+		bSizer151.Add( bSizer301, 1, wx.EXPAND, 0 )
+		
+		bSizer35 = wx.BoxSizer( wx.VERTICAL )
+		
+		self.btnVoorbeeld = wx.Button( self, wx.ID_ANY, u"<Preview>", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
+		self.btnVoorbeeld.SetFont( wx.Font( wx.NORMAL_FONT.GetPointSize(), 70, 90, 92, False, wx.EmptyString ) )
+		self.btnVoorbeeld.SetForegroundColour( wx.Colour( 10, 43, 233 ) )
+		self.btnVoorbeeld.SetToolTipString( u"Preview hoe de betreffende foto eruit zal zien\nmet de gekozen dimensie en rotatie." )
+		
+		bSizer35.Add( self.btnVoorbeeld, 0, wx.ALIGN_CENTER|wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
 		
 		
-		bSizer151.Add( bSizer301, 1, wx.EXPAND, 5 )
+		bSizer151.Add( bSizer35, 1, wx.EXPAND, 0 )
 		
-		self.btnSelectFile = wx.Button( self, wx.ID_ANY, u"Toevoegen  ->", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
-		self.btnSelectFile.SetFont( wx.Font( wx.NORMAL_FONT.GetPointSize(), 70, 90, 92, False, wx.EmptyString ) )
-		self.btnSelectFile.SetForegroundColour( wx.Colour( 60, 130, 50 ) )
-		self.btnSelectFile.SetToolTipString( u"Voeg foto's toe aan uploadlijst" )
-		
-		bSizer151.Add( self.btnSelectFile, 0, wx.ALL, 5 )
+		bSizer34 = wx.BoxSizer( wx.HORIZONTAL )
 		
 		self.btnUnselectFile = wx.Button( self, wx.ID_ANY, u"<- Verwijderen", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
 		self.btnUnselectFile.SetFont( wx.Font( wx.NORMAL_FONT.GetPointSize(), 70, 90, 92, False, wx.EmptyString ) )
-		self.btnUnselectFile.SetForegroundColour( wx.Colour( 31, 37, 181 ) )
+		self.btnUnselectFile.SetForegroundColour( wx.Colour( 241, 26, 15 ) )
 		self.btnUnselectFile.SetToolTipString( u"Verwijder foto van uploadlijst" )
 		
-		bSizer151.Add( self.btnUnselectFile, 0, wx.ALL, 5 )
+		bSizer34.Add( self.btnUnselectFile, 0, wx.ALL, 5 )
+		
+		self.btnSelectFile = wx.Button( self, wx.ID_ANY, u"Toevoegen  ->", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
+		self.btnSelectFile.SetFont( wx.Font( wx.NORMAL_FONT.GetPointSize(), 70, 90, 92, False, wx.EmptyString ) )
+		self.btnSelectFile.SetForegroundColour( wx.Colour( 25, 120, 11 ) )
+		self.btnSelectFile.SetToolTipString( u"Voeg foto's toe aan uploadlijst" )
+		
+		bSizer34.Add( self.btnSelectFile, 0, wx.ALL, 5 )
+		
+		
+		bSizer151.Add( bSizer34, 1, wx.EXPAND, 0 )
 		
 		
 		bSizer42.Add( bSizer151, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 5 )
@@ -168,7 +187,7 @@ class Mainframe ( wx.Frame ):
 		self.btnUpload = wx.Button( self, wx.ID_ANY, u"Upload naar aquaforum", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.btnUpload.SetFont( wx.Font( wx.NORMAL_FONT.GetPointSize(), 70, 90, 92, False, wx.EmptyString ) )
 		self.btnUpload.SetForegroundColour( wx.Colour( 255, 42, 0 ) )
-		self.btnUpload.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
+		self.btnUpload.SetBackgroundColour( wx.Colour( 242, 195, 8 ) )
 		self.btnUpload.SetToolTipString( u"De foto's in de uploadlijst zullen (zo nodig) worden geconverteerd naar de gekozen dimensies en dan\nworden ge-upload naar de server van aquaforum.nl" )
 		
 		bSizer29.Add( self.btnUpload, 0, wx.ALIGN_RIGHT|wx.EXPAND, 3 )
@@ -208,10 +227,10 @@ class Mainframe ( wx.Frame ):
 		self.tvFiles.Bind( wx.EVT_TREE_ITEM_ACTIVATED, self.ontvFilesItemActivate )
 		self.tvFiles.Bind( wx.EVT_TREE_ITEM_MENU, self.OntvFilesRightClick )
 		self.tvFiles.Bind( wx.EVT_TREE_SEL_CHANGED, self.ontvFilesSelChanged )
-		self.btnVoorbeeld.Bind( wx.EVT_BUTTON, self.onbtnVoorbeeldClick )
 		self.btnRotate.Bind( wx.EVT_BUTTON, self.onbtnRotateClick )
-		self.btnSelectFile.Bind( wx.EVT_BUTTON, self.onbtnSelectFileClick )
+		self.btnVoorbeeld.Bind( wx.EVT_BUTTON, self.onbtnVoorbeeldClick )
 		self.btnUnselectFile.Bind( wx.EVT_BUTTON, self.onbtnUnselectFileClick )
+		self.btnSelectFile.Bind( wx.EVT_BUTTON, self.onbtnSelectFileClick )
 		self.btnClearList.Bind( wx.EVT_BUTTON, self.onbtnClearListClick )
 		self.listFiles.Bind( wx.EVT_LIST_ITEM_SELECTED, self.onlistFilesSelected )
 		self.btnArchief.Bind( wx.EVT_BUTTON, self.onbtnArchiefClick )
@@ -237,16 +256,16 @@ class Mainframe ( wx.Frame ):
 	def ontvFilesSelChanged( self, event ):
 		event.Skip()
 	
-	def onbtnVoorbeeldClick( self, event ):
-		event.Skip()
-	
 	def onbtnRotateClick( self, event ):
 		event.Skip()
 	
-	def onbtnSelectFileClick( self, event ):
+	def onbtnVoorbeeldClick( self, event ):
 		event.Skip()
 	
 	def onbtnUnselectFileClick( self, event ):
+		event.Skip()
+	
+	def onbtnSelectFileClick( self, event ):
 		event.Skip()
 	
 	def onbtnClearListClick( self, event ):
