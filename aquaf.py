@@ -403,6 +403,12 @@ class AquaFrame(maingui.Mainframe):
         dlg.ShowModal()  # this one is non blocking!!
         dlg.Destroy()
 
+    def onbtnTest(self, event):
+#        if not exists('http://www.aquaforum.nl/gallery/upload/339568kellemes_0_5_download.jpg'):
+#            print 'Foto niet gevonden op de server'
+#        else:  # Er is iets gevonden.. is dit de foto?
+#            print 'True'
+
     def onbtnArchiefClick(self, event):
 
         if diversen.USER_WEBNIEUW:
