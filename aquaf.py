@@ -381,6 +381,9 @@ class AquaFrame(maingui.Mainframe):
                 dimensions = StringToTupleDimensions(self.listFiles.GetItemText(_i, 1))
                 resizedFilename = ResizeImage(os.path.join(self.listFiles.GetItemText(_i, 3),
                                                            self.listFiles.GetItemText(_i, 0)), dimensions)
+                # ROTEREN
+                resizedFilename = resizedFilename.rotate(int(self.listFiles.GetItemText(_i, 2)))
+                # ##
                 desiredName, dimWidth, dimHeight = DumpImage(resizedFilename, diversen.USER_USERNAME, self.listFiles.GetItemText(_i, 3))
                 url = AUQAOFORUM_PICTURE_URL + desiredName
                 addDATA2DB(url, dimWidth, dimHeight)
