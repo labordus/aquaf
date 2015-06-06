@@ -4,6 +4,7 @@ import string
 import sys
 import urllib2
 import httplib
+import requests
 
 import mechanize
 import wx
@@ -265,13 +266,34 @@ def UpdateAvailable():
 
 
 def exists(url):
+    #    try:
+    #        resource = urllib2.urlopen(url)
+    #    except:
+    #        return False
+
+    # schijnbaar iets gevonden..
+    #    status = resource.getcode()
+    #    content_type = resource.info().get('Content-Type')
+    #    print '%d: %s at %s\n' % (status, content_type, url)
+
     try:
-        resource = urllib2.urlopen(url)
+        response = requests.head(url)
     except:
         return False
-    status = resource.getcode()
-    content_type = resource.info().get('Content-Type')
-    print '%d: %s at %s\n' % (status, content_type, url)
+    if not response.status_code == 200:
+        return False
+
+    # download
+    r = requests.get(url)
+    if len(r.content) == 0:  # image met lengte 0? Kan niet kloppen..
+        return False
+    if int(r.headers['content-length']) > 3000000:  # 3 Mb
+        # te groot
+        return False
+
+    with open("temp.jpg", "wb") as code:
+        code.write(r.content)
+
     return True
 
 
