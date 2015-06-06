@@ -3,9 +3,11 @@ import os
 import string
 import sys
 import urllib2
+import httplib
 
 import mechanize
 import wx
+from mechanize._opener import urlopen
 try:
     from PIL import Image
     from PIL import JpegImagePlugin  # @UnusedImport
@@ -260,6 +262,17 @@ def UpdateAvailable():
         #        print e.reason
         #        print e.code
         #        print e.read()
+
+
+def exists(url):
+    try:
+        resource = urllib2.urlopen(url)
+    except:
+        return False
+    status = resource.getcode()
+    content_type = resource.info().get('Content-Type')
+    print '%d: %s at %s\n' % (status, content_type, url)
+    return True
 
 
 def PilImageToWxBitmap(myPilImage):
