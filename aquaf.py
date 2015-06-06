@@ -404,10 +404,11 @@ class AquaFrame(maingui.Mainframe):
         dlg.Destroy()
 
     def onbtnTest(self, event):
-#        if not exists('http://www.aquaforum.nl/gallery/upload/339568kellemes_0_5_download.jpg'):
-#            print 'Foto niet gevonden op de server'
-#        else:  # Er is iets gevonden.. is dit de foto?
-#            print 'True'
+        if not exists('http://www.aquaforum.nl/gallery/upload/339568kellemes_0_85_download.jpg'):
+            #        if not exists('http://blog.webboda.es/wp-content/uploads/2030/01/fotorama-foto-5.jpeg'):
+            print 'Foto niet gevonden op de server'
+        else:  # Er is iets gevonden.. is dit de foto?
+            print 'True'
 
     def onbtnArchiefClick(self, event):
 
