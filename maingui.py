@@ -112,7 +112,7 @@ class Mainframe ( wx.Frame ):
 		
 		bSizer151.Add( bSizer301, 1, wx.EXPAND, 0 )
 		
-		bSizer35 = wx.BoxSizer( wx.VERTICAL )
+		bSizer35 = wx.BoxSizer( wx.HORIZONTAL )
 		
 		self.btnVoorbeeld = wx.Button( self, wx.ID_ANY, u"<Preview>", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
 		self.btnVoorbeeld.SetFont( wx.Font( wx.NORMAL_FONT.GetPointSize(), 70, 90, 92, False, wx.EmptyString ) )
@@ -120,6 +120,9 @@ class Mainframe ( wx.Frame ):
 		self.btnVoorbeeld.SetToolTipString( u"Preview hoe de betreffende foto eruit zal zien\nmet de gekozen dimensie en rotatie." )
 		
 		bSizer35.Add( self.btnVoorbeeld, 0, wx.ALIGN_CENTER|wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
+		
+		self.btnTest = wx.Button( self, wx.ID_ANY, u"MyButton", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer35.Add( self.btnTest, 0, wx.ALL, 5 )
 		
 		
 		bSizer151.Add( bSizer35, 1, wx.EXPAND, 0 )
@@ -229,6 +232,7 @@ class Mainframe ( wx.Frame ):
 		self.tvFiles.Bind( wx.EVT_TREE_SEL_CHANGED, self.ontvFilesSelChanged )
 		self.btnRotate.Bind( wx.EVT_BUTTON, self.onbtnRotateClick )
 		self.btnVoorbeeld.Bind( wx.EVT_BUTTON, self.onbtnVoorbeeldClick )
+		self.btnTest.Bind( wx.EVT_BUTTON, self.onbtnTest )
 		self.btnUnselectFile.Bind( wx.EVT_BUTTON, self.onbtnUnselectFileClick )
 		self.btnSelectFile.Bind( wx.EVT_BUTTON, self.onbtnSelectFileClick )
 		self.btnClearList.Bind( wx.EVT_BUTTON, self.onbtnClearListClick )
@@ -260,6 +264,9 @@ class Mainframe ( wx.Frame ):
 		event.Skip()
 	
 	def onbtnVoorbeeldClick( self, event ):
+		event.Skip()
+	
+	def onbtnTest( self, event ):
 		event.Skip()
 	
 	def onbtnUnselectFileClick( self, event ):
