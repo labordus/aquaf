@@ -17,6 +17,8 @@ AUQAOFORUM_PICTURE_URL = "http://www.aquaforum.nl/gallery/upload/"
 TEST_FOTO = "test.jpg"
 FRONT_FOTO = "front.jpg"
 ROTATE_IMAGE = 0
+ONLINE_PREVIEW = 0
+ONLINE_TEMPFILE = ''
 
 
 def main_is_frozen():
@@ -235,11 +237,14 @@ class AquaFrame(maingui.Mainframe):
         else:
             ROTATE_IMAGE += 90
 
-        padjes = self.tvFiles.GetFilePaths()
-        for pad in padjes:
-            self.PreviewImage(pad)
-            return
-        self.PreviewImage(FRONT_FOTO)
+        if ONLINE_PREVIEW:
+            self.PreviewImage(ONLINE_TEMPFILE)
+        else:
+            padjes = self.tvFiles.GetFilePaths()
+            for pad in padjes:
+                self.PreviewImage(pad)
+                return
+#        self.PreviewImage(FRONT_FOTO)
 
     def PreviewImage(self, pad):
         if not diversen.USER_PREVIEW:
@@ -307,34 +312,64 @@ class AquaFrame(maingui.Mainframe):
         self.onbtnSelectFileClick(event)
         event.Skip()
 
-    def VoegPadToe(self, pad):
+    def VoegPadToe(self, pad, dim):
         #                helepad = self.tvFiles.GetPath()
         helepad = os.path.dirname(pad)
         bestandsnaam = os.path.basename(pad)
 
         index = self.listFiles.InsertStringItem(sys.maxsize, bestandsnaam)
-        s = self.choiceDimensie.GetString(self.choiceDimensie.GetSelection())
+        if not dim:
+            dim = self.choiceDimensie.GetString(self.choiceDimensie.GetSelection())
         r = str(ROTATE_IMAGE)
-        self.listFiles.SetStringItem(index, 1, s)
+        self.listFiles.SetStringItem(index, 1, dim)
         self.listFiles.SetStringItem(index, 2, r)
         self.listFiles.SetStringItem(index, 3, helepad)
 
-    def onbtnSelectFileClick(self, event):
-        breaker = 0
-        padjes = self.tvFiles.GetFilePaths()
-        for _pad in padjes:
-            for _i in range(self.listFiles.ItemCount):
-                breaker = 0
-                sPad = os.path.join(self.listFiles.GetItemText(_i, 3),
-                                    self.listFiles.GetItemText(_i, 0))
-                if _pad == sPad:
-                    print("""Foto is al toegevoegd""")
-                    breaker = 1
-                    break
+    def onbtnToevoegenClick(self, event):
+        if ONLINE_PREVIEW == 1:  # online file to handel
+            if len(self.edtURL.GetValue()) == 0:
+                print "Niets ingevoerd"
+            else:
+                path = online_image_temp(self.edtURL.GetValue())
+                if path == '':
+                    print 'Foto niet gevonden op de server'
+                else:  # Er is iets gevonden.. is dit de foto?
+                    #                if IsValidImage(path):
+                    self.VoegPadToe(path, '800x600')
+        else:  # check of (lokaal) bestand al is toegevoegd.
+            breaker = 0
+            padjes = self.tvFiles.GetFilePaths()
+            for _pad in padjes:
+                for _i in range(self.listFiles.ItemCount):
+                    breaker = 0
+                    sPad = os.path.join(self.listFiles.GetItemText(_i, 3),
+                                        self.listFiles.GetItemText(_i, 0))
+                    if _pad == sPad:
+                        print("""Foto is al toegevoegd""")
+                        breaker = 1
+                        break
 
-            if breaker == 0:
-                if IsValidImage(_pad):
-                    self.VoegPadToe(_pad)
+                if breaker == 0:
+                    if IsValidImage(_pad):
+                        self.VoegPadToe(_pad)
+
+    def onbtnPreviewOnlineClick(self, event):
+        if len(self.edtURL.GetValue()) == 0:
+            print "Niets ingevoerd"
+        else:
+            path = online_image_temp(self.edtURL.GetValue())
+            global ONLINE_TEMPFILE
+            ONLINE_TEMPFILE = path
+            if path == '':
+                # 'http://www.aquaforum.nl/gallery/upload/339568kellemes_0_85_download.jpg'
+                #        if not image_exists('http://blog.webboda.es/wp-content/uploads/2030/01/fotorama-foto-5.jpeg'):
+                print 'Foto niet gevonden op de server'
+            else:  # Er is iets gevonden.. is dit de foto?
+                #                if IsValidImage(path):
+                global ONLINE_PREVIEW
+                ONLINE_PREVIEW = 1
+#                self.choiceDimensie.SetSelection(0)
+                self.PreviewImage(path)
 
     def onbtnUnselectFileClick(self, event):
         # Zet hier de lijst met geselecteerde items in een array, en gebruik die array
@@ -402,13 +437,6 @@ class AquaFrame(maingui.Mainframe):
         dlg.CenterOnParent()
         dlg.ShowModal()  # this one is non blocking!!
         dlg.Destroy()
-
-    def onbtnTest(self, event):
-        if not image_exists('http://www.aquaforum.nl/gallery/upload/339568kellemes_0_85_download.jpg'):
-            #        if not image_exists('http://blog.webboda.es/wp-content/uploads/2030/01/fotorama-foto-5.jpeg'):
-            print 'Foto niet gevonden op de server'
-        else:  # Er is iets gevonden.. is dit de foto?
-            print 'True'
 
     def onbtnArchiefClick(self, event):
 
