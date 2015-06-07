@@ -6,15 +6,14 @@
       http://stackoverflow.com/questions/4228530/pil-thumbnail-is-rotating-my-image
 - [x] Kunnen draaien van een foto.. en uploaden.
 - [x] Onvoorbeeldclick moet voorbeeld tonen van actieve foto in view (bitmapSelectedFile).
-- [ ] Fetch image van remote URL? Photobucket, Flickr, Picasa, http://postimage.org/ etc..
-- [ ] URLS kunnen er totaal anders uitzien als http://www.domein.nl/plaatje.jpg + andere formaten worden afgewezen.
-- [ ] "filetype JPG heeft geen JPG-extensie" etc.. etc.. is dit eigenlijk nog nodig?
+- [x] Fetch image van remote URL? Photobucket, Flickr, Picasa, http://postimage.org/ etc..
+- [x] "filetype JPG heeft geen JPG-extensie" etc.. etc.. is dit eigenlijk nog nodig? Uitgeschakeld.
 - [x] dimensie/rotatie remote image.
 - [x] Druk UPLOAD -->> online afwezigheid foto afhandelen.
 - [x] Druk UPLOAD -->> local afwezigheid foto afhandelen.
+- [ ] tempfiles wissen.. oa bij afsluiten.
 - [x] Bij initialisatie app wat global variabelen zetten, zodat ik ze niet telkens uit de DB hoef te trekken.
 - [ ] APP_VERSIE en USER_DIMENSIE moeten nog maar dat ligt lastiger.
-- [ ] tempfiles wissen.. oa bij afsluiten.
 - [ ] PreviewKnop laat alleen preview zien van geselecteerde foto links.. ookal is er een foto
       uit de rechter lijst actief in de previewbox.
 - [ ] Welke foto is actief? lijsten van kleur doen verschieten bij activeren of zoiets? Focus..
