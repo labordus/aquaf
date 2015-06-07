@@ -61,14 +61,14 @@ class Mainframe ( wx.Frame ):
 		
 		bSizer36.Add( self.m_staticText13, 0, wx.ALIGN_CENTER|wx.ALL, 0 )
 		
-		self.edtURL = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.edtURL = wx.TextCtrl( self, wx.ID_ANY, u"http://www.aquaforum.nl/gallery/upload/339568kellemes_0_85_download.jpg", wx.DefaultPosition, wx.DefaultSize, 0 )
 		bSizer36.Add( self.edtURL, 1, wx.ALL, 0 )
 		
-		self.btnToevoegenOnline = wx.Button( self, wx.ID_ANY, u"->", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
-		self.btnToevoegenOnline.SetFont( wx.Font( wx.NORMAL_FONT.GetPointSize(), 70, 90, 92, False, wx.EmptyString ) )
-		self.btnToevoegenOnline.SetForegroundColour( wx.Colour( 25, 120, 11 ) )
+		self.btnPreviewOnline = wx.Button( self, wx.ID_ANY, u"->", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
+		self.btnPreviewOnline.SetFont( wx.Font( wx.NORMAL_FONT.GetPointSize(), 70, 90, 92, False, wx.EmptyString ) )
+		self.btnPreviewOnline.SetForegroundColour( wx.Colour( 25, 120, 11 ) )
 		
-		bSizer36.Add( self.btnToevoegenOnline, 0, wx.ALL, 0 )
+		bSizer36.Add( self.btnPreviewOnline, 0, wx.ALL, 0 )
 		
 		
 		bSizer4.Add( bSizer36, 0, wx.EXPAND, 0 )
@@ -128,9 +128,6 @@ class Mainframe ( wx.Frame ):
 		self.btnVoorbeeld.SetToolTipString( u"Preview hoe de betreffende foto eruit zal zien\nmet de gekozen dimensie en rotatie." )
 		
 		bSizer35.Add( self.btnVoorbeeld, 0, wx.ALIGN_CENTER|wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
-		
-		self.btnTest = wx.Button( self, wx.ID_ANY, u"MyButton", wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer35.Add( self.btnTest, 0, wx.ALL, 5 )
 		
 		
 		bSizer151.Add( bSizer35, 1, wx.EXPAND, 0 )
@@ -235,14 +232,14 @@ class Mainframe ( wx.Frame ):
 		
 		# Connect Events
 		self.Bind( wx.EVT_CLOSE, self.oncloseMainframe )
+		self.btnPreviewOnline.Bind( wx.EVT_BUTTON, self.onbtnPreviewOnlineClick )
 		self.tvFiles.Bind( wx.EVT_TREE_ITEM_ACTIVATED, self.ontvFilesItemActivate )
 		self.tvFiles.Bind( wx.EVT_TREE_ITEM_MENU, self.OntvFilesRightClick )
 		self.tvFiles.Bind( wx.EVT_TREE_SEL_CHANGED, self.ontvFilesSelChanged )
 		self.btnRotate.Bind( wx.EVT_BUTTON, self.onbtnRotateClick )
 		self.btnVoorbeeld.Bind( wx.EVT_BUTTON, self.onbtnVoorbeeldClick )
-		self.btnTest.Bind( wx.EVT_BUTTON, self.onbtnTest )
 		self.btnUnselectFile.Bind( wx.EVT_BUTTON, self.onbtnUnselectFileClick )
-		self.btnSelectFile.Bind( wx.EVT_BUTTON, self.onbtnSelectFileClick )
+		self.btnSelectFile.Bind( wx.EVT_BUTTON, self.onbtnToevoegenClick )
 		self.btnClearList.Bind( wx.EVT_BUTTON, self.onbtnClearListClick )
 		self.listFiles.Bind( wx.EVT_LIST_ITEM_SELECTED, self.onlistFilesSelected )
 		self.btnArchief.Bind( wx.EVT_BUTTON, self.onbtnArchiefClick )
@@ -257,6 +254,9 @@ class Mainframe ( wx.Frame ):
 	
 	# Virtual event handlers, overide them in your derived class
 	def oncloseMainframe( self, event ):
+		event.Skip()
+	
+	def onbtnPreviewOnlineClick( self, event ):
 		event.Skip()
 	
 	def ontvFilesItemActivate( self, event ):
@@ -274,13 +274,10 @@ class Mainframe ( wx.Frame ):
 	def onbtnVoorbeeldClick( self, event ):
 		event.Skip()
 	
-	def onbtnTest( self, event ):
-		event.Skip()
-	
 	def onbtnUnselectFileClick( self, event ):
 		event.Skip()
 	
-	def onbtnSelectFileClick( self, event ):
+	def onbtnToevoegenClick( self, event ):
 		event.Skip()
 	
 	def onbtnClearListClick( self, event ):
