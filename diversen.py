@@ -293,7 +293,7 @@ def online_image_temp(url):
 
     # save to tempfile
     import tempfile
-    fd, path = tempfile.mkstemp()
+    fd, path = tempfile.mkstemp(prefix='aqf_')
 
     # resize to max
 #    img = ResizeImage(path, (800, 600))
@@ -302,6 +302,8 @@ def online_image_temp(url):
     with open(path, "wb") as code:
         code.write(r.content)
         result = path
+        os.close(fd)
+#        os.remove(path)
 
     return result
 
