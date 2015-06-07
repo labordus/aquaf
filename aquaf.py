@@ -180,27 +180,30 @@ class AquaFrame(maingui.Mainframe):
         wx.AboutBox(info)
 
     def onbtnVoorbeeldClick(self, event):
-        # Als er een plaatje is geselecteerd..
-        # gebruik die voor de preview
 
-        _pad = ''
-        padjes = self.tvFiles.GetFilePaths()
-        for pad in padjes:
-            _pad = pad
-            break
+        if ONLINE_PREVIEW == 1:  # als actieve view is een online foto..
+            PLAATJE = ONLINE_TEMPFILE
+        else:
+            # Als er een plaatje is geselecteerd..
+            # gebruik die voor de preview
+            _pad = ''
+            padjes = self.tvFiles.GetFilePaths()
+            for pad in padjes:
+                _pad = pad
+                break
 
-#        _pad = self.tvFiles.GetFilePath()
-        if _pad != () and _pad != "":
-            if IsValidImage(_pad):
-                #                PLAATJE = self.tvFiles.GetFilePath()
-                PLAATJE = _pad
+    #        _pad = self.tvFiles.GetFilePath()
+            if _pad != () and _pad != "":
+                if IsValidImage(_pad):
+                    #                PLAATJE = self.tvFiles.GetFilePath()
+                    PLAATJE = _pad
+                else:
+                    PLAATJE = TEST_FOTO
             else:
                 PLAATJE = TEST_FOTO
-        else:
-            PLAATJE = TEST_FOTO
 
-        if not diversen.USER_PREVIEW:
-            PLAATJE = TEST_FOTO
+            if not diversen.USER_PREVIEW:
+                PLAATJE = TEST_FOTO
 
         index = self.choiceDimensie.GetSelection()
         dimensions = getDimensions(index)
@@ -275,6 +278,8 @@ class AquaFrame(maingui.Mainframe):
         self.bitmapSelectedFile.Center()
 
     def ontvFilesSelChanged(self, event):
+        global ONLINE_PREVIEW
+        ONLINE_PREVIEW = 0
         global ROTATE_IMAGE
         ROTATE_IMAGE = 0
 
@@ -309,17 +314,16 @@ class AquaFrame(maingui.Mainframe):
 #        self.PreviewImage(pad)
 
     def ontvFilesItemActivate(self, event):
-        self.onbtnSelectFileClick(event)
+        self.onbtnToevoegenClick(event)
         event.Skip()
 
-    def VoegPadToe(self, pad, dim):
+    def VoegPadToe(self, pad):
         #                helepad = self.tvFiles.GetPath()
         helepad = os.path.dirname(pad)
         bestandsnaam = os.path.basename(pad)
 
         index = self.listFiles.InsertStringItem(sys.maxsize, bestandsnaam)
-        if not dim:
-            dim = self.choiceDimensie.GetString(self.choiceDimensie.GetSelection())
+        dim = self.choiceDimensie.GetString(self.choiceDimensie.GetSelection())
         r = str(ROTATE_IMAGE)
         self.listFiles.SetStringItem(index, 1, dim)
         self.listFiles.SetStringItem(index, 2, r)
@@ -330,12 +334,13 @@ class AquaFrame(maingui.Mainframe):
             if len(self.edtURL.GetValue()) == 0:
                 print "Niets ingevoerd"
             else:
-                path = online_image_temp(self.edtURL.GetValue())
+                path = ONLINE_TEMPFILE  # online_image_temp(self.edtURL.GetValue())
                 if path == '':
                     print 'Foto niet gevonden op de server'
                 else:  # Er is iets gevonden.. is dit de foto?
                     #                if IsValidImage(path):
-                    self.VoegPadToe(path, '800x600')
+                    self.edtURL.Clear()
+                    self.VoegPadToe(path)
         else:  # check of (lokaal) bestand al is toegevoegd.
             breaker = 0
             padjes = self.tvFiles.GetFilePaths()
@@ -354,6 +359,8 @@ class AquaFrame(maingui.Mainframe):
                         self.VoegPadToe(_pad)
 
     def onbtnPreviewOnlineClick(self, event):
+        #        if not ONLINE_TEMPFILE == '':
+        #            os.remove(ONLINE_TEMPFILE)
         if len(self.edtURL.GetValue()) == 0:
             print "Niets ingevoerd"
         else:
@@ -370,6 +377,17 @@ class AquaFrame(maingui.Mainframe):
                 ONLINE_PREVIEW = 1
 #                self.choiceDimensie.SetSelection(0)
                 self.PreviewImage(path)
+
+    def delete_tempfiles(self):
+        for _i in range(self.listFiles.ItemCount):
+            filename = self.listFiles.GetItemText(_i, 0)
+            if filename.startswith('aqf_'):
+                sPad = os.path.join(self.listFiles.GetItemText(_i, 3),
+                                    self.listFiles.GetItemText(_i, 0))
+                os.remove(sPad)
+
+# str = "this is string example....wow!!!";
+# print str.startswith( 'this' );
 
     def onbtnUnselectFileClick(self, event):
         # Zet hier de lijst met geselecteerde items in een array, en gebruik die array
@@ -430,6 +448,7 @@ class AquaFrame(maingui.Mainframe):
                 del busyDlg
                 exit
 #        self.listFiles.ClearAll()
+        self.delete_tempfiles()
         self.listFiles.DeleteAllItems()
         del busyDlg
         dlg = uploaddialog.UploadDoneDialog(self)
@@ -478,6 +497,7 @@ class AquaFrame(maingui.Mainframe):
 
     def onbtnClearListClick(self, event):
         #        self.listFiles.ClearAll()
+        self.delete_tempfiles()
         self.listFiles.DeleteAllItems()
 
     def onmenuitemClickAfsluiten(self, event):
@@ -491,6 +511,7 @@ class AquaFrame(maingui.Mainframe):
             result = dlg.ShowModal()
             if result == wx.ID_NO:
                 return
+        self.delete_tempfiles()
         event.Skip()
 
 app = wx.App(False)
