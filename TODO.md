@@ -4,13 +4,16 @@
 # Versie 0.86
 - [x] Foto's worden automatisch gedraaid? DSC_0001.JPG -> http://www.aquaforum.nl/gallery/upload/339568kellemes_0_85_download.jpg
       http://stackoverflow.com/questions/4228530/pil-thumbnail-is-rotating-my-image
-- [x] Kunnen draaien van een foto.
+- [x] Kunnen draaien van een foto.. en uploaden.
+- [ ] Selecteer foto in rechterlijst, die kunnen draaien en rotatie in lijst updaten.
+- [ ] Fetch image van remote URL? Photobucket, Flickr, Picasa, http://postimage.org/ etc..
+- [ ] demensie/rotatie remote image.
 - [ ] Druk UPLOAD -->> stel dat foto ondertussen niet meer bestaat, vang ik dit af?
 - [x] Bij initialisatie app wat global variabelen zetten, zodat ik ze niet telkens uit de DB hoef te trekken.
 - [ ] APP_VERSIE en USER_DIMENSIE moeten nog maar dat ligt lastiger.
 - [ ] PreviewKnop laat alleen preview zien van geselecteerde foto links.. ookal is er een foto
       uit de rechter lijst actief in de previewbox.
-- [ ] Fetch foto van remote URL? Photobucket, Flickr, Picasa, http://postimage.org/ etc..
+- [ ] Welke foto is actief? lijsten van kleur doen verschieten bij activeren of zoiets? Focus..
 - [ ] Extern opgeslagen DB kunnen gebruiken? Of alleen importeren?
 - [ ] Context-sensitive popupmenu op tvFiles voor "maak actieve map default"
 - [ ] DB kunnen backupen, ook op externe server zoals DropBox of zo..
