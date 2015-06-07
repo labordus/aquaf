@@ -197,30 +197,31 @@ def IsValidImage(pad):
         print "error.. geen image-bestand"
         return False
     else:
-        # check of bv.. IMAGE.PNG ook echt een PNG is.. anders return.
-        # extract extension en maak lowercase
-        ext = os.path.splitext(pad)[-1].lower()
-        if image_type == 'jpeg':
-            if (ext != '.jpg' and
-                    ext != '.jpeg'):
-                print "filetype JPG heeft geen JPG-extensie"
-                return True
-        elif image_type == 'bmp':
-            if ext != '.bmp':
-                print "filetype BMP heeft geen BMP-extensie"
-                return False
-        elif image_type == 'png':
-            if ext != '.png':
-                print "filetype PNG heeft geen PNG-extensie"
-                return False
-        elif image_type == 'tiff':
-            if (ext != '.tiff' and
-                    ext != '.tif'):
-                print "filetype TIF(F) heeft geen TIFF-extensie"
-                return False
-        else:
-            print "Geen ondersteund image-formaat"
-            return False
+        #
+        #         # check of bv.. IMAGE.PNG ook echt een PNG is.. anders return.
+        #         # extract extension en maak lowercase
+        #         ext = os.path.splitext(pad)[-1].lower()
+        #         if image_type == 'jpeg':
+        #             if (ext != '.jpg' and
+        #                     ext != '.jpeg'):
+        #                 print "filetype JPG heeft geen JPG-extensie"
+        #                 return True
+        #         elif image_type == 'bmp':
+        #             if ext != '.bmp':
+        #                 print "filetype BMP heeft geen BMP-extensie"
+        #                 return False
+        #         elif image_type == 'png':
+        #             if ext != '.png':
+        #                 print "filetype PNG heeft geen PNG-extensie"
+        #                 return False
+        #         elif image_type == 'tiff':
+        #             if (ext != '.tiff' and
+        #                     ext != '.tif'):
+        #                 print "filetype TIF(F) heeft geen TIFF-extensie"
+        #                 return False
+        #         else:
+        #             print "Geen ondersteund image-formaat"
+        #             return False
         return True
 
 
