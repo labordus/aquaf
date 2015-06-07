@@ -8,16 +8,16 @@
 - [x] Onvoorbeeldclick moet voorbeeld tonen van actieve foto in view (bitmapSelectedFile).
 - [ ] Fetch image van remote URL? Photobucket, Flickr, Picasa, http://postimage.org/ etc..
 - [ ] URLS kunnen er totaal anders uitzien als http://www.domein.nl/plaatje.jpg + andere formaten worden afgewezen.
+- [ ] "filetype JPG heeft geen JPG-extensie" etc.. etc.. is dit eigenlijk nog nodig?
 - [x] dimensie/rotatie remote image.
 - [x] Druk UPLOAD -->> online afwezigheid foto afhandelen.
 - [x] Druk UPLOAD -->> local afwezigheid foto afhandelen.
 - [x] Bij initialisatie app wat global variabelen zetten, zodat ik ze niet telkens uit de DB hoef te trekken.
-- [ ] tempfiles wissen.. oa bij afsluiten.
 - [ ] APP_VERSIE en USER_DIMENSIE moeten nog maar dat ligt lastiger.
+- [ ] tempfiles wissen.. oa bij afsluiten.
 - [ ] PreviewKnop laat alleen preview zien van geselecteerde foto links.. ookal is er een foto
       uit de rechter lijst actief in de previewbox.
 - [ ] Welke foto is actief? lijsten van kleur doen verschieten bij activeren of zoiets? Focus..
-- [ ] "filetype JPG heeft geen JPG-extensie" etc.. etc.. is dit eigenlijk nog nodig?
 - [ ] Extern opgeslagen DB kunnen gebruiken? Of alleen importeren?
 - [ ] Context-sensitive popupmenu op tvFiles voor "maak actieve map default"
 - [ ] DB kunnen backupen, ook op externe server zoals DropBox of zo..
