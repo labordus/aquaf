@@ -61,7 +61,7 @@ class Mainframe ( wx.Frame ):
 		
 		bSizer36.Add( self.m_staticText13, 0, wx.ALIGN_CENTER|wx.ALL, 0 )
 		
-		self.edtURL = wx.TextCtrl( self, wx.ID_ANY, u"http://www.aquaforum.nl/gallery/upload/339568kellemes_0_85_download.jpg", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.edtURL = wx.TextCtrl( self, wx.ID_ANY, u"http://www.aqua-rebell.com/images/aquascaping/aquascaping-art-of-the-planted-aquarium-adrie-01.jpg", wx.DefaultPosition, wx.DefaultSize, 0 )
 		bSizer36.Add( self.edtURL, 1, wx.ALL, 0 )
 		
 		self.btnPreviewOnline = wx.Button( self, wx.ID_ANY, u"->", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )

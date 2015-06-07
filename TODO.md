@@ -5,13 +5,14 @@
 - [x] Foto's worden automatisch gedraaid? DSC_0001.JPG -> http://www.aquaforum.nl/gallery/upload/339568kellemes_0_85_download.jpg
       http://stackoverflow.com/questions/4228530/pil-thumbnail-is-rotating-my-image
 - [x] Kunnen draaien van een foto.. en uploaden.
-- [ ] Selecteer foto in rechterlijst, die kunnen draaien en rotatie in lijst updaten.
-- [ ] Onvoorbeeldclick moet voorbeeld tonen van actieve foto in view (bitmapSelectedFile).
-- [x] Fetch image van remote URL? Photobucket, Flickr, Picasa, http://postimage.org/ etc..
+- [x] Onvoorbeeldclick moet voorbeeld tonen van actieve foto in view (bitmapSelectedFile).
+- [ ] Fetch image van remote URL? Photobucket, Flickr, Picasa, http://postimage.org/ etc..
+- [ ] URLS kunnen er totaal anders uitzien als http://www.domein.nl/plaatje.jpg + andere formaten worden afgewezen.
 - [x] dimensie/rotatie remote image.
 - [x] Druk UPLOAD -->> online afwezigheid foto afhandelen.
-- [ ] Druk UPLOAD -->> local afwezigheid foto afhandelen.
+- [x] Druk UPLOAD -->> local afwezigheid foto afhandelen.
 - [x] Bij initialisatie app wat global variabelen zetten, zodat ik ze niet telkens uit de DB hoef te trekken.
+- [ ] tempfiles wissen.. oa bij afsluiten.
 - [ ] APP_VERSIE en USER_DIMENSIE moeten nog maar dat ligt lastiger.
 - [ ] PreviewKnop laat alleen preview zien van geselecteerde foto links.. ookal is er een foto
       uit de rechter lijst actief in de previewbox.

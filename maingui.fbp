@@ -464,7 +464,7 @@
                                                         <property name="validator_style">wxFILTER_NONE</property>
                                                         <property name="validator_type">wxDefaultValidator</property>
                                                         <property name="validator_variable"></property>
-                                                        <property name="value">http://www.aquaforum.nl/gallery/upload/339568kellemes_0_85_download.jpg</property>
+                                                        <property name="value">http://www.aqua-rebell.com/images/aquascaping/aquascaping-art-of-the-planted-aquarium-adrie-01.jpg</property>
                                                         <property name="window_extra_style"></property>
                                                         <property name="window_name"></property>
                                                         <property name="window_style"></property>
@@ -1791,7 +1791,7 @@
                     </object>
                 </object>
             </object>
-            <object class="wxMenuBar" expanded="0">
+            <object class="wxMenuBar" expanded="1">
                 <property name="bg"></property>
                 <property name="context_help"></property>
                 <property name="context_menu">1</property>
@@ -1836,7 +1836,7 @@
                 <event name="OnSetFocus"></event>
                 <event name="OnSize"></event>
                 <event name="OnUpdateUI"></event>
-                <object class="wxMenu" expanded="0">
+                <object class="wxMenu" expanded="1">
                     <property name="label">Menu</property>
                     <property name="name">m_menu1</property>
                     <property name="permission">protected</property>
