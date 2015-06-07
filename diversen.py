@@ -265,17 +265,8 @@ def UpdateAvailable():
         #        print e.read()
 
 
-def exists(url):
-    #    try:
-    #        resource = urllib2.urlopen(url)
-    #    except:
-    #        return False
-
-    # schijnbaar iets gevonden..
-    #    status = resource.getcode()
-    #    content_type = resource.info().get('Content-Type')
-    #    print '%d: %s at %s\n' % (status, content_type, url)
-
+def image_exists(url):
+    # kan ik contact maken?
     try:
         response = requests.head(url)
     except:
@@ -283,15 +274,25 @@ def exists(url):
     if not response.status_code == 200:
         return False
 
-    # download
+    # check grootte van het bestand.
+    # Kan dit ook met alleen len(r.content)? Kan ik content-length skippen.. die bestaat namelijk niet altijd.
     r = requests.get(url)
     if len(r.content) == 0:  # image met lengte 0? Kan niet kloppen..
+        print 'lengte = 0'
         return False
-    if int(r.headers['content-length']) > 3000000:  # 3 Mb
-        # te groot
-        return False
+    try:
+        if int(r.headers['content-length']) > 3000000:  # 3 Mb
+            # te groot
+            return False
+    except KeyError:  # als ['content-length'] niet bestaat krijg ik een key-error
+        print 'omvang onbepaald'
 
-    with open("temp.jpg", "wb") as code:
+    # save to tempfile
+    import tempfile
+    fd, path = tempfile.mkstemp()
+
+#    with open("temp.jpg", "wb") as code:
+    with open(path, "wb") as code:
         code.write(r.content)
 
     return True
