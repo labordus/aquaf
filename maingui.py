@@ -57,10 +57,18 @@ class Mainframe ( wx.Frame ):
 		
 		self.m_staticText13 = wx.StaticText( self, wx.ID_ANY, u"Online Foto:", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText13.Wrap( -1 )
-		bSizer36.Add( self.m_staticText13, 0, wx.ALIGN_CENTER|wx.ALL, 5 )
+		self.m_staticText13.SetFont( wx.Font( wx.NORMAL_FONT.GetPointSize(), 70, 90, 92, False, wx.EmptyString ) )
+		
+		bSizer36.Add( self.m_staticText13, 0, wx.ALIGN_CENTER|wx.ALL, 0 )
 		
 		self.edtURL = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer36.Add( self.edtURL, 1, wx.ALL, 2 )
+		bSizer36.Add( self.edtURL, 1, wx.ALL, 0 )
+		
+		self.btnToevoegenOnline = wx.Button( self, wx.ID_ANY, u"->", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
+		self.btnToevoegenOnline.SetFont( wx.Font( wx.NORMAL_FONT.GetPointSize(), 70, 90, 92, False, wx.EmptyString ) )
+		self.btnToevoegenOnline.SetForegroundColour( wx.Colour( 25, 120, 11 ) )
+		
+		bSizer36.Add( self.btnToevoegenOnline, 0, wx.ALL, 0 )
 		
 		
 		bSizer4.Add( bSizer36, 0, wx.EXPAND, 0 )
