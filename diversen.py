@@ -3,8 +3,8 @@ import os
 import string
 import sys
 import urllib2
-import httplib
 import requests
+import posixpath
 
 import mechanize
 import wx
@@ -204,7 +204,7 @@ def IsValidImage(pad):
             if (ext != '.jpg' and
                     ext != '.jpeg'):
                 print "filetype JPG heeft geen JPG-extensie"
-                return False
+                return True
         elif image_type == 'bmp':
             if ext != '.bmp':
                 print "filetype BMP heeft geen BMP-extensie"
@@ -265,37 +265,45 @@ def UpdateAvailable():
         #        print e.read()
 
 
-def image_exists(url):
+def online_image_temp(url):
     # kan ik contact maken?
     try:
         response = requests.head(url)
     except:
-        return False
+        return ''
     if not response.status_code == 200:
-        return False
+        return ''
 
     # check grootte van het bestand.
     # Kan dit ook met alleen len(r.content)? Kan ik content-length skippen.. die bestaat namelijk niet altijd.
     r = requests.get(url)
     if len(r.content) == 0:  # image met lengte 0? Kan niet kloppen..
         print 'lengte = 0'
-        return False
+        return ''
     try:
         if int(r.headers['content-length']) > 3000000:  # 3 Mb
             # te groot
-            return False
+            return ''
     except KeyError:  # als ['content-length'] niet bestaat krijg ik een key-error
         print 'omvang onbepaald'
+
+#    path = urllib2.urlparse.urlsplit(url).path
+#    filename = posixpath.basename(path)
+# dit geeft "filename.ext"
 
     # save to tempfile
     import tempfile
     fd, path = tempfile.mkstemp()
 
+    # resize to max
+#    img = ResizeImage(path, (800, 600))
+
 #    with open("temp.jpg", "wb") as code:
     with open(path, "wb") as code:
         code.write(r.content)
+        result = path
 
-    return True
+    return result
 
 
 def PilImageToWxBitmap(myPilImage):
