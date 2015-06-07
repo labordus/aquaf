@@ -334,6 +334,8 @@ class AquaFrame(maingui.Mainframe):
             if len(self.edtURL.GetValue()) == 0:
                 print "Niets ingevoerd"
             else:
+                #                if not ONLINE_TEMPFILE == '':
+                #                    os.remove(ONLINE_TEMPFILE)
                 path = ONLINE_TEMPFILE  # online_image_temp(self.edtURL.GetValue())
                 if path == '':
                     print 'Foto niet gevonden op de server'
@@ -359,11 +361,13 @@ class AquaFrame(maingui.Mainframe):
                         self.VoegPadToe(_pad)
 
     def onbtnPreviewOnlineClick(self, event):
-        #        if not ONLINE_TEMPFILE == '':
-        #            os.remove(ONLINE_TEMPFILE)
+        global ROTATE_IMAGE
+        ROTATE_IMAGE = 0
         if len(self.edtURL.GetValue()) == 0:
             print "Niets ingevoerd"
         else:
+            #            if not ONLINE_TEMPFILE == '':
+            #                os.remove(ONLINE_TEMPFILE)
             path = online_image_temp(self.edtURL.GetValue())
             global ONLINE_TEMPFILE
             ONLINE_TEMPFILE = path
