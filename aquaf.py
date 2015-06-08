@@ -84,9 +84,9 @@ class AquaFrame(maingui.Mainframe):
         # en linux laat alleen bestanden zien met specifieke casing
 
         if (sys.platform.startswith('win')):  # dan win32 of win64
-            self.tvFiles.SetFilter("plaatjes(*.bmp;*.jpg;*.png;*.tiff;*.tif;)|*.bmp;*.jpg;*.png;*.tiff;*.tif")
+            self.tvFiles.SetFilter("plaatjes(*.bmp;*.jpg;*.png;*.tiff;*.tif;*.gif;*.ico;)|*.bmp;*.jpg;*.png;*.tiff;*.tif;*.gif;*.ico")
         else:  # posix
-            self.tvFiles.SetFilter("plaatjes(*.bmp;*.BMP;*.jpg;*.JPG;*.png;*.PNG;*.tiff;*.TIFF;*.tif;*.TIF)|*.bmp;*.BMP;*.jpg;*.JPG;*.png;*.PNG;*.tiff;*.TIFF;*.tif;*.TIF")
+            self.tvFiles.SetFilter("plaatjes(*.bmp;*.BMP;*.jpg;*.JPG;*.png;*.PNG;*.tiff;*.TIFF;*.tif;*.TIF;*.gif;*.GIF;*.ico;*.ICO)|*.bmp;*.BMP;*.jpg;*.JPG;*.png;*.PNG;*.tiff;*.TIFF;*.tif;*.TIF;*.gif;*.GIF;*.ico;*.ICO")
 
         print "Hoi " + diversen.USER_USERNAME
         print "Welkom bij Aquaf " + APP_VERSION
@@ -259,7 +259,12 @@ class AquaFrame(maingui.Mainframe):
             # file selected
             if IsValidImage(pad):
                 #                busyDlg = wx.BusyInfo('Bezig met genereren preview...')
-                img = ResizeImage(pad, (400, 300))
+                try:
+                    img = ResizeImage(pad, (400, 300))
+                except Exception as IOError:
+                    print 'onbekend formaat'
+                    img = WxBitmapToPilImage(wx.Bitmap(FRONT_FOTO))
+                    ROTATE_IMAGE = 0
 #                del busyDlg
             else:  # als geen geldige image..
                 #                img = ResizeImage(TEST_FOTO, (400, 300))
@@ -328,6 +333,7 @@ class AquaFrame(maingui.Mainframe):
         self.listFiles.SetStringItem(index, 1, dim)
         self.listFiles.SetStringItem(index, 2, r)
         self.listFiles.SetStringItem(index, 3, helepad)
+        return index
 
     def onbtnToevoegenClick(self, event):
         if ONLINE_PREVIEW == 1:  # online file to handel
@@ -342,7 +348,9 @@ class AquaFrame(maingui.Mainframe):
                 else:  # Er is iets gevonden.. is dit de foto?
                     #                if IsValidImage(path):
                     self.edtURL.Clear()
-                    self.VoegPadToe(path)
+                    idx = self.VoegPadToe(path)
+                    self.deselectItems()
+                    self.listFiles.Select(idx, 1)
         else:  # check of (lokaal) bestand al is toegevoegd.
             breaker = 0
             padjes = self.tvFiles.GetFilePaths()
@@ -358,7 +366,15 @@ class AquaFrame(maingui.Mainframe):
 
                 if breaker == 0:
                     if IsValidImage(_pad):
-                        self.VoegPadToe(_pad)
+                        idx = self.VoegPadToe(_pad)
+                        self.deselectItems()
+                        self.listFiles.Select(idx, 1)
+
+    def deselectItems(self):
+        sel = self.listFiles.GetFirstSelected()
+        while sel != -1:
+            self.listFiles.SetItemState(sel, 0, wx.LIST_STATE_SELECTED | wx.LIST_STATE_FOCUSED)
+            sel = self.listFiles.GetNextSelected(sel)
 
     def onbtnPreviewOnlineClick(self, event):
         global ROTATE_IMAGE
@@ -381,14 +397,6 @@ class AquaFrame(maingui.Mainframe):
                 ONLINE_PREVIEW = 1
 #                self.choiceDimensie.SetSelection(0)
                 self.PreviewImage(path)
-
-    def delete_tempfiles(self):
-        for _i in range(self.listFiles.ItemCount):
-            filename = self.listFiles.GetItemText(_i, 0)
-            if filename.startswith('aqf_'):
-                sPad = os.path.join(self.listFiles.GetItemText(_i, 3),
-                                    self.listFiles.GetItemText(_i, 0))
-                os.remove(sPad)
 
 # str = "this is string example....wow!!!";
 # print str.startswith( 'this' );
@@ -452,7 +460,7 @@ class AquaFrame(maingui.Mainframe):
                 del busyDlg
                 exit
 #        self.listFiles.ClearAll()
-        self.delete_tempfiles()
+        diversen.delete_tempfiles()
         self.listFiles.DeleteAllItems()
         del busyDlg
         dlg = uploaddialog.UploadDoneDialog(self)
@@ -501,7 +509,7 @@ class AquaFrame(maingui.Mainframe):
 
     def onbtnClearListClick(self, event):
         #        self.listFiles.ClearAll()
-        self.delete_tempfiles()
+        diversen.delete_tempfiles()
         self.listFiles.DeleteAllItems()
 
     def onmenuitemClickAfsluiten(self, event):
@@ -515,7 +523,7 @@ class AquaFrame(maingui.Mainframe):
             result = dlg.ShowModal()
             if result == wx.ID_NO:
                 return
-        self.delete_tempfiles()
+        diversen.delete_tempfiles()
         event.Skip()
 
 app = wx.App(False)
