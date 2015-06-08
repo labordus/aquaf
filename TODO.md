@@ -4,6 +4,8 @@
 # Versie 0.86
 - [x] Foto's worden automatisch gedraaid? DSC_0001.JPG -> http://www.aquaforum.nl/gallery/upload/339568kellemes_0_85_download.jpg
       http://stackoverflow.com/questions/4228530/pil-thumbnail-is-rotating-my-image
+      Dit ging om iets heel anders.. de browser laat de foto zien zonder rekening te houden met de
+      eventueel aanwezige rotatie in de EXIF-data.. een lokale viewer veelal wel, vandaar de verwarring.
 - [x] Kunnen draaien van een foto.. en uploaden.
 - [x] Onvoorbeeldclick moet voorbeeld tonen van actieve foto in view (bitmapSelectedFile).
 - [x] Fetch image van remote URL? Photobucket, Flickr, Picasa, http://postimage.org/ etc..
@@ -11,7 +13,11 @@
 - [x] dimensie/rotatie remote image.
 - [x] Druk UPLOAD -->> online afwezigheid foto afhandelen.
 - [x] Druk UPLOAD -->> local afwezigheid foto afhandelen.
-- [ ] tempfiles wissen.. oa bij afsluiten.
+- [x] Na toevoegen online/local-image.. listfiles -> net toegevoegd item selecteren.
+- [x] tempfiles wissen.. oa bij afsluiten.
+- [x] ook GIF en ICO ondersteunen
+- [x] online -> gif doet het niet.. http://www.gsmeets.be/Hengelsport/Vissen_op_blankvoorn/Afbeeldingen/blankvoorn.gif
+- [x] foto niet gevonden.. http://www.visaquarium.nl/images/v/98/t1_320x240.jpg ..  response = 301 .. REDIRECT!!
 - [x] Bij initialisatie app wat global variabelen zetten, zodat ik ze niet telkens uit de DB hoef te trekken.
 - [ ] APP_VERSIE en USER_DIMENSIE moeten nog maar dat ligt lastiger.
 - [ ] PreviewKnop laat alleen preview zien van geselecteerde foto links.. ookal is er een foto
