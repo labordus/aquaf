@@ -1,10 +1,10 @@
 import imp
 import os
+import errno
 import string
 import sys
 import urllib2
 import requests
-import posixpath
 
 import mechanize
 import wx
@@ -15,6 +15,8 @@ try:
     from PIL import PngImagePlugin  # @UnusedImport
     from PIL import BmpImagePlugin  # @UnusedImport
     from PIL import TiffImagePlugin  # @UnusedImport
+    from PIL import GifImagePlugin  # @UnusedImport
+    from PIL import IcoImagePlugin  # @UnusedImport
 except ImportError:
     raise ImportError('Aquaf was unable to import Pil(low). Please confirm it`s installed and available on your current Python path.')
 
@@ -34,6 +36,7 @@ USER_UPDATECHECK = 1
 USER_FOLDER = ''
 USER_TOOLTIP = 1
 ALLOWED_CHARS = "qwertyuioplkjhgfdsazxcvbnm0123456789._"
+TEMPFILES = []
 
 ALPHA_ONLY = 1
 DIGIT_ONLY = 2
@@ -190,13 +193,21 @@ def constructUploadName(loginname, requestedfilename):
     return resultName
 
 
+def test_ico(h, f):
+    """ICO files"""
+    if h[:4] == b"\0\0\1\0":
+        return 'ico'
+
+
 def IsValidImage(pad):
     import imghdr
+    imghdr.tests.append(test_ico)
     image_type = imghdr.what(pad)
     if not image_type:
         print "error.. geen image-bestand"
         return False
     else:
+
         #
         #         # check of bv.. IMAGE.PNG ook echt een PNG is.. anders return.
         #         # extract extension en maak lowercase
@@ -272,7 +283,7 @@ def online_image_temp(url):
         response = requests.head(url)
     except:
         return ''
-    if not response.status_code == 200:
+    if not (response.status_code == 200 or response.status_code == 301):  # 301 = redirect
         return ''
 
     # check grootte van het bestand.
@@ -304,9 +315,23 @@ def online_image_temp(url):
         code.write(r.content)
         result = path
         os.close(fd)
+        TEMPFILES.append(path)
 #        os.remove(path)
-
     return result
+
+
+def delete_tempfiles():
+    for tempje in TEMPFILES:
+        try:
+            os.remove(tempje)
+        except OSError as e:  # this would be "except OSError, e:" before Python 2.6
+            if e.errno != errno.ENOENT:  # errno.ENOENT = no such file or directory
+                raise  # re-raise exception if a different error occured
+#        for tempje in TEMPFILES:
+#            os.remove(tempje)
+#            del TEMPFILES[:]
+#        global TEMPFILES
+#        TEMPFILES = []
 
 
 def PilImageToWxBitmap(myPilImage):
