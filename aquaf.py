@@ -162,7 +162,6 @@ class AquaFrame(maingui.Mainframe):
         self.choiceDimensie.SetSelection(getUserDimensieID() - 1)
 #        if diversen.USER_FOLDER:
 #            self.tvFiles.SetPath(diversen.USER_FOLDER)
-
         if self.panelPreview.IsShown() != diversen.USER_PREVIEW:
             self.panelPreview.Show(diversen.USER_PREVIEW)
             self.Fit()
@@ -397,9 +396,6 @@ class AquaFrame(maingui.Mainframe):
                 ONLINE_PREVIEW = 1
 #                self.choiceDimensie.SetSelection(0)
                 self.PreviewImage(path)
-
-# str = "this is string example....wow!!!";
-# print str.startswith( 'this' );
 
     def onbtnUnselectFileClick(self, event):
         # Zet hier de lijst met geselecteerde items in een array, en gebruik die array
