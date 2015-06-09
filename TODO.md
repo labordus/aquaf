@@ -17,13 +17,17 @@
 - [x] tempfiles wissen.. oa bij afsluiten.
 - [x] ook GIF en ICO ondersteunen
 - [x] online -> gif doet het niet.. http://www.gsmeets.be/Hengelsport/Vissen_op_blankvoorn/Afbeeldingen/blankvoorn.gif
-- [x] foto niet gevonden.. http://www.visaquarium.nl/images/v/98/t1_320x240.jpg ..  response = 301 .. REDIRECT!!
+- [x] foto niet gevonden.. http://www.visaquarium.nl/images/v/98/t1_320x240.jpg ..  response 301 Moved Permanently\
+- [ ] Wat als preview = False? Online foto tijdelijk op preview = True
+- [ ] Bij preview = False -> indeling der componenten wat strakker.
+- [ ] listfiles editable maken -> dimensies + rotatie
 - [x] Bij initialisatie app wat global variabelen zetten, zodat ik ze niet telkens uit de DB hoef te trekken.
 - [ ] APP_VERSIE en USER_DIMENSIE moeten nog maar dat ligt lastiger.
 - [ ] PreviewKnop laat alleen preview zien van geselecteerde foto links.. ookal is er een foto
       uit de rechter lijst actief in de previewbox.
 - [ ] Welke foto is actief? lijsten van kleur doen verschieten bij activeren of zoiets? Focus..
 - [ ] Extern opgeslagen DB kunnen gebruiken? Of alleen importeren?
+- [ ] DB onderhoud?
 - [ ] Context-sensitive popupmenu op tvFiles voor "maak actieve map default"
 - [ ] DB kunnen backupen, ook op externe server zoals DropBox of zo..
 - [ ] Moet iets verzinnen op de listctrl, setitemdata/getitemdata etc.. nu ben ik 'verplicht' pad te laten zien in een listctrl-column.
