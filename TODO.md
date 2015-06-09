@@ -18,8 +18,8 @@
 - [x] ook GIF en ICO ondersteunen
 - [x] online -> gif doet het niet.. http://www.gsmeets.be/Hengelsport/Vissen_op_blankvoorn/Afbeeldingen/blankvoorn.gif
 - [x] foto niet gevonden.. http://www.visaquarium.nl/images/v/98/t1_320x240.jpg ..  response 301 Moved Permanently\
-- [ ] Wat als preview = False? Online foto tijdelijk op preview = True
-- [ ] Bij preview = False -> indeling der componenten wat strakker.
+- [ ] Wat als preview = False? Online foto tijdelijk op preview = True .. of niet?
+- [x] Bij preview = False -> indeling der componenten wat strakker. + alleen toevoegen/verwijderen?!
 - [ ] listfiles editable maken -> dimensies + rotatie
 - [x] Bij initialisatie app wat global variabelen zetten, zodat ik ze niet telkens uit de DB hoef te trekken.
 - [ ] APP_VERSIE en USER_DIMENSIE moeten nog maar dat ligt lastiger.
