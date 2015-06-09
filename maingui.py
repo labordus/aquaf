@@ -95,12 +95,6 @@ class Mainframe ( wx.Frame ):
 		self.bitmapSelectedFile = wx.StaticBitmap( self.panelPreview, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition, wx.Size( -1,-1 ), 0 )
 		bSizer152.Add( self.bitmapSelectedFile, 1, wx.ALIGN_CENTER|wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.ALL|wx.EXPAND, 0 )
 		
-		
-		self.panelPreview.SetSizer( bSizer152 )
-		self.panelPreview.Layout()
-		bSizer152.Fit( self.panelPreview )
-		bSizer22.Add( self.panelPreview, 0, wx.ALIGN_CENTER|wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.ALL|wx.EXPAND, 0 )
-		
 		bSizer42 = wx.BoxSizer( wx.VERTICAL )
 		
 		bSizer151 = wx.BoxSizer( wx.VERTICAL )
@@ -108,54 +102,55 @@ class Mainframe ( wx.Frame ):
 		bSizer301 = wx.BoxSizer( wx.HORIZONTAL )
 		
 		choiceDimensieChoices = []
-		self.choiceDimensie = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, choiceDimensieChoices, 0 )
+		self.choiceDimensie = wx.Choice( self.panelPreview, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, choiceDimensieChoices, 0 )
 		self.choiceDimensie.SetSelection( 0 )
 		self.choiceDimensie.SetToolTipString( u"De betreffende foto's zullen in de gekozen dimensies worden ge-upload naar de aquaforum-server.\n\nLet op: De conversie verkleind (zo nodig) een foto naar (maximaal) de geselecteerde dimensies.\nAls de originele dimensies van een foto kleiner zijn dan de gekozen dimensie dan zal er geen conversie plaatsvinden.\nM.a.w. foto-formaten worden niet vergroot ;)" )
 		
 		bSizer301.Add( self.choiceDimensie, 0, wx.ALL, 5 )
 		
-		self.btnRotate = wx.Button( self, wx.ID_ANY, u"Roteer", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
+		self.btnRotate = wx.Button( self.panelPreview, wx.ID_ANY, u"Roteer", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
 		bSizer301.Add( self.btnRotate, 0, wx.ALL, 5 )
 		
-		
-		bSizer151.Add( bSizer301, 1, wx.EXPAND, 0 )
-		
-		bSizer35 = wx.BoxSizer( wx.HORIZONTAL )
-		
-		self.btnVoorbeeld = wx.Button( self, wx.ID_ANY, u"<Preview>", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
+		self.btnVoorbeeld = wx.Button( self.panelPreview, wx.ID_ANY, u"<Preview>", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
 		self.btnVoorbeeld.SetFont( wx.Font( wx.NORMAL_FONT.GetPointSize(), 70, 90, 92, False, wx.EmptyString ) )
 		self.btnVoorbeeld.SetForegroundColour( wx.Colour( 10, 43, 233 ) )
 		self.btnVoorbeeld.SetToolTipString( u"Preview hoe de betreffende foto eruit zal zien\nmet de gekozen dimensie en rotatie." )
 		
-		bSizer35.Add( self.btnVoorbeeld, 0, wx.ALIGN_CENTER|wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
+		bSizer301.Add( self.btnVoorbeeld, 0, wx.ALIGN_CENTER|wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
 		
 		
-		bSizer151.Add( bSizer35, 1, wx.EXPAND, 0 )
+		bSizer151.Add( bSizer301, 1, wx.EXPAND, 0 )
 		
-		bSizer34 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		self.btnUnselectFile = wx.Button( self, wx.ID_ANY, u"<- Verwijderen", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
-		self.btnUnselectFile.SetFont( wx.Font( wx.NORMAL_FONT.GetPointSize(), 70, 90, 92, False, wx.EmptyString ) )
-		self.btnUnselectFile.SetForegroundColour( wx.Colour( 241, 26, 15 ) )
-		self.btnUnselectFile.SetToolTipString( u"Verwijder foto van uploadlijst" )
+		bSizer42.Add( bSizer151, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
-		bSizer34.Add( self.btnUnselectFile, 0, wx.ALL, 5 )
+		
+		bSizer152.Add( bSizer42, 0, wx.EXPAND, 5 )
+		
+		
+		self.panelPreview.SetSizer( bSizer152 )
+		self.panelPreview.Layout()
+		bSizer152.Fit( self.panelPreview )
+		bSizer22.Add( self.panelPreview, 0, wx.ALIGN_CENTER|wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.ALL|wx.EXPAND, 0 )
+		
+		bSizer361 = wx.BoxSizer( wx.VERTICAL )
 		
 		self.btnSelectFile = wx.Button( self, wx.ID_ANY, u"Toevoegen  ->", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
 		self.btnSelectFile.SetFont( wx.Font( wx.NORMAL_FONT.GetPointSize(), 70, 90, 92, False, wx.EmptyString ) )
 		self.btnSelectFile.SetForegroundColour( wx.Colour( 25, 120, 11 ) )
 		self.btnSelectFile.SetToolTipString( u"Voeg foto's toe aan uploadlijst" )
 		
-		bSizer34.Add( self.btnSelectFile, 0, wx.ALL, 5 )
+		bSizer361.Add( self.btnSelectFile, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 5 )
+		
+		self.btnUnselectFile = wx.Button( self, wx.ID_ANY, u"<- Verwijderen", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
+		self.btnUnselectFile.SetFont( wx.Font( wx.NORMAL_FONT.GetPointSize(), 70, 90, 92, False, wx.EmptyString ) )
+		self.btnUnselectFile.SetForegroundColour( wx.Colour( 241, 26, 15 ) )
+		self.btnUnselectFile.SetToolTipString( u"Verwijder foto van uploadlijst" )
+		
+		bSizer361.Add( self.btnUnselectFile, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 5 )
 		
 		
-		bSizer151.Add( bSizer34, 1, wx.EXPAND, 0 )
-		
-		
-		bSizer42.Add( bSizer151, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 5 )
-		
-		
-		bSizer22.Add( bSizer42, 0, wx.EXPAND, 5 )
+		bSizer22.Add( bSizer361, 1, wx.EXPAND, 5 )
 		
 		
 		bSizer13.Add( bSizer22, 0, wx.ALIGN_CENTER|wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.ALL|wx.EXPAND, 0 )
@@ -238,8 +233,8 @@ class Mainframe ( wx.Frame ):
 		self.tvFiles.Bind( wx.EVT_TREE_SEL_CHANGED, self.ontvFilesSelChanged )
 		self.btnRotate.Bind( wx.EVT_BUTTON, self.onbtnRotateClick )
 		self.btnVoorbeeld.Bind( wx.EVT_BUTTON, self.onbtnVoorbeeldClick )
-		self.btnUnselectFile.Bind( wx.EVT_BUTTON, self.onbtnUnselectFileClick )
 		self.btnSelectFile.Bind( wx.EVT_BUTTON, self.onbtnToevoegenClick )
+		self.btnUnselectFile.Bind( wx.EVT_BUTTON, self.onbtnUnselectFileClick )
 		self.btnClearList.Bind( wx.EVT_BUTTON, self.onbtnClearListClick )
 		self.listFiles.Bind( wx.EVT_LIST_ITEM_SELECTED, self.onlistFilesSelected )
 		self.btnArchief.Bind( wx.EVT_BUTTON, self.onbtnArchiefClick )
@@ -274,10 +269,10 @@ class Mainframe ( wx.Frame ):
 	def onbtnVoorbeeldClick( self, event ):
 		event.Skip()
 	
-	def onbtnUnselectFileClick( self, event ):
+	def onbtnToevoegenClick( self, event ):
 		event.Skip()
 	
-	def onbtnToevoegenClick( self, event ):
+	def onbtnUnselectFileClick( self, event ):
 		event.Skip()
 	
 	def onbtnClearListClick( self, event ):
