@@ -283,7 +283,10 @@ def online_image_temp(url):
         response = requests.head(url)
     except:
         return ''
-    if not (response.status_code == 200 or response.status_code == 301):  # 301 = redirect
+    if not (response.status_code == 200 or response.status_code == 301 or response.status_code == 302):
+        # 200 OK
+        # 301 Moved Permanently
+        # 302 URL redirect
         return ''
 
     # check grootte van het bestand.
