@@ -114,8 +114,7 @@ class AquaFrame(maingui.Mainframe):
         self.listFiles.InsertColumn(3, 'Pad', width=140)
 
 #        self.Layout()
-        self.panelPreview.Show(diversen.USER_PREVIEW)
-        self.Fit()
+        self.SetPreview(diversen.USER_PREVIEW)
 
         if diversen.USER_UPDATECHECK:
             ReleaseVersion, ReleaseDate, ReleaseChanges = UpdateAvailable()
@@ -162,9 +161,28 @@ class AquaFrame(maingui.Mainframe):
         self.choiceDimensie.SetSelection(getUserDimensieID() - 1)
 #        if diversen.USER_FOLDER:
 #            self.tvFiles.SetPath(diversen.USER_FOLDER)
-        if self.panelPreview.IsShown() != diversen.USER_PREVIEW:
-            self.panelPreview.Show(diversen.USER_PREVIEW)
-            self.Fit()
+#        if self.panelPreview.IsShown() != diversen.USER_PREVIEW:
+#            self.panelPreview.Show(diversen.USER_PREVIEW)
+#            self.Fit()
+        self.SetPreview(diversen.USER_PREVIEW)
+
+    def SetPreview(self, prv=False):
+        #        if self.panelPreview.IsShown() == prv:  # reset nodig?
+        #            return
+        #        else:
+        #            if not prv:
+        self.lblDimensie.SetLabelText(self.choiceDimensie.GetString(self.choiceDimensie.GetSelection()))
+        self.lblRotatie.SetLabelText(str(ROTATE_IMAGE))
+
+        self.panelPreview.Show(prv)
+        self.panelPreviewInfo.Show(not prv)
+        self.Fit()
+
+    def onbtneditmodeon(self, event):
+        self.SetPreview(True)
+
+    def onbtneditmodeoff(self, event):
+        self.SetPreview(False)
 
     def onmenuitemClickAbout(self, event):
         info = wx.AboutDialogInfo()
@@ -180,7 +198,7 @@ class AquaFrame(maingui.Mainframe):
 
     def onbtnVoorbeeldClick(self, event):
 
-        if ONLINE_PREVIEW == 1:  # als actieve view is een online foto..
+        if ONLINE_PREVIEW == 1:  # als actieve view een online foto is..
             PLAATJE = ONLINE_TEMPFILE
         else:
             # Als er een plaatje is geselecteerd..
