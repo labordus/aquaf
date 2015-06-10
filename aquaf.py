@@ -17,6 +17,7 @@ AUQAOFORUM_PICTURE_URL = "http://www.aquaforum.nl/gallery/upload/"
 TEST_FOTO = "test.jpg"
 FRONT_FOTO = "front.jpg"
 ROTATE_IMAGE = 0
+PREVIEW_ON = False
 ONLINE_PREVIEW = 0
 ONLINE_TEMPFILE = ''
 
@@ -179,9 +180,11 @@ class AquaFrame(maingui.Mainframe):
         self.Fit()
 
     def onbtneditmodeon(self, event):
+        PREVIEW_ON = True
         self.SetPreview(True)
 
     def onbtneditmodeoff(self, event):
+        PREVIEW_ON = False
         self.SetPreview(False)
 
     def onmenuitemClickAbout(self, event):
@@ -266,7 +269,7 @@ class AquaFrame(maingui.Mainframe):
                 return
 #        self.PreviewImage(FRONT_FOTO)
 
-    def PreviewImage(self, pad):
+    def PreviewImage(self, pad, forcepreview=False):
         if not diversen.USER_PREVIEW:
             self.bitmapSelectedFile.SetBitmap(wx.Bitmap(FRONT_FOTO))
             return
@@ -368,6 +371,7 @@ class AquaFrame(maingui.Mainframe):
                     idx = self.VoegPadToe(path)
                     self.deselectItems()
                     self.listFiles.Select(idx, 1)
+#                    self.SetPreview(diversen.USER_PREVIEW)
         else:  # check of (lokaal) bestand al is toegevoegd.
             breaker = 0
             padjes = self.tvFiles.GetFilePaths()
@@ -413,6 +417,7 @@ class AquaFrame(maingui.Mainframe):
                 global ONLINE_PREVIEW
                 ONLINE_PREVIEW = 1
 #                self.choiceDimensie.SetSelection(0)
+                self.SetPreview(True)
                 self.PreviewImage(path)
 
     def onbtnUnselectFileClick(self, event):
