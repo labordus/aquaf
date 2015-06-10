@@ -92,6 +92,17 @@ class Mainframe ( wx.Frame ):
 		bSizer152 = wx.BoxSizer( wx.VERTICAL )
 		
 		bSizer152.SetMinSize( wx.Size( 400,300 ) ) 
+		bSizer401 = wx.BoxSizer( wx.VERTICAL )
+		
+		self.btnEditmodeOff = wx.Button( self.panelPreview, wx.ID_ANY, u"Sluit bewerking", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
+		self.btnEditmodeOff.SetFont( wx.Font( wx.NORMAL_FONT.GetPointSize(), 70, 90, 90, False, wx.EmptyString ) )
+		self.btnEditmodeOff.SetForegroundColour( wx.Colour( 10, 43, 233 ) )
+		
+		bSizer401.Add( self.btnEditmodeOff, 0, wx.ALL|wx.EXPAND, 0 )
+		
+		
+		bSizer152.Add( bSizer401, 0, wx.EXPAND, 5 )
+		
 		self.bitmapSelectedFile = wx.StaticBitmap( self.panelPreview, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition, wx.Size( -1,-1 ), 0 )
 		bSizer152.Add( self.bitmapSelectedFile, 1, wx.ALIGN_CENTER|wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.ALL|wx.EXPAND, 0 )
 		
@@ -132,6 +143,44 @@ class Mainframe ( wx.Frame ):
 		self.panelPreview.Layout()
 		bSizer152.Fit( self.panelPreview )
 		bSizer22.Add( self.panelPreview, 0, wx.ALIGN_CENTER|wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.ALL|wx.EXPAND, 0 )
+		
+		self.panelPreviewInfo = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		self.panelPreviewInfo.SetBackgroundColour( wx.Colour( 116, 113, 162 ) )
+		
+		bSizer40 = wx.BoxSizer( wx.VERTICAL )
+		
+		self.btnEditmodeOn = wx.Button( self.panelPreviewInfo, wx.ID_ANY, u"Open bewerking", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
+		self.btnEditmodeOn.SetFont( wx.Font( wx.NORMAL_FONT.GetPointSize(), 70, 90, 90, False, wx.EmptyString ) )
+		self.btnEditmodeOn.SetForegroundColour( wx.Colour( 10, 43, 233 ) )
+		
+		bSizer40.Add( self.btnEditmodeOn, 0, wx.ALL|wx.EXPAND, 0 )
+		
+		gSizer2 = wx.GridSizer( 0, 2, 0, 0 )
+		
+		self.m_staticText18 = wx.StaticText( self.panelPreviewInfo, wx.ID_ANY, u"Dimensie :", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText18.Wrap( -1 )
+		gSizer2.Add( self.m_staticText18, 0, wx.ALL, 3 )
+		
+		self.lblDimensie = wx.StaticText( self.panelPreviewInfo, wx.ID_ANY, u"MyLabel", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.lblDimensie.Wrap( -1 )
+		gSizer2.Add( self.lblDimensie, 0, wx.ALL, 3 )
+		
+		self.m_staticText20 = wx.StaticText( self.panelPreviewInfo, wx.ID_ANY, u"Rotatie :", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText20.Wrap( -1 )
+		gSizer2.Add( self.m_staticText20, 0, wx.ALL, 3 )
+		
+		self.lblRotatie = wx.StaticText( self.panelPreviewInfo, wx.ID_ANY, u"MyLabel", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.lblRotatie.Wrap( -1 )
+		gSizer2.Add( self.lblRotatie, 0, wx.ALL, 3 )
+		
+		
+		bSizer40.Add( gSizer2, 0, wx.EXPAND, 0 )
+		
+		
+		self.panelPreviewInfo.SetSizer( bSizer40 )
+		self.panelPreviewInfo.Layout()
+		bSizer40.Fit( self.panelPreviewInfo )
+		bSizer22.Add( self.panelPreviewInfo, 0, wx.ALIGN_CENTER|wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.ALL|wx.EXPAND, 0 )
 		
 		bSizer361 = wx.BoxSizer( wx.VERTICAL )
 		
@@ -231,8 +280,10 @@ class Mainframe ( wx.Frame ):
 		self.tvFiles.Bind( wx.EVT_TREE_ITEM_ACTIVATED, self.ontvFilesItemActivate )
 		self.tvFiles.Bind( wx.EVT_TREE_ITEM_MENU, self.OntvFilesRightClick )
 		self.tvFiles.Bind( wx.EVT_TREE_SEL_CHANGED, self.ontvFilesSelChanged )
+		self.btnEditmodeOff.Bind( wx.EVT_BUTTON, self.onbtneditmodeoff )
 		self.btnRotate.Bind( wx.EVT_BUTTON, self.onbtnRotateClick )
 		self.btnVoorbeeld.Bind( wx.EVT_BUTTON, self.onbtnVoorbeeldClick )
+		self.btnEditmodeOn.Bind( wx.EVT_BUTTON, self.onbtneditmodeon )
 		self.btnSelectFile.Bind( wx.EVT_BUTTON, self.onbtnToevoegenClick )
 		self.btnUnselectFile.Bind( wx.EVT_BUTTON, self.onbtnUnselectFileClick )
 		self.btnClearList.Bind( wx.EVT_BUTTON, self.onbtnClearListClick )
@@ -263,10 +314,16 @@ class Mainframe ( wx.Frame ):
 	def ontvFilesSelChanged( self, event ):
 		event.Skip()
 	
+	def onbtneditmodeoff( self, event ):
+		event.Skip()
+	
 	def onbtnRotateClick( self, event ):
 		event.Skip()
 	
 	def onbtnVoorbeeldClick( self, event ):
+		event.Skip()
+	
+	def onbtneditmodeon( self, event ):
 		event.Skip()
 	
 	def onbtnToevoegenClick( self, event ):
