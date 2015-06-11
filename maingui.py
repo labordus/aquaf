@@ -17,9 +17,9 @@ import wx.xrc
 class Mainframe ( wx.Frame ):
 	
 	def __init__( self, parent ):
-		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Aquaforum upload programma", pos = wx.DefaultPosition, size = wx.Size( -1,-1 ), style = wx.CAPTION|wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Aquaforum upload programma", pos = wx.DefaultPosition, size = wx.Size( 1057,800 ), style = wx.CAPTION|wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
 		
-		self.SetSizeHintsSz( wx.Size( 850,650 ), wx.DefaultSize )
+		self.SetSizeHintsSz( wx.Size( 795,800 ), wx.Size( -1,800 ) )
 		self.SetBackgroundColour( wx.Colour( 116, 113, 162 ) )
 		
 		bSizer30 = wx.BoxSizer( wx.VERTICAL )
@@ -50,7 +50,7 @@ class Mainframe ( wx.Frame ):
 		
 		bSizer13 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		fgSizer1 = wx.FlexGridSizer( 0, 3, 0, 0 )
+		fgSizer1 = wx.FlexGridSizer( 2, 3, 0, 0 )
 		fgSizer1.SetFlexibleDirection( wx.BOTH )
 		fgSizer1.SetNonFlexibleGrowMode( wx.FLEX_GROWMODE_SPECIFIED )
 		
@@ -89,7 +89,7 @@ class Mainframe ( wx.Frame ):
 		bSizer4.Add( self.tvFiles, 1, wx.EXPAND |wx.ALL, 3 )
 		
 		
-		fgSizer1.Add( bSizer4, 0, wx.EXPAND, 0 )
+		fgSizer1.Add( bSizer4, 0, wx.ALL|wx.EXPAND, 0 )
 		
 		bSizer22 = wx.BoxSizer( wx.VERTICAL )
 		
@@ -150,39 +150,31 @@ class Mainframe ( wx.Frame ):
 		bSizer45.Add( self.panelPreview, 0, 0, 0 )
 		
 		
-		bSizer22.Add( bSizer45, 0, wx.TOP, 0 )
+		bSizer22.Add( bSizer45, 1, wx.ALL|wx.EXPAND, 0 )
 		
 		self.panelPreviewInfo = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		self.panelPreviewInfo.SetBackgroundColour( wx.Colour( 116, 113, 162 ) )
 		
 		bSizer40 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.btnEditmodeOn = wx.Button( self.panelPreviewInfo, wx.ID_ANY, u"Open bewerking", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
+		self.btnEditmodeOn = wx.Button( self.panelPreviewInfo, wx.ID_ANY, u"Bewerk", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
 		self.btnEditmodeOn.SetFont( wx.Font( wx.NORMAL_FONT.GetPointSize(), 70, 90, 90, False, wx.EmptyString ) )
 		self.btnEditmodeOn.SetForegroundColour( wx.Colour( 10, 43, 233 ) )
 		
 		bSizer40.Add( self.btnEditmodeOn, 0, wx.ALL|wx.EXPAND, 0 )
 		
-		gSizer2 = wx.GridSizer( 0, 2, 0, 0 )
-		
-		self.m_staticText18 = wx.StaticText( self.panelPreviewInfo, wx.ID_ANY, u"Dimensie :", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText18.Wrap( -1 )
-		gSizer2.Add( self.m_staticText18, 0, wx.ALL, 3 )
+		bSizer38 = wx.BoxSizer( wx.VERTICAL )
 		
 		self.lblDimensie = wx.StaticText( self.panelPreviewInfo, wx.ID_ANY, u"MyLabel", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.lblDimensie.Wrap( -1 )
-		gSizer2.Add( self.lblDimensie, 0, wx.ALL, 3 )
-		
-		self.m_staticText20 = wx.StaticText( self.panelPreviewInfo, wx.ID_ANY, u"Rotatie :", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText20.Wrap( -1 )
-		gSizer2.Add( self.m_staticText20, 0, wx.ALL, 3 )
+		bSizer38.Add( self.lblDimensie, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 3 )
 		
 		self.lblRotatie = wx.StaticText( self.panelPreviewInfo, wx.ID_ANY, u"MyLabel", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.lblRotatie.Wrap( -1 )
-		gSizer2.Add( self.lblRotatie, 0, wx.ALL, 3 )
+		bSizer38.Add( self.lblRotatie, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 3 )
 		
 		
-		bSizer40.Add( gSizer2, 0, wx.EXPAND, 0 )
+		bSizer40.Add( bSizer38, 1, wx.EXPAND, 5 )
 		
 		
 		self.panelPreviewInfo.SetSizer( bSizer40 )
@@ -199,19 +191,19 @@ class Mainframe ( wx.Frame ):
 		
 		bSizer361.Add( self.btnVoorbeeld, 0, wx.ALIGN_CENTER|wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 2 )
 		
-		self.btnSelectFile = wx.Button( self, wx.ID_ANY, u"Toevoegen  ->", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
-		self.btnSelectFile.SetFont( wx.Font( wx.NORMAL_FONT.GetPointSize(), 70, 90, 92, False, wx.EmptyString ) )
-		self.btnSelectFile.SetForegroundColour( wx.Colour( 25, 120, 11 ) )
-		self.btnSelectFile.SetToolTipString( u"Voeg foto's toe aan uploadlijst" )
+		self.btnToevoegen = wx.Button( self, wx.ID_ANY, u"Toevoegen  ->", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
+		self.btnToevoegen.SetFont( wx.Font( wx.NORMAL_FONT.GetPointSize(), 70, 90, 92, False, wx.EmptyString ) )
+		self.btnToevoegen.SetForegroundColour( wx.Colour( 25, 120, 11 ) )
+		self.btnToevoegen.SetToolTipString( u"Voeg foto's toe aan uploadlijst" )
 		
-		bSizer361.Add( self.btnSelectFile, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 2 )
+		bSizer361.Add( self.btnToevoegen, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 2 )
 		
-		self.btnUnselectFile = wx.Button( self, wx.ID_ANY, u"<- Verwijderen", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
-		self.btnUnselectFile.SetFont( wx.Font( wx.NORMAL_FONT.GetPointSize(), 70, 90, 92, False, wx.EmptyString ) )
-		self.btnUnselectFile.SetForegroundColour( wx.Colour( 241, 26, 15 ) )
-		self.btnUnselectFile.SetToolTipString( u"Verwijder foto van uploadlijst" )
+		self.btnVerwijderen = wx.Button( self, wx.ID_ANY, u"<- Verwijderen", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
+		self.btnVerwijderen.SetFont( wx.Font( wx.NORMAL_FONT.GetPointSize(), 70, 90, 92, False, wx.EmptyString ) )
+		self.btnVerwijderen.SetForegroundColour( wx.Colour( 241, 26, 15 ) )
+		self.btnVerwijderen.SetToolTipString( u"Verwijder foto van uploadlijst" )
 		
-		bSizer361.Add( self.btnUnselectFile, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 2 )
+		bSizer361.Add( self.btnVerwijderen, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 2 )
 		
 		
 		bSizer22.Add( bSizer361, 1, wx.ALIGN_BOTTOM|wx.BOTTOM|wx.EXPAND, 5 )
@@ -251,6 +243,9 @@ class Mainframe ( wx.Frame ):
 		
 		bSizer29.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
 		
+		self.btnWIT = wx.Button( self, wx.ID_ANY, u"WIT", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer29.Add( self.btnWIT, 0, wx.ALL, 5 )
+		
 		self.btnUpload = wx.Button( self, wx.ID_ANY, u"Upload naar aquaforum", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.btnUpload.SetFont( wx.Font( wx.NORMAL_FONT.GetPointSize(), 70, 90, 92, False, wx.EmptyString ) )
 		self.btnUpload.SetForegroundColour( wx.Colour( 255, 42, 0 ) )
@@ -268,7 +263,6 @@ class Mainframe ( wx.Frame ):
 		
 		self.SetSizer( bSizer30 )
 		self.Layout()
-		bSizer30.Fit( self )
 		self.m_menubar1 = wx.MenuBar( 0 )
 		self.m_menu1 = wx.Menu()
 		self.menuitemConf = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"Configuratie", wx.EmptyString, wx.ITEM_NORMAL )
@@ -300,10 +294,11 @@ class Mainframe ( wx.Frame ):
 		self.btnRotate.Bind( wx.EVT_BUTTON, self.onbtnRotateClick )
 		self.btnEditmodeOn.Bind( wx.EVT_BUTTON, self.onbtneditmodeon )
 		self.btnVoorbeeld.Bind( wx.EVT_BUTTON, self.onbtnVoorbeeldClick )
-		self.btnSelectFile.Bind( wx.EVT_BUTTON, self.onbtnToevoegenClick )
-		self.btnUnselectFile.Bind( wx.EVT_BUTTON, self.onbtnUnselectFileClick )
+		self.btnToevoegen.Bind( wx.EVT_BUTTON, self.onbtnToevoegenClick )
+		self.btnVerwijderen.Bind( wx.EVT_BUTTON, self.onbtnVerwijderenClick )
 		self.listFiles.Bind( wx.EVT_LIST_ITEM_SELECTED, self.onlistFilesSelected )
 		self.btnArchief.Bind( wx.EVT_BUTTON, self.onbtnArchiefClick )
+		self.btnWIT.Bind( wx.EVT_BUTTON, self.onbtnWITclick )
 		self.btnUpload.Bind( wx.EVT_BUTTON, self.onbtnUploadClick )
 		self.Bind( wx.EVT_MENU, self.onmenuitemClickConf, id = self.menuitemConf.GetId() )
 		self.Bind( wx.EVT_MENU, self.onmenuitemClickAfsluiten, id = self.menuitemAfsluiten.GetId() )
@@ -347,13 +342,16 @@ class Mainframe ( wx.Frame ):
 	def onbtnToevoegenClick( self, event ):
 		event.Skip()
 	
-	def onbtnUnselectFileClick( self, event ):
+	def onbtnVerwijderenClick( self, event ):
 		event.Skip()
 	
 	def onlistFilesSelected( self, event ):
 		event.Skip()
 	
 	def onbtnArchiefClick( self, event ):
+		event.Skip()
+	
+	def onbtnWITclick( self, event ):
 		event.Skip()
 	
 	def onbtnUploadClick( self, event ):
