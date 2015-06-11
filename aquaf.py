@@ -157,7 +157,7 @@ class AquaFrame(maingui.Mainframe):
         menu.Destroy()
 
     def OnPopupUploadList(self, event):
-        self.onbtnSelectFileClick(event)
+        self.onbtnToevoegenClick(event)
 
     def onmenuitemClickConf(self, event):
         conf = confdialog.Configure(self)
@@ -389,6 +389,7 @@ class AquaFrame(maingui.Mainframe):
                     idx = self.VoegPadToe(path)
                     self.deselectItems()
                     self.listFiles.Select(idx, 1)
+#                    self.tvFiles.UnselectAll()
 #                    self.SetPreview(diversen.USER_PREVIEW)
         else:  # check of (lokaal) bestand al is toegevoegd.
             breaker = 0
