@@ -21,6 +21,8 @@
 - [ ] Wat als preview = False? Online foto tijdelijk op preview = True
 - [x] Bij preview = False -> indeling der componenten wat strakker. + alleen toevoegen/verwijderen?!
 - [ ] listfiles editable maken -> dimensies + rotatie
+- [ ] Foto is al toegevoegd! -> foto (dim/rotatie) updaten?
+- [ ] Na verwijderen foto -> foto niet meer actief in preview.
 - [x] Bij initialisatie app wat global variabelen zetten, zodat ik ze niet telkens uit de DB hoef te trekken.
 - [ ] APP_VERSIE en USER_DIMENSIE moeten nog maar dat ligt lastiger.
 - [ ] PreviewKnop laat alleen preview zien van geselecteerde foto links.. ookal is er een foto
