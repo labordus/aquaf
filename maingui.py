@@ -17,7 +17,7 @@ import wx.xrc
 class Mainframe ( wx.Frame ):
 	
 	def __init__( self, parent ):
-		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Aquaforum upload programma", pos = wx.DefaultPosition, size = wx.Size( 1057,800 ), style = wx.CAPTION|wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Aquaforum upload programma", pos = wx.DefaultPosition, size = wx.Size( -1,800 ), style = wx.CAPTION|wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
 		
 		self.SetSizeHintsSz( wx.Size( 795,800 ), wx.Size( -1,800 ) )
 		self.SetBackgroundColour( wx.Colour( 116, 113, 162 ) )
@@ -89,7 +89,7 @@ class Mainframe ( wx.Frame ):
 		bSizer4.Add( self.tvFiles, 1, wx.EXPAND |wx.ALL, 3 )
 		
 		
-		fgSizer1.Add( bSizer4, 0, wx.ALL|wx.EXPAND, 0 )
+		fgSizer1.Add( bSizer4, 1, wx.EXPAND, 5 )
 		
 		bSizer22 = wx.BoxSizer( wx.VERTICAL )
 		

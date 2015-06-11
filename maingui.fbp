@@ -44,7 +44,7 @@
             <property name="minimum_size">795,800</property>
             <property name="name">Mainframe</property>
             <property name="pos"></property>
-            <property name="size">1057,800</property>
+            <property name="size">-1,800</property>
             <property name="style">wxCAPTION|wxDEFAULT_FRAME_STYLE</property>
             <property name="subclass">; </property>
             <property name="title">Aquaforum upload programma</property>
@@ -692,10 +692,10 @@
                                                 <event name="OnUpdateUI"></event>
                                             </object>
                                         </object>
-                                        <object class="sizeritem" expanded="0">
-                                            <property name="border">0</property>
-                                            <property name="flag">wxALL|wxEXPAND</property>
-                                            <property name="proportion">0</property>
+                                        <object class="sizeritem" expanded="1">
+                                            <property name="border">5</property>
+                                            <property name="flag">wxEXPAND</property>
+                                            <property name="proportion">1</property>
                                             <object class="wxBoxSizer" expanded="0">
                                                 <property name="minimum_size">300,-1</property>
                                                 <property name="name">bSizer4</property>
@@ -805,7 +805,7 @@
                                                 </object>
                                             </object>
                                         </object>
-                                        <object class="sizeritem" expanded="0">
+                                        <object class="sizeritem" expanded="1">
                                             <property name="border">0</property>
                                             <property name="flag">wxEXPAND</property>
                                             <property name="proportion">0</property>
