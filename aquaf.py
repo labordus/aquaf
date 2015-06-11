@@ -74,7 +74,7 @@ class AquaFrame(maingui.Mainframe):
         _icon = wx.EmptyIcon()
         _icon.CopyFromBitmap(wx.Bitmap("icon.ico", wx.BITMAP_TYPE_ANY))
         self.SetIcon(_icon)
-        self.SetSize((702, 538))
+#        self.SetSize((702, 538))
 
         log = self.infoBox
         # redirect text here
@@ -114,7 +114,6 @@ class AquaFrame(maingui.Mainframe):
         self.listFiles.InsertColumn(2, 'Rotatie', width=60)
         self.listFiles.InsertColumn(3, 'Pad', width=140)
 
-#        self.Layout()
         self.SetPreview(diversen.USER_PREVIEW)
 
         if diversen.USER_UPDATECHECK:
@@ -125,6 +124,14 @@ class AquaFrame(maingui.Mainframe):
                 update.CenterOnParent()
                 update.ShowModal()
                 update.Destroy()
+
+# Hier zet ik de size van frame KEIHARD.. conform "bestsize" zoals aangegeven door WIT.
+        self.SetSize((1130, 800))
+
+#        self.SendSizeEvent()
+#        self.SetAutoLayout(True)
+#        self.Layout()
+#        self.Fit()
 
         # for wxMSW
 #        self.tvFiles.Bind(wx.EVT_COMMAND_RIGHT_CLICK, self.OntvFilesRightClick)
@@ -178,6 +185,15 @@ class AquaFrame(maingui.Mainframe):
         self.panelPreview.Show(prv)
         self.panelPreviewInfo.Show(not prv)
         self.Fit()
+
+        if not prv:  # geen Preview dan..
+            self.btnToevoegen.SetLabel('-->')
+            self.btnVerwijderen.SetLabel('<--')
+            self.btnVoorbeeld.SetLabel('Prv')
+        else:  # als Preview dan..
+            self.btnToevoegen.SetLabel('Toevoegen  ->')
+            self.btnVerwijderen.SetLabel('<- Verwijderen')
+            self.btnVoorbeeld.SetLabel(' Preview ')
 
     def onbtneditmodeon(self, event):
         PREVIEW_ON = True
@@ -302,6 +318,8 @@ class AquaFrame(maingui.Mainframe):
         self.bitmapSelectedFile.SetBitmap(PilImageToWxBitmap(img))
         self.bitmapSelectedFile.Center()
 
+        self.Layout()
+
     def ontvFilesSelChanged(self, event):
         global ONLINE_PREVIEW
         ONLINE_PREVIEW = 0
@@ -420,7 +438,7 @@ class AquaFrame(maingui.Mainframe):
                 self.SetPreview(True)
                 self.PreviewImage(path)
 
-    def onbtnUnselectFileClick(self, event):
+    def onbtnVerwijderenClick(self, event):
         # Zet hier de lijst met geselecteerde items in een array, en gebruik die array
         # later in REVERSED-ORDER voor het wissen van de items.
         # Dit aangezien bij het wissen van items ook de item-index veranderd..
@@ -533,6 +551,10 @@ class AquaFrame(maingui.Mainframe):
 
     def onmenuitemClickAfsluiten(self, event):
         self.Close()
+
+    def onbtnWITclick(self, event):
+        import wx.lib.inspection
+        wx.lib.inspection.InspectionTool().Show()
 
     def oncloseMainframe(self, event):
         # checken of er nog foto's klaar staan in de uploadlijst.
