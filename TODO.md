@@ -20,6 +20,8 @@
 - [x] foto niet gevonden.. http://www.visaquarium.nl/images/v/98/t1_320x240.jpg ..  response 301 Moved Permanently\
 - [ ] Wat als preview = False? Online foto tijdelijk op preview = True
 - [x] Bij preview = False -> indeling der componenten wat strakker. + alleen toevoegen/verwijderen?!
+- [ ] Toevoegen/Verwijderen-knoppen vastzetten onderin. 
+- [ ] Preview alleen vanuit listfiles, preview-knop er dus uit.
 - [ ] listfiles editable maken -> dimensies + rotatie
 - [ ] Foto is al toegevoegd! -> foto (dim/rotatie) updaten?
 - [ ] Na verwijderen foto -> foto niet meer actief in preview.
