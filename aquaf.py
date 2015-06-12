@@ -320,6 +320,9 @@ class AquaFrame(maingui.Mainframe):
 
         self.Layout()
 
+    def onbtnClearLogClick(self, event):
+        self.infoBox.Clear()
+
     def ontvFilesSelChanged(self, event):
         global ONLINE_PREVIEW
         ONLINE_PREVIEW = 0
@@ -346,7 +349,37 @@ class AquaFrame(maingui.Mainframe):
         pad = os.path.join(self.listFiles.GetItemText(self.listFiles.GetFirstSelected(), 3),
                            self.listFiles.GetItemText(self.listFiles.GetFirstSelected(), 0))
         ROTATE_IMAGE = int(self.listFiles.GetItemText(self.listFiles.GetFirstSelected(), 2))
-        self.PreviewImage(pad)
+#        self.PreviewImage(pad)
+# ############################################
+
+        index = self.choiceDimensie.GetSelection()
+        dimensions = getDimensions(index)
+#        dimensions = self.listFiles.GetItemText(self.listFiles.GetFirstSelected(), 1)
+        resizedFileName = None
+        try:
+            if not (os.path.exists(pad)):
+                wx.MessageDialog(self, pad + " bestaat niet", "Bericht", style=wx.OK).ShowModal()
+                resizedFileName = None
+                return
+            else:
+                resizedFileName = ResizeImage(pad, dimensions)
+        except Exception as er:
+            resizedFileName = None
+            wx.MessageDialog(
+                self,
+                "Er is een fout opgetreden tijdens het converteren\n" +
+                "De error is " + str(er),
+                "Bericht", style=wx.OK).ShowModal()
+            return
+        Voorbeeld = dlgVoorbeeld(self)
+        Voorbeeld.SetTitle(str(dimensions))
+        resizedFileName = resizedFileName.rotate(ROTATE_IMAGE)
+        Voorbeeld.bitmapVoorbeeld.SetBitmap(PilImageToWxBitmap(resizedFileName))
+        Voorbeeld.Fit()
+        Voorbeeld.Layout()
+        Voorbeeld.CenterOnParent()
+        Voorbeeld.ShowModal()
+        Voorbeeld.Destroy()
 
 
 # FOLGENDE FUNCTIE LEVERT PROBLEMEN OP MET WINDOWS
