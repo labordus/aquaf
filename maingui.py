@@ -243,6 +243,9 @@ class Mainframe ( wx.Frame ):
 		
 		bSizer29.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
 		
+		self.btnClearLog = wx.Button( self, wx.ID_ANY, u"Clear Log", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer29.Add( self.btnClearLog, 0, wx.ALL, 5 )
+		
 		self.btnWIT = wx.Button( self, wx.ID_ANY, u"WIT", wx.DefaultPosition, wx.DefaultSize, 0 )
 		bSizer29.Add( self.btnWIT, 0, wx.ALL, 5 )
 		
@@ -298,6 +301,7 @@ class Mainframe ( wx.Frame ):
 		self.btnVerwijderen.Bind( wx.EVT_BUTTON, self.onbtnVerwijderenClick )
 		self.listFiles.Bind( wx.EVT_LIST_ITEM_SELECTED, self.onlistFilesSelected )
 		self.btnArchief.Bind( wx.EVT_BUTTON, self.onbtnArchiefClick )
+		self.btnClearLog.Bind( wx.EVT_BUTTON, self.onbtnClearLogClick )
 		self.btnWIT.Bind( wx.EVT_BUTTON, self.onbtnWITclick )
 		self.btnUpload.Bind( wx.EVT_BUTTON, self.onbtnUploadClick )
 		self.Bind( wx.EVT_MENU, self.onmenuitemClickConf, id = self.menuitemConf.GetId() )
@@ -349,6 +353,9 @@ class Mainframe ( wx.Frame ):
 		event.Skip()
 	
 	def onbtnArchiefClick( self, event ):
+		event.Skip()
+	
+	def onbtnClearLogClick( self, event ):
 		event.Skip()
 	
 	def onbtnWITclick( self, event ):
