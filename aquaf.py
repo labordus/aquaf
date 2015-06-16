@@ -17,9 +17,11 @@ AUQAOFORUM_PICTURE_URL = "http://www.aquaforum.nl/gallery/upload/"
 TEST_FOTO = "test.jpg"
 FRONT_FOTO = "front.jpg"
 ROTATE_IMAGE = 0
+DIM_IMAGE = ''
 PREVIEW_ON = False
 ONLINE_PREVIEW = 0
 ONLINE_TEMPFILE = ''
+FOTO_IN_PREVIEW = ''
 
 
 def main_is_frozen():
@@ -179,7 +181,10 @@ class AquaFrame(maingui.Mainframe):
         #            return
         #        else:
         #            if not prv:
-        self.lblDimensie.SetLabelText(self.choiceDimensie.GetString(self.choiceDimensie.GetSelection()))
+        global PREVIEW_ON
+        PREVIEW_ON = prv
+        # self.lblDimensie.SetLabelText(self.choiceDimensie.GetString(self.choiceDimensie.GetSelection()))
+        self.lblDimensie.SetLabelText(DIM_IMAGE)
         self.lblRotatie.SetLabelText(str(ROTATE_IMAGE))
 
         self.panelPreview.Show(prv)
@@ -238,7 +243,8 @@ class AquaFrame(maingui.Mainframe):
             else:
                 PLAATJE = TEST_FOTO
 
-            if not diversen.USER_PREVIEW:
+#            if not diversen.USER_PREVIEW:
+            if not PREVIEW_ON:
                 PLAATJE = TEST_FOTO
 
         index = self.choiceDimensie.GetSelection()
@@ -279,14 +285,20 @@ class AquaFrame(maingui.Mainframe):
         if ONLINE_PREVIEW:
             self.PreviewImage(ONLINE_TEMPFILE)
         else:
-            padjes = self.tvFiles.GetFilePaths()
-            for pad in padjes:
-                self.PreviewImage(pad)
-                return
-#        self.PreviewImage(FRONT_FOTO)
+            #            padjes = self.tvFiles.GetFilePaths()
+            #            for pad in padjes:
+            #                self.PreviewImage(pad)
+            #                return
+            self.PreviewImage(FOTO_IN_PREVIEW)
 
-    def PreviewImage(self, pad, forcepreview=False):
-        if not diversen.USER_PREVIEW:
+    def PreviewImage(self, pad='', forcepreview=False):
+        global FOTO_IN_PREVIEW
+        FOTO_IN_PREVIEW = pad
+        #        if not diversen.USER_PREVIEW:
+        if not PREVIEW_ON:
+            self.lblRotatie.SetLabelText(str(ROTATE_IMAGE))
+            # self.lblDimensie.SetLabelText(self.choiceDimensie.GetString(self.choiceDimensie.GetSelection()))
+            self.lblDimensie.SetLabelText(DIM_IMAGE)
             self.bitmapSelectedFile.SetBitmap(wx.Bitmap(FRONT_FOTO))
             return
         global ROTATE_IMAGE
@@ -330,10 +342,13 @@ class AquaFrame(maingui.Mainframe):
         ROTATE_IMAGE = 0
 
         padjes = self.tvFiles.GetFilePaths()
+        if len(padjes) > 1:
+            self.PreviewImage(FRONT_FOTO)
+            return
         for pad in padjes:
             self.PreviewImage(pad)
-            return
-        self.PreviewImage(FRONT_FOTO)
+
+        self.deselectItems()
         #        self.PreviewImage(self.tvFiles.GetFilePath())
 
 #        padjes = self.tvFiles.GetFilePaths()
@@ -345,41 +360,51 @@ class AquaFrame(maingui.Mainframe):
 #        print('SelChange')
 
     def onlistFilesSelected(self, event):
+        self.tvFiles.UnselectAll()
+        if self.listFiles.SelectedItemCount > 1:
+            self.PreviewImage(FRONT_FOTO)
+            return
+
         global ROTATE_IMAGE
         pad = os.path.join(self.listFiles.GetItemText(self.listFiles.GetFirstSelected(), 3),
                            self.listFiles.GetItemText(self.listFiles.GetFirstSelected(), 0))
         ROTATE_IMAGE = int(self.listFiles.GetItemText(self.listFiles.GetFirstSelected(), 2))
-#        self.PreviewImage(pad)
+        dim = self.listFiles.GetItemText(self.listFiles.GetFirstSelected(), 1)
+        global DIM_IMAGE
+        DIM_IMAGE = dim
+        self.PreviewImage(pad)
+        global FOTO_IN_PREVIEW
+        FOTO_IN_PREVIEW = pad
 # ############################################
 
-        index = self.choiceDimensie.GetSelection()
-        dimensions = getDimensions(index)
-#        dimensions = self.listFiles.GetItemText(self.listFiles.GetFirstSelected(), 1)
-        resizedFileName = None
-        try:
-            if not (os.path.exists(pad)):
-                wx.MessageDialog(self, pad + " bestaat niet", "Bericht", style=wx.OK).ShowModal()
-                resizedFileName = None
-                return
-            else:
-                resizedFileName = ResizeImage(pad, dimensions)
-        except Exception as er:
-            resizedFileName = None
-            wx.MessageDialog(
-                self,
-                "Er is een fout opgetreden tijdens het converteren\n" +
-                "De error is " + str(er),
-                "Bericht", style=wx.OK).ShowModal()
-            return
-        Voorbeeld = dlgVoorbeeld(self)
-        Voorbeeld.SetTitle(str(dimensions))
-        resizedFileName = resizedFileName.rotate(ROTATE_IMAGE)
-        Voorbeeld.bitmapVoorbeeld.SetBitmap(PilImageToWxBitmap(resizedFileName))
-        Voorbeeld.Fit()
-        Voorbeeld.Layout()
-        Voorbeeld.CenterOnParent()
-        Voorbeeld.ShowModal()
-        Voorbeeld.Destroy()
+#         index = self.choiceDimensie.GetSelection()
+#         dimensions = getDimensions(index)
+#         resizedFileName = None
+#         try:
+#             if not (os.path.exists(pad)):
+#                 wx.MessageDialog(self, pad + " bestaat niet", "Bericht", style=wx.OK).ShowModal()
+#                 resizedFileName = None
+#                 return
+#             else:
+#                 resizedFileName = ResizeImage(pad, dimensions)
+#         except Exception as er:
+#             resizedFileName = None
+#             wx.MessageDialog(
+#                 self,
+#                 "Er is een fout opgetreden tijdens het converteren\n" +
+#                 "De error is " + str(er),
+#                 "Bericht", style=wx.OK).ShowModal()
+#             return
+#         Voorbeeld = dlgVoorbeeld(self)
+#         Voorbeeld.SetTitle(str(dimensions))
+#         resizedFileName = resizedFileName.rotate(ROTATE_IMAGE)
+#         Voorbeeld.bitmapVoorbeeld.SetBitmap(PilImageToWxBitmap(resizedFileName))
+#         Voorbeeld.Fit()
+#         Voorbeeld.Layout()
+#         Voorbeeld.CenterOnParent()
+#         Voorbeeld.ShowModal()
+#         Voorbeeld.Destroy()
+# ############################################
 
 
 # FOLGENDE FUNCTIE LEVERT PROBLEMEN OP MET WINDOWS
@@ -425,6 +450,7 @@ class AquaFrame(maingui.Mainframe):
 #                    self.tvFiles.UnselectAll()
 #                    self.SetPreview(diversen.USER_PREVIEW)
         else:  # check of (lokaal) bestand al is toegevoegd.
+            # ALS ER GEEN SELECTIE IS IN TVFILES MAAR WEL EEN FOTO_IN_PREVIEW.. AFHANDELEN!!
             breaker = 0
             padjes = self.tvFiles.GetFilePaths()
             for _pad in padjes:
@@ -432,17 +458,33 @@ class AquaFrame(maingui.Mainframe):
                     breaker = 0
                     sPad = os.path.join(self.listFiles.GetItemText(_i, 3),
                                         self.listFiles.GetItemText(_i, 0))
-                    if _pad == sPad:
-                        print("""Foto is al toegevoegd""")
-                        breaker = 1
-                        break
-
-                if breaker == 0:
+                    if _pad == sPad:  # Foto is al toegevoegd.. updaten?
+                        dlg = wx.MessageDialog(None, """Foto is al toegevoegd. \n""" +
+                                               """Bestaande foto updaten?""", 'Updaten', wx.YES_NO | wx.ICON_QUESTION)
+                        result = dlg.ShowModal()
+                        if result == wx.ID_NO:
+                            dlg.Destroy()
+                            breaker = 1
+                            break
+                        else:  # update
+                            self.listFiles.SetStringItem(_i, 1, self.choiceDimensie.GetString(self.choiceDimensie.GetSelection()))  # dim
+                            self.listFiles.SetStringItem(_i, 2, str(ROTATE_IMAGE))  # rotation
+#                            self.listFiles.Select(_i, 1)
+#                             self.listFiles.DeleteItem(_i)
+#                             if IsValidImage(_pad):
+#                                 idx = self.VoegPadToe(_pad)
+#                                 self.deselectItems()
+#                                 self.listFiles.Select(idx, 1)
+                            breaker = 1
+                            break
+                if breaker == 0:  # Geen zelfde foto gevonden in de uploadlijst.
                     if IsValidImage(_pad):
                         idx = self.VoegPadToe(_pad)
                         self.deselectItems()
                         self.listFiles.Select(idx, 1)
+            self.tvFiles.UnselectAll()
 
+# #####################################################################################
     def deselectItems(self):
         sel = self.listFiles.GetFirstSelected()
         while sel != -1:
@@ -582,6 +624,11 @@ class AquaFrame(maingui.Mainframe):
         #        self.listFiles.ClearAll()
         diversen.delete_tempfiles()
         self.listFiles.DeleteAllItems()
+#        global FOTO_IN_PREVIEW
+#        FOTO_IN_PREVIEW = ''
+        padjes = self.tvFiles.GetFilePaths()
+        for _pad in padjes:
+            self.PreviewImage(_pad)
 
     def onmenuitemClickAfsluiten(self, event):
         self.Close()
