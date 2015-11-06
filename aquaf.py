@@ -359,7 +359,11 @@ class AquaFrame(maingui.Mainframe):
         #            print pad
 #        print('SelChange')
 
+    def onlistFilesFocused(self, event):
+        print 'onlistFilesFocused'
+
     def onlistFilesSelected(self, event):
+        print 'onlistFilesSelected'
         self.tvFiles.UnselectAll()
         if self.listFiles.SelectedItemCount > 1:
             self.PreviewImage(FRONT_FOTO)

@@ -299,6 +299,7 @@ class Mainframe ( wx.Frame ):
 		self.btnVoorbeeld.Bind( wx.EVT_BUTTON, self.onbtnVoorbeeldClick )
 		self.btnToevoegen.Bind( wx.EVT_BUTTON, self.onbtnToevoegenClick )
 		self.btnVerwijderen.Bind( wx.EVT_BUTTON, self.onbtnVerwijderenClick )
+		self.listFiles.Bind( wx.EVT_LIST_ITEM_FOCUSED, self.onlistFilesFocused )
 		self.listFiles.Bind( wx.EVT_LIST_ITEM_SELECTED, self.onlistFilesSelected )
 		self.btnArchief.Bind( wx.EVT_BUTTON, self.onbtnArchiefClick )
 		self.btnClearLog.Bind( wx.EVT_BUTTON, self.onbtnClearLogClick )
@@ -347,6 +348,9 @@ class Mainframe ( wx.Frame ):
 		event.Skip()
 	
 	def onbtnVerwijderenClick( self, event ):
+		event.Skip()
+	
+	def onlistFilesFocused( self, event ):
 		event.Skip()
 	
 	def onlistFilesSelected( self, event ):

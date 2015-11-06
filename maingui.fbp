@@ -2041,7 +2041,7 @@
                                                                 <event name="OnListInsertItem"></event>
                                                                 <event name="OnListItemActivated"></event>
                                                                 <event name="OnListItemDeselected"></event>
-                                                                <event name="OnListItemFocused"></event>
+                                                                <event name="OnListItemFocused">onlistFilesFocused</event>
                                                                 <event name="OnListItemMiddleClick"></event>
                                                                 <event name="OnListItemRightClick"></event>
                                                                 <event name="OnListItemSelected">onlistFilesSelected</event>

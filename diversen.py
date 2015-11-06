@@ -351,14 +351,14 @@ def PilImageToWxImage(myPilImage, copyAlpha=True):
         myWxImage = wx.EmptyImage(*myPilImage.size)
         myPilImageCopyRGBA = myPilImage.copy()
         myPilImageCopyRGB = myPilImageCopyRGBA.convert('RGB')    # RGBA --> RGB
-        myPilImageRgbData = myPilImageCopyRGB.tostring()
+        myPilImageRgbData = myPilImageCopyRGB.tobytes()
         myWxImage.SetData(myPilImageRgbData)
-        myWxImage.SetAlphaData(myPilImageCopyRGBA.tostring()[3::4])  # Create layer and insert alpha values.
+        myWxImage.SetAlphaData(myPilImageCopyRGBA.tobytes()[3::4])  # Create layer and insert alpha values.
     else:    # The resulting image will not have alpha.
         myWxImage = wx.EmptyImage(*myPilImage.size)
         myPilImageCopy = myPilImage.copy()
         myPilImageCopyRGB = myPilImageCopy.convert('RGB')    # Discard any alpha from the PIL image.
-        myPilImageRgbData = myPilImageCopyRGB.tostring()
+        myPilImageRgbData = myPilImageCopyRGB.tobytes()
         myWxImage.SetData(myPilImageRgbData)
     return myWxImage
 
@@ -368,7 +368,7 @@ def WxImageToPilImage(wxImage):
         GetData() -> PyProject: Returns a string containing a copy of the RGB bytes of the image.
     """
     pilImage = Image.new('RGB', wxImage.GetSize())  # new
-    pilImage.fromstring(wxImage.GetData())  # copy
+    pilImage.frombytes(wxImage.GetData())  # copy
     return pilImage
 
 
