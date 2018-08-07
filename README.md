@@ -1,8 +1,3 @@
-# 2015 30 juni : Versie 0.86 :
-* Online foto's kunnen uploaden naar de server van aquaforum.nl
-* Foto's kunnen draaien alvorens te uploaden.
-* Vele 'under the hood' verbeteringen.. en bug-fixes.
-
 # 2015 28 januari : Versie 0.85 :
 * Meerdere foto's tegelijk selecteren met SHIFT/Ctrl-toetsen en dan
   met Enter-toets in uploadlijst kunnen zetten, of dubbelklik met muis.
